@@ -182,7 +182,7 @@ function Chatbot({prov,city}){
   const [open,setOpen]=useState(false);const [msgs,setMsgs]=useState([{role:"bot",text:"👋 Hi! I'm your Canadian mortgage assistant. Ask me anything about rates, CMHC, affordability, or first-time buyer programs!"}]);const [input,setInput]=useState("");const [loading,setLoading]=useState(false);const [history,setHistory]=useState([]);const endRef=useRef(null);
   const sugg=["Fixed vs variable?","How to pass stress test?","What is CMHC?","First-time buyer programs"];
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:"smooth"});},[msgs]);
-  async function send(q){const text=q||input.trim();if(!text)return;setInput("");setLoading(true);const nm=[...msgs,{role:"user",text}];setMsgs(nm);const nh=[...history,{role:"user",content:text}];
+  async function send(q?:string){const text=q||input.trim();if(!text)return;setInput("");setLoading(true);const nm=[...msgs,{role:"user",text}];setMsgs(nm);const nh=[...history,{role:"user",content:text}];
     try{const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:300,system:`You are a friendly Canadian mortgage assistant. BoC rate: 2.25%, Prime: 4.45%. User is in ${PDATA[prov]?.name||"Canada"}, ${city}. Keep answers concise (2–4 sentences).`,messages:nh})});const data=await res.json();const reply=data.content?.find(b=>b.type==="text")?.text||"Sorry, I'm having trouble. Please try again.";setMsgs([...nm,{role:"bot",text:reply}]);setHistory([...nh,{role:"assistant",content:reply}]);}
     catch{setMsgs([...nm,{role:"bot",text:"Sorry, I'm having trouble connecting right now."}]);}
     setLoading(false);}
