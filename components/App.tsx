@@ -229,10 +229,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Consult"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Consult"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn"]},{label:"Help",tabs:["Consult"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn"]},{label:"Help",tabs:["Consult"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -263,23 +263,22 @@ function NavBar({active,setActive}){
 
 function Hero({prov,city,locLoading}){
   return(
-    <div style={{background:`linear-gradient(135deg,#0a1628 0%,#0d2240 40%,#1a3a5c 70%,#0d2240 100%)`,padding:"32px 20px 40px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
+    <div style={{background:`linear-gradient(135deg,#0a1628 0%,#0d2240 40%,#1a3a5c 70%,#0d2240 100%)`,padding:"14px 20px 18px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
       <div style={{position:"absolute",top:-40,right:-40,width:200,height:200,borderRadius:"50%",background:"rgba(200,16,46,0.08)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",bottom:-60,left:-60,width:280,height:280,borderRadius:"50%",background:"rgba(245,166,35,0.06)",pointerEvents:"none"}}/>
       <div style={{position:"relative",zIndex:1}}>
-        <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"4px 14px",marginBottom:14}}>
-          <span style={{color:s.gold,fontSize:11,fontWeight:700,letterSpacing:"0.5px"}}>🍁 CANADA'S MOST COMPLETE MORTGAGE PLATFORM</span>
+        <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",marginBottom:8}}>
+          <span style={{color:s.gold,fontSize:10,fontWeight:700,letterSpacing:"0.5px"}}>🍁 CANADA'S MOST COMPLETE MORTGAGE PLATFORM</span>
         </div>
-        <h1 style={{color:"#fff",fontSize:"clamp(20px,4vw,36px)",fontWeight:800,marginBottom:8,letterSpacing:"-0.5px",lineHeight:1.2}}>Compare <span style={{color:s.gold}}>Mortgage Rates</span><br/>Across All of Canada</h1>
-        <p style={{color:"rgba(255,255,255,0.7)",fontSize:13,marginBottom:6}}>Banks · Credit Unions · AI-Powered · Free Forever</p>
-        <p style={{color:locLoading?"rgba(255,255,255,0.4)":s.gold,fontSize:11,fontWeight:600,marginBottom:20}}>
+        <h1 style={{color:"#fff",fontSize:"clamp(16px,3vw,26px)",fontWeight:800,marginBottom:4,letterSpacing:"-0.5px",lineHeight:1.2}}>Compare <span style={{color:s.gold}}>Mortgage Rates</span> Across All of Canada</h1>
+        <p style={{color:locLoading?"rgba(255,255,255,0.4)":s.gold,fontSize:11,fontWeight:600,marginBottom:8}}>
           {locLoading?"📍 Detecting your location...":"📍 "+city+", "+(PDATA[prov]?.name||prov)}
         </p>
-        <div style={{display:"flex",justifyContent:"center",gap:0,flexWrap:"wrap",background:"rgba(255,255,255,0.06)",borderRadius:16,padding:"14px 20px",maxWidth:500,margin:"0 auto",border:"1px solid rgba(255,255,255,0.1)"}}>
+        <div style={{display:"flex",justifyContent:"center",gap:0,flexWrap:"wrap",background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",maxWidth:460,margin:"0 auto",border:"1px solid rgba(255,255,255,0.1)"}}>
           {[["20+","Lenders"],["10","Provinces"],["AI","Powered"],["Free","Always"],["Live","Rates"]].map(([v,l],i)=>(
-            <div key={l} style={{flex:1,minWidth:70,textAlign:"center",padding:"0 8px",borderRight:i<4?"1px solid rgba(255,255,255,0.1)":"none"}}>
-              <div style={{color:s.gold,fontSize:20,fontWeight:800}}>{v}</div>
-              <div style={{color:"rgba(255,255,255,0.55)",fontSize:10,marginTop:2}}>{l}</div>
+            <div key={l} style={{flex:1,minWidth:60,textAlign:"center",padding:"0 6px",borderRight:i<4?"1px solid rgba(255,255,255,0.1)":"none"}}>
+              <div style={{color:s.gold,fontSize:15,fontWeight:800}}>{v}</div>
+              <div style={{color:"rgba(255,255,255,0.55)",fontSize:9,marginTop:1}}>{l}</div>
             </div>
           ))}
         </div>
@@ -924,8 +923,57 @@ function ConsultTab(){
   );
 }
 
+function HomeTab({setActive}:{setActive:(t:string)=>void}){
+  const features=[
+    {icon:"📊",tab:"Rates",title:"Live Mortgage Rates",desc:"Compare rates from 20+ banks and credit unions across all 10 provinces. Updated daily via AI-powered web search."},
+    {icon:"🧮",tab:"Calculators",title:"Mortgage Calculators",desc:"Payment, affordability, rent vs buy, renewal savings, and stress test — all in one place."},
+    {icon:"🏛️",tab:"Property Tax",title:"Property Tax Estimator",desc:"Estimate your annual property tax based on your home value and city across every province."},
+    {icon:"🏠",tab:"Insurance",title:"Home Insurance",desc:"Compare quotes from Canada's top insurers — Intact, Aviva, Desjardins, and more."},
+    {icon:"🎯",tab:"Rate Finder",title:"Personalized Rate Finder",desc:"Answer 5 quick questions and get your estimated mortgage rate range based on your profile."},
+    {icon:"🇨🇦",tab:"First-Time Buyers",title:"First-Time Buyer Programs",desc:"Federal and provincial programs — FHSA, HBP, LTT rebates, and new 2026 incentives."},
+    {icon:"📰",tab:"News",title:"Mortgage & Real Estate News",desc:"AI-curated news for your province — BoC decisions, market updates, and rate forecasts."},
+    {icon:"🏡",tab:"Listings",title:"Home Listings Search",desc:"AI-powered property search across Canada. Find homes by city, type, beds, and price."},
+    {icon:"📚",tab:"Learn",title:"Learn & Education",desc:"Fixed vs variable, stress test guide, CMHC explained, FHSA complete guide, and more."},
+    {icon:"📞",tab:"Consult",title:"Free Consultation",desc:"Connect with a licensed mortgage professional — free, no obligation, within 1 business day."},
+  ];
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:32,marginBottom:8}}>🍁</div>
+        <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>Welcome to Canada Mortgage Rates</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:13,lineHeight:1.7,maxWidth:600,margin:"0 auto 16px"}}>Canada's most complete mortgage platform — free, AI-powered, and built for every province. Compare rates, calculate payments, discover first-time buyer programs, and connect with experts.</p>
+        <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
+          {[["🏦 20+ Lenders",""],["🌍 All 10 Provinces",""],["🤖 AI-Powered",""],["💰 Always Free",""]].map(([l])=>(
+            <span key={l} style={{background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:20,padding:"5px 14px",color:"#fff",fontSize:11,fontWeight:600}}>{l}</span>
+          ))}
+        </div>
+      </div>
+      <div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:10,padding:"10px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
+        <div style={{fontSize:20}}>📢</div>
+        <div><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>BoC Rate Hold — June 10, 2026</div><div style={{fontSize:11,color:"#92400e"}}>Bank of Canada held overnight rate at 2.25%. Prime Rate: 4.45%. Next decision: July 15, 2026.</div></div>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
+        {features.map(f=>(
+          <div key={f.tab} onClick={()=>setActive(f.tab)} style={{background:s.white,borderRadius:12,padding:16,border:`1px solid ${s.border}`,cursor:"pointer",transition:"box-shadow 0.2s"}}
+            onMouseEnter={e=>(e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.12)")}
+            onMouseLeave={e=>(e.currentTarget.style.boxShadow="none")}>
+            <div style={{fontSize:26,marginBottom:8}}>{f.icon}</div>
+            <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:5}}>{f.title}</div>
+            <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{f.desc}</div>
+            <div style={{fontSize:11,color:s.blue,fontWeight:600}}>Open {f.tab} →</div>
+          </div>
+        ))}
+      </div>
+      <div style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,padding:16,marginTop:14}}>
+        <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:10}}>⚠️ Important Disclaimer</div>
+        <p style={{fontSize:11,color:s.muted,lineHeight:1.7}}>Canada Mortgage Rates is not a licensed mortgage broker, lender, or financial advisor. All rates and calculator results are for informational purposes only and may not reflect your actual qualified rate. Always verify rates directly with the financial institution and consult a licensed mortgage professional before making any financial decisions.</p>
+      </div>
+    </div>
+  );
+}
+
 export default function App(){
-  const [active,setActive]=useState("Rates");
+  const [active,setActive]=useState("Home");
   const [prov,setProv]=useState("MB");
   const [city,setCity]=useState("Winnipeg");
   const [locLoading,setLocLoading]=useState(true);
@@ -944,6 +992,7 @@ export default function App(){
   const tabProps={initProv:prov,initCity:city};
 
   function renderTab(){
+    if(active==="Home")return <HomeTab setActive={setActive}/>;
     if(active==="Rates")return <RatesTab {...tabProps} onLocationChange={(p,c)=>{setProv(p);setCity(c);}}/>;
     if(active==="Calculators")return <CalcTab prov={prov}/>;
     if(active==="Property Tax")return <PropertyTaxTab {...tabProps}/>;
