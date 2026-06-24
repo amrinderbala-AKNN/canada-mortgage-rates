@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const PDATA={
   AB:{name:"Alberta",cities:["Calgary","Edmonton","Red Deer","Lethbridge","Grande Prairie","Airdrie","Medicine Hat","Spruce Grove"],cu:[
@@ -107,9 +107,9 @@ function Skeleton({w="100%",h=16,r=6,mb=0}){return <div style={{width:w,height:h
 function EmptyState({icon,title,sub,link,linkText}){return(<div style={{textAlign:"center",padding:"40px 20px"}}><div style={{fontSize:48,marginBottom:12}}>{icon}</div><div style={{fontSize:15,fontWeight:700,color:s.navy,marginBottom:6}}>{title}</div><div style={{fontSize:13,color:s.muted,marginBottom:link?14:0}}>{sub}</div>{link&&<a href={link} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"8px 20px",background:s.navy,color:"#fff",borderRadius:8,fontSize:13,fontWeight:700,textDecoration:"none"}}>{linkText}</a>}</div>);}
 function Card({children,style}){return <div style={{background:s.white,borderRadius:12,padding:18,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",...style}}>{children}</div>;}
 function Field({label,children}){return <div style={{marginBottom:9}}><label style={{display:"block",fontSize:10,fontWeight:700,color:s.muted,marginBottom:3,textTransform:"uppercase",letterSpacing:"0.4px"}}>{label}</label>{children}</div>;}
-const inp={width:"100%",padding:"8px 10px",borderRadius:8,border:`1.5px solid #e2e8f0`,fontSize:13,fontWeight:500,boxSizing:"border-box"};
-const calcBtn={width:"100%",padding:10,background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",marginTop:6};
-const resultBox={background:`linear-gradient(135deg,#0d2240,#1a3a5c)`,borderRadius:10,padding:14,marginTop:12,color:"#fff"};
+const inp:React.CSSProperties={width:"100%",padding:"8px 10px",borderRadius:8,border:`1.5px solid #e2e8f0`,fontSize:13,fontWeight:500,boxSizing:"border-box"};
+const calcBtn:React.CSSProperties={width:"100%",padding:10,background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",marginTop:6};
+const resultBox:React.CSSProperties={background:`linear-gradient(135deg,#0d2240,#1a3a5c)`,borderRadius:10,padding:14,marginTop:12,color:"#fff"};
 function RRow({l,v,bold}){return <><div style={{color:"rgba(255,255,255,0.7)",fontSize:11}}>{l}</div><div style={{textAlign:"right",fontWeight:bold?700:400,fontSize:11}}>{v}</div></>;}
 
 function BackToTop(){
