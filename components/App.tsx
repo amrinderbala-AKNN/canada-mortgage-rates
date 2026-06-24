@@ -923,7 +923,7 @@ function ConsultTab(){
   );
 }
 
-function HomeTab({setActive}:{setActive:(t:string)=>void}){
+function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const features=[
     {icon:"📊",tab:"Rates",title:"Live Mortgage Rates",desc:"Compare rates from 20+ banks and credit unions across all 10 provinces. Updated daily via AI-powered web search."},
     {icon:"🧮",tab:"Calculators",title:"Mortgage Calculators",desc:"Payment, affordability, rent vs buy, renewal savings, and stress test — all in one place."},
