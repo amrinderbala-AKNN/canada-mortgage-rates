@@ -313,14 +313,14 @@ function RatesTab({initProv,initCity,onLocationChange}){
   async function fetchRates(){
     setLoading(true);setUsingSample(false);
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:"Return ONLY a valid JSON array of mortgage rates. Each object must have: institution, term, fixed, variable. No markdown, no explanation, just the JSON array.",messages:[{role:"user",content:`Current mortgage rates in ${city}, ${PDATA[prov]?.name||prov}, Canada for these institutions: ${institutions.map(i=>i.name).join(", ")}. Terms: 1-year,2-year,3-year,5-year. Return ONLY a JSON array, nothing else.`}]})});
+      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,system:"You are a JSON generator. Output ONLY a valid JSON array. No text before or after. No markdown. No explanation.",messages:[{role:"user",content:`Generate a JSON array of current Canadian mortgage rates for these institutions: ${institutions.slice(0,8).map(i=>i.name).join(", ")}. Use these terms: 1-year, 2-year, 3-year, 5-year. Base rates on current Canadian market (around 4.5-6.5% fixed, 3.5-5% variable). Format: [{"institution":"RBC Royal Bank","term":"1-year","fixed":5.84,"variable":4.95},...]`}]})});
       const data=await res.json();
-      const tb=data.content?.find((b:any)=>b.type==="text");
-      if(!tb?.text) throw new Error("No text response");
-      const clean=tb.text.replace(/```json|```/g,"").trim();
-      const match=clean.match(/\[[\s\S]*\]/);
-      if(!match) throw new Error("No JSON array found");
-      setRates(JSON.parse(match[0]));setLastUpd("Live ✅");
+      const allText=data.content?.map((b:any)=>b.text||"").join("")||"";
+      const match=allText.match(/\[[\s\S]*?\]/);
+      if(!match) throw new Error("No array");
+      const parsed=JSON.parse(match[0]);
+      if(!Array.isArray(parsed)||parsed.length===0) throw new Error("Empty");
+      setRates(parsed);setLastUpd("Live ✅");
     }catch{setRates(getMock());setUsingSample(true);setLastUpd("Sample ⚠️");}
     setLoading(false);
   }
