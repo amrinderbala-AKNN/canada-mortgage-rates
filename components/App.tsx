@@ -313,9 +313,14 @@ function RatesTab({initProv,initCity,onLocationChange}){
   async function fetchRates(){
     setLoading(true);setUsingSample(false);
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,tools:[{type:"web_search_20250305",name:"web_search"}],system:"Return ONLY a valid JSON array of mortgage rates. Each: {institution,term,fixed,variable}. No markdown.",messages:[{role:"user",content:`Current mortgage rates in ${city}, ${PDATA[prov]?.name||prov}, Canada for: ${institutions.map(i=>i.name).join(", ")}. Terms: 1-year,2-year,3-year,5-year. JSON only.`}]})});
-      const data=await res.json();const tb=data.content?.find(b=>b.type==="text");
-      setRates(JSON.parse(tb.text.replace(/```json|```/g,"").trim()));setLastUpd("Live ✅");
+      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:"Return ONLY a valid JSON array of mortgage rates. Each object must have: institution, term, fixed, variable. No markdown, no explanation, just the JSON array.",messages:[{role:"user",content:`Current mortgage rates in ${city}, ${PDATA[prov]?.name||prov}, Canada for these institutions: ${institutions.map(i=>i.name).join(", ")}. Terms: 1-year,2-year,3-year,5-year. Return ONLY a JSON array, nothing else.`}]})});
+      const data=await res.json();
+      const tb=data.content?.find((b:any)=>b.type==="text");
+      if(!tb?.text) throw new Error("No text response");
+      const clean=tb.text.replace(/```json|```/g,"").trim();
+      const match=clean.match(/\[[\s\S]*\]/);
+      if(!match) throw new Error("No JSON array found");
+      setRates(JSON.parse(match[0]));setLastUpd("Live ✅");
     }catch{setRates(getMock());setUsingSample(true);setLastUpd("Sample ⚠️");}
     setLoading(false);
   }
