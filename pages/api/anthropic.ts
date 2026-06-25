@@ -11,6 +11,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    const body = JSON.stringify(req.body).replace(
+      /claude-sonnet-4-20250514/g,
+      "claude-sonnet-4-6"
+    );
+
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
@@ -18,12 +23,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         "x-api-key": apiKey,
         "anthropic-version": "2023-06-01",
       },
-      body: JSON.stringify(req.body),
+      body,
     });
 
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("Anthropic API error:", data);
       return res.status(response.status).json(data);
     }
 
