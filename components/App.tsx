@@ -129,14 +129,33 @@ function BackToTop(){
   return <button onClick={()=>window.scrollTo({top:0,behavior:"smooth"})} style={{position:"fixed",bottom:90,right:24,zIndex:9990,width:42,height:42,background:s.navy,color:"#fff",border:"none",borderRadius:"50%",fontSize:18,cursor:"pointer",boxShadow:"0 4px 12px rgba(0,0,0,0.2)"}}>↑</button>;
 }
 
-function BocTicker({onRateAlert}){
-  const items=[...BOC_ITEMS,...BOC_ITEMS];
-  const clr={up:"#f5a623",down:"#4ade80",hold:"#94a3b8"};
-  const ico={up:"▲",down:"▼",hold:"●"};
+function useBocRates(){
+  const [rates,setRates]=useState({overnight:"2.25",prime:"4.45",bankRate:"2.50",cadUsd:"0.72",asOf:"",fallback:true});
+  useEffect(()=>{
+    fetch("/api/boc").then(r=>r.json()).then(d=>setRates(d)).catch(()=>{});
+  },[]);
+  return rates;
+}
+
+function BocTicker({onRateAlert}:{onRateAlert:()=>void}){
+  const boc=useBocRates();
+  const items=[
+    {label:"Overnight Rate",value:boc.overnight+"%",change:"hold"},
+    {label:"Prime Rate",value:boc.prime+"%",change:"hold"},
+    {label:"Bank Rate",value:boc.bankRate+"%",change:"hold"},
+    {label:"CAD/USD",value:"~"+boc.cadUsd,change:"hold"},
+    {label:"Inflation (Apr)",value:"2.8%",change:"up"},
+    {label:"Last Decision",value:"Hold — Jun 10",change:"hold"},
+    {label:"Next Announcement",value:"Jul 15, 2026",change:"hold"},
+    {label:"GDP Growth",value:"1.2%",change:"down"},
+  ];
+  const doubled=[...items,...items];
+  const clr:{[k:string]:string}={up:"#f5a623",down:"#4ade80",hold:"#94a3b8"};
+  const ico:{[k:string]:string}={up:"▲",down:"▼",hold:"●"};
   return(
     <div style={{background:s.navy,borderBottom:`2px solid ${s.red}`,overflow:"hidden",display:"flex",alignItems:"stretch",flexShrink:0}}>
       <div style={{background:s.red,color:"#fff",fontSize:11,fontWeight:800,padding:"7px 12px",whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center"}}>🏦 BANK OF CANADA</div>
-      <div style={{overflow:"hidden",flex:1}}><div style={{display:"inline-flex",animation:"ticker 40s linear infinite"}}>{items.map((it,i)=><div key={i} style={{display:"inline-flex",alignItems:"center",gap:6,padding:"7px 18px",borderRight:"1px solid rgba(255,255,255,0.1)",fontSize:11,whiteSpace:"nowrap"}}><span style={{color:"rgba(255,255,255,0.5)",fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{it.label}</span><span style={{color:"#fff",fontWeight:700}}>{it.value}</span><span style={{color:clr[it.change],fontSize:10}}>{ico[it.change]}</span></div>)}</div></div>
+      <div style={{overflow:"hidden",flex:1}}><div style={{display:"inline-flex",animation:"ticker 40s linear infinite"}}>{doubled.map((it,i)=><div key={i} style={{display:"inline-flex",alignItems:"center",gap:6,padding:"7px 18px",borderRight:"1px solid rgba(255,255,255,0.1)",fontSize:11,whiteSpace:"nowrap"}}><span style={{color:"rgba(255,255,255,0.5)",fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{it.label}</span><span style={{color:"#fff",fontWeight:700}}>{it.value}</span><span style={{color:clr[it.change],fontSize:10}}>{ico[it.change]}</span></div>)}</div></div>
       <button onClick={onRateAlert} style={{background:s.red,border:"none",color:"#fff",fontSize:11,fontWeight:700,padding:"7px 14px",cursor:"pointer",whiteSpace:"nowrap",flexShrink:0,borderLeft:"1px solid rgba(255,255,255,0.2)"}}>🔔 Rate Alerts</button>
     </div>
   );
@@ -144,16 +163,17 @@ function BocTicker({onRateAlert}){
 
 function BocBanner(){
   const [show,setShow]=useState(true);
+  const boc=useBocRates();
   if(!show)return null;
   return(
     <div style={{background:s.white,borderBottom:`1px solid ${s.border}`,flexShrink:0}}>
       <div style={{maxWidth:1060,margin:"0 auto",padding:"8px 14px",display:"flex",flexWrap:"wrap",gap:12,alignItems:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,flex:1,minWidth:160}}>
           <div style={{width:8,height:8,borderRadius:"50%",background:s.gold,flexShrink:0}}/>
-          <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>⏸ Rate Held Steady — Bank of Canada June 10, 2026</div><div style={{fontSize:10,color:s.muted}}>BoC held overnight rate at 2.25% for the fifth consecutive decision.</div></div>
+          <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>⏸ Rate Held Steady — Bank of Canada June 10, 2026</div><div style={{fontSize:10,color:s.muted}}>BoC held overnight rate at {boc.overnight}% for the fifth consecutive decision.</div></div>
         </div>
         <div style={{display:"flex",gap:14,flexWrap:"wrap"}}>
-          {[["Overnight Rate","2.25%"],["Prime Rate","4.45%"],["Next","July 15, 2026"],["Inflation","2.8%"]].map(([l,v])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,color:s.muted,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{l}</div><div style={{fontSize:15,fontWeight:800,color:s.navy}}>{v}</div></div>)}
+          {([["Overnight Rate",boc.overnight+"%"],["Prime Rate",boc.prime+"%"],["Next","July 15, 2026"],["Inflation","2.8%"]] as [string,string][]).map(([l,v])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,color:s.muted,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{l}</div><div style={{fontSize:15,fontWeight:800,color:s.navy}}>{v}</div></div>)}
         </div>
         <button onClick={()=>setShow(false)} style={{background:"none",border:"none",color:s.muted,fontSize:16,cursor:"pointer",padding:"0 4px"}}>✕</button>
       </div>
@@ -794,16 +814,52 @@ function CalcTab({prov}:{prov:string}){
                   </div>
                 </div>
                 <div style={{background:"#f8fafc",borderRadius:10,padding:12,marginBottom:10}}>
-                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:8}}>📊 Your Debt Ratios</div>
-                  <div style={{marginBottom:8}}>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}><span style={{fontSize:11,color:s.muted}}>GDS Ratio (max 39%)</span><span style={{fontSize:11,fontWeight:700,color:(affR as any).gds>39?"#dc2626":s.green}}>{(affR as any).gds}%</span></div>
-                    <div style={{background:"#e2e8f0",borderRadius:20,height:8}}><div style={{width:Math.min((affR as any).gds/39*100,100)+"%",height:"100%",background:(affR as any).gds>39?"#dc2626":s.green,borderRadius:20}}/></div>
-                  </div>
-                  <div>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}><span style={{fontSize:11,color:s.muted}}>TDS Ratio (max 44%)</span><span style={{fontSize:11,fontWeight:700,color:(affR as any).tds>44?"#dc2626":s.green}}>{(affR as any).tds}%</span></div>
-                    <div style={{background:"#e2e8f0",borderRadius:20,height:8}}><div style={{width:Math.min((affR as any).tds/44*100,100)+"%",height:"100%",background:(affR as any).tds>44?"#dc2626":s.green,borderRadius:20}}/></div>
-                  </div>
-                  <div style={{fontSize:10,color:s.muted,marginTop:6}}>Includes $150/mo heat per lender standard.</div>
+                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:10}}>📊 Your Debt Ratios</div>
+                  {(()=>{
+                    const gds=(affR as any).gds,tds=(affR as any).tds;
+                    const gdsOk=gds<=39,tdsOk=tds<=44;
+                    const bothOk=gdsOk&&tdsOk;
+                    const gdsOver=Math.max(0,gds-39).toFixed(1);
+                    const tdsOver=Math.max(0,tds-44).toFixed(1);
+                    return(<>
+                      <div style={{background:bothOk?"#f0fdf4":"#fff1f2",border:`1px solid ${bothOk?"#bbf7d0":"#fecdd3"}`,borderRadius:8,padding:"8px 12px",marginBottom:10,display:"flex",alignItems:"center",gap:8}}>
+                        <span style={{fontSize:18}}>{bothOk?"✅":"❌"}</span>
+                        <div>
+                          <div style={{fontSize:12,fontWeight:800,color:bothOk?"#15803d":"#be123c"}}>{bothOk?"Both ratios within lender limits — you qualify":"One or more ratios exceed lender limits"}</div>
+                          {!bothOk&&<div style={{fontSize:11,color:"#be123c",marginTop:2}}>{!gdsOk?`GDS is ${gdsOver}% over the 39% limit. `:""}{!tdsOk?`TDS is ${tdsOver}% over the 44% limit.`:""}</div>}
+                        </div>
+                      </div>
+                      <div style={{marginBottom:8}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                          <span style={{fontSize:11,color:s.muted}}>GDS Ratio <span style={{color:s.muted,fontWeight:400}}>(housing costs ÷ income)</span></span>
+                          <div style={{display:"flex",alignItems:"center",gap:6}}>
+                            <span style={{fontSize:11,fontWeight:800,color:gdsOk?s.green:"#dc2626"}}>{gds}%</span>
+                            <span style={{fontSize:10,background:gdsOk?"#dcfce7":"#fee2e2",color:gdsOk?"#15803d":"#dc2626",borderRadius:20,padding:"1px 6px",fontWeight:700}}>{gdsOk?"✓ PASS":"✗ FAIL — max 39%"}</span>
+                          </div>
+                        </div>
+                        <div style={{background:"#e2e8f0",borderRadius:20,height:10,position:"relative"}}>
+                          <div style={{position:"absolute",left:"0",top:0,width:"39%",height:"100%",borderRight:"2px dashed #94a3b8",pointerEvents:"none"}}/>
+                          <div style={{width:Math.min(gds/50*100,100)+"%",height:"100%",background:gdsOk?`linear-gradient(90deg,${s.green},#22c55e)`:"linear-gradient(90deg,#f87171,#dc2626)",borderRadius:20,transition:"width 0.5s"}}/>
+                        </div>
+                        {!gdsOk&&<div style={{fontSize:10,color:"#dc2626",marginTop:4}}>💡 To fix: Reduce housing cost by {cur(Math.ceil((gds-39)/100*(affR as any).totalInc/12))} /mo — or add {cur(Math.ceil((gds-39)/39*(affR as any).totalInc/12*12))} /yr income.</div>}
+                      </div>
+                      <div style={{marginBottom:6}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                          <span style={{fontSize:11,color:s.muted}}>TDS Ratio <span style={{color:s.muted,fontWeight:400}}>(all debts ÷ income)</span></span>
+                          <div style={{display:"flex",alignItems:"center",gap:6}}>
+                            <span style={{fontSize:11,fontWeight:800,color:tdsOk?s.green:"#dc2626"}}>{tds}%</span>
+                            <span style={{fontSize:10,background:tdsOk?"#dcfce7":"#fee2e2",color:tdsOk?"#15803d":"#dc2626",borderRadius:20,padding:"1px 6px",fontWeight:700}}>{tdsOk?"✓ PASS":"✗ FAIL — max 44%"}</span>
+                          </div>
+                        </div>
+                        <div style={{background:"#e2e8f0",borderRadius:20,height:10,position:"relative"}}>
+                          <div style={{position:"absolute",left:"0",top:0,width:"44%",height:"100%",borderRight:"2px dashed #94a3b8",pointerEvents:"none"}}/>
+                          <div style={{width:Math.min(tds/55*100,100)+"%",height:"100%",background:tdsOk?`linear-gradient(90deg,${s.green},#22c55e)`:"linear-gradient(90deg,#f87171,#dc2626)",borderRadius:20,transition:"width 0.5s"}}/>
+                        </div>
+                        {!tdsOk&&<div style={{fontSize:10,color:"#dc2626",marginTop:4}}>💡 To fix: Pay down {cur(Math.ceil((tds-44)/100*(affR as any).totalInc/12))} /mo in debts — or add {cur(Math.ceil((tds-44)/44*(affR as any).totalInc/12*12))} /yr income.</div>}
+                      </div>
+                      <div style={{fontSize:10,color:s.muted,marginTop:6,paddingTop:6,borderTop:`1px solid ${s.border}`}}>Heat $150/mo included per lender standard · GDS max 39% · TDS max 44%{!bothOk&&<span style={{color:s.blue,fontWeight:600,marginLeft:8,cursor:"pointer"}}> → Speak to a mortgage advisor about your options</span>}</div>
+                    </>);
+                  })()}
                 </div>
                 <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:12,marginBottom:10}}>
                   <div style={{fontSize:11,fontWeight:700,color:"#c2410c",marginBottom:8}}>⚠️ Stress Test Impact</div>
@@ -978,16 +1034,52 @@ function CalcTab({prov}:{prov:string}){
                   </div>
                 </div>
                 <div style={{background:"#f8fafc",borderRadius:10,padding:12,marginBottom:10}}>
-                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:8}}>📊 Debt Ratios (at stress rate)</div>
-                  <div style={{marginBottom:8}}>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}><span style={{fontSize:11,color:s.muted}}>GDS Ratio (max 39%)</span><span style={{fontSize:11,fontWeight:700,color:(stR as any).gds>39?"#dc2626":s.green}}>{(stR as any).gds}%</span></div>
-                    <div style={{background:"#e2e8f0",borderRadius:20,height:8}}><div style={{width:Math.min((stR as any).gds/39*100,100)+"%",height:"100%",background:(stR as any).gds>39?"#dc2626":s.green,borderRadius:20}}/></div>
-                  </div>
-                  <div>
-                    <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}><span style={{fontSize:11,color:s.muted}}>TDS Ratio (max 44%)</span><span style={{fontSize:11,fontWeight:700,color:(stR as any).tds>44?"#dc2626":s.green}}>{(stR as any).tds}%</span></div>
-                    <div style={{background:"#e2e8f0",borderRadius:20,height:8}}><div style={{width:Math.min((stR as any).tds/44*100,100)+"%",height:"100%",background:(stR as any).tds>44?"#dc2626":s.green,borderRadius:20}}/></div>
-                  </div>
-                  <div style={{fontSize:10,color:s.muted,marginTop:6}}>Heat $150/mo included. Income: {cur((stR as any).totalInc)}/yr. Debts: {cur((stR as any).sd)}/mo.</div>
+                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:10}}>📊 Debt Ratios at Stress Rate ({(stR as any).str.toFixed(2)}%)</div>
+                  {(()=>{
+                    const gds=(stR as any).gds,tds=(stR as any).tds;
+                    const gdsOk=gds<=39,tdsOk=tds<=44;
+                    const bothOk=gdsOk&&tdsOk;
+                    const gdsOver=Math.max(0,gds-39).toFixed(1);
+                    const tdsOver=Math.max(0,tds-44).toFixed(1);
+                    return(<>
+                      <div style={{background:bothOk?"#f0fdf4":"#fff1f2",border:`1px solid ${bothOk?"#bbf7d0":"#fecdd3"}`,borderRadius:8,padding:"8px 12px",marginBottom:10,display:"flex",alignItems:"center",gap:8}}>
+                        <span style={{fontSize:18}}>{bothOk?"✅":"❌"}</span>
+                        <div>
+                          <div style={{fontSize:12,fontWeight:800,color:bothOk?"#15803d":"#be123c"}}>{bothOk?"You pass the stress test — both ratios within limits":"Stress test failed — ratios exceed lender limits"}</div>
+                          {!bothOk&&<div style={{fontSize:11,color:"#be123c",marginTop:2}}>{!gdsOk?`GDS is ${gdsOver}% over the 39% limit. `:""}{!tdsOk?`TDS is ${tdsOver}% over the 44% limit.`:""}</div>}
+                        </div>
+                      </div>
+                      <div style={{marginBottom:8}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                          <span style={{fontSize:11,color:s.muted}}>GDS <span style={{fontWeight:400}}>(housing costs ÷ income)</span></span>
+                          <div style={{display:"flex",alignItems:"center",gap:6}}>
+                            <span style={{fontSize:11,fontWeight:800,color:gdsOk?s.green:"#dc2626"}}>{gds}%</span>
+                            <span style={{fontSize:10,background:gdsOk?"#dcfce7":"#fee2e2",color:gdsOk?"#15803d":"#dc2626",borderRadius:20,padding:"1px 6px",fontWeight:700}}>{gdsOk?"✓ PASS":"✗ FAIL"}</span>
+                          </div>
+                        </div>
+                        <div style={{background:"#e2e8f0",borderRadius:20,height:10,position:"relative"}}>
+                          <div style={{position:"absolute",left:"0",top:0,width:"39%",height:"100%",borderRight:"2px dashed #94a3b8",pointerEvents:"none"}}/>
+                          <div style={{width:Math.min(gds/50*100,100)+"%",height:"100%",background:gdsOk?`linear-gradient(90deg,${s.green},#22c55e)`:"linear-gradient(90deg,#f87171,#dc2626)",borderRadius:20,transition:"width 0.5s"}}/>
+                        </div>
+                        {!gdsOk&&<div style={{fontSize:10,color:"#dc2626",marginTop:4}}>💡 GDS fix: Add {cur(Math.ceil((gds-39)/39*(stR as any).totalInc/12*12))}/yr income, or choose a lower-priced home.</div>}
+                      </div>
+                      <div style={{marginBottom:6}}>
+                        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
+                          <span style={{fontSize:11,color:s.muted}}>TDS <span style={{fontWeight:400}}>(all debts ÷ income)</span></span>
+                          <div style={{display:"flex",alignItems:"center",gap:6}}>
+                            <span style={{fontSize:11,fontWeight:800,color:tdsOk?s.green:"#dc2626"}}>{tds}%</span>
+                            <span style={{fontSize:10,background:tdsOk?"#dcfce7":"#fee2e2",color:tdsOk?"#15803d":"#dc2626",borderRadius:20,padding:"1px 6px",fontWeight:700}}>{tdsOk?"✓ PASS":"✗ FAIL"}</span>
+                          </div>
+                        </div>
+                        <div style={{background:"#e2e8f0",borderRadius:20,height:10,position:"relative"}}>
+                          <div style={{position:"absolute",left:"0",top:0,width:"44%",height:"100%",borderRight:"2px dashed #94a3b8",pointerEvents:"none"}}/>
+                          <div style={{width:Math.min(tds/55*100,100)+"%",height:"100%",background:tdsOk?`linear-gradient(90deg,${s.green},#22c55e)`:"linear-gradient(90deg,#f87171,#dc2626)",borderRadius:20,transition:"width 0.5s"}}/>
+                        </div>
+                        {!tdsOk&&<div style={{fontSize:10,color:"#dc2626",marginTop:4}}>💡 TDS fix: Pay down {cur(Math.ceil((tds-44)/44*(stR as any).totalInc/12*12))}/yr in debts, or add a co-borrower to increase qualifying income.</div>}
+                      </div>
+                      <div style={{fontSize:10,color:s.muted,marginTop:6,paddingTop:6,borderTop:`1px solid ${s.border}`}}>Calculated at stress rate {(stR as any).str.toFixed(2)}% · Heat $150/mo included · Income: {cur((stR as any).totalInc)}/yr · Debts: {cur((stR as any).sd)}/mo{!bothOk&&<span style={{color:s.blue,fontWeight:600,marginLeft:8,cursor:"pointer"}}> → A mortgage advisor can help you qualify</span>}</div>
+                    </>);
+                  })()}
                 </div>
                 <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:12}}>
                   <div style={{fontSize:11,fontWeight:700,color:"#1e40af",marginBottom:8}}>💡 How to Qualify for More</div>
@@ -1378,28 +1470,185 @@ function FTHBTab({initProv}:{initProv:string}){
 }
 
 
-function NewsTab({initProv}){
-  const [prov,setProv]=useState(initProv);const [news,setNews]=useState(null);const [loading,setLoading]=useState(false);
+function NewsTab({initProv}:{initProv:string}){
+  const [prov,setProv]=useState(initProv);
+  const [news,setNews]=useState<any[]|null>(null);
+  const [loading,setLoading]=useState(false);
+  const [filter,setFilter]=useState("All");
+  const [featured,setFeatured]=useState<any|null>(null);
+
   useEffect(()=>setProv(initProv),[initProv]);
-  async function fetchNews(){setLoading(true);setNews(null);try{const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:800,tools:[{type:"web_search_20250305",name:"web_search"}],system:"Return ONLY a valid JSON array of 6 news items. Each: {title,summary,category,date,url}. No markdown.",messages:[{role:"user",content:`Latest Canadian mortgage and real estate news for ${PDATA[prov]?.name}, Canada 2026. JSON only.`}]})});const data=await res.json();const tb=data.content?.find(b=>b.type==="text");setNews(JSON.parse(tb.text.replace(/```json|```/g,"").trim()));}catch{setNews([]);}setLoading(false);}
+
+  const categoryColors:{[k:string]:string}={
+    "BoC / Rates":"#c8102e","Market Update":"#2563eb","First-Time Buyers":"#16a34a",
+    "Policy / Government":"#7c3aed","Mortgage Tips":"#0891b2","Local News":"#92400e","News":"#64748b"
+  };
+
+  async function fetchNews(){
+    setLoading(true);setNews(null);setFeatured(null);setFilter("All");
+    try{
+      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        model:"claude-sonnet-4-6",max_tokens:1200,
+        tools:[{type:"web_search_20250305",name:"web_search"}],
+        system:`Return ONLY a valid JSON array of 8 Canadian mortgage and real estate news items. Each item must have: {title, summary, category, date, url, impact, impactType}. 
+Categories must be one of: "BoC / Rates", "Market Update", "First-Time Buyers", "Policy / Government", "Mortgage Tips", "Local News".
+impact: a one-sentence plain-English explanation of what this means for Canadian homebuyers or homeowners (e.g. "Variable rate holders could see payments drop by $50/mo").
+impactType: "positive", "negative", or "neutral" from a homebuyer perspective.
+summary: 2 sentences max, clear and informative.
+No markdown, no preamble. Raw JSON array only.`,
+        messages:[{role:"user",content:`Find the 8 most important and recent Canadian mortgage and real estate news stories as of today June 2026. Focus on: Bank of Canada rate decisions, mortgage rule changes, housing market prices, first-time buyer programs, and ${(PDATA[prov] as any)?.name} specific real estate news. JSON only.`}]
+      })});
+      const data=await res.json();
+      const tb=data.content?.find((b:any)=>b.type==="text");
+      const parsed=JSON.parse(tb.text.replace(/```json|```/g,"").trim());
+      setNews(parsed);
+      setFeatured(parsed[0]);
+    }catch{setNews([]);}
+    setLoading(false);
+  }
+
   useEffect(()=>{fetchNews();},[prov]);
+
+  const categories=["All",...Array.from(new Set((news||[]).map((n:any)=>n.category).filter(Boolean)))];
+  const filtered=filter==="All"?(news||[]):(news||[]).filter((n:any)=>n.category===filter);
+
+  const impactBg:{[k:string]:string}={positive:"#f0fdf4",negative:"#fff1f2",neutral:"#f8fafc"};
+  const impactBorder:{[k:string]:string}={positive:"#bbf7d0",negative:"#fecdd3",neutral:"#e2e8f0"};
+  const impactColor:{[k:string]:string}={positive:"#15803d",negative:"#be123c",neutral:"#64748b"};
+  const impactIcon:{[k:string]:string}={positive:"📈",negative:"📉",neutral:"➡️"};
+
   return(
-    <Card>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:14,flexWrap:"wrap",gap:8}}>
-        <h2 style={{fontSize:16,fontWeight:800,color:s.navy}}>📰 Mortgage & Real Estate News</h2>
-        <div style={{display:"flex",gap:8,alignItems:"center"}}>
-          <select value={prov} onChange={e=>setProv(e.target.value)} style={{padding:"5px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
-          <button onClick={fetchNews} disabled={loading} style={{padding:"6px 12px",background:loading?"#aaa":s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>{loading?"⏳...":"🔄 Refresh"}</button>
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"14px 18px",marginBottom:14}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:10}}>
+          <div>
+            <div style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:2}}>📰 Canadian Mortgage & Real Estate News</div>
+            <div style={{color:"rgba(255,255,255,0.65)",fontSize:11}}>AI-curated · Live web search · Updated on refresh</div>
+          </div>
+          <div style={{display:"flex",gap:8,alignItems:"center"}}>
+            <select value={prov} onChange={e=>setProv(e.target.value)} style={{padding:"6px 10px",borderRadius:8,border:"1px solid rgba(255,255,255,0.2)",fontSize:12,background:"rgba(255,255,255,0.1)",color:"#fff"}}>
+              {Object.entries(PDATA).map(([k,v])=><option key={k} value={k} style={{color:s.navy}}>{(v as any).name}</option>)}
+            </select>
+            <button onClick={fetchNews} disabled={loading} style={{padding:"7px 14px",background:loading?"rgba(255,255,255,0.1)":s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>
+              {loading?"⏳ Loading...":"🔄 Refresh"}
+            </button>
+          </div>
         </div>
       </div>
-      {loading&&<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(250px,1fr))",gap:12}}>{Array.from({length:6}).map((_,i)=><div key={i} style={{border:`1px solid ${s.border}`,borderRadius:10,padding:13}}><Skeleton h={12} r={20} mb={8} w="60%"/><Skeleton h={14} mb={5}/><Skeleton h={11} mb={4}/><Skeleton h={11} w="70%"/></div>)}</div>}
-      {news&&news.length===0&&<EmptyState icon="📰" title="Could not load news" sub="Try refreshing or check your connection." link="https://www.theglobeandmail.com/real-estate/" linkText="Browse Globe & Mail →"/>}
-      {news&&news.length>0&&(
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(250px,1fr))",gap:12}}>
-          {news.map((n,i)=><div key={i} style={{border:`1px solid ${s.border}`,borderRadius:10,padding:13}}><span style={{background:"#fee2e2",color:s.red,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{n.category||"News"}</span><div style={{fontSize:13,fontWeight:700,color:s.navy,lineHeight:1.4,margin:"7px 0 5px"}}>{n.title}</div><div style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:6}}>{n.summary}</div><div style={{fontSize:10,color:s.muted}}>{n.date} · <a href={n.url||"#"} target="_blank" rel="noopener noreferrer" style={{color:s.blue,fontWeight:600}}>Read more →</a></div></div>)}
+
+      {/* Loading skeletons */}
+      {loading&&(
+        <div>
+          <div style={{background:s.white,borderRadius:12,padding:18,marginBottom:14,border:`1px solid ${s.border}`}}>
+            <Skeleton h={12} r={20} mb={10} w="30%"/>
+            <Skeleton h={20} mb={8}/>
+            <Skeleton h={13} mb={5}/>
+            <Skeleton h={13} mb={5} w="80%"/>
+            <Skeleton h={40} r={8} mb={0}/>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12}}>
+            {Array.from({length:6}).map((_,i)=>(
+              <div key={i} style={{border:`1px solid ${s.border}`,borderRadius:10,padding:14}}>
+                <Skeleton h={11} r={20} mb={8} w="40%"/>
+                <Skeleton h={14} mb={6}/>
+                <Skeleton h={11} mb={4}/>
+                <Skeleton h={11} mb={10} w="75%"/>
+                <Skeleton h={32} r={8}/>
+              </div>
+            ))}
+          </div>
         </div>
       )}
-    </Card>
+
+      {/* Error state */}
+      {!loading&&news&&news.length===0&&(
+        <Card>
+          <EmptyState icon="📰" title="Could not load news" sub="Try refreshing or check your connection." link="https://www.theglobeandmail.com/real-estate/" linkText="Browse Globe & Mail →"/>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10,marginTop:14}}>
+            {[["Globe & Mail","https://www.theglobeandmail.com/real-estate/","📰"],["CBC Real Estate","https://www.cbc.ca/news/canada/real-estate","🏠"],["Financial Post","https://financialpost.com/real-estate","💼"],["Better Dwelling","https://betterdwelling.com","📊"],["Ratehub News","https://www.ratehub.ca/blog/","🏦"],["CREA Stats","https://www.crea.ca/housing-market-stats/","📈"]].map(([name,url,icon])=>(
+              <a key={name} href={url} target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:8,padding:"10px 12px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,textDecoration:"none"}}>
+                <span style={{fontSize:16}}>{icon}</span>
+                <span style={{fontSize:12,fontWeight:600,color:s.navy}}>{name} →</span>
+              </a>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* News loaded */}
+      {!loading&&news&&news.length>0&&(
+        <div>
+          {/* Featured story */}
+          {featured&&(
+            <div style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,padding:18,marginBottom:14,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+                <span style={{background:s.red,color:"#fff",borderRadius:20,padding:"2px 10px",fontSize:10,fontWeight:800}}>⭐ TOP STORY</span>
+                {featured.category&&<span style={{background:(categoryColors[featured.category]||"#64748b")+"20",color:categoryColors[featured.category]||"#64748b",borderRadius:20,padding:"2px 10px",fontSize:10,fontWeight:700}}>{featured.category}</span>}
+                <span style={{fontSize:10,color:s.muted,marginLeft:"auto"}}>{featured.date}</span>
+              </div>
+              <div style={{fontSize:16,fontWeight:800,color:s.navy,lineHeight:1.4,marginBottom:8}}>{featured.title}</div>
+              <div style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:12}}>{featured.summary}</div>
+              {featured.impact&&(
+                <div style={{background:impactBg[featured.impactType]||"#f8fafc",border:`1px solid ${impactBorder[featured.impactType]||"#e2e8f0"}`,borderRadius:8,padding:"8px 12px",marginBottom:12,display:"flex",gap:8,alignItems:"flex-start"}}>
+                  <span style={{fontSize:16,flexShrink:0}}>{impactIcon[featured.impactType]||"➡️"}</span>
+                  <div>
+                    <div style={{fontSize:10,fontWeight:700,color:impactColor[featured.impactType]||"#64748b",marginBottom:2,textTransform:"uppercase"}}>What this means for you</div>
+                    <div style={{fontSize:12,color:impactColor[featured.impactType]||"#374151",lineHeight:1.5}}>{featured.impact}</div>
+                  </div>
+                </div>
+              )}
+              <a href={featured.url||"#"} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"8px 18px",background:s.navy,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textDecoration:"none"}}>Read Full Story →</a>
+            </div>
+          )}
+
+          {/* Category filters */}
+          {categories.length>2&&(
+            <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:12}}>
+              {categories.map(cat=>(
+                <button key={cat} onClick={()=>setFilter(cat)} style={{padding:"4px 12px",borderRadius:20,border:`1.5px solid ${filter===cat?(categoryColors[cat]||s.navy):s.border}`,background:filter===cat?(categoryColors[cat]||s.navy)+"15":s.white,color:filter===cat?(categoryColors[cat]||s.navy):s.muted,fontSize:11,fontWeight:filter===cat?700:400,cursor:"pointer"}}>
+                  {cat}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* News grid */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:12,marginBottom:14}}>
+            {filtered.slice(featured?1:0).map((n:any,i:number)=>(
+              <div key={i} style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:10,padding:14,display:"flex",flexDirection:"column",transition:"all 0.2s"}}
+                onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
+                onMouseLeave={e=>{e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=s.border;}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                  {n.category&&<span style={{background:(categoryColors[n.category]||"#64748b")+"18",color:categoryColors[n.category]||"#64748b",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{n.category}</span>}
+                  <span style={{fontSize:10,color:s.muted,marginLeft:"auto"}}>{n.date}</span>
+                </div>
+                <div style={{fontSize:13,fontWeight:700,color:s.navy,lineHeight:1.4,marginBottom:6,flex:1}}>{n.title}</div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:10}}>{n.summary}</div>
+                {n.impact&&(
+                  <div style={{background:impactBg[n.impactType]||"#f8fafc",border:`1px solid ${impactBorder[n.impactType]||"#e2e8f0"}`,borderRadius:6,padding:"6px 10px",marginBottom:10,display:"flex",gap:6,alignItems:"flex-start"}}>
+                    <span style={{fontSize:12,flexShrink:0}}>{impactIcon[n.impactType]||"➡️"}</span>
+                    <div style={{fontSize:10,color:impactColor[n.impactType]||"#374151",lineHeight:1.5}}><b>For you:</b> {n.impact}</div>
+                  </div>
+                )}
+                <a href={n.url||"#"} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"7px 12px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:7,fontSize:11,fontWeight:700,color:s.blue,textDecoration:"none",textAlign:"center"}}>Read more →</a>
+              </div>
+            ))}
+          </div>
+
+          {/* Trusted sources */}
+          <Card>
+            <div style={{fontSize:12,fontWeight:700,color:s.navy,marginBottom:10}}>📚 Trusted Canadian Mortgage & Real Estate Sources</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8}}>
+              {[["Globe & Mail — Real Estate","https://www.theglobeandmail.com/real-estate/","📰"],["CBC News — Real Estate","https://www.cbc.ca/news/canada/real-estate","🏠"],["Financial Post","https://financialpost.com/real-estate","💼"],["Better Dwelling","https://betterdwelling.com","📊"],["Ratehub Blog","https://www.ratehub.ca/blog/","🏦"],["CREA Market Stats","https://www.crea.ca/housing-market-stats/","📈"],["Bank of Canada","https://www.bankofcanada.ca/publications/","🏛️"],["CMHC Research","https://www.cmhc-schl.gc.ca/professionals/housing-markets-data-and-research","🔬"]].map(([name,url,icon])=>(
+                <a key={name} href={url} target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:7,padding:"8px 10px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,textDecoration:"none",fontSize:11,fontWeight:600,color:s.navy}}>
+                  <span>{icon}</span><span>{name}</span>
+                </a>
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
+    </div>
   );
 }
 
