@@ -1487,29 +1487,30 @@ function NewsTab({initProv}:{initProv:string}){
   async function fetchNews(){
     setLoading(true);setNews(null);setFeatured(null);setFilter("All");
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        model:"claude-sonnet-4-20250514",max_tokens:1200,
-        tools:[{type:"web_search_20250305",name:"web_search"}],
-        system:`Return ONLY a valid JSON array of 8 Canadian mortgage and real estate news items. Each item must have: {title, summary, category, date, url, impact, impactType}. 
-Categories must be one of: "BoC / Rates", "Market Update", "First-Time Buyers", "Policy / Government", "Mortgage Tips", "Local News".
-impact: a one-sentence plain-English explanation of what this means for Canadian homebuyers or homeowners (e.g. "Variable rate holders could see payments drop by $50/mo").
-impactType: "positive", "negative", or "neutral" from a homebuyer perspective.
-summary: 2 sentences max, clear and informative.
-No markdown, no preamble. Raw JSON array only.`,
-        messages:[{role:"user",content:`Find the 8 most important and recent Canadian mortgage and real estate news stories as of today June 2026. Focus on: Bank of Canada rate decisions, mortgage rule changes, housing market prices, first-time buyer programs, and ${(PDATA[prov] as any)?.name} specific real estate news. JSON only.`}]
-      })});
+      const res=await fetch(`/api/news?prov=${encodeURIComponent((PDATA[prov] as any)?.name||"Canada")}`);
       const data=await res.json();
-      const tb=data.content?.find((b:any)=>b.type==="text");
-      if(!tb?.text)throw new Error("No text response");
-      const clean=tb.text.replace(/```json|```/g,"").trim();
-      // Extract JSON array even if there's surrounding text
-      const match=clean.match(/\[[\s\S]*\]/);
-      if(!match)throw new Error("No JSON array found");
-      const parsed=JSON.parse(match[0]);
-      if(!Array.isArray(parsed)||parsed.length===0)throw new Error("Empty array");
-      setNews(parsed);
-      setFeatured(parsed[0]);
-    }catch(e){console.error("News fetch error:",e);setNews([]);}
+      const items=data.items||[];
+      if(items.length===0)throw new Error("No items");
+      setNews(items);
+      setFeatured(items[0]);
+    }catch(e){
+      console.error("News fetch error:",e);
+      // Fallback: generate with Claude directly
+      try{
+        const res2=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+          model:"claude-sonnet-4-20250514",max_tokens:1500,
+          system:`Return ONLY a valid JSON array. No markdown. No text before or after.
+Each item: {"title":"...","summary":"...","category":"...","date":"Jun 2026","url":"https://www.bankofcanada.ca","impact":"...","impactType":"positive|negative|neutral"}
+category: "BoC / Rates"|"Market Update"|"First-Time Buyers"|"Policy / Government"|"Mortgage Tips"|"Local News"`,
+          messages:[{role:"user",content:`8 Canadian mortgage news items for ${(PDATA[prov] as any)?.name} June 2026. JSON array only starting with [`}]
+        })});
+        const d2=await res2.json();
+        const tb=d2.content?.find((b:any)=>b.type==="text");
+        const match=tb?.text?.match(/\[[\s\S]*\]/);
+        if(match){const parsed=JSON.parse(match[0]);setNews(parsed);setFeatured(parsed[0]);}
+        else throw new Error("Fallback also failed");
+      }catch{setNews([]);}
+    }
     setLoading(false);
   }
 
@@ -1624,9 +1625,12 @@ No markdown, no preamble. Raw JSON array only.`,
               <div key={i} style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:10,padding:14,display:"flex",flexDirection:"column",transition:"all 0.2s"}}
                 onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
                 onMouseLeave={e=>{e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=s.border;}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8,flexWrap:"wrap",gap:4}}>
                   {n.category&&<span style={{background:(categoryColors[n.category]||"#64748b")+"18",color:categoryColors[n.category]||"#64748b",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{n.category}</span>}
-                  <span style={{fontSize:10,color:s.muted,marginLeft:"auto"}}>{n.date}</span>
+                  <div style={{display:"flex",gap:6,alignItems:"center",marginLeft:"auto"}}>
+                    {n.source&&n.source!=="Canadian News"&&<span style={{fontSize:9,color:s.muted,background:"#f1f5f9",borderRadius:20,padding:"1px 6px"}}>{n.source}</span>}
+                    <span style={{fontSize:10,color:s.muted}}>{n.date}</span>
+                  </div>
                 </div>
                 <div style={{fontSize:13,fontWeight:700,color:s.navy,lineHeight:1.4,marginBottom:6,flex:1}}>{n.title}</div>
                 <div style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:10}}>{n.summary}</div>
