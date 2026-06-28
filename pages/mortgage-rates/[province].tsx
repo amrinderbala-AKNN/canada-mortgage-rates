@@ -41,7 +41,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
             <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,38px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>Mortgage Rates in {prov.name} — 2026</h1>
             <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>{prov.marketDesc}</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,maxWidth:700}}>
-              {[["5-yr Fixed",prov.fixedRate,"#f5a623"],["Variable Rate",prov.variableRate,"#4ade80"],["Min. Down Payment",prov.minDown,"#60a5fa"],["Land Transfer Tax",prov.ltt.length>14?prov.ltt.slice(0,14)+"...":prov.ltt,"#c084fc"]].map(([l,v,c])=>(
+              {[["5-yr Fixed",prov.fixedRate,"#f5a623"],["Variable Rate",prov.variableRate,"#4ade80"],["Min. Down Payment",prov.minDown,"#60a5fa"],["Land Transfer Tax",String(prov.ltt||"").length>14?String(prov.ltt||"").slice(0,14)+"...":String(prov.ltt||""),"#c084fc"]].map(([l,v,c])=>(
                 <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 14px"}}>
                   <div style={{fontSize:9,color:"rgba(255,255,255,0.55)",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px",marginBottom:4}}>{l}</div>
                   <div style={{fontSize:18,fontWeight:800,color:c}}>{v}</div>
@@ -94,7 +94,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
           {/* Cities grid */}
           <h2 style={{fontSize:18,fontWeight:800,color:"#0d2240",marginBottom:12}}>Mortgage Rates by City in {prov.name}</h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12,marginBottom:24}}>
-            {prov.cities.map((city:any)=>(
+            {(prov.cities||[]).map((city:any)=>(
               <Link key={city.slug} href={`/mortgage-rates/${prov.slug}/${city.slug}`} style={{textDecoration:"none"}}>
                 <div style={{background:"#fff",borderRadius:10,padding:14,border:"1px solid #e2e8f0",cursor:"pointer",transition:"all 0.2s"}}
                   onMouseEnter={e=>{(e.currentTarget as HTMLElement).style.boxShadow="0 4px 16px rgba(0,0,0,0.1)";(e.currentTarget as HTMLElement).style.borderColor="#0d2240";}}
@@ -119,7 +119,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
             <h2 style={{fontSize:16,fontWeight:800,color:"#0d2240",marginBottom:4}}>Local Credit Unions in {prov.name}</h2>
             <p style={{fontSize:12,color:"#64748b",marginBottom:14}}>Credit unions often offer rates 0.25–0.50% below major banks. They're member-owned and reinvest profits into better rates.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:10}}>
-              {prov.cu.map((cu:any)=>(
+              {(prov.cu||[]).map((cu:any)=>(
                 <a key={cu.name} href={cu.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:8,textDecoration:"none"}}>
                   <span style={{fontSize:20}}>🏦</span>
                   <div><div style={{fontSize:12,fontWeight:700,color:"#0d2240"}}>{cu.name}</div><div style={{fontSize:10,color:"#2563eb"}}>Get rates →</div></div>
