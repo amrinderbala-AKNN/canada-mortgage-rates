@@ -11,18 +11,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const body = JSON.parse(JSON.stringify(req.body));
-    body.model = "claude-sonnet-4-6";
-    delete body.tools;
+    const bodyObj = { ...req.body };
+
+    // Always use latest model
+    bodyObj.model = "claude-sonnet-4-6";
+
+    // Add betas header if tools (web search) are present
+    const hasTools = bodyObj.tools && bodyObj.tools.length > 0;
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+    };
+
+    if (hasTools) {
+      headers["anthropic-beta"] = "web-search-2025-03-05";
+    }
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify(body),
+      headers,
+      body: JSON.stringify(bodyObj),
     });
 
     const data = await response.json();
