@@ -1488,7 +1488,7 @@ function NewsTab({initProv}:{initProv:string}){
     setLoading(true);setNews(null);setFeatured(null);setFilter("All");
     try{
       const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        model:"claude-sonnet-4-6",max_tokens:1200,
+        model:"claude-sonnet-4-20250514",max_tokens:1200,
         tools:[{type:"web_search_20250305",name:"web_search"}],
         system:`Return ONLY a valid JSON array of 8 Canadian mortgage and real estate news items. Each item must have: {title, summary, category, date, url, impact, impactType}. 
 Categories must be one of: "BoC / Rates", "Market Update", "First-Time Buyers", "Policy / Government", "Mortgage Tips", "Local News".
@@ -1500,10 +1500,16 @@ No markdown, no preamble. Raw JSON array only.`,
       })});
       const data=await res.json();
       const tb=data.content?.find((b:any)=>b.type==="text");
-      const parsed=JSON.parse(tb.text.replace(/```json|```/g,"").trim());
+      if(!tb?.text)throw new Error("No text response");
+      const clean=tb.text.replace(/```json|```/g,"").trim();
+      // Extract JSON array even if there's surrounding text
+      const match=clean.match(/\[[\s\S]*\]/);
+      if(!match)throw new Error("No JSON array found");
+      const parsed=JSON.parse(match[0]);
+      if(!Array.isArray(parsed)||parsed.length===0)throw new Error("Empty array");
       setNews(parsed);
       setFeatured(parsed[0]);
-    }catch{setNews([]);}
+    }catch(e){console.error("News fetch error:",e);setNews([]);}
     setLoading(false);
   }
 
