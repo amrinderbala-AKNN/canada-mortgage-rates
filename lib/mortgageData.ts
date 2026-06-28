@@ -1,0 +1,118 @@
+export const PROVINCES:{[k:string]:{name:string,slug:string,cities:{name:string,slug:string,avgPrice:number,priceChange:string}[],fixedRate:string,variableRate:string,minDown:string,ltt:string,topLenders:string[],marketDesc:string,cu:{name:string,url:string}[]}} = {
+  AB:{name:"Alberta",slug:"alberta",fixedRate:"4.89%",variableRate:"3.35%",minDown:"5%",ltt:"No land transfer tax",marketDesc:"Alberta's housing market is one of Canada's strongest in 2026. Calgary and Edmonton continue to see strong interprovincial migration driving demand. No provincial land transfer tax makes Alberta one of the most affordable provinces for closing costs.",
+    cities:[
+      {name:"Calgary",slug:"calgary",avgPrice:620000,priceChange:"+7.2%"},
+      {name:"Edmonton",slug:"edmonton",avgPrice:445000,priceChange:"+5.8%"},
+      {name:"Red Deer",slug:"red-deer",avgPrice:385000,priceChange:"+4.1%"},
+      {name:"Lethbridge",slug:"lethbridge",avgPrice:355000,priceChange:"+3.8%"},
+      {name:"Grande Prairie",slug:"grande-prairie",avgPrice:375000,priceChange:"+3.2%"},
+      {name:"Airdrie",slug:"airdrie",avgPrice:540000,priceChange:"+6.1%"},
+    ],
+    topLenders:["ATB Financial","Servus Credit Union","RBC Royal Bank","TD Canada Trust","Scotiabank"],
+    cu:[{name:"Servus Credit Union",url:"https://www.servus.ca"},{name:"ATB Financial",url:"https://www.atb.com"},{name:"Connect First Credit Union",url:"https://www.connectfirstcu.com"}]},
+  BC:{name:"British Columbia",slug:"british-columbia",fixedRate:"4.94%",variableRate:"3.40%",minDown:"5%",ltt:"1–3% (PTT)",marketDesc:"BC remains Canada's most expensive housing market, though prices have stabilized in 2026. Vancouver's strict zoning and geographic constraints keep supply tight. The Property Transfer Tax exemption for first-time buyers on homes under $500K provides meaningful relief.",
+    cities:[
+      {name:"Vancouver",slug:"vancouver",avgPrice:1250000,priceChange:"+1.8%"},
+      {name:"Victoria",slug:"victoria",avgPrice:890000,priceChange:"+2.4%"},
+      {name:"Surrey",slug:"surrey",avgPrice:920000,priceChange:"+2.1%"},
+      {name:"Kelowna",slug:"kelowna",avgPrice:750000,priceChange:"+3.2%"},
+      {name:"Burnaby",slug:"burnaby",avgPrice:1050000,priceChange:"+1.5%"},
+      {name:"Abbotsford",slug:"abbotsford",avgPrice:780000,priceChange:"+2.8%"},
+      {name:"Kamloops",slug:"kamloops",avgPrice:560000,priceChange:"+3.5%"},
+      {name:"Nanaimo",slug:"nanaimo",avgPrice:620000,priceChange:"+2.9%"},
+    ],
+    topLenders:["Vancity Credit Union","Coast Capital Savings","RBC Royal Bank","TD Canada Trust","CIBC"],
+    cu:[{name:"Vancity Credit Union",url:"https://www.vancity.com"},{name:"Coast Capital Savings",url:"https://www.coastcapitalsavings.com"},{name:"First West Credit Union",url:"https://www.firstwestcu.ca"}]},
+  MB:{name:"Manitoba",slug:"manitoba",fixedRate:"4.85%",variableRate:"3.30%",minDown:"5%",ltt:"0.5–2% (rebate available)",marketDesc:"Manitoba offers some of Canada's most affordable housing in 2026. Winnipeg remains a buyers' market with strong inventory. The LTT rebate for first-time buyers and rural homeownership programs make Manitoba particularly attractive for new buyers.",
+    cities:[
+      {name:"Winnipeg",slug:"winnipeg",avgPrice:380000,priceChange:"+4.2%"},
+      {name:"Brandon",slug:"brandon",avgPrice:295000,priceChange:"+3.5%"},
+      {name:"Steinbach",slug:"steinbach",avgPrice:340000,priceChange:"+4.8%"},
+      {name:"Portage la Prairie",slug:"portage-la-prairie",avgPrice:235000,priceChange:"+2.9%"},
+      {name:"Winkler",slug:"winkler",avgPrice:310000,priceChange:"+5.1%"},
+    ],
+    topLenders:["Assiniboine Credit Union","Steinbach Credit Union","RBC Royal Bank","TD Canada Trust","BMO"],
+    cu:[{name:"Assiniboine Credit Union",url:"https://www.assiniboine.mb.ca"},{name:"Steinbach Credit Union",url:"https://www.steinbachcu.com"},{name:"Westoba Credit Union",url:"https://www.westoba.com"}]},
+  ON:{name:"Ontario",slug:"ontario",fixedRate:"4.92%",variableRate:"3.38%",minDown:"5%",ltt:"0.5–2.5% (rebate for FTB)",marketDesc:"Ontario's housing market is highly varied — Toronto and the GTA remain among Canada's most expensive, while smaller cities like Windsor and Sudbury offer much better affordability. The Ontario HST New Home Rebate (2026) removes HST on new builds under $1M, a significant saving.",
+    cities:[
+      {name:"Toronto",slug:"toronto",avgPrice:1100000,priceChange:"+0.8%"},
+      {name:"Ottawa",slug:"ottawa",avgPrice:650000,priceChange:"+2.5%"},
+      {name:"Mississauga",slug:"mississauga",avgPrice:920000,priceChange:"+1.2%"},
+      {name:"Brampton",slug:"brampton",avgPrice:880000,priceChange:"+1.5%"},
+      {name:"Hamilton",slug:"hamilton",avgPrice:720000,priceChange:"+2.1%"},
+      {name:"London",slug:"london",avgPrice:620000,priceChange:"+3.2%"},
+      {name:"Kitchener",slug:"kitchener",avgPrice:680000,priceChange:"+2.8%"},
+      {name:"Windsor",slug:"windsor",avgPrice:430000,priceChange:"+4.5%"},
+      {name:"Barrie",slug:"barrie",avgPrice:720000,priceChange:"+2.3%"},
+      {name:"Kingston",slug:"kingston",avgPrice:590000,priceChange:"+3.1%"},
+    ],
+    topLenders:["Meridian Credit Union","DUCA Credit Union","RBC Royal Bank","TD Canada Trust","Scotiabank"],
+    cu:[{name:"Meridian Credit Union",url:"https://www.meridiancu.ca"},{name:"DUCA Credit Union",url:"https://www.duca.com"},{name:"Alterna Savings",url:"https://www.alterna.ca"}]},
+  QC:{name:"Quebec",slug:"quebec",fixedRate:"4.87%",variableRate:"3.32%",minDown:"5%",ltt:"0.5–2% (municipal + provincial)",marketDesc:"Quebec's housing market remains more affordable than Ontario and BC, with Montreal seeing steady growth. Quebec has unique civil law property rules and both provincial and municipal land transfer taxes apply. Desjardins dominates the local mortgage market.",
+    cities:[
+      {name:"Montreal",slug:"montreal",avgPrice:580000,priceChange:"+3.8%"},
+      {name:"Quebec City",slug:"quebec-city",avgPrice:390000,priceChange:"+4.2%"},
+      {name:"Laval",slug:"laval",avgPrice:520000,priceChange:"+3.5%"},
+      {name:"Gatineau",slug:"gatineau",avgPrice:420000,priceChange:"+4.8%"},
+      {name:"Longueuil",slug:"longueuil",avgPrice:490000,priceChange:"+3.2%"},
+      {name:"Sherbrooke",slug:"sherbrooke",avgPrice:340000,priceChange:"+5.1%"},
+    ],
+    topLenders:["Desjardins Group","National Bank","RBC Royal Bank","TD Canada Trust","BMO"],
+    cu:[{name:"Desjardins Group",url:"https://www.desjardins.com"},{name:"Caisse Alliance",url:"https://www.caissealliance.com"}]},
+  SK:{name:"Saskatchewan",slug:"saskatchewan",fixedRate:"4.84%",variableRate:"3.29%",minDown:"5%",ltt:"Only 0.3% transfer fee",marketDesc:"Saskatchewan offers excellent housing affordability with one of Canada's lowest transfer fees at just 0.3%. Saskatoon and Regina are seeing steady growth driven by resource sector employment and interprovincial migration.",
+    cities:[
+      {name:"Saskatoon",slug:"saskatoon",avgPrice:390000,priceChange:"+5.2%"},
+      {name:"Regina",slug:"regina",avgPrice:340000,priceChange:"+4.8%"},
+      {name:"Prince Albert",slug:"prince-albert",avgPrice:245000,priceChange:"+3.1%"},
+      {name:"Moose Jaw",slug:"moose-jaw",avgPrice:265000,priceChange:"+3.8%"},
+    ],
+    topLenders:["Conexus Credit Union","Affinity Credit Union","RBC Royal Bank","TD Canada Trust","BMO"],
+    cu:[{name:"Affinity Credit Union",url:"https://www.affinitycu.ca"},{name:"Conexus Credit Union",url:"https://www.conexus.ca"},{name:"Innovation Credit Union",url:"https://www.innovationcu.ca"}]},
+  NS:{name:"Nova Scotia",slug:"nova-scotia",fixedRate:"4.88%",variableRate:"3.33%",minDown:"5% (2% pilot)",marketDesc:"Nova Scotia's housing market has cooled from its pandemic surge but remains active, particularly in Halifax. The new 2% down payment pilot program (2026) makes Nova Scotia one of the most accessible provinces for first-time buyers.",
+    cities:[
+      {name:"Halifax",slug:"halifax",avgPrice:520000,priceChange:"+2.8%"},
+      {name:"Dartmouth",slug:"dartmouth",avgPrice:480000,priceChange:"+2.5%"},
+      {name:"Sydney",slug:"sydney",avgPrice:295000,priceChange:"+3.2%"},
+      {name:"Truro",slug:"truro",avgPrice:310000,priceChange:"+2.9%"},
+    ],
+    topLenders:["East Coast Credit Union","Credit Union Atlantic","RBC Royal Bank","TD Canada Trust","Scotiabank"],
+    cu:[{name:"East Coast Credit Union",url:"https://www.eastcoastcu.ca"},{name:"Credit Union Atlantic",url:"https://www.cua.com"}]},
+  NB:{name:"New Brunswick",slug:"new-brunswick",fixedRate:"4.86%",variableRate:"3.31%",minDown:"5%",ltt:"1.5% (flat)",marketDesc:"New Brunswick remains one of Canada's most affordable provinces in 2026. Moncton leads growth driven by francophone community expansion and remote workers relocating from higher-cost provinces.",
+    cities:[
+      {name:"Moncton",slug:"moncton",avgPrice:310000,priceChange:"+5.8%"},
+      {name:"Saint John",slug:"saint-john",avgPrice:260000,priceChange:"+4.2%"},
+      {name:"Fredericton",slug:"fredericton",avgPrice:285000,priceChange:"+4.9%"},
+    ],
+    topLenders:["UNI Financial","RBC Royal Bank","TD Canada Trust","Scotiabank","BMO"],
+    cu:[{name:"UNI Financial Cooperation",url:"https://www.uni.ca"},{name:"Bayshore Credit Union",url:"https://www.bayshorecu.ca"}]},
+  PE:{name:"Prince Edward Island",slug:"prince-edward-island",fixedRate:"4.86%",variableRate:"3.31%",minDown:"5%",ltt:"Full exemption under $200K",marketDesc:"PEI's housing market has seen significant price growth driven by tourism, agriculture, and interprovincial migration. Charlottetown remains the most active market with strong demand from first-time buyers.",
+    cities:[
+      {name:"Charlottetown",slug:"charlottetown",avgPrice:380000,priceChange:"+4.5%"},
+      {name:"Summerside",slug:"summerside",avgPrice:310000,priceChange:"+3.8%"},
+      {name:"Stratford",slug:"stratford",avgPrice:395000,priceChange:"+4.1%"},
+    ],
+    topLenders:["Provincial Credit Union","RBC Royal Bank","TD Canada Trust","Scotiabank","BMO"],
+    cu:[{name:"Provincial Credit Union",url:"https://www.pcu.pe.ca"}]},
+  NL:{name:"Newfoundland",slug:"newfoundland",fixedRate:"4.87%",variableRate:"3.32%",minDown:"5%",ltt:"0.4% (approx)",marketDesc:"Newfoundland offers some of Canada's lowest home prices in 2026. St. John's is the primary market with steady demand from oil sector workers and public sector employees. Down payment assistance programs make homeownership very accessible.",
+    cities:[
+      {name:"St. John's",slug:"st-johns",avgPrice:320000,priceChange:"+3.5%"},
+      {name:"Mount Pearl",slug:"mount-pearl",avgPrice:295000,priceChange:"+3.1%"},
+      {name:"Corner Brook",slug:"corner-brook",avgPrice:220000,priceChange:"+2.8%"},
+    ],
+    topLenders:["NLCU","RBC Royal Bank","TD Canada Trust","Scotiabank","BMO"],
+    cu:[{name:"Newfoundland & Labrador Credit Union",url:"https://www.nlcu.com"}]},
+};
+
+export const PROVINCE_SLUGS = Object.values(PROVINCES).map(p => p.slug);
+
+export function getProvinceBySlug(slug: string) {
+  return Object.entries(PROVINCES).find(([,v]) => v.slug === slug);
+}
+
+export function getCityBySlug(provSlug: string, citySlug: string) {
+  const entry = getProvinceBySlug(provSlug);
+  if (!entry) return null;
+  const [code, prov] = entry;
+  const city = prov.cities.find(c => c.slug === citySlug);
+  return city ? { code, prov, city } : null;
+}
