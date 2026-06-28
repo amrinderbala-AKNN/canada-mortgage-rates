@@ -13,6 +13,14 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
+        {/* Google Analytics 4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-D00RKKCRZW"/>
+        <script dangerouslySetInnerHTML={{__html:`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-D00RKKCRZW', { page_path: window.location.pathname });
+        `}}/>
       </Head>
       <body>
         <Main />
