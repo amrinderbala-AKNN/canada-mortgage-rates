@@ -467,8 +467,8 @@ const LEGAL={
     title:"Privacy Policy",
     content:`<p style="color:#64748b;font-size:11px;margin-bottom:14px;">Last updated: June 24, 2026</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">1. Who We Are</h3>
-<p>Canada Mortgage Rates operates canadamortgagerates.ca. We are committed to protecting your personal information in accordance with the <b>Personal Information Protection and Electronic Documents Act (PIPEDA)</b>.</p>
-<p style="margin-top:6px;">Contact: <a href="mailto:info@canadamortgagerates.ca" style="color:#2563eb;">info@canadamortgagerates.ca</a></p>
+<p>Canada Mortgage Rates operates canadamortgagerates.net. We are committed to protecting your personal information in accordance with the <b>Personal Information Protection and Electronic Documents Act (PIPEDA)</b>.</p>
+<p style="margin-top:6px;">Contact: <a href="mailto:info@canadamortgagerates.net" style="color:#2563eb;">info@canadamortgagerates.net</a></p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">2. What We Collect</h3>
 <p>We collect the following only when you voluntarily submit a form: full name, email address, phone number (consultation form), city and province, and any message you submit.</p>
 <p style="margin-top:6px;">We also collect anonymous traffic data via cookies (see Section 5).</p>
@@ -493,7 +493,7 @@ const LEGAL={
   <li><b>Advertising:</b> Google AdSense shows relevant ads</li>
 </ul>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">6. Your Rights Under PIPEDA</h3>
-<p>You have the right to access, correct, or request deletion of your data. Email <a href="mailto:info@canadamortgagerates.ca" style="color:#2563eb;">info@canadamortgagerates.ca</a> and we will respond within 30 days. You may also file a complaint with the <a href="https://www.priv.gc.ca" target="_blank" style="color:#2563eb;">Office of the Privacy Commissioner of Canada</a>.</p>
+<p>You have the right to access, correct, or request deletion of your data. Email <a href="mailto:info@canadamortgagerates.net" style="color:#2563eb;">info@canadamortgagerates.net</a> and we will respond within 30 days. You may also file a complaint with the <a href="https://www.priv.gc.ca" target="_blank" style="color:#2563eb;">Office of the Privacy Commissioner of Canada</a>.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">7. Data Retention</h3>
 <p>We retain your information only as long as necessary to fulfill the purpose it was collected for, or as required by law.</p>`
   },
@@ -501,7 +501,7 @@ const LEGAL={
     title:"Terms of Use",
     content:`<p style="color:#64748b;font-size:11px;margin-bottom:14px;">Last updated: June 24, 2026</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">1. Acceptance of Terms</h3>
-<p>By accessing canadamortgagerates.ca, you agree to these Terms of Use. If you do not agree, please do not use the site.</p>
+<p>By accessing canadamortgagerates.net, you agree to these Terms of Use. If you do not agree, please do not use the site.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">2. Not a Licensed Mortgage Broker</h3>
 <p>Canada Mortgage Rates is <b>not a licensed mortgage broker, lender, or financial advisor</b>. All content is for <b>informational and educational purposes only</b>. We are not registered with FSRA, BCFSA, or any provincial mortgage regulatory authority.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">3. Rate Accuracy</h3>
@@ -517,7 +517,7 @@ const LEGAL={
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">8. Governing Law</h3>
 <p>These Terms are governed by the laws of the Province of Manitoba and the federal laws of Canada.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">9. Contact</h3>
-<p><a href="mailto:info@canadamortgagerates.ca" style="color:#2563eb;">info@canadamortgagerates.ca</a></p>`
+<p><a href="mailto:info@canadamortgagerates.net" style="color:#2563eb;">info@canadamortgagerates.net</a></p>`
   },
   disclaimer:{
     title:"Financial Disclaimer",
@@ -544,7 +544,7 @@ function LegalModal({type,onClose}){
         <div style={{background:s.navy,padding:"16px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
           <div>
             <div style={{color:"#fff",fontSize:16,fontWeight:800}}>{content.title}</div>
-            <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>Canada Mortgage Rates · canadamortgagerates.ca</div>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>Canada Mortgage Rates · canadamortgagerates.net</div>
           </div>
           <button onClick={onClose} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:30,height:30,borderRadius:"50%",fontSize:15,cursor:"pointer",flexShrink:0}}>✕</button>
         </div>
@@ -2211,7 +2211,7 @@ export default function App(){
         </div>
         <div style={{color:"rgba(255,255,255,0.4)",fontSize:10,marginBottom:10}}>© 2026 Canada Mortgage Rates · Not a licensed mortgage broker · Rates for informational purposes only</div>
         <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap",marginBottom:10}}>
-          {[["Realtor.ca","https://www.realtor.ca"],["CMHC","https://www.cmhc-schl.gc.ca"],["Bank of Canada","https://www.bankofcanada.ca"],["Contact Us","mailto:info@canadamortgagerates.ca"]].map(([l,u])=><a key={l} href={u} target="_blank" rel="noopener noreferrer" style={{color:"rgba(255,255,255,0.45)",fontSize:11,textDecoration:"none"}}>{l}</a>)}
+          {[["Realtor.ca","https://www.realtor.ca"],["CMHC","https://www.cmhc-schl.gc.ca"],["Bank of Canada","https://www.bankofcanada.ca"],["Contact Us","mailto:info@canadamortgagerates.net"]].map(([l,u])=><a key={l} href={u} target="_blank" rel="noopener noreferrer" style={{color:"rgba(255,255,255,0.45)",fontSize:11,textDecoration:"none"}}>{l}</a>)}
         </div>
         <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap",paddingTop:8,borderTop:"1px solid rgba(255,255,255,0.1)"}}>
           {[["Privacy Policy","privacy"],["Terms of Use","terms"],["Financial Disclaimer","disclaimer"]].map(([l,t])=>(
