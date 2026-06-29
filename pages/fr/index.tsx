@@ -13,7 +13,7 @@ export default function FrenchHome() {
       </Head>
       <div style={{fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",background:"#f4f6f9",minHeight:"100vh"}}>
         <nav style={{background:"#0d2240",padding:"12px 20px",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-          <Link href="/fr" style={{color:"#f5a623",fontWeight:800,fontSize:15,textDecoration:"none"}}>🍁 Taux Hypothécaires Canada</Link>
+          <Link href="/" style={{color:"rgba(255,255,255,0.7)",fontSize:12,textDecoration:"none",border:"1px solid rgba(255,255,255,0.25)",borderRadius:6,padding:"4px 10px",marginRight:4}}>← EN</Link><Link href="/fr" style={{color:"#f5a623",fontWeight:800,fontSize:15,textDecoration:"none"}}>🍁 Taux Hypothécaires Canada</Link>
           <div style={{marginLeft:"auto",display:"flex",gap:8,alignItems:"center"}}>
             <Link href="/" style={{color:"rgba(255,255,255,0.6)",fontSize:12,textDecoration:"none",border:"1px solid rgba(255,255,255,0.2)",borderRadius:6,padding:"3px 8px"}}>EN</Link>
             <span style={{color:"#fff",fontSize:12,fontWeight:700,border:"1px solid #f5a623",borderRadius:6,padding:"3px 8px"}}>FR</span>
