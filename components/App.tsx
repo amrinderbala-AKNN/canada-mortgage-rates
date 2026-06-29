@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const PDATA={
-  AB:{name:"Alberta",cities:["Calgary","Edmonton","Red Deer","Lethbridge","Grande Prairie","Airdrie","Medicine Hat","Spruce Grove"],cu:[
+  AB:{name:"Alberta",cities:["Calgary","Edmonton","Red Deer","Lethbridge","Grande Prairie","Airdrie","Medicine Hat","Spruce Grove","Fort McMurray","St. Albert","Leduc","Camrose","Lacombe","Lloydminster","Olds"],cu:[
     {name:"Servus Credit Union",url:"https://www.servus.ca"},
     {name:"ATB Financial",url:"https://www.atb.com"},
     {name:"Connect First Credit Union",url:"https://www.connectfirstcu.com"},
@@ -9,7 +9,7 @@ const PDATA={
     {name:"Bow Valley Credit Union",url:"https://www.bowvalleycu.com"},
     {name:"Lakeland Credit Union",url:"https://www.lakelandcu.com"},
   ]},
-  BC:{name:"British Columbia",cities:["Vancouver","Victoria","Surrey","Burnaby","Kelowna","Abbotsford","Kamloops","Nanaimo","Prince George","Langley"],cu:[
+  BC:{name:"British Columbia",cities:["Vancouver","Victoria","Surrey","Burnaby","Kelowna","Abbotsford","Kamloops","Nanaimo","Prince George","Langley","Coquitlam","Richmond","Delta","Chilliwack","Penticton","Vernon","Courtenay","Campbell River","Fort St. John","Maple Ridge"],cu:[
     {name:"Vancity Credit Union",url:"https://www.vancity.com"},
     {name:"Coast Capital Savings",url:"https://www.coastcapitalsavings.com"},
     {name:"First West Credit Union",url:"https://www.firstwestcu.ca"},
@@ -18,7 +18,7 @@ const PDATA={
     {name:"BlueShore Financial",url:"https://www.blueshorefinancial.com"},
     {name:"Gulf & Fraser Credit Union",url:"https://www.gulfandfraser.com"},
   ]},
-  MB:{name:"Manitoba",cities:["Winnipeg","Brandon","Steinbach","Portage la Prairie","Thompson","Winkler","Selkirk","Morden","Morris","Dauphin"],cu:[
+  MB:{name:"Manitoba",cities:["Winnipeg","Brandon","Steinbach","Portage la Prairie","Thompson","Winkler","Selkirk","Morden","Morris","Dauphin","Flin Flon","The Pas","Virden","Altona","Carman"],cu:[
     {name:"Assiniboine Credit Union",url:"https://www.assiniboine.mb.ca"},
     {name:"Steinbach Credit Union",url:"https://www.steinbachcu.com"},
     {name:"Westoba Credit Union",url:"https://www.westoba.com"},
@@ -27,22 +27,22 @@ const PDATA={
     {name:"Valley Credit Union",url:"https://www.valleycu.ca"},
     {name:"Sunrise Credit Union",url:"https://www.sunrisecu.mb.ca"},
   ]},
-  NB:{name:"New Brunswick",cities:["Moncton","Saint John","Fredericton","Dieppe","Riverview","Miramichi","Bathurst"],cu:[
+  NB:{name:"New Brunswick",cities:["Moncton","Saint John","Fredericton","Dieppe","Riverview","Miramichi","Bathurst","Edmundston","Campbellton","Sussex","Oromocto","Grand Falls"],cu:[
     {name:"UNI Financial Cooperation",url:"https://www.uni.ca"},
     {name:"Atlantic Central",url:"https://www.atlanticcentral.ca"},
     {name:"Bayshore Credit Union",url:"https://www.bayshorecu.ca"},
   ]},
-  NL:{name:"Newfoundland",cities:["St. John's","Mount Pearl","Corner Brook","Conception Bay South","Paradise","Grand Falls"],cu:[
+  NL:{name:"Newfoundland",cities:["St. John's","Mount Pearl","Corner Brook","Conception Bay South","Paradise","Grand Falls","Gander","Happy Valley-Goose Bay","Labrador City","Stephenville","Carbonear"],cu:[
     {name:"Newfoundland & Labrador Credit Union",url:"https://www.nlcu.com"},
     {name:"NewCap Credit Union",url:"https://www.newcap.ca"},
   ]},
-  NS:{name:"Nova Scotia",cities:["Halifax","Dartmouth","Sydney","Truro","New Glasgow","Glace Bay","Bridgewater"],cu:[
+  NS:{name:"Nova Scotia",cities:["Halifax","Dartmouth","Sydney","Truro","New Glasgow","Glace Bay","Bridgewater","Amherst","Antigonish","Yarmouth","Windsor","Kentville"],cu:[
     {name:"East Coast Credit Union",url:"https://www.eastcoastcu.ca"},
     {name:"League Savings & Mortgage",url:"https://www.leaguesavings.ca"},
     {name:"Credit Union Atlantic",url:"https://www.cua.com"},
     {name:"Coastal Financial Credit Union",url:"https://www.coastalfinancial.ca"},
   ]},
-  ON:{name:"Ontario",cities:["Toronto","Ottawa","Mississauga","Brampton","Hamilton","London","Markham","Kitchener","Windsor","Barrie","Sudbury","Kingston"],cu:[
+  ON:{name:"Ontario",cities:["Toronto","Ottawa","Mississauga","Brampton","Hamilton","London","Markham","Kitchener","Windsor","Barrie","Sudbury","Kingston","Guelph","Waterloo","Cambridge","Oakville","Burlington","Oshawa","St. Catharines","Thunder Bay","Peterborough","Brantford","Sarnia","Belleville","Sault Ste. Marie","North Bay","Welland","Timmins","Whitby","Ajax"],cu:[
     {name:"Meridian Credit Union",url:"https://www.meridiancu.ca"},
     {name:"DUCA Credit Union",url:"https://www.duca.com"},
     {name:"Alterna Savings",url:"https://www.alterna.ca"},
@@ -269,6 +269,10 @@ function NavBar({active,setActive}){
         <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
           <div style={{width:32,height:32,background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🍁</div>
           <div><div style={{color:"#fff",fontWeight:800,fontSize:14,lineHeight:1}}>Canada</div><div style={{color:s.gold,fontWeight:700,fontSize:11,lineHeight:1}}>Mortgage Rates</div></div>
+          <div style={{display:"flex",gap:4,marginLeft:4}}>
+            <a href="/blog" style={{color:"rgba(255,255,255,0.65)",fontSize:10,fontWeight:700,border:"1px solid rgba(255,255,255,0.2)",borderRadius:5,padding:"2px 6px",textDecoration:"none"}}>BLOG</a>
+            <a href="/fr" style={{color:"rgba(255,255,255,0.65)",fontSize:10,fontWeight:700,border:"1px solid rgba(255,255,255,0.2)",borderRadius:5,padding:"2px 6px",textDecoration:"none"}}>FR</a>
+          </div>
         </div>
         <div style={{display:"flex",gap:1,marginLeft:"auto",overflowX:"auto",maxWidth:"calc(100% - 180px)",scrollbarWidth:"none"}}>
           {TABS.map(t=><button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:active===t?"rgba(255,255,255,0.15)":"none",border:"none",color:active===t?"#fff":"rgba(255,255,255,0.65)",fontSize:12,padding:"8px 12px",borderRadius:6,cursor:"pointer",fontWeight:active===t?700:400,whiteSpace:"nowrap",flexShrink:0,borderBottom:active===t?`2px solid ${s.gold}`:"2px solid transparent"}}>{t==="Rates"?<>📊 {t}<span style={{background:"#4ade80",color:"#14532d",borderRadius:20,padding:"1px 6px",fontSize:9,fontWeight:800,marginLeft:5}}>LIVE</span></>:t}</button>)}

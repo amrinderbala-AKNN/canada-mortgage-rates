@@ -7,7 +7,19 @@ function generateSitemap() {
 
   const staticPages = [
     { url: "/", priority: "1.0", changefreq: "daily" },
+    { url: "/fr", priority: "0.9", changefreq: "weekly" },
     { url: "/mortgage-rates", priority: "0.9", changefreq: "weekly" },
+    { url: "/blog", priority: "0.8", changefreq: "weekly" },
+    { url: "/blog/best-mortgage-rates-canada-2026", priority: "0.8", changefreq: "weekly" },
+    { url: "/blog/how-to-pass-mortgage-stress-test-canada", priority: "0.8", changefreq: "monthly" },
+    { url: "/blog/fhsa-rrsp-home-buyers-plan-guide", priority: "0.8", changefreq: "monthly" },
+    { url: "/blog/fixed-vs-variable-mortgage-2026", priority: "0.8", changefreq: "weekly" },
+    { url: "/blog/mortgage-renewal-guide-canada", priority: "0.8", changefreq: "monthly" },
+    { url: "/blog/cmhc-insurance-explained", priority: "0.7", changefreq: "monthly" },
+    { url: "/blog/first-time-home-buyer-programs-canada", priority: "0.8", changefreq: "monthly" },
+    { url: "/blog/canada-housing-market-outlook-2026", priority: "0.8", changefreq: "weekly" },
+    { url: "/blog/mortgage-broker-vs-bank-canada", priority: "0.7", changefreq: "monthly" },
+    { url: "/blog/rent-vs-buy-canada-2026", priority: "0.7", changefreq: "monthly" },
   ];
 
   const provincePages = Object.values(PROVINCES).map(prov => ({
