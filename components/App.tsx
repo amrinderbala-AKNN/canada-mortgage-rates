@@ -1168,6 +1168,10 @@ function PropertyTaxTab({initProv,initCity}){
             <div style={{fontSize:11,color:"#1e40af",lineHeight:1.6}}>For your exact property tax, check your official assessment notice or contact your municipality.{assessLink&&<> <a href={assessLink.url} target="_blank" rel="noopener noreferrer" style={{color:"#2563eb",fontWeight:600,textDecoration:"none"}}>{assessLink.name} →</a></>}</div>
           </div>
           <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Based on published mill rates. Actual tax depends on your official assessed value. Verify with your local municipality.</p>
+          <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"10px 14px",marginTop:10}}>
+            <div style={{fontSize:11,fontWeight:700,color:"#1e40af",marginBottom:4}}>💡 Why does the same home value result in different taxes across cities?</div>
+            <div style={{fontSize:11,color:"#1e40af",lineHeight:1.6}}>Property tax = <b>Mill Rate × Assessed Value</b>. Each city sets its own mill rate based on its budget needs and the total assessed value of all properties in the city. Cities with lower average home prices typically need higher mill rates to generate enough revenue for services like roads, water, schools, and emergency services. Cities with higher average home values can fund the same services with a lower mill rate. This means comparing property taxes across cities using the same home value can produce surprising results — and that's completely normal across Canada.</div>
+          </div>
         </div>
       )}</div>
     </Card>
