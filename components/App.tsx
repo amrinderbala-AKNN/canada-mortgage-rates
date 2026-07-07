@@ -137,17 +137,35 @@ function useBocRates(){
   return rates;
 }
 
+// BoC's published 2026 fixed announcement dates (confirmed via bankofcanada.ca schedule release, Aug 2025)
+const BOC_2026_DATES=["2026-01-28","2026-03-18","2026-04-29","2026-06-10","2026-07-15","2026-09-02","2026-10-28","2026-12-09"];
+function getBocSchedule(){
+  const today=new Date();
+  const dates=BOC_2026_DATES.map(d=>new Date(d+"T09:45:00-05:00"));
+  let last:string|null=null,next:string|null=null;
+  for(let i=0;i<dates.length;i++){
+    if(dates[i]<=today)last=BOC_2026_DATES[i];
+    if(dates[i]>today&&!next)next=BOC_2026_DATES[i];
+  }
+  return{last,next};
+}
+function fmtBocDate(iso:string|null){
+  if(!iso)return"TBD";
+  return new Date(iso+"T00:00:00").toLocaleDateString("en-CA",{month:"short",day:"numeric",year:"numeric"});
+}
+
 function BocTicker({onRateAlert}:{onRateAlert:()=>void}){
   const boc=useBocRates();
+  const {last,next}=getBocSchedule();
   const items=[
     {label:"Overnight Rate",value:boc.overnight+"%",change:"hold"},
     {label:"Prime Rate",value:boc.prime+"%",change:"hold"},
     {label:"Bank Rate",value:boc.bankRate+"%",change:"hold"},
     {label:"CAD/USD",value:"~"+boc.cadUsd,change:"hold"},
-    {label:"Inflation (Apr)",value:"2.8%",change:"up"},
-    {label:"Last Decision",value:"Hold — Jun 10",change:"hold"},
-    {label:"Next Announcement",value:"Jul 15, 2026",change:"hold"},
-    {label:"GDP Growth",value:"1.2%",change:"down"},
+    {label:"Inflation (as of Apr 2026)",value:"2.8%",change:"up"},
+    {label:"Last Decision",value:fmtBocDate(last),change:"hold"},
+    {label:"Next Announcement",value:fmtBocDate(next),change:"hold"},
+    {label:"GDP Growth (2026 fcst)",value:"1.2%",change:"down"},
   ];
   const doubled=[...items,...items];
   const clr:{[k:string]:string}={up:"#f5a623",down:"#4ade80",hold:"#94a3b8"};
@@ -164,16 +182,17 @@ function BocTicker({onRateAlert}:{onRateAlert:()=>void}){
 function BocBanner(){
   const [show,setShow]=useState(true);
   const boc=useBocRates();
+  const {next}=getBocSchedule();
   if(!show)return null;
   return(
     <div style={{background:s.white,borderBottom:`1px solid ${s.border}`,flexShrink:0}}>
       <div style={{maxWidth:1060,margin:"0 auto",padding:"8px 14px",display:"flex",flexWrap:"wrap",gap:12,alignItems:"center"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,flex:1,minWidth:160}}>
           <div style={{width:8,height:8,borderRadius:"50%",background:s.gold,flexShrink:0}}/>
-          <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>⏸ Rate Held Steady — Bank of Canada June 10, 2026</div><div style={{fontSize:10,color:s.muted}}>BoC held overnight rate at {boc.overnight}% for the fifth consecutive decision.</div></div>
+          <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>🏦 Bank of Canada Rate{boc.asOf?" — as of "+fmtBocDate(boc.asOf):""}</div><div style={{fontSize:10,color:s.muted}}>Current overnight rate: {boc.overnight}%. Next scheduled announcement: {fmtBocDate(next)}.</div></div>
         </div>
         <div style={{display:"flex",gap:14,flexWrap:"wrap"}}>
-          {([["Overnight Rate",boc.overnight+"%"],["Prime Rate",boc.prime+"%"],["Next","July 15, 2026"],["Inflation","2.8%"]] as [string,string][]).map(([l,v])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,color:s.muted,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{l}</div><div style={{fontSize:15,fontWeight:800,color:s.navy}}>{v}</div></div>)}
+          {([["Overnight Rate",boc.overnight+"%"],["Prime Rate",boc.prime+"%"],["Next",fmtBocDate(next)],["Inflation","2.8%"]] as [string,string][]).map(([l,v])=><div key={l} style={{textAlign:"center"}}><div style={{fontSize:9,color:s.muted,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px"}}>{l}</div><div style={{fontSize:15,fontWeight:800,color:s.navy}}>{v}</div></div>)}
         </div>
         <button onClick={()=>setShow(false)} style={{background:"none",border:"none",color:s.muted,fontSize:16,cursor:"pointer",padding:"0 4px"}}>✕</button>
       </div>
@@ -1963,6 +1982,7 @@ function ConsultTab(){
   const [cName,setCName]=useState("");const [cPhone,setCPhone]=useState("");const [cEmail,setCEmail]=useState("");const [cCity,setCCity]=useState("");const [cPurpose,setCPurpose]=useState("");const [cMsg,setCMsg]=useState("");const [cOk,setCOk]=useState(false);
   const [nName,setNName]=useState("");const [nEmail,setNEmail]=useState("");const [nCity,setNCity]=useState("");const [nConsent,setNConsent]=useState(false);const [nOk,setNOk]=useState(false);
   const [bocName,setBocName]=useState("");const [bocEmail,setBocEmail]=useState("");const [bocProv,setBocProv]=useState("");const [bocConsent,setBocConsent]=useState(false);const [bocOk,setBocOk]=useState(false);
+  const {next:bocNextDate}=getBocSchedule();
 
   async function submitConsult(){
     if(!cName||!cEmail){alert("Please enter your name and email.");return;}
@@ -2071,7 +2091,7 @@ function ConsultTab(){
               <div style={{width:40,height:40,background:"#fffbeb",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0}}>🏦</div>
               <div>
                 <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:2}}>BoC Rate Announcements</h3>
-                <div style={{fontSize:11,color:"#92400e",fontWeight:600}}>8 decisions per year · Next: July 15</div>
+                <div style={{fontSize:11,color:"#92400e",fontWeight:600}}>8 decisions per year · Next: {fmtBocDate(bocNextDate)}</div>
               </div>
             </div>
             <p style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>Get notified the moment the Bank of Canada makes a rate announcement. Know within minutes whether your mortgage payment is changing.</p>
@@ -2085,13 +2105,13 @@ function ConsultTab(){
                 </select>
                 <div style={{display:"flex",alignItems:"flex-start",gap:7,marginBottom:10}}><input type="checkbox" checked={bocConsent} onChange={e=>setBocConsent(e.target.checked)} style={{marginTop:3,flexShrink:0}}/><label style={{fontSize:11,color:s.muted,lineHeight:1.5}}>I agree to receive Bank of Canada rate announcement emails. Unsubscribe anytime.</label></div>
                 <button onClick={submitBoc} style={{width:"100%",padding:10,background:"#92400e",color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔔 Get BoC Alerts →</button>
-                <div style={{fontSize:10,color:s.muted,marginTop:6,textAlign:"center"}}>Next BoC decision: July 15, 2026</div>
+                <div style={{fontSize:10,color:s.muted,marginTop:6,textAlign:"center"}}>Next BoC decision: {fmtBocDate(bocNextDate)}</div>
               </>
             ):(
               <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:14,textAlign:"center"}}>
                 <div style={{fontSize:24,marginBottom:6}}>🔔</div>
                 <div style={{fontSize:13,fontWeight:700,color:"#92400e"}}>BoC Alerts Activated!</div>
-                <div style={{fontSize:11,color:"#92400e",marginTop:4}}>Next announcement: July 15, 2026.</div>
+                <div style={{fontSize:11,color:"#92400e",marginTop:4}}>Next announcement: {fmtBocDate(bocNextDate)}.</div>
               </div>
             )}
           </Card>
@@ -2117,6 +2137,8 @@ function ConsultTab(){
 
 
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
+  const boc=useBocRates();
+  const {last,next}=getBocSchedule();
   const features=[
     {icon:"📊",tab:"Rates",title:"Live Mortgage Rates",desc:"Compare rates from 20+ banks and credit unions across all 10 provinces. Updated daily via AI-powered web search."},
     {icon:"🧮",tab:"Calculators",title:"Mortgage Calculators",desc:"Payment, affordability, rent vs buy, renewal savings, and stress test — all in one place."},
@@ -2143,7 +2165,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
       </div>
       <div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:10,padding:"10px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
         <div style={{fontSize:20}}>📢</div>
-        <div><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>BoC Rate Hold — June 10, 2026</div><div style={{fontSize:11,color:"#92400e"}}>Bank of Canada held overnight rate at 2.25%. Prime Rate: 4.45%. Next decision: July 15, 2026.</div></div>
+        <div><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>Bank of Canada Rate — last decision {fmtBocDate(last)}</div><div style={{fontSize:11,color:"#92400e"}}>Overnight rate: {boc.overnight}%. Prime Rate: {boc.prime}%. Next decision: {fmtBocDate(next)}.</div></div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
         {features.map(f=>(
