@@ -371,11 +371,10 @@ function RatesTab({initProv,initCity,onLocationChange}){
     });
   }
 
-  async function fetchRates(){
-    setLoading(true);setUsingSample(false);
+  function fetchRates(){
+    setUsingSample(false);
     setRates(getMock());
     setLastUpd("Live ✅");
-    setLoading(false);
   }
 
   function changeProv(p){const c=PDATA[p].cities[0];setProv(p);setCity(c);setShowCustom(false);setCustomCity("");onLocationChange&&onLocationChange(p,c);}
