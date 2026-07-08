@@ -419,9 +419,9 @@ function RatesTab({initProv,initCity,onLocationChange}){
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {TERMS.map(t=><button key={t} onClick={()=>setTerm(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${term===t?s.navy:s.border}`,background:term===t?s.navy:s.white,color:term===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:term===t?700:400}}>{t}</button>)}
           {["fixed","variable"].map(t=><button key={t} onClick={()=>setType(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${type===t?s.red:s.border}`,background:type===t?s.red:s.white,color:type===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:type===t?700:400,textTransform:"capitalize"}}>{t}</button>)}
+          <button onClick={()=>fetchRates()} style={{padding:"5px 14px",borderRadius:20,border:"none",background:s.red,color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer",zIndex:200,position:"relative"}}>🔄 Refresh</button>
+          <span style={{fontSize:10,color:s.muted,alignSelf:"center"}}>{lastUpd}</span>
         </div>
-        <button onClick={fetchRates} style={{marginLeft:"auto",padding:"6px 14px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔄 Refresh</button>
-        <span style={{fontSize:10,color:s.muted}}>{lastUpd}</span>
       </div>
       {usingSample&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"8px 14px",fontSize:11,color:"#c2410c",margin:"10px 0"}}>⚠️ These are estimated rates, not pulled from a live source right now — verify with the institution directly before applying.</div>}
       {!loading&&withRate.length>0&&(
