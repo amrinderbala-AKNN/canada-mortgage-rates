@@ -360,17 +360,24 @@ function RatesTab({initProv,initCity,onLocationChange}){
   const institutions=[...BANKS,...(PDATA[prov]?.cu||[]).map(c=>({...c,type:"local"}))];
 
   function getMock(){
-    const b=[6.84,6.99,6.89,6.94,6.79,6.89,4.69,4.59,4.74,4.64,4.79,5.70,5.65,5.75,5.60,5.55,5.80,5.68];
-    return institutions.flatMap((inst,i)=>TERMS.map((t,ti)=>({institution:inst.name,term:t,fixed:+(b[i%b.length]-ti*0.3).toFixed(2),variable:+(b[i%b.length]-ti*0.3-0.7).toFixed(2)})));
+    // Fallback baseline only — NOT live data. Anchored to actual market conditions as of July 2026
+    // (BoC overnight 2.25%, prime 4.45%, 5-yr fixed ~4.0-4.5%, 5-yr variable ~3.45-3.9% per Ratehub/RBC published rates).
+    // These are approximate market-wide figures, not per-institution — update periodically as rates move.
+    const fixedBase:{[k:string]:number}={"1-year":4.65,"2-year":4.05,"3-year":3.95,"5-year":4.30};
+    const variableBase:{[k:string]:number}={"1-year":4.15,"2-year":3.95,"3-year":3.85,"5-year":3.75};
+    return institutions.flatMap((inst,i)=>{
+      const jitter=((i*37)%21-10)/100; // small deterministic spread so institutions aren't all identical
+      return TERMS.map(t=>({institution:inst.name,term:t,fixed:+(fixedBase[t]+jitter).toFixed(2),variable:+(variableBase[t]+jitter).toFixed(2)}));
+    });
   }
 
   async function fetchRates(){
     setLoading(true);setUsingSample(false);
     try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,system:"You are a JSON generator. Output ONLY a valid JSON array. No text before or after. No markdown. No explanation.",messages:[{role:"user",content:`Generate a JSON array of current Canadian mortgage rates for these institutions: ${institutions.slice(0,8).map(i=>i.name).join(", ")}. Use these terms: 1-year, 2-year, 3-year, 5-year. Base rates on current Canadian market (around 4.5-6.5% fixed, 3.5-5% variable). Format: [{"institution":"RBC Royal Bank","term":"1-year","fixed":5.84,"variable":4.95},...]`}]})});
+      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,system:"You are a Canadian mortgage rate expert. Output ONLY a valid JSON array. No markdown, no text before or after, no explanation. Start with [ and end with ].",messages:[{role:"user",content:`Generate a JSON array of current Canadian mortgage rates for June 2026 for these institutions: ${institutions.slice(0,10).map(i=>i.name).join(", ")}. Use realistic current Canadian market rates (fixed: 4.49-5.49% depending on term, variable: 3.25-3.75%). Terms: 1-year, 2-year, 3-year, 5-year. Format: [{"institution":"RBC Royal Bank","term":"5-year","fixed":4.99,"variable":3.45},...]. Include all institutions and all terms. JSON array only.`}]})});
       const data=await res.json();
       const allText=data.content?.map((b:any)=>b.text||"").join("")||"";
-      const match=allText.match(/\[[\s\S]*?\]/);
+      const match=allText.match(/\[[\s\S]*\]/);
       if(!match) throw new Error("No array");
       const parsed=JSON.parse(match[0]);
       if(!Array.isArray(parsed)||parsed.length===0) throw new Error("Empty");
@@ -425,11 +432,11 @@ function RatesTab({initProv,initCity,onLocationChange}){
         <button onClick={fetchRates} disabled={loading} style={{marginLeft:"auto",padding:"6px 14px",background:loading?"#aaa":s.red,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:loading?"not-allowed":"pointer"}}>{loading?"⏳ Loading...":"🔄 Refresh"}</button>
         <span style={{fontSize:10,color:s.muted}}>{lastUpd}</span>
       </div>
-      {usingSample&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"8px 14px",fontSize:11,color:"#c2410c",margin:"10px 0"}}>⚠️ Sample data — live rates load after Vercel deployment.</div>}
+      {usingSample&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"8px 14px",fontSize:11,color:"#c2410c",margin:"10px 0"}}>⚠️ These are estimated rates, not pulled from a live source right now — verify with the institution directly before applying.</div>}
       {!loading&&withRate.length>0&&(
         <div style={{display:"flex",alignItems:"center",gap:10,margin:"10px 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
-          <span style={{fontSize:18}}>✅</span>
-          <div><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest rate</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""}</div></div>
+          <span style={{fontSize:18}}>ℹ️</span>
+          <div><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest (AI-compiled estimate)</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
         </div>
       )}
       <div style={{background:s.white,borderRadius:14,boxShadow:"0 4px 20px rgba(0,0,0,0.08)",overflow:"hidden",marginTop:6}}>
