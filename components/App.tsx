@@ -419,7 +419,7 @@ function RatesTab({initProv,initCity,onLocationChange}){
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {TERMS.map(t=><button key={t} onClick={()=>setTerm(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${term===t?s.navy:s.border}`,background:term===t?s.navy:s.white,color:term===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:term===t?700:400}}>{t}</button>)}
           {["fixed","variable"].map(t=><button key={t} onClick={()=>setType(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${type===t?s.red:s.border}`,background:type===t?s.red:s.white,color:type===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:type===t?700:400,textTransform:"capitalize"}}>{t}</button>)}
-          <button onClick={()=>fetchRates()} style={{padding:"5px 14px",borderRadius:20,border:"none",background:s.red,color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer",zIndex:200,position:"relative"}}>🔄 Refresh</button>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{padding:"5px 14px",borderRadius:20,border:"none",background:s.green,color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer",zIndex:200,position:"relative"}}>📞 Get My Rate →</button>
           <span style={{fontSize:10,color:s.muted,alignSelf:"center"}}>{lastUpd}</span>
         </div>
       </div>
@@ -2195,6 +2195,12 @@ export default function App(){
   const [locLoading,setLocLoading]=useState(true);
   const [showRateAlert,setShowRateAlert]=useState(false);
   const [legalModal,setLegalModal]=useState(null);
+
+  useEffect(()=>{
+    const handler=(e:any)=>setActive(e.detail);
+    window.addEventListener("switchTab",handler);
+    return()=>window.removeEventListener("switchTab",handler);
+  },[]);
 
   useEffect(()=>{
     if(navigator.geolocation){
