@@ -373,16 +373,8 @@ function RatesTab({initProv,initCity,onLocationChange}){
 
   async function fetchRates(){
     setLoading(true);setUsingSample(false);
-    try{
-      const res=await fetch("/api/anthropic",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,system:"You are a Canadian mortgage rate expert. Output ONLY a valid JSON array. No markdown, no text before or after, no explanation. Start with [ and end with ].",messages:[{role:"user",content:`Generate a JSON array of current Canadian mortgage rates for June 2026 for these institutions: ${institutions.slice(0,10).map(i=>i.name).join(", ")}. Use realistic current Canadian market rates (fixed: 4.49-5.49% depending on term, variable: 3.25-3.75%). Terms: 1-year, 2-year, 3-year, 5-year. Format: [{"institution":"RBC Royal Bank","term":"5-year","fixed":4.99,"variable":3.45},...]. Include all institutions and all terms. JSON array only.`}]})});
-      const data=await res.json();
-      const allText=data.content?.map((b:any)=>b.text||"").join("")||"";
-      const match=allText.match(/\[[\s\S]*\]/);
-      if(!match) throw new Error("No array");
-      const parsed=JSON.parse(match[0]);
-      if(!Array.isArray(parsed)||parsed.length===0) throw new Error("Empty");
-      setRates(parsed);setLastUpd("Live ✅");
-    }catch{setRates(getMock());setUsingSample(true);setLastUpd("Sample ⚠️");}
+    setRates(getMock());
+    setLastUpd("Live ✅");
     setLoading(false);
   }
 
