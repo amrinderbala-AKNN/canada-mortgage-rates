@@ -84,6 +84,16 @@ const BANKS=[
   {name:"MCAP",url:"https://www.mcap.com/mortgages",type:"online"},
 ];
 const TERMS=["1-year","2-year","3-year","5-year"];
+const OFFERS=[
+  {bank:"RBC Royal Bank",type:"Switch",badge:"🔄 Switch Offer",color:"#003168",textColor:"#fff",offer:"Up to $1,100 in switch fee rebates",detail:"Switch your mortgage to RBC and get up to $300 in processing fees + $300 in discharge fees covered. Plus earn up to 55,000 Avion Rewards Points.",expires:"August 31, 2026",url:"https://www.rbcroyalbank.com/dms/mortgages/limited-time-offer/2026.html",tag:"Limited Time"},
+  {bank:"RBC Royal Bank",type:"New Purchase",badge:"🏠 New Purchase",color:"#003168",textColor:"#fff",offer:"55,000 Avion Points + Cash Bonus",detail:"Apply for an RBC mortgage by Aug 31, 2026 and earn up to 55,000 Avion Rewards Points. Enrol in HomeProtector Insurance for 10,000 bonus points.",expires:"August 31, 2026",url:"https://www.rbcroyalbank.com/dms/mortgages/limited-time-offer/2026.html",tag:"Ends Aug 31"},
+  {bank:"CIBC",type:"Cash Back",badge:"💰 Cash Back",color:"#c41f3e",textColor:"#fff",offer:"Up to $4,500 Cash Back",detail:"Get $2,000–$4,500 cash back on a CIBC mortgage depending on your loan amount. Available for new purchases and first-time buyers. Min $100K mortgage, 3-yr term or 5-yr variable.",expires:"July 30, 2026",url:"https://www.cibc.com/en/special-offers/cash-back-mortgage.html",tag:"Ends Jul 30"},
+  {bank:"BMO Bank of Montreal",type:"Cash Back",badge:"💰 Cash Back",color:"#0079c1",textColor:"#fff",offer:"Up to $5,000 Cash Back",detail:"Get cash back when you get a new BMO mortgage or switch from another lender. Available for fixed or variable closed term mortgages of 3 years or longer. Min $100K mortgage.",expires:"Check BMO.com",url:"https://www.bmo.com/en-ca/main/personal/mortgages/mortgage-banking-offer/",tag:"Check BMO"},
+  {bank:"Scotiabank",type:"Bundle",badge:"🎁 Bundle Deal",color:"#cc0000",textColor:"#fff",offer:"Up to $1,000 Cash Bonus Bundle",detail:"Bundle a Scotiabank Preferred Package chequing account with your mortgage and earn up to $700 cash bonus. Add a savings account or credit card for up to $300 more.",expires:"October 29, 2026",url:"https://www.scotiabank.com/ca/en/personal/mortgages/mortgage-programs.html",tag:"Ends Oct 29"},
+  {bank:"nesto",type:"Rate",badge:"📉 Rate Special",color:"#2563eb",textColor:"#fff",offer:"Canada's Lowest Rates Guaranteed",detail:"nesto offers a lowest rate guarantee — if you find a lower rate elsewhere, they'll beat it. No broker fees, fully digital, and fast approvals.",expires:"Ongoing",url:"https://www.nesto.ca",tag:"Ongoing"},
+  {bank:"First National",type:"Switch",badge:"🔄 Switch Offer",color:"#1a3a5c",textColor:"#fff",offer:"No-Fee Mortgage Switch",detail:"Switch your mortgage to First National at renewal with no switch fees. Access competitive rates and flexible prepayment options up to 20% annually.",expires:"Ongoing",url:"https://www.firstnational.ca",tag:"Ongoing"},
+  {bank:"Meridian Credit Union",type:"First-Time Buyer",badge:"🏡 First-Time Buyer",color:"#16a34a",textColor:"#fff",offer:"First Home Advantage Package",detail:"Meridian's First Home Advantage includes a dedicated advisor, rate hold for 120 days, free financial planning session, and preferred rates for qualifying first-time buyers.",expires:"Ongoing",url:"https://www.meridiancu.ca",tag:"Ongoing"},
+];
 const PT_RATES={
   AB:{Calgary:{res:0.00638,edu:0.00258},Edmonton:{res:0.00922,edu:0.00258},"Red Deer":{res:0.00984,edu:0.00258},Lethbridge:{res:0.00877,edu:0.00258},"Grande Prairie":{res:0.00912,edu:0.00258},Airdrie:{res:0.00623,edu:0.00258},"Medicine Hat":{res:0.00845,edu:0.00258},"Spruce Grove":{res:0.00756,edu:0.00258},def:{res:0.0075,edu:0.00258}},
   BC:{Vancouver:{res:0.00269,edu:0.00163},Victoria:{res:0.00398,edu:0.00163},Surrey:{res:0.00285,edu:0.00163},Burnaby:{res:0.00273,edu:0.00163},Kelowna:{res:0.00452,edu:0.00163},Abbotsford:{res:0.00389,edu:0.00163},Kamloops:{res:0.00512,edu:0.00163},Nanaimo:{res:0.00468,edu:0.00163},"Prince George":{res:0.00598,edu:0.00163},Langley:{res:0.00312,edu:0.00163},def:{res:0.0035,edu:0.00163}},
@@ -451,6 +461,33 @@ function RatesTab({initProv,initCity,onLocationChange}){
             })}
           </tbody>
         </table>
+      </div>
+
+      {/* OFFERS SECTION */}
+      <div style={{marginTop:20}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12,flexWrap:"wrap"}}>
+          <div style={{fontSize:16,fontWeight:800,color:s.navy}}>🎁 Current Lender Offers & Promotions</div>
+          <span style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Updated July 2026</span>
+        </div>
+        <p style={{fontSize:12,color:s.muted,marginBottom:12}}>Limited-time offers from Canadian lenders — cash back, switch incentives, and bundle deals. Always verify terms directly with the lender.</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
+          {OFFERS.map((offer:any,i:number)=>(
+            <div key={i} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+              <div style={{background:offer.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div style={{color:offer.textColor,fontSize:13,fontWeight:800}}>{offer.bank}</div>
+                <span style={{background:"rgba(255,255,255,0.2)",color:offer.textColor,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{offer.tag}</span>
+              </div>
+              <div style={{padding:14}}>
+                <div style={{display:"inline-block",background:"#f1f5f9",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:s.navy,marginBottom:8}}>{offer.badge}</div>
+                <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:6}}>{offer.offer}</div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{offer.detail}</div>
+                <div style={{fontSize:10,color:s.muted,marginBottom:10}}>⏰ Expires: <strong>{offer.expires}</strong></div>
+                <a href={offer.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px 12px",background:offer.color,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textAlign:"center",textDecoration:"none"}}>View Offer →</a>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p style={{fontSize:10,color:"#bbb",marginTop:8}}>⚠️ Offers subject to change. Always verify current terms directly with the lender. Canada Mortgage Rates is not affiliated with any lender.</p>
       </div>
     </div>
   );
