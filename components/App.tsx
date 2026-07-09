@@ -166,7 +166,7 @@ const YEAR_MULT={new:0.82,mid:1.0,old:1.32};
 const RF_STEPS=[{q:"What is the purpose of your mortgage?",key:"purpose",opts:["🏠 First Home Purchase","🏡 Purchase (Not First Home)","🔄 Mortgage Renewal","💳 Refinance"]},{q:"What is your estimated credit score?",key:"credit",opts:["🟢 Excellent (750+)","🔵 Good (700–749)","🟡 Fair (650–699)","🔴 Below 650"]},{q:"How much is your down payment?",key:"down",opts:["5–9% (Insured)","10–14% (Insured)","15–19% (Insured)","20%+ (Conventional)"]},{q:"What is your employment type?",key:"employment",opts:["💼 Salaried / Full-Time","🧾 Self-Employed","📋 Contract / Part-Time","🎯 Retired"]},{q:"What mortgage term do you prefer?",key:"term",opts:["📉 Variable Rate","📅 1–2 Year Fixed","📅 3 Year Fixed","📅 5 Year Fixed"]}];
 const FTHB_PROV={AB:{programs:[{name:"No Land Transfer Tax",saving:"$5,000–$15,000+",status:"Always",color:"#16a34a",desc:"Alberta has no provincial land transfer tax.",url:"https://www.alberta.ca/land-titles.aspx"}],savings:[{l:"No LTT",v:"~$10K"},{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"}]},BC:{programs:[{name:"Property Transfer Tax Exemption",saving:"Up to $8,000+",status:"Active",color:"#16a34a",desc:"Full exemption on homes under $500K.",url:"https://www2.gov.bc.ca/gov/content/taxes/property-taxes/property-transfer-tax/exemptions/first-time-home-buyers"}],savings:[{l:"PTT Exemption",v:"~$8K"},{l:"HOG",v:"$770/yr"},{l:"FHSA+HBP",v:"~$200K"}]},MB:{programs:[{name:"LTT Rebate",saving:"Up to $4,500",status:"Active",color:"#16a34a",desc:"Manitoba first-time buyers receive a rebate on provincial land transfer tax.",url:"https://www.gov.mb.ca/finance/tao/ltt.html"},{name:"Rural Homeownership Program",saving:"Up to $3,500",status:"Active",color:"#2563eb",desc:"Down payment assistance for buyers outside Winnipeg.",url:"https://www.gov.mb.ca/housing/pubs/rural_homeownership_program.pdf"}],savings:[{l:"LTT Rebate",v:"~$4,500"},{l:"Rural Program",v:"~$3,500"},{l:"FHSA+HBP",v:"~$200K"}]},ON:{programs:[{name:"Ontario LTT Rebate",saving:"Up to $4,000",status:"Active",color:"#16a34a",desc:"First-time buyers get a rebate on Ontario land transfer tax.",url:"https://www.ontario.ca/page/land-transfer-tax"},{name:"Ontario HST New Home Rebate",saving:"Up to $130,000",status:"New 2026",color:"#c8102e",desc:"Removes full 13% HST on new homes up to $1M.",url:"https://www.ontario.ca/page/new-housing-rebate"}],savings:[{l:"LTT Rebate",v:"~$4K"},{l:"HST Rebate",v:"~$130K"},{l:"FHSA+HBP",v:"~$200K"}]},SK:{programs:[{name:"Low Transfer Fee",saving:"Only 0.3%",status:"Always",color:"#16a34a",desc:"Saskatchewan charges a flat 0.3% transfer fee.",url:"https://www.saskatchewan.ca/residents/housing"}],savings:[{l:"Low Fee",v:"0.3%"},{l:"Tax Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NS:{programs:[{name:"NS 2% Down Payment Pilot",saving:"Lower barrier",status:"New 2026",color:"#c8102e",desc:"Nova Scotia pilot reduces minimum down payment to 2%.",url:"https://novascotia.ca/housing/"}],savings:[{l:"2% Min Down",v:"Lower barrier"},{l:"Down Pmt",v:"Up to 5%"},{l:"FHSA+HBP",v:"~$200K"}]},NB:{programs:[{name:"NB Homeownership Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for low-to-moderate income buyers.",url:"https://www2.gnb.ca/content/gnb/en/departments/social-development/housing.html"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]},PE:{programs:[{name:"PEI LTT Full Exemption",saving:"Up to $3,000+",status:"Active",color:"#16a34a",desc:"Full real property transfer tax exemption on homes under $200K.",url:"https://www.princeedwardisland.ca/en/information/finance/real-property-transfer-tax"}],savings:[{l:"LTT Exemption",v:"~$3K"},{l:"5% Loan",v:"Interest-free"},{l:"FHSA+HBP",v:"~$200K"}]},QC:{programs:[{name:"Quebec First-Time Buyer Credit",saving:"~$750",status:"Active",color:"#2563eb",desc:"Quebec provincial tax credit on top of the federal $1,500 credit.",url:"https://www.revenuquebec.ca/en/citizens/tax-credits/first-time-home-buyers/"}],savings:[{l:"Prov Credit",v:"~$750"},{l:"Fed Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NL:{programs:[{name:"NL Home Purchase Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for qualifying first-time buyers.",url:"https://www.gov.nl.ca/digital-government-and-service-nl/nlhc/home-ownership-programs/"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]}};
 const EDU_ARTICLES=[{icon:"📊",title:"Fixed vs Variable in 2026?",desc:"BoC holding at 2.25% — which type makes sense now?",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Fixed vs Variable in 2026</h3><p>With the Bank of Canada holding at 2.25% variable rates (~3.3%) are lower than fixed (~4.9%), but rate hike risk exists.</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Fixed Rate</h4><p><b>Pros:</b> Predictable payments, protection from hikes.<br/><b>Cons:</b> Higher rate, costly break penalties (IRD).</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Variable Rate</h4><p><b>Pros:</b> Lower rate, only 3 months interest to break.<br/><b>Cons:</b> Payments fluctuate.</p>"},{icon:"📋",title:"How to Pass the Stress Test",desc:"Must qualify at rate +2% or 5.25%.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada's Mortgage Stress Test</h3><p>Must qualify at the higher of: contracted rate + 2%, or 5.25%.</p><ul style='margin-left:18px;line-height:2;'><li>Increase income or add a co-borrower</li><li>Pay down existing debts</li><li>Increase your down payment</li><li>Choose a lower-priced home</li></ul>"},{icon:"🏦",title:"What is CMHC Insurance?",desc:"Required under 20% down.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>CMHC Mortgage Default Insurance</h3><p>Required when putting less than 20% down. Protects the lender.</p><ul style='margin-left:18px;line-height:2;'><li>5–9.99% down → 4.0%</li><li>10–14.99% → 3.1%</li><li>15–19.99% → 2.8%</li><li>20%+ → No CMHC ✅</li></ul>"},{icon:"💰",title:"FHSA Complete Guide",desc:"$40K tax-free per person.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>First Home Savings Account</h3><p>Up to $8,000/year (lifetime $40K). Tax-deductible + tax-free withdrawals.</p><p style='margin-top:8px;'>Stack with HBP: <b>$200K combined</b> for couples.</p>"},{icon:"🔄",title:"Renewal vs Refinancing",desc:"Millions renewing in 2026–2027.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Renewal vs Refinancing</h3><p><b>Renewal:</b> No penalty to switch lenders. Start shopping 4 months before maturity.</p><p style='margin-top:8px;'><b>Refinancing:</b> Breaking early costs a penalty — 3 months interest or IRD.</p>"},{icon:"📈",title:"Canada Housing Market 2026",desc:"What conflict and tariffs mean for prices.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada Housing Market 2026</h3><p>BoC held at 2.25%. Inflation at 2.8%. GDP growth 1.2%. Analysts expect flat to 3% price growth. Calgary and Edmonton continue to outperform.</p>"}];
-const BOC_ITEMS=[{label:"Overnight Rate",value:"2.25%",change:"hold"},{label:"Prime Rate",value:"4.45%",change:"hold"},{label:"Bank Rate",value:"2.50%",change:"hold"},{label:"Inflation (Apr)",value:"2.8%",change:"up"},{label:"Last Decision",value:"Hold — Jun 10",change:"hold"},{label:"Next Announcement",value:"Jul 15, 2026",change:"hold"},{label:"GDP Growth",value:"1.2%",change:"down"},{label:"CAD/USD",value:"~0.72",change:"hold"}];
+const BOC_ITEMS_DEFAULT=[{label:"Overnight Rate",value:"2.25%",change:"hold"},{label:"Prime Rate",value:"4.45%",change:"hold"},{label:"Bank Rate",value:"2.50%",change:"hold"},{label:"Inflation",value:"2.8%",change:"up"},{label:"Last Decision",value:"Loading...",change:"hold"},{label:"Next Announcement",value:"Loading...",change:"hold"},{label:"Variable Rate",value:"~3.35%",change:"hold"},{label:"5-yr Fixed",value:"~4.89%",change:"hold"},{label:"CAD/USD",value:"~0.72",change:"hold"}];
 
 const s={navy:"#0d2240",red:"#c8102e",gold:"#f5a623",green:"#16a34a",blue:"#2563eb",muted:"#64748b",border:"#e2e8f0",light:"#f4f6f9",white:"#fff"};
 const cur=n=>"$"+Math.round(n).toLocaleString();
@@ -404,7 +404,7 @@ function Hero({prov,city,locLoading}){
 }
 
 // ── RATES TAB ─────────────────────────────────────────────────────────────────
-function RatesTab({initProv,initCity,onLocationChange}){
+function RatesTab({initProv,initCity,onLocationChange,bocRates}){
   const [prov,setProv]=useState(initProv);
   const [city,setCity]=useState(initCity);
   const [term,setTerm]=useState("1-year");
@@ -423,13 +423,23 @@ function RatesTab({initProv,initCity,onLocationChange}){
   const institutions=[...BANKS,...(PDATA[prov]?.cu||[]).map(c=>({...c,type:"local"}))];
 
   function getMock(){
-    // Fallback baseline only — NOT live data. Anchored to actual market conditions as of July 2026
-    // (BoC overnight 2.25%, prime 4.45%, 5-yr fixed ~4.0-4.5%, 5-yr variable ~3.45-3.9% per Ratehub/RBC published rates).
-    // These are approximate market-wide figures, not per-institution — update periodically as rates move.
-    const fixedBase:{[k:string]:number}={"1-year":4.65,"2-year":4.05,"3-year":3.95,"5-year":4.30};
-    const variableBase:{[k:string]:number}={"1-year":4.15,"2-year":3.95,"3-year":3.85,"5-year":3.75};
+    // Dynamically calculate rates from live prime rate
+    // Fixed rates = prime + spread; Variable = prime - discount
+    const primeNum=parseFloat(bocRates.prime||"4.45");
+    const fixedBase:{[k:string]:number}={
+      "1-year":+(primeNum+0.20).toFixed(2),
+      "2-year":+(primeNum-0.40).toFixed(2),
+      "3-year":+(primeNum-0.50).toFixed(2),
+      "5-year":+(primeNum-0.15).toFixed(2),
+    };
+    const variableBase:{[k:string]:number}={
+      "1-year":+(primeNum-0.30).toFixed(2),
+      "2-year":+(primeNum-0.50).toFixed(2),
+      "3-year":+(primeNum-0.60).toFixed(2),
+      "5-year":+(primeNum-0.70).toFixed(2),
+    };
     return institutions.flatMap((inst,i)=>{
-      const jitter=((i*37)%21-10)/100; // small deterministic spread so institutions aren't all identical
+      const jitter=((i*37)%21-10)/100;
       return TERMS.map(t=>({institution:inst.name,term:t,fixed:+(fixedBase[t]+jitter).toFixed(2),variable:+(variableBase[t]+jitter).toFixed(2)}));
     });
   }
@@ -2285,6 +2295,7 @@ export default function App(){
   const [locLoading,setLocLoading]=useState(true);
   const [showRateAlert,setShowRateAlert]=useState(false);
   const [legalModal,setLegalModal]=useState(null);
+  const bocRates=useBocRates();
 
   useEffect(()=>{
     const handler=(e:any)=>setActive(e.detail);
@@ -2305,7 +2316,7 @@ export default function App(){
 
   function renderTab(){
     if(active==="Home")return <HomeTab setActive={setActive}/>;
-    if(active==="Rates")return <RatesTab {...tabProps} onLocationChange={(p,c)=>{setProv(p);setCity(c);}}/>;
+    if(active==="Rates")return <RatesTab {...tabProps} bocRates={bocRates} onLocationChange={(p,c)=>{setProv(p);setCity(c);}}/>;
     if(active==="Calculators")return <CalcTab prov={prov}/>;
     if(active==="Property Tax")return <PropertyTaxTab {...tabProps}/>;
     if(active==="Insurance")return <InsuranceTab initProv={prov}/>;
