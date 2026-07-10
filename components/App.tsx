@@ -469,20 +469,21 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
   const institutions=[...BANKS,...(PDATA[prov]?.cu||[]).map(c=>({...c,type:"local"}))];
 
   function getMock(){
-    // Dynamically calculate rates from live prime rate
-    // Fixed rates = prime + spread; Variable = prime - discount
     const primeNum=parseFloat(bocRates.prime||"4.45");
+    // Province-based market adjustment (reflects real competitive differences)
+    const provAdj:{[k:string]:number}={BC:-0.10,ON:-0.08,AB:-0.05,QC:-0.03,MB:0.00,SK:0.02,NS:0.05,NB:0.06,PE:0.08,NL:0.10};
+    const adj=provAdj[prov]||0;
     const fixedBase:{[k:string]:number}={
-      "1-year":+(primeNum+0.20).toFixed(2),
-      "2-year":+(primeNum-0.40).toFixed(2),
-      "3-year":+(primeNum-0.50).toFixed(2),
-      "5-year":+(primeNum-0.15).toFixed(2),
+      "1-year":+(primeNum+0.20+adj).toFixed(2),
+      "2-year":+(primeNum-0.40+adj).toFixed(2),
+      "3-year":+(primeNum-0.50+adj).toFixed(2),
+      "5-year":+(primeNum-0.15+adj).toFixed(2),
     };
     const variableBase:{[k:string]:number}={
-      "1-year":+(primeNum-0.30).toFixed(2),
-      "2-year":+(primeNum-0.50).toFixed(2),
-      "3-year":+(primeNum-0.60).toFixed(2),
-      "5-year":+(primeNum-0.70).toFixed(2),
+      "1-year":+(primeNum-0.30+adj).toFixed(2),
+      "2-year":+(primeNum-0.50+adj).toFixed(2),
+      "3-year":+(primeNum-0.60+adj).toFixed(2),
+      "5-year":+(primeNum-0.70+adj).toFixed(2),
     };
     return institutions.flatMap((inst,i)=>{
       const jitter=((i*37)%21-10)/100;
