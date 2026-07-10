@@ -102,7 +102,6 @@ const TESTIMONIALS=[
   {name:"Lisa R.",city:"Winnipeg, MB",stars:5,text:"Property tax estimator was dead accurate for my neighbourhood. Really useful for budgeting when we were shopping for homes.",role:"Home buyer"},
   {name:"David C.",city:"Ottawa, ON",stars:5,text:"The BoC rate ticker and announcement dates keep me informed without having to search around. Subscribed to rate alerts — great feature.",role:"Investor"},
 ];
-
 const s={navy:"#0d2240",red:"#c8102e",gold:"#f5a623",green:"#16a34a",blue:"#2563eb",muted:"#64748b",border:"#e2e8f0",light:"#f4f6f9",white:"#fff"};
 const cur=n=>"$"+Math.round(n).toLocaleString();
 function getCMHC(p,d){if(d>=20||p>1500000)return{req:false,premium:0,rate:0};const r=d>=15?0.028:d>=10?0.031:0.04;return{req:true,premium:Math.round(p*(1-d/100)*r),rate:r};}
@@ -416,7 +415,6 @@ function RatesTab({initProv,initCity,onLocationChange}){
         <span style={{fontSize:10,color:s.muted}}>{lastUpd}</span>
       </div>
       {usingSample&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"8px 14px",fontSize:11,color:"#c2410c",margin:"10px 0"}}>⚠️ Sample data — live rates load after Vercel deployment.</div>}
-
       {!loading&&withRate.length>0&&(
         <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"12px 16px",margin:"10px 0",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
           <div style={{flexShrink:0}}>
@@ -437,7 +435,6 @@ function RatesTab({initProv,initCity,onLocationChange}){
           </div>
         </div>
       )}
-
       {!loading&&withRate.length>0&&(
         <div style={{display:"flex",alignItems:"center",gap:10,margin:"10px 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
           <span style={{fontSize:18}}>✅</span>
