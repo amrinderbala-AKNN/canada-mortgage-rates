@@ -387,10 +387,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Consult"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Consult"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn"]},{label:"Help",tabs:["Consult"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Consult"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -2301,6 +2301,105 @@ function ConsultTab(){
 }
 
 
+const GLOSSARY_TERMS=[
+  {term:"Amortization Period",cat:"Basics",def:"The total length of time to pay off your mortgage in full. In Canada, the maximum is typically 25 years for insured mortgages and 30 years for conventional mortgages."},
+  {term:"Bank of Canada (BoC)",cat:"Rates",def:"Canada's central bank, which sets the overnight lending rate. Changes to this rate directly affect variable mortgage rates and the Prime Rate charged by banks."},
+  {term:"Basis Point (bps)",cat:"Rates",def:"One hundredth of one percent (0.01%). Lenders and economists use basis points to describe rate changes. A 25 bps increase means the rate went up by 0.25%."},
+  {term:"Bridge Financing",cat:"Buying",def:"A short-term loan that covers the gap between the closing date of your new home and the sale of your existing home. Typically lasts 30–90 days."},
+  {term:"Closed Mortgage",cat:"Basics",def:"A mortgage that cannot be paid off, refinanced, or renegotiated before the end of the term without paying a prepayment penalty. Offers lower rates than open mortgages."},
+  {term:"CMHC Insurance",cat:"Insurance",def:"Mortgage default insurance required when your down payment is less than 20%. Protects the lender — not you — if you default. Premium ranges from 2.8% to 4.0% of the mortgage amount."},
+  {term:"Conventional Mortgage",cat:"Basics",def:"A mortgage with a down payment of 20% or more. Does not require CMHC mortgage default insurance."},
+  {term:"Co-Signer",cat:"Qualifying",def:"A person who signs the mortgage with you and is equally responsible for repayment. Used when the primary borrower doesn't qualify alone due to income or credit."},
+  {term:"Credit Score",cat:"Qualifying",def:"A number from 300–900 that represents your creditworthiness. Most A-lenders require 680+. Scores above 750 typically get the best rates."},
+  {term:"Default",cat:"Basics",def:"Failing to make your mortgage payments as agreed. Can result in the lender forcing the sale of your home (power of sale or foreclosure)."},
+  {term:"Down Payment",cat:"Buying",def:"The portion of the home purchase price you pay upfront. Minimum is 5% in Canada for homes under $500,000. Homes over $1M require 20% minimum."},
+  {term:"Equity",cat:"Basics",def:"The difference between your home's market value and what you owe on your mortgage. Equity grows as you pay down your mortgage and/or as your home appreciates."},
+  {term:"FHSA (First Home Savings Account)",cat:"First-Time Buyers",def:"A registered account letting first-time buyers save up to $8,000/year (lifetime max $40,000) with tax-deductible contributions and tax-free withdrawals for a home purchase."},
+  {term:"Fixed Rate Mortgage",cat:"Rates",def:"A mortgage where the interest rate stays the same for the entire term. Offers payment certainty but typically has higher break penalties (IRD) than variable."},
+  {term:"GDS Ratio",cat:"Qualifying",def:"Gross Debt Service ratio — the percentage of your gross monthly income used for housing costs (mortgage, property tax, heat). Canadian lenders cap this at 39%."},
+  {term:"HBP (Home Buyers' Plan)",cat:"First-Time Buyers",def:"Allows first-time buyers to withdraw up to $60,000 from their RRSP tax-free for a home purchase. Must be repaid over 15 years."},
+  {term:"High-Ratio Mortgage",cat:"Basics",def:"A mortgage where the down payment is less than 20% of the purchase price. Requires CMHC mortgage default insurance."},
+  {term:"Home Equity Line of Credit (HELOC)",cat:"Products",def:"A revolving line of credit secured against your home's equity. Rates are variable, typically Prime + 0.5%. Maximum borrowing is 65% of your home's value."},
+  {term:"Insured Mortgage",cat:"Insurance",def:"A mortgage backed by CMHC, Sagen, or Canada Guaranty. Required when down payment is under 20%. Allows lenders to offer lower rates."},
+  {term:"Interest Rate Differential (IRD)",cat:"Penalties",def:"The penalty for breaking a fixed-rate mortgage early. Calculated as the difference between your rate and today's rate for the remaining term. Can be very large at major banks."},
+  {term:"Land Transfer Tax (LTT)",cat:"Buying",def:"A provincial tax paid when you buy a property. Rates vary by province — Ontario and BC charge 1–2.5%, Alberta has none. First-time buyers get rebates in most provinces."},
+  {term:"Maturity Date",cat:"Basics",def:"The date your mortgage term ends and must be renewed, paid off, or refinanced. You can switch lenders at maturity with no penalty."},
+  {term:"Mortgage Term",cat:"Basics",def:"The length of time your current mortgage rate and contract conditions are in effect — typically 1 to 5 years. Not to be confused with amortization."},
+  {term:"Open Mortgage",cat:"Basics",def:"A mortgage that can be paid off, refinanced, or renegotiated at any time without penalty. Carries higher rates than closed mortgages."},
+  {term:"Overnight Rate",cat:"Rates",def:"The interest rate at which major Canadian banks lend to each other overnight. Set by the Bank of Canada. Changes directly affect the Prime Rate and variable mortgage rates."},
+  {term:"Portability",cat:"Products",def:"The ability to transfer your existing mortgage — rate, term, and balance — to a new property when you move, avoiding break penalties."},
+  {term:"Pre-Approval",cat:"Buying",def:"A lender's conditional commitment to lend you up to a certain amount at a specific rate, held for 90–120 days. Does not guarantee final approval."},
+  {term:"Prepayment Privilege",cat:"Products",def:"The right to make extra payments on your mortgage beyond your regular schedule without penalty. Most lenders allow 10–20% of the original balance per year."},
+  {term:"Prime Rate",cat:"Rates",def:"The interest rate Canadian banks use as a benchmark for variable rate products. Currently 4.45%. Typically Prime = BoC overnight rate + 2.20%."},
+  {term:"Principal",cat:"Basics",def:"The original amount you borrowed, or the remaining balance owed on your mortgage, not including interest."},
+  {term:"Refinancing",cat:"Products",def:"Breaking your current mortgage before maturity to access a new rate, change terms, or borrow against your home equity. Usually involves a prepayment penalty."},
+  {term:"Renewal",cat:"Products",def:"At the end of your mortgage term, you renew for a new term. No penalty to switch lenders at renewal. Always shop around — your lender's first offer is rarely the best."},
+  {term:"Stress Test",cat:"Qualifying",def:"A federal requirement to qualify at the higher of your contracted rate + 2% or 5.25%. Ensures you can afford payments if rates rise. Reduces your maximum purchase price by ~15–20%."},
+  {term:"TDS Ratio",cat:"Qualifying",def:"Total Debt Service ratio — the percentage of gross monthly income used for all debt payments including mortgage, property tax, car loans, and credit cards. Maximum is 44%."},
+  {term:"Title Insurance",cat:"Buying",def:"Insurance protecting against losses from title defects, fraud, or encumbrances not found during a title search. Typically costs $200–$400 and is a one-time premium."},
+  {term:"Variable Rate Mortgage",cat:"Rates",def:"A mortgage where the interest rate fluctuates with the Prime Rate. Currently cheaper than fixed rates but payments can change. Break penalty is typically only 3 months interest."},
+];
+
+const GLOSSARY_CATS=["All",...Array.from(new Set(GLOSSARY_TERMS.map(t=>t.cat)))];
+
+function GlossaryTab(){
+  const [search,setSearch]=useState("");
+  const [cat,setCat]=useState("All");
+  const [open,setOpen]=useState<string|null>(null);
+  const filtered=GLOSSARY_TERMS.filter(t=>{
+    const matchCat=cat==="All"||t.cat===cat;
+    const matchSearch=!search||t.term.toLowerCase().includes(search.toLowerCase())||t.def.toLowerCase().includes(search.toLowerCase());
+    return matchCat&&matchSearch;
+  }).sort((a,b)=>a.term.localeCompare(b.term));
+  const letters=Array.from(new Set(filtered.map(t=>t.term[0]))).sort();
+  return(
+    <div>
+      <Card style={{marginBottom:14}}>
+        <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:4}}>📖 Canadian Mortgage Glossary</h2>
+        <p style={{fontSize:12,color:s.muted,marginBottom:14}}>{GLOSSARY_TERMS.length} mortgage terms explained in plain English.</p>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
+          <input type="text" placeholder="Search terms..." value={search} onChange={e=>setSearch(e.target.value)} style={{flex:1,minWidth:160,padding:"8px 12px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:13}}/>
+          <select value={cat} onChange={e=>setCat(e.target.value)} style={{padding:"8px 12px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:13,background:s.white}}>
+            {GLOSSARY_CATS.map(c=><option key={c}>{c}</option>)}
+          </select>
+        </div>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap",marginBottom:4}}>
+          {letters.map(l=><button key={l} onClick={()=>document.getElementById("gl-"+l)?.scrollIntoView({behavior:"smooth",block:"start"})} style={{padding:"3px 8px",borderRadius:6,border:`1px solid ${s.border}`,background:s.white,fontSize:11,fontWeight:700,color:s.navy,cursor:"pointer"}}>{l}</button>)}
+        </div>
+      </Card>
+      {filtered.length===0&&<EmptyState icon="🔍" title="No terms found" sub="Try a different search or category."/>}
+      {letters.map(letter=>{
+        const terms=filtered.filter(t=>t.term[0]===letter);
+        if(!terms.length)return null;
+        return(
+          <div key={letter} id={"gl-"+letter} style={{marginBottom:16}}>
+            <div style={{fontSize:22,fontWeight:800,color:s.navy,borderBottom:`2px solid ${s.border}`,paddingBottom:6,marginBottom:8}}>{letter}</div>
+            <div style={{display:"flex",flexDirection:"column",gap:6}}>
+              {terms.map(t=>(
+                <div key={t.term} style={{background:s.white,borderRadius:10,border:`1px solid ${s.border}`,overflow:"hidden"}}>
+                  <button onClick={()=>setOpen(open===t.term?null:t.term)} style={{width:"100%",textAlign:"left",padding:"12px 16px",background:"none",border:"none",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+                    <div style={{display:"flex",alignItems:"center",gap:10}}>
+                      <span style={{fontSize:13,fontWeight:700,color:s.navy}}>{t.term}</span>
+                      <span style={{background:"#f1f5f9",color:s.muted,borderRadius:20,padding:"1px 8px",fontSize:10,fontWeight:600}}>{t.cat}</span>
+                    </div>
+                    <span style={{fontSize:16,color:s.muted,flexShrink:0,transform:open===t.term?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+                  </button>
+                  {open===t.term&&(
+                    <div style={{padding:"0 16px 14px",fontSize:13,color:s.muted,lineHeight:1.8,borderTop:`1px solid ${s.light}`}}>
+                      <div style={{paddingTop:10}}>{t.def}</div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Definitions are for informational purposes only. Consult a licensed mortgage professional for advice specific to your situation.</p>
+    </div>
+  );
+}
+
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
@@ -2393,6 +2492,7 @@ export default function App(){
     if(active==="News")return <NewsTab initProv={prov}/>;
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
     if(active==="Learn")return <LearnTab/>;
+    if(active==="Glossary")return <GlossaryTab/>;
     if(active==="Consult")return <ConsultTab/>;
     return null;
   }
