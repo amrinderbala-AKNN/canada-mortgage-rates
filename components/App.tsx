@@ -2403,7 +2403,6 @@ export default function App(){
       <BocBanner/>
       <NavBar active={active} setActive={setActive}/>
       <Hero prov={prov} city={city} locLoading={locLoading}/>
-      <TestimonialsSection/>
       <div style={{maxWidth:1060,margin:"0 auto",padding:"16px 14px",width:"100%",flex:1,boxSizing:"border-box"}}>
         {renderTab()}
       </div>
