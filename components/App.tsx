@@ -387,10 +387,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Consult"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Renewal","Consult"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Consult"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Consult"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -2143,6 +2143,123 @@ BoC Rate: 2.25% (held) · Prime: 4.45% · Inflation: 2.8% · GDP Growth: 1.2% ·
   );
 }
 
+function RenewalTab(){
+  const [balance,setBalance]=useState(350000);
+  const [currentRate,setCurrentRate]=useState(5.5);
+  const [offerRate,setOfferRate]=useState(5.1);
+  const [amort,setAmort]=useState(20);
+  const [term,setTerm]=useState(5);
+  const [result,setResult]=useState<any>(null);
+  const resultRef=useRef<any>(null);
+
+  function calcPmtLocal(p:number,r:number,y:number){const m=r/100/12,n=y*12;return m===0?p/n:p*(m*Math.pow(1+m,n))/(Math.pow(1+m,n)-1);}
+
+  function compare(){
+    const currentPmt=calcPmtLocal(balance,currentRate,amort);
+    const offerPmt=calcPmtLocal(balance,offerRate,amort);
+    const saving=currentPmt-offerPmt;
+    const termSaving=saving*term*12;
+    const betterRate=Math.min(currentRate,offerRate)-0.3;
+    const bestPmt=calcPmtLocal(balance,betterRate,amort);
+    const bestSaving=currentPmt-bestPmt;
+    const bestTermSaving=bestSaving*term*12;
+    setResult({currentPmt,offerPmt,saving,termSaving,betterRate,bestPmt,bestSaving,bestTermSaving,term,isGood:offerRate<currentRate-0.15});
+    setTimeout(()=>resultRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
+  }
+
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px 20px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🔄</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Compare Your Renewal Offer</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Millions of Canadians renew their mortgage in 2026–2027. Don't just accept your lender's first offer — find out how much you could save by shopping around.</p>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
+        <Card>
+          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>📋 Your Renewal Details</h3>
+          <Field label="Remaining Mortgage Balance ($)">
+            <input type="number" value={balance} onChange={e=>setBalance(parseFloat(e.target.value)||0)} style={inp}/>
+          </Field>
+          <Field label="Your Current Rate (%)">
+            <input type="number" step="0.05" value={currentRate} onChange={e=>setCurrentRate(parseFloat(e.target.value)||0)} style={inp}/>
+          </Field>
+          <Field label="Your Lender's Renewal Offer (%)">
+            <input type="number" step="0.05" value={offerRate} onChange={e=>setOfferRate(parseFloat(e.target.value)||0)} style={inp}/>
+          </Field>
+          <Field label="New Term (years)">
+            <select value={term} onChange={e=>setTerm(parseInt(e.target.value))} style={inp}>
+              {[1,2,3,4,5].map(y=><option key={y} value={y}>{y} year{y>1?"s":""}</option>)}
+            </select>
+          </Field>
+          <Field label="Remaining Amortization (years)">
+            <select value={amort} onChange={e=>setAmort(parseInt(e.target.value))} style={inp}>
+              {[5,10,15,20,25].map(y=><option key={y} value={y}>{y} years</option>)}
+            </select>
+          </Field>
+          <button onClick={compare} style={calcBtn}>Compare My Offer →</button>
+        </Card>
+
+        <Card style={{background:s.navy}}>
+          <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:12}}>💡 Renewal Tips</h3>
+          {[
+            ["START 4 MONTHS EARLY","Lenders must offer your renewal 21 days before maturity. Start shopping 120 days out."],
+            ["NO PENALTY TO SWITCH","Switching lenders at renewal costs nothing. No penalty, no IRD."],
+            ["NEVER TAKE THE FIRST OFFER","Your lender's posted renewal rate is rarely their best. Always negotiate or shop around."],
+            ["USE A BROKER","A mortgage broker compares 30+ lenders at once and may find 0.25–0.50% lower than your bank."],
+            ["RATE HOLD","Get a rate hold from a competing lender while you negotiate with your current one."],
+          ].map(([t,d])=>(
+            <div key={t} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:7}}>
+              <div style={{fontSize:10,color:s.gold,fontWeight:700,marginBottom:2}}>{t}</div>
+              <div style={{fontSize:11,color:"rgba(255,255,255,0.8)"}}>{d}</div>
+            </div>
+          ))}
+        </Card>
+      </div>
+
+      <div ref={resultRef}>{result&&(
+        <div style={{marginTop:14}}>
+          <div style={{background:result.isGood?"linear-gradient(135deg,#f0fdf4,#dcfce7)":"linear-gradient(135deg,#fff7ed,#ffedd5)",border:`1px solid ${result.isGood?"#bbf7d0":"#fed7aa"}`,borderRadius:12,padding:16,marginBottom:14,display:"flex",alignItems:"center",gap:12}}>
+            <div style={{fontSize:32}}>{result.isGood?"✅":"⚠️"}</div>
+            <div>
+              <div style={{fontSize:14,fontWeight:800,color:result.isGood?"#15803d":"#c2410c",marginBottom:3}}>
+                {result.isGood?"Your offer looks reasonable — but you may still do better":"Your lender's offer may not be competitive"}
+              </div>
+              <div style={{fontSize:12,color:result.isGood?"#16a34a":"#ea580c"}}>
+                {result.isGood
+                  ?`Saving ${cur(result.saving)}/mo vs current rate. Shop around — brokers may find ${result.betterRate.toFixed(2)}% or lower.`
+                  :`Only saving ${cur(Math.abs(result.saving))}/mo. A broker may find rates 0.25–0.50% lower than this offer.`
+                }
+              </div>
+            </div>
+          </div>
+
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,marginBottom:14}}>
+            {[
+              [cur(result.currentPmt)+"/mo","At Current Rate ("+currentRate+"%)","#64748b"],
+              [cur(result.offerPmt)+"/mo","Lender's Offer ("+offerRate+"%)","#2563eb"],
+              [cur(result.saving)+"/mo","Monthly Savings vs Current",result.saving>0?"#16a34a":"#c8102e"],
+              [cur(result.termSaving),"Total Savings Over "+result.term+"yr Term",result.termSaving>0?"#16a34a":"#c8102e"],
+            ].map(([v,l,c])=>(
+              <div key={l} style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:10,padding:14,textAlign:"center"}}>
+                <div style={{fontSize:20,fontWeight:800,color:c as string}}>{v}</div>
+                <div style={{fontSize:11,color:s.muted,marginTop:4}}>{l}</div>
+              </div>
+            ))}
+          </div>
+
+          <Card style={{borderLeft:`4px solid ${s.red}`}}>
+            <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:10}}>🏆 What If You Shopped Around?</div>
+            <p style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:12}}>Based on current market rates, a mortgage broker may be able to find you <b style={{color:s.navy}}>{result.betterRate.toFixed(2)}%</b> or lower — that's <b style={{color:s.green}}>{cur(result.bestSaving)}/month</b> saved vs your current rate, or <b style={{color:s.green}}>{cur(result.bestTermSaving)}</b> over your {result.term}-year term.</p>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"11px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>📞 Get a Free Rate Comparison →</button>
+          </Card>
+          <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Estimates only. Actual rates depend on your credit, income, and lender. Consult a licensed mortgage professional.</p>
+        </div>
+      )}</div>
+    </div>
+  );
+}
+
 function ConsultTab(){
   const [cName,setCName]=useState("");const [cPhone,setCPhone]=useState("");const [cEmail,setCEmail]=useState("");const [cCity,setCCity]=useState("");const [cPurpose,setCPurpose]=useState("");const [cMsg,setCMsg]=useState("");const [cOk,setCOk]=useState(false);
   const [nName,setNName]=useState("");const [nEmail,setNEmail]=useState("");const [nCity,setNCity]=useState("");const [nConsent,setNConsent]=useState(false);const [nOk,setNOk]=useState(false);
@@ -2493,6 +2610,7 @@ export default function App(){
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
     if(active==="Learn")return <LearnTab/>;
     if(active==="Glossary")return <GlossaryTab/>;
+    if(active==="Renewal")return <RenewalTab/>;
     if(active==="Consult")return <ConsultTab/>;
     return null;
   }
