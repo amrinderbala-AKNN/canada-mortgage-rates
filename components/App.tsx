@@ -2548,6 +2548,14 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <div style={{fontSize:20}}>📢</div>
         <div><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>Bank of Canada Rate — last decision {fmtBocDate(last)}</div><div style={{fontSize:11,color:"#92400e"}}>Overnight rate: {boc.overnight}%. Prime Rate: {boc.prime}%. Next decision: {fmtBocDate(next)}.</div></div>
       </div>
+      <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:12,padding:"16px 20px",marginBottom:16,display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+        <div style={{fontSize:28,flexShrink:0}}>🔔</div>
+        <div style={{flex:1,minWidth:180}}>
+          <div style={{color:"#fff",fontSize:14,fontWeight:800,marginBottom:3}}>Get BoC Rate Alerts — Free</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11,lineHeight:1.5}}>Next announcement: <b>{fmtBocDate(next)}</b>. Be the first to know when rates change.</div>
+        </div>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"10px 20px",background:"#fff",color:s.red,border:"none",borderRadius:8,fontSize:13,fontWeight:800,cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>🔔 Get Alerts →</button>
+      </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
         {features.map(f=>(
           <div key={f.tab} onClick={()=>setActive(f.tab)} style={{background:s.white,borderRadius:12,padding:16,border:`1px solid ${s.border}`,cursor:"pointer",transition:"all 0.2s"}}
@@ -2584,7 +2592,9 @@ export default function App(){
   useEffect(()=>{
     const handler=(e:any)=>setActive(e.detail);
     window.addEventListener("switchTab",handler);
-    return()=>window.removeEventListener("switchTab",handler);
+    const alertHandler=()=>setShowRateAlert(true);
+    window.addEventListener("openRateAlert",alertHandler);
+    return()=>{window.removeEventListener("switchTab",handler);window.removeEventListener("openRateAlert",alertHandler);};
   },[]);
 
   useEffect(()=>{
