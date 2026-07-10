@@ -168,14 +168,6 @@ const FTHB_PROV={AB:{programs:[{name:"No Land Transfer Tax",saving:"$5,000–$15
 const EDU_ARTICLES=[{icon:"📊",title:"Fixed vs Variable in 2026?",desc:"BoC holding at 2.25% — which type makes sense now?",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Fixed vs Variable in 2026</h3><p>With the Bank of Canada holding at 2.25% variable rates (~3.3%) are lower than fixed (~4.9%), but rate hike risk exists.</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Fixed Rate</h4><p><b>Pros:</b> Predictable payments, protection from hikes.<br/><b>Cons:</b> Higher rate, costly break penalties (IRD).</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Variable Rate</h4><p><b>Pros:</b> Lower rate, only 3 months interest to break.<br/><b>Cons:</b> Payments fluctuate.</p>"},{icon:"📋",title:"How to Pass the Stress Test",desc:"Must qualify at rate +2% or 5.25%.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada's Mortgage Stress Test</h3><p>Must qualify at the higher of: contracted rate + 2%, or 5.25%.</p><ul style='margin-left:18px;line-height:2;'><li>Increase income or add a co-borrower</li><li>Pay down existing debts</li><li>Increase your down payment</li><li>Choose a lower-priced home</li></ul>"},{icon:"🏦",title:"What is CMHC Insurance?",desc:"Required under 20% down.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>CMHC Mortgage Default Insurance</h3><p>Required when putting less than 20% down. Protects the lender.</p><ul style='margin-left:18px;line-height:2;'><li>5–9.99% down → 4.0%</li><li>10–14.99% → 3.1%</li><li>15–19.99% → 2.8%</li><li>20%+ → No CMHC ✅</li></ul>"},{icon:"💰",title:"FHSA Complete Guide",desc:"$40K tax-free per person.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>First Home Savings Account</h3><p>Up to $8,000/year (lifetime $40K). Tax-deductible + tax-free withdrawals.</p><p style='margin-top:8px;'>Stack with HBP: <b>$200K combined</b> for couples.</p>"},{icon:"🔄",title:"Renewal vs Refinancing",desc:"Millions renewing in 2026–2027.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Renewal vs Refinancing</h3><p><b>Renewal:</b> No penalty to switch lenders. Start shopping 4 months before maturity.</p><p style='margin-top:8px;'><b>Refinancing:</b> Breaking early costs a penalty — 3 months interest or IRD.</p>"},{icon:"📈",title:"Canada Housing Market 2026",desc:"What conflict and tariffs mean for prices.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada Housing Market 2026</h3><p>BoC held at 2.25%. Inflation at 2.8%. GDP growth 1.2%. Analysts expect flat to 3% price growth. Calgary and Edmonton continue to outperform.</p>"}];
 const BOC_ITEMS_DEFAULT=[{label:"Overnight Rate",value:"2.25%",change:"hold"},{label:"Prime Rate",value:"4.45%",change:"hold"},{label:"Bank Rate",value:"2.50%",change:"hold"},{label:"Inflation",value:"2.8%",change:"up"},{label:"Last Decision",value:"Loading...",change:"hold"},{label:"Next Announcement",value:"Loading...",change:"hold"},{label:"Variable Rate",value:"~3.35%",change:"hold"},{label:"5-yr Fixed",value:"~4.89%",change:"hold"},{label:"CAD/USD",value:"~0.72",change:"hold"}];
 
-const TESTIMONIALS=[
-  {name:"Sarah M.",city:"Toronto, ON",stars:5,text:"Saved $180/month on my renewal by comparing lenders here. Switched from TD to Nesto and couldn't be happier. The rate finder tool made it so easy.",role:"First-time buyer"},
-  {name:"James K.",city:"Calgary, AB",stars:5,text:"The stress test calculator finally made sense to me after using this site. Knew exactly what I qualified for before talking to the bank.",role:"Upgrading homes"},
-  {name:"Priya S.",city:"Vancouver, BC",stars:5,text:"Used the FTHB section to stack FHSA + HBP. Found programs I didn't even know existed. Saved thousands in land transfer tax.",role:"First-time buyer"},
-  {name:"Michel T.",city:"Montreal, QC",stars:5,text:"Compared 20+ lenders in 5 minutes. The rate bar chart showing who's cheapest is genius. Ended up going with a credit union over the big banks.",role:"Renewing mortgage"},
-  {name:"Lisa R.",city:"Winnipeg, MB",stars:5,text:"Property tax estimator was dead accurate for my neighbourhood. Really useful for budgeting when we were shopping for homes.",role:"Home buyer"},
-  {name:"David C.",city:"Ottawa, ON",stars:5,text:"The BoC rate ticker and announcement dates keep me informed without having to search around. Subscribed to rate alerts — great feature.",role:"Investor"},
-];
 const s={navy:"#0d2240",red:"#c8102e",gold:"#f5a623",green:"#16a34a",blue:"#2563eb",muted:"#64748b",border:"#e2e8f0",light:"#f4f6f9",white:"#fff"};
 const cur=n=>"$"+Math.round(n).toLocaleString();
 function getCMHC(p,d){if(d>=20||p>1500000)return{req:false,premium:0,rate:0};const r=d>=15?0.028:d>=10?0.031:0.04;return{req:true,premium:Math.round(p*(1-d/100)*r),rate:r};}
@@ -194,12 +186,42 @@ const calcBtn:React.CSSProperties={width:"100%",padding:10,background:s.navy,col
 const resultBox:React.CSSProperties={background:`linear-gradient(135deg,#0d2240,#1a3a5c)`,borderRadius:10,padding:14,marginTop:12,color:"#fff"};
 function RRow({l,v,bold}:{l:string,v:string,bold?:boolean}){return <><div style={{color:"rgba(255,255,255,0.7)",fontSize:11}}>{l}</div><div style={{textAlign:"right",fontWeight:bold?700:400,fontSize:11}}>{v}</div></>;}
 function TestimonialsSection(){
+  const [reviews,setReviews]=useState<any[]>([]);
+  const [loading,setLoading]=useState(true);
   const [idx,setIdx]=useState(0);
+  const [showForm,setShowForm]=useState(false);
+  const [name,setName]=useState("");
+  const [city,setCity]=useState("");
+  const [role,setRole]=useState("");
+  const [rating,setRating]=useState(5);
+  const [text,setText]=useState("");
+  const [submitting,setSubmitting]=useState(false);
+  const [ok,setOk]=useState(false);
+  const [error,setError]=useState("");
   const visible=3;
-  const total=TESTIMONIALS.length;
-  const prev=()=>setIdx(i=>Math.max(0,i-1));
-  const next=()=>setIdx(i=>Math.min(total-visible,i+1));
-  const shown=TESTIMONIALS.slice(idx,idx+visible);
+
+  useEffect(()=>{
+    fetch("/api/reviews").then(r=>r.json()).then(d=>{setReviews(Array.isArray(d)?d:[]);setLoading(false);}).catch(()=>setLoading(false));
+  },[]);
+
+  async function submit(){
+    if(!name.trim()||!text.trim()){setError("Name and review are required.");return;}
+    if(text.length<20){setError("Review must be at least 20 characters.");return;}
+    setSubmitting(true);setError("");
+    try{
+      const r=await fetch("/api/reviews",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name,city,role,rating,text})});
+      if(!r.ok)throw new Error();
+      const newReview=await r.json();
+      setReviews(prev=>[Array.isArray(newReview)?newReview[0]:newReview,...prev]);
+      setOk(true);setShowForm(false);
+      setName("");setCity("");setRole("");setRating(5);setText("");
+    }catch{setError("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  const total=reviews.length;
+  const shown=reviews.slice(idx,idx+visible);
+
   return(
     <div style={{background:`linear-gradient(135deg,#f8fafc,#f0f4f8)`,borderTop:`1px solid ${s.border}`,borderBottom:`1px solid ${s.border}`,padding:"28px 14px",flexShrink:0}}>
       <div style={{maxWidth:1060,margin:"0 auto"}}>
@@ -208,24 +230,59 @@ function TestimonialsSection(){
             <div style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:2}}>⭐ What Canadians Are Saying</div>
             <div style={{fontSize:11,color:s.muted}}>Real experiences from homebuyers and renewers across Canada</div>
           </div>
-          <div style={{display:"flex",gap:6}}>
-            <button onClick={prev} disabled={idx===0} style={{width:32,height:32,borderRadius:"50%",border:`1.5px solid ${s.border}`,background:idx===0?"#f1f5f9":s.white,color:idx===0?s.muted:s.navy,cursor:idx===0?"not-allowed":"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>‹</button>
-            <button onClick={next} disabled={idx>=total-visible} style={{width:32,height:32,borderRadius:"50%",border:`1.5px solid ${s.border}`,background:idx>=total-visible?"#f1f5f9":s.white,color:idx>=total-visible?s.muted:s.navy,cursor:idx>=total-visible?"not-allowed":"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>›</button>
+          <div style={{display:"flex",gap:6,alignItems:"center"}}>
+            {total>visible&&<>
+              <button onClick={()=>setIdx(i=>Math.max(0,i-1))} disabled={idx===0} style={{width:32,height:32,borderRadius:"50%",border:`1.5px solid ${s.border}`,background:idx===0?"#f1f5f9":s.white,color:idx===0?s.muted:s.navy,cursor:idx===0?"not-allowed":"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>‹</button>
+              <button onClick={()=>setIdx(i=>Math.min(total-visible,i+1))} disabled={idx>=total-visible} style={{width:32,height:32,borderRadius:"50%",border:`1.5px solid ${s.border}`,background:idx>=total-visible?"#f1f5f9":s.white,color:idx>=total-visible?s.muted:s.navy,cursor:idx>=total-visible?"not-allowed":"pointer",fontSize:14,display:"flex",alignItems:"center",justifyContent:"center"}}>›</button>
+            </>}
+            <button onClick={()=>{setShowForm(!showForm);setOk(false);}} style={{padding:"6px 14px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>{showForm?"✕ Cancel":"✍️ Leave a Review"}</button>
           </div>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12}}>
-          {shown.map((t,i)=>(
-            <div key={i} style={{background:s.white,borderRadius:12,padding:16,boxShadow:"0 2px 12px rgba(0,0,0,0.06)",border:`1px solid ${s.border}`}}>
-              <div style={{color:s.gold,fontSize:13,marginBottom:8}}>{"★".repeat(t.stars)}</div>
-              <p style={{fontSize:12,color:"#374151",lineHeight:1.7,marginBottom:12,fontStyle:"italic"}}>"{t.text}"</p>
-              <div style={{display:"flex",alignItems:"center",gap:9}}>
-                <div style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:14,fontWeight:800,flexShrink:0}}>{t.name[0]}</div>
-                <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>{t.name}</div><div style={{fontSize:10,color:s.muted}}>{t.city} · {t.role}</div></div>
+
+        {ok&&<div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"10px 14px",fontSize:12,color:"#15803d",fontWeight:600,marginBottom:12}}>✅ Thanks for your review! It's now live.</div>}
+
+        {showForm&&(
+          <div style={{background:s.white,borderRadius:12,padding:16,border:`1px solid ${s.border}`,marginBottom:16,boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+            <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:12}}>Share Your Experience</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:8,marginBottom:8}}>
+              <input placeholder="Your name *" value={name} onChange={e=>setName(e.target.value)} style={{...inp,fontSize:12}} maxLength={60}/>
+              <input placeholder="City (optional)" value={city} onChange={e=>setCity(e.target.value)} style={{...inp,fontSize:12}}/>
+              <input placeholder="e.g. First-time buyer" value={role} onChange={e=>setRole(e.target.value)} style={{...inp,fontSize:12}}/>
+              <div style={{display:"flex",alignItems:"center",gap:6}}>
+                <span style={{fontSize:11,color:s.muted,whiteSpace:"nowrap"}}>Rating:</span>
+                {[1,2,3,4,5].map(r=><button key={r} onClick={()=>setRating(r)} style={{background:"none",border:"none",cursor:"pointer",fontSize:18,color:r<=rating?s.gold:"#d1d5db",padding:"0 1px"}}>{r<=rating?"★":"☆"}</button>)}
               </div>
             </div>
-          ))}
-        </div>
-        <div style={{textAlign:"center",marginTop:12,fontSize:10,color:s.muted}}>* Reviews represent typical user experiences. Results vary based on individual circumstances.</div>
+            <textarea placeholder="Your review (min 20 characters) *" value={text} onChange={e=>setText(e.target.value)} maxLength={500} rows={3} style={{...inp,fontSize:12,resize:"none",marginBottom:8,width:"100%",boxSizing:"border-box"}}/>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
+              {error&&<div style={{fontSize:11,color:s.red}}>{error}</div>}
+              <div style={{fontSize:10,color:s.muted}}>{text.length}/500 characters</div>
+              <button onClick={submit} disabled={submitting} style={{padding:"8px 18px",background:submitting?"#aaa":s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:submitting?"not-allowed":"pointer"}}>{submitting?"Submitting...":"Submit Review"}</button>
+            </div>
+          </div>
+        )}
+
+        {loading&&<div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12}}>{[1,2,3].map(i=><div key={i} style={{background:s.white,borderRadius:12,padding:16,border:`1px solid ${s.border}`}}><Skeleton h={12} mb={8} w="40%"/><Skeleton h={11} mb={4}/><Skeleton h={11} mb={4}/><Skeleton h={11} w="70%"/></div>)}</div>}
+
+        {!loading&&reviews.length===0&&!showForm&&(
+          <div style={{textAlign:"center",padding:"20px",color:s.muted,fontSize:13}}>No reviews yet — be the first to share your experience! 👆</div>
+        )}
+
+        {!loading&&shown.length>0&&(
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12}}>
+            {shown.map((t,i)=>(
+              <div key={t.id||i} style={{background:s.white,borderRadius:12,padding:16,boxShadow:"0 2px 12px rgba(0,0,0,0.06)",border:`1px solid ${s.border}`}}>
+                <div style={{color:s.gold,fontSize:13,marginBottom:8}}>{"★".repeat(t.rating||5)}{"☆".repeat(5-(t.rating||5))}</div>
+                <p style={{fontSize:12,color:"#374151",lineHeight:1.7,marginBottom:12,fontStyle:"italic"}}>"{t.text}"</p>
+                <div style={{display:"flex",alignItems:"center",gap:9}}>
+                  <div style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:14,fontWeight:800,flexShrink:0}}>{(t.name||"?")[0].toUpperCase()}</div>
+                  <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>{t.name}</div><div style={{fontSize:10,color:s.muted}}>{[t.city,t.role].filter(Boolean).join(" · ")}</div></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div style={{textAlign:"center",marginTop:12,fontSize:10,color:s.muted}}>Reviews are from real users and posted automatically.</div>
       </div>
     </div>
   );
