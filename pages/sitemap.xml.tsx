@@ -8,6 +8,8 @@ function generateSitemap() {
   const staticPages = [
     { url: "/", priority: "1.0", changefreq: "daily" },
     { url: "/fr", priority: "0.9", changefreq: "weekly" },
+    { url: "/about", priority: "0.8", changefreq: "monthly" },
+    { url: "/faq", priority: "0.8", changefreq: "monthly" },
     { url: "/mortgage-rates", priority: "0.9", changefreq: "weekly" },
     { url: "/blog", priority: "0.8", changefreq: "weekly" },
     { url: "/blog/best-mortgage-rates-canada-2026", priority: "0.8", changefreq: "weekly" },
