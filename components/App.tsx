@@ -2575,10 +2575,13 @@ function RenewalTab(){
 }
 
 function LawyersTab(){
+  const [filterProv,setFilterProv]=useState("MB");
+  const [filterCity,setFilterCity]=useState("");
+  const [filterType,setFilterType]=useState("all");
+  const [selectedLawyer,setSelectedLawyer]=useState<any>(null);
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
   const [phone,setPhone]=useState("");
-  const [lprov,setLprov]=useState("MB");
   const [lcity,setLcity]=useState("");
   const [price,setPrice]=useState("");
   const [closing,setClosing]=useState("");
@@ -2586,6 +2589,8 @@ function LawyersTab(){
   const [msg,setMsg]=useState("");
   const [ok,setOk]=useState(false);
   const [submitting,setSubmitting]=useState(false);
+  const [showForm,setShowForm]=useState(false);
+  const [faqOpen,setFaqOpen]=useState<string|null>(null);
 
   const LAW_SOCIETIES:{[k:string]:{name:string,url:string}}={
     AB:{name:"Law Society of Alberta",url:"https://www.lawsociety.ab.ca/public-resources/finding-a-lawyer/"},
@@ -2600,14 +2605,30 @@ function LawyersTab(){
     SK:{name:"Law Society of Saskatchewan",url:"https://www.lawsociety.sk.ca/for-the-public/find-a-lawyer/"},
   };
 
+  // Placeholder lawyer cards — replace with real ones as you sign partners
+  const LAWYERS=[
+    {id:1,name:"Coming Soon",firm:"Winnipeg Real Estate Law",city:"Winnipeg",prov:"MB",types:["purchase","refinance","firsttime"],fee:"$1,200–$1,800",languages:["English"],phone:"",email:"",website:"",rating:5,reviews:0,bio:"We are actively recruiting real estate lawyers in Winnipeg. Submit your request and we'll connect you as soon as our first partner is confirmed.",verified:false},
+    {id:2,name:"Coming Soon",firm:"Manitoba Conveyancing Group",city:"Brandon",prov:"MB",types:["purchase","refinance"],fee:"$1,100–$1,600",languages:["English"],phone:"",email:"",website:"",rating:5,reviews:0,bio:"Brandon-area real estate law services coming soon. Submit your details and we'll follow up.",verified:false},
+  ];
+
+  const FAQS=[
+    {q:"Do I need a real estate lawyer in Canada?",a:"Yes — in all provinces except British Columbia (where notaries can handle simple purchases), a licensed real estate lawyer is legally required to complete a home purchase. They handle title transfer, mortgage registration, and closing funds."},
+    {q:"How much does a real estate lawyer cost in Canada?",a:"Typically $1,200–$2,500 all-in, including professional fees, title insurance, disbursements, and land title registration. Costs vary by province, city, and transaction complexity. Condos and refinances are usually less expensive than freehold purchases."},
+    {q:"When should I hire a real estate lawyer?",a:"Hire your lawyer as soon as your offer is accepted — ideally before you remove conditions. They need time to review the agreement, conduct title searches, and arrange closing funds. Give them at least 2–3 weeks before your closing date."},
+    {q:"What's the difference between a lawyer and a notary for real estate?",a:"In most provinces only lawyers can handle real estate transactions. In BC, a notary public can handle straightforward purchases but cannot provide legal advice. In Quebec, a notary (notaire) is the standard professional for real estate closings."},
+    {q:"Can I use any lawyer or does it need to be a real estate specialist?",a:"Technically any lawyer can handle a real estate closing, but you should always use one who specializes in real estate conveyancing. They know the local market, common issues, and have relationships with lenders — mistakes at closing can be very costly."},
+    {q:"What documents do I need to bring to my lawyer?",a:"Signed purchase agreement, mortgage commitment letter, down payment proof (90-day bank history), photo ID, and SIN. Your lawyer will send you a full list after you retain them. See our Document Checklist tab for a complete breakdown."},
+  ];
+
   async function submit(){
     if(!name||!email||!lcity){alert("Please fill in name, email, and city.");return;}
     setSubmitting(true);
     try{
       await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        name,email,phone,province:PDATA[lprov]?.name,city:lcity,
+        name,email,phone,province:PDATA[filterProv]?.name,city:lcity,
         purchase_price:price,closing_date:closing,
         first_time_buyer:firstTime?"Yes":"No",
+        preferred_lawyer:selectedLawyer?selectedLawyer.name:"No preference",
         message:msg,type:"Real Estate Lawyer Referral"
       })});
       setOk(true);
@@ -2615,94 +2636,171 @@ function LawyersTab(){
     setSubmitting(false);
   }
 
-  const ls=LAW_SOCIETIES[lprov];
+  const filtered=LAWYERS.filter(l=>{
+    const matchProv=l.prov===filterProv;
+    const matchCity=!filterCity||l.city.toLowerCase().includes(filterCity.toLowerCase());
+    const matchType=filterType==="all"||l.types.includes(filterType);
+    return matchProv&&matchCity&&matchType;
+  });
+
+  const ls=LAW_SOCIETIES[filterProv];
 
   return(
     <div>
-      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px 20px",marginBottom:16,textAlign:"center"}}>
-        <div style={{fontSize:28,marginBottom:6}}>⚖️</div>
-        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Find a Real Estate Lawyer</h2>
-        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>A real estate lawyer is required for every home purchase in Canada. They handle title transfer, mortgage registration, and closing funds — typically costing $1,200–$2,500.</p>
-      </div>
-
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
-        <Card>
-          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:4}}>📋 Request a Lawyer Connection</h3>
-          <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Fill out this form and we'll connect you with a qualified real estate lawyer in your area.</p>
-
-          {!ok?(
-            <>
-              <Field label="Your Name *"><input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" style={inp}/></Field>
-              <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={inp}/></Field>
-              <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Optional" style={inp}/></Field>
-              <Field label="Province *"><select value={lprov} onChange={e=>setLprov(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
-              <Field label="City *"><input type="text" value={lcity} onChange={e=>setLcity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
-              <Field label="Purchase Price (approx.)"><input type="text" value={price} onChange={e=>setPrice(e.target.value)} placeholder="e.g. $500,000" style={inp}/></Field>
-              <Field label="Expected Closing Date"><input type="text" value={closing} onChange={e=>setClosing(e.target.value)} placeholder="e.g. August 2026" style={inp}/></Field>
-              <div style={{marginBottom:10}}>
-                <label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}>
-                  <input type="checkbox" checked={firstTime} onChange={e=>setFirstTime(e.target.checked)}/>
-                  First-time buyer
-                </label>
-              </div>
-              <Field label="Additional Notes"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Any questions or special circumstances?" rows={3} style={{...inp,resize:"none"}}/></Field>
-              <button onClick={submit} disabled={submitting} style={{width:"100%",padding:10,background:submitting?"#aaa":s.green,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:submitting?"not-allowed":"pointer",marginTop:4}}>
-                {submitting?"Submitting...":"⚖️ Connect Me with a Lawyer →"}
-              </button>
-              <p style={{fontSize:10,color:s.muted,marginTop:8,lineHeight:1.5}}>* This is a referral connection service. Canada Mortgage Rates is not a law firm and does not provide legal advice. A licensed real estate lawyer will contact you directly.</p>
-            </>
-          ):(
-            <div style={{textAlign:"center",padding:"24px 0"}}>
-              <div style={{fontSize:40,marginBottom:10}}>✅</div>
-              <div style={{fontSize:15,fontWeight:800,color:s.navy,marginBottom:6}}>Request Received!</div>
-              <div style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:16}}>We'll connect you with a qualified real estate lawyer in {lcity} within 1 business day.</div>
-              <button onClick={()=>{setOk(false);setName("");setEmail("");setPhone("");setLcity("");setPrice("");setClosing("");setFirstTime(false);setMsg("");}} style={{padding:"9px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Submit Another Request</button>
-            </div>
-          )}
-        </Card>
-
-        <div style={{display:"flex",flexDirection:"column",gap:12}}>
-          <Card style={{background:"#f0fdf4",border:`1px solid #bbf7d0`}}>
-            <h3 style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:10}}>⚖️ What Does a Real Estate Lawyer Do?</h3>
-            {[
-              ["Title Search","Verifies the seller legally owns the property and there are no liens or encumbrances."],
-              ["Title Insurance","Arranges title insurance to protect you from title defects and fraud."],
-              ["Mortgage Registration","Registers your mortgage with the Land Titles Office on behalf of your lender."],
-              ["Closing Funds","Receives and distributes closing funds — pays the seller, lender fees, and land transfer tax."],
-              ["Key Transfer","Confirms title is transferred to your name and hands over the keys."],
-            ].map(([t,d])=>(
-              <div key={t} style={{background:s.white,borderRadius:8,padding:10,marginBottom:7,border:"1px solid #dcfce7"}}>
-                <div style={{fontSize:11,fontWeight:700,color:"#15803d",marginBottom:2}}>{t}</div>
-                <div style={{fontSize:11,color:"#374151"}}>{d}</div>
+      {/* Header */}
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+          <div style={{flex:1,minWidth:200}}>
+            <div style={{fontSize:28,marginBottom:6}}>⚖️</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Find a Real Estate Lawyer</h2>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.6}}>A licensed real estate lawyer is required for every home purchase in Canada. Compare lawyers by city, specialty, and fee — then request a free connection.</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,flexShrink:0}}>
+            {[["$1,200–$2,500","Typical Fee"],["Required","In All Provinces"],["2–3 weeks","Before Closing"],["Free","To Connect"]].map(([v,l])=>(
+              <div key={l} style={{background:"rgba(255,255,255,0.1)",borderRadius:8,padding:"10px 12px",textAlign:"center"}}>
+                <div style={{fontSize:14,fontWeight:800,color:s.gold}}>{v}</div>
+                <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:2}}>{l}</div>
               </div>
             ))}
-          </Card>
-
-          <Card>
-            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🔍 Find Your Own Lawyer</h3>
-            <p style={{fontSize:11,color:s.muted,marginBottom:10}}>Prefer to search yourself? Each province's Law Society maintains a public directory of licensed lawyers.</p>
-            {ls&&(
-              <a href={ls.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,textDecoration:"none",marginBottom:8}}>
-                <span style={{fontSize:20}}>⚖️</span>
-                <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>{ls.name}</div><div style={{fontSize:10,color:s.blue}}>Search licensed lawyers →</div></div>
-              </a>
-            )}
-            <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e"}}>
-              💡 <b>Tip:</b> Always verify your lawyer is in good standing with their provincial Law Society before retaining them.
-            </div>
-          </Card>
-
-          <Card style={{background:s.navy}}>
-            <h3 style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:10}}>💰 Typical Legal Fee Breakdown</h3>
-            {[["Professional fee","$800–$1,500"],["Title insurance","$200–$400"],["Disbursements","$200–$500"],["Land title registration","$50–$200"],["Total (est.)","$1,200–$2,500"]].map(([l,v],i)=>(
-              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:i<4?`1px solid rgba(255,255,255,0.1)`:"none"}}>
-                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{l}</span>
-                <span style={{fontSize:11,fontWeight:i===4?800:600,color:i===4?s.gold:"#fff"}}>{v}</span>
-              </div>
-            ))}
-          </Card>
+          </div>
         </div>
       </div>
+
+      {/* Filters */}
+      <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+        <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
+        <input type="text" placeholder="Search city..." value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,width:140}}/>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {[["all","All Types"],["purchase","Purchase"],["firsttime","First-Time"],["refinance","Refinance"],["condo","Condo"]].map(([v,l])=>(
+            <button key={v} onClick={()=>setFilterType(v)} style={{padding:"5px 10px",borderRadius:20,border:`1.5px solid ${filterType===v?s.navy:s.border}`,background:filterType===v?s.navy:s.white,color:filterType===v?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:filterType===v?700:400}}>{l}</button>
+          ))}
+        </div>
+        <button onClick={()=>{setShowForm(true);setSelectedLawyer(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer</button>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:16}}>
+        {filtered.map(l=>(
+          <div key={l.id} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+            <div style={{background:l.verified?`linear-gradient(135deg,${s.green},#15803d)`:`linear-gradient(135deg,#94a3b8,#64748b)`,padding:"12px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div>
+                <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{l.name}</div>
+                <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{l.firm}</div>
+              </div>
+              {l.verified?<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>✓ Partner</span>:<span style={{background:"rgba(255,255,255,0.15)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Coming Soon</span>}
+            </div>
+            <div style={{padding:14}}>
+              <div style={{display:"flex",gap:8,marginBottom:10,flexWrap:"wrap"}}>
+                <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {l.city}, {l.prov}</span>
+                <span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>💰 {l.fee}</span>
+                {l.languages.map(lang=><span key={lang} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{lang}</span>)}
+              </div>
+              <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
+                {l.types.map(t=><span key={t} style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{t==="firsttime"?"First-Time":t}</span>)}
+              </div>
+              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:12}}>{l.bio}</p>
+              <button onClick={()=>{setSelectedLawyer(l);setShowForm(true);setLcity(l.city);}} style={{width:"100%",padding:"9px",background:l.verified?s.green:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>{l.verified?"Request Connection →":"Join Waitlist →"}</button>
+            </div>
+          </div>
+        ))}
+        {filtered.length===0&&(
+          <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:s.white,borderRadius:12,border:`1px solid ${s.border}`}}>
+            <div style={{fontSize:32,marginBottom:8}}>🔍</div>
+            <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>No lawyers listed yet in this area</div>
+            <div style={{fontSize:12,color:s.muted,marginBottom:14}}>We're building our network. Submit a request and we'll find you a qualified lawyer.</div>
+            <button onClick={()=>setShowForm(true)} style={{padding:"9px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Request a Lawyer →</button>
+          </div>
+        )}
+      </div>
+
+      {/* Info strip */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,marginBottom:16}}>
+        <Card style={{background:"#f0fdf4",border:`1px solid #bbf7d0`}}>
+          <h3 style={{fontSize:12,fontWeight:800,color:"#15803d",marginBottom:8}}>⚖️ What They Do</h3>
+          {["Title search & insurance","Mortgage registration","Closing fund management","Title transfer to your name","Key handover coordination"].map(item=>(
+            <div key={item} style={{display:"flex",alignItems:"center",gap:6,padding:"4px 0",fontSize:11,color:"#374151"}}><span style={{color:s.green,fontSize:10}}>✓</span>{item}</div>
+          ))}
+        </Card>
+        <Card style={{background:s.navy}}>
+          <h3 style={{fontSize:12,fontWeight:800,color:"#fff",marginBottom:8}}>💰 Fee Breakdown</h3>
+          {[["Professional fee","$800–$1,500"],["Title insurance","$200–$400"],["Disbursements","$200–$500"],["Land title reg.","$50–$200"],["Total (est.)","$1,200–$2,500"]].map(([l,v],i)=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"4px 0",borderBottom:i<4?`1px solid rgba(255,255,255,0.08)`:"none",fontSize:11}}>
+              <span style={{color:"rgba(255,255,255,0.7)"}}>{l}</span>
+              <span style={{fontWeight:i===4?800:500,color:i===4?s.gold:"#fff"}}>{v}</span>
+            </div>
+          ))}
+        </Card>
+        <Card>
+          <h3 style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:8}}>🔍 Search Yourself</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:10,lineHeight:1.5}}>Each province's Law Society maintains a public directory of all licensed lawyers.</p>
+          {ls&&<a href={ls.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px 12px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,textDecoration:"none",fontSize:11,fontWeight:700,color:s.navy,marginBottom:8}}>{ls.name} →</a>}
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",fontSize:10,color:"#92400e"}}>Always verify your lawyer is in good standing before retaining them.</div>
+        </Card>
+      </div>
+
+      {/* FAQ */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Real Estate Lawyer FAQ</h3>
+        {FAQS.map((f,i)=>(
+          <div key={i} style={{borderBottom:`1px solid ${s.light}`,overflow:"hidden"}}>
+            <button onClick={()=>setFaqOpen(faqOpen===String(i)?null:String(i))} style={{width:"100%",textAlign:"left",padding:"12px 0",background:"none",border:"none",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+              <span style={{fontSize:12,fontWeight:700,color:s.navy,lineHeight:1.4}}>{f.q}</span>
+              <span style={{fontSize:16,color:s.muted,flexShrink:0,transform:faqOpen===String(i)?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+            </button>
+            {faqOpen===String(i)&&<div style={{fontSize:12,color:s.muted,lineHeight:1.8,paddingBottom:12}}>{f.a}</div>}
+          </div>
+        ))}
+      </Card>
+
+      {/* Are you a lawyer CTA */}
+      <div style={{background:"linear-gradient(135deg,#fffbeb,#fef3c7)",border:"1px solid #fde68a",borderRadius:12,padding:"16px 20px",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+        <div style={{flex:1,minWidth:200}}>
+          <div style={{fontSize:13,fontWeight:800,color:"#92400e",marginBottom:4}}>⚖️ Are You a Real Estate Lawyer?</div>
+          <div style={{fontSize:11,color:"#92400e",lineHeight:1.5}}>Join our referral network. We connect qualified buyers directly to you. Pay only per referred lead — no monthly fees.</div>
+        </div>
+        <a href="mailto:info@canadamortgagerates.net?subject=Lawyer Partner Inquiry" style={{padding:"10px 20px",background:"#92400e",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textDecoration:"none",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</a>
+      </div>
+
+      {/* Connection Form Modal */}
+      {showForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:480,overflow:"hidden",maxHeight:"90vh",display:"flex",flexDirection:"column"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+              <div>
+                <div style={{color:"#fff",fontSize:14,fontWeight:700}}>⚖️ Request a Lawyer Connection</div>
+                {selectedLawyer&&<div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>{selectedLawyer.firm}</div>}
+              </div>
+              <button onClick={()=>setShowForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{padding:18,overflowY:"auto",flex:1}}>
+              {!ok?(
+                <>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                    <Field label="Your Name *"><input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" style={inp}/></Field>
+                    <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Optional" style={inp}/></Field>
+                  </div>
+                  <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={{...inp,marginBottom:8}}/></Field>
+                  <Field label="Your City *"><input type="text" value={lcity} onChange={e=>setLcity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                    <Field label="Purchase Price"><input type="text" value={price} onChange={e=>setPrice(e.target.value)} placeholder="e.g. $500,000" style={inp}/></Field>
+                    <Field label="Closing Date"><input type="text" value={closing} onChange={e=>setClosing(e.target.value)} placeholder="e.g. Aug 2026" style={inp}/></Field>
+                  </div>
+                  <div style={{marginBottom:10}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={firstTime} onChange={e=>setFirstTime(e.target.checked)}/>First-time buyer</label></div>
+                  <Field label="Additional Notes"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Any questions or special circumstances?" rows={2} style={{...inp,resize:"none"}}/></Field>
+                  <button onClick={submit} disabled={submitting} style={{width:"100%",padding:11,background:submitting?"#aaa":s.green,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:submitting?"not-allowed":"pointer",marginTop:8}}>{submitting?"Submitting...":"⚖️ Connect Me with a Lawyer →"}</button>
+                  <p style={{fontSize:10,color:s.muted,marginTop:8,lineHeight:1.5}}>Canada Mortgage Rates is not a law firm. A licensed real estate lawyer will contact you directly. Free to use.</p>
+                </>
+              ):(
+                <div style={{textAlign:"center",padding:"24px 0"}}>
+                  <div style={{fontSize:40,marginBottom:10}}>✅</div>
+                  <div style={{fontSize:15,fontWeight:800,color:s.navy,marginBottom:6}}>Request Received!</div>
+                  <div style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:16}}>We'll connect you with a qualified real estate lawyer in {lcity} within 1 business day.</div>
+                  <button onClick={()=>{setOk(false);setShowForm(false);setName("");setEmail("");setPhone("");setLcity("");setPrice("");setClosing("");setFirstTime(false);setMsg("");}} style={{padding:"9px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Done</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
