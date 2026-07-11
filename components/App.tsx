@@ -171,7 +171,49 @@ const BOC_ITEMS_DEFAULT=[{label:"Overnight Rate",value:"2.25%",change:"hold"},{l
 const s={navy:"#0d2240",red:"#c8102e",gold:"#f5a623",green:"#16a34a",blue:"#2563eb",muted:"#64748b",border:"#e2e8f0",light:"#f4f6f9",white:"#fff"};
 const cur=n=>"$"+Math.round(n).toLocaleString();
 function getCMHC(p,d){if(d>=20||p>1500000)return{req:false,premium:0,rate:0};const r=d>=15?0.028:d>=10?0.031:0.04;return{req:true,premium:Math.round(p*(1-d/100)*r),rate:r};}
-function getLTT(price,p){let t=0;if(p==="ON"){if(price<=55000)t=price*0.005;else if(price<=250000)t=275+(price-55000)*0.01;else if(price<=400000)t=2225+(price-250000)*0.015;else t=4475+(price-400000)*0.02;}else if(p==="BC"){if(price<=200000)t=price*0.01;else if(price<=2000000)t=2000+(price-200000)*0.02;else t=38000+(price-2000000)*0.03;}else if(p==="MB"){if(price<=30000)t=0;else if(price<=90000)t=(price-30000)*0.005;else if(price<=150000)t=300+(price-90000)*0.01;else if(price<=200000)t=900+(price-150000)*0.015;else t=1650+(price-200000)*0.02;}else if(p==="QC"){if(price<=53200)t=price*0.005;else if(price<=266200)t=266+(price-53200)*0.01;else if(price<=532400)t=2398+(price-266200)*0.015;else t=6391+(price-532400)*0.02;}else if(["NB","NS","PE","NL"].includes(p))t=price*0.015;else if(p==="SK")t=price*0.003;return Math.round(t);}
+function getLTT(price:number,p:string,city?:string){
+  let t=0;
+  if(p==="ON"){
+    // Provincial LTT
+    if(price<=55000)t=price*0.005;
+    else if(price<=250000)t=275+(price-55000)*0.01;
+    else if(price<=400000)t=2225+(price-250000)*0.015;
+    else if(price<=2000000)t=4475+(price-400000)*0.02;
+    else t=36475+(price-2000000)*0.025;
+    // Toronto municipal LTT (same brackets, doubles the cost)
+    if(city==="Toronto"||city==="toronto"){
+      let muni=0;
+      if(price<=55000)muni=price*0.005;
+      else if(price<=250000)muni=275+(price-55000)*0.01;
+      else if(price<=400000)muni=2225+(price-250000)*0.015;
+      else if(price<=2000000)muni=4475+(price-400000)*0.02;
+      else muni=36475+(price-2000000)*0.025;
+      t+=muni;
+    }
+  }else if(p==="BC"){
+    if(price<=200000)t=price*0.01;
+    else if(price<=2000000)t=2000+(price-200000)*0.02;
+    else t=38000+(price-2000000)*0.03;
+  }else if(p==="MB"){
+    if(price<=30000)t=0;
+    else if(price<=90000)t=(price-30000)*0.005;
+    else if(price<=150000)t=300+(price-90000)*0.01;
+    else if(price<=200000)t=900+(price-150000)*0.015;
+    else t=1650+(price-200000)*0.02;
+  }else if(p==="QC"){
+    if(price<=53200)t=price*0.005;
+    else if(price<=266200)t=266+(price-53200)*0.01;
+    else if(price<=532400)t=2398+(price-266200)*0.015;
+    else t=6391+(price-532400)*0.02;
+  }else if(["NB","NS","PE","NL"].includes(p))t=price*0.015;
+  else if(p==="SK")t=price*0.003;
+  else if(p==="AB"){
+    // Alberta land title transfer fee (~$400 on $500K)
+    t=price<=50000?0:Math.round(50+(price-50000)/5000)*5;
+    t=Math.min(t,800); // cap estimate
+  }
+  return Math.round(t);
+}
 function calcPmt(p,r,y){const m=r/100/12,n=y*12;return m===0?p/n:p*(m*Math.pow(1+m,n))/(Math.pow(1+m,n)-1);}
 function detectProvince(lat,lon){if(lon<-140)return"BC";if(lon<-110&&lat>49&&lat<60)return"AB";if(lon<-95&&lon>-110&&lat>49)return"SK";if(lon>-95&&lon<-88&&lat>49)return"MB";if(lon>-88&&lon<-74&&lat>42)return"ON";if(lon>-74&&lon<-64&&lat>45)return"QC";if(lon>-64&&lon<-59&&lat>44)return"NB";if(lon>-66&&lat>43&&lat<47)return"NS";if(lon>-64&&lon<-61&&lat>45&&lat<48)return"PE";if(lat>46&&lon>-60)return"NL";return"MB";}
 function detectCity(prov:string,lat:number,lon:number):string{const cities:{[k:string]:{[c:string]:[number,number]}}={AB:{Calgary:[51.04,-114.07],Edmonton:[53.55,-113.49]},BC:{Vancouver:[49.28,-123.12],Victoria:[48.43,-123.37]},MB:{Winnipeg:[49.90,-97.14],Brandon:[49.85,-99.95]},ON:{Toronto:[43.70,-79.42],Ottawa:[45.42,-75.69],Mississauga:[43.59,-79.64]},QC:{Montreal:[45.50,-73.57],"Quebec City":[46.82,-71.22]},SK:{Saskatoon:[52.13,-106.67],Regina:[50.45,-104.62]},NS:{Halifax:[44.65,-63.57]},NB:{Moncton:[46.09,-64.80]},NL:{"St. John's":[47.56,-52.71]},PE:{Charlottetown:[46.24,-63.13]}};const pc=cities[prov];if(!pc)return PDATA[prov]?.cities[0]||"";let best="",bd=999;Object.entries(pc).forEach(([c,coords])=>{const [la,lo]=coords;const d=Math.abs(lat-la)+Math.abs(lon-lo);if(d<bd){bd=d;best=c;}});return best||PDATA[prov]?.cities[0]||"";}
@@ -1447,28 +1489,40 @@ function AmortTab(){
 function ClosingCostTab({prov:initProv}:{prov:string}){
   const [chp,setChp]=useState(500000);
   const [cprov,setCprov]=useState(initProv);
+  const [ccity,setCcity]=useState("");
   const [cfirst,setCfirst]=useState(true);
   const [cnew,setCnew]=useState(false);
   const [cResult,setCResult]=useState<any>(null);
   const cRef=useRef<any>(null);
+
+  const isToronto=ccity.trim().toLowerCase()==="toronto";
+
   function calcClosing(){
-    const ltt=getLTT(chp,cprov);
-    const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?4000:cprov==="BC"?8000:cprov==="MB"?4500:cprov==="PE"?3000:0):0;
+    const ltt=getLTT(chp,cprov,ccity);
+    const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?(isToronto?8000:4000):cprov==="BC"?8000:cprov==="MB"?4500:cprov==="PE"?3000:0):0;
     const lttNet=ltt-lttRebate;
     const legal=1500,titleIns=350,homeInsp=500,appraisal=300,moving=1500;
     const hst=cnew?Math.min(chp*0.05,25000):0;
     const hstRebate=cnew?Math.min(hst,6300):0;
     const hstNet=hst-hstRebate;
     const total=lttNet+legal+titleIns+homeInsp+appraisal+moving+hstNet;
-    setCResult({ltt,lttRebate,lttNet,legal,titleIns,homeInsp,appraisal,moving,hst,hstRebate,hstNet,total});
+    setCResult({ltt,lttRebate,lttNet,legal,titleIns,homeInsp,appraisal,moving,hst,hstRebate,hstNet,total,isToronto,cprov});
     setTimeout(()=>cRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
   }
+
+  const EstBadge=()=><span style={{background:"#fef3c7",color:"#92400e",borderRadius:4,padding:"1px 5px",fontSize:9,fontWeight:700,marginLeft:6,verticalAlign:"middle"}}>EST</span>;
+
   return(
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
       <Card>
-        <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>🏷️ Closing Cost Calculator</h3>
+        <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:4}}>🏷️ Closing Cost Calculator</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Items marked <span style={{background:"#fef3c7",color:"#92400e",borderRadius:4,padding:"1px 5px",fontSize:9,fontWeight:700}}>EST</span> are typical estimates — get real quotes from your lawyer, inspector, and moving company.</p>
         <Field label="Purchase Price ($)"><input type="number" value={chp} onChange={e=>setChp(parseFloat(e.target.value)||0)} style={inp}/></Field>
-        <Field label="Province"><select value={cprov} onChange={e=>setCprov(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+        <Field label="Province"><select value={cprov} onChange={e=>{setCprov(e.target.value);setCcity("");}} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+        <Field label="City (optional — important for Toronto)">
+          <input type="text" placeholder={cprov==="ON"?"e.g. Toronto (affects LTT)":"e.g. Vancouver"} value={ccity} onChange={e=>setCcity(e.target.value)} style={inp}/>
+        </Field>
+        {isToronto&&<div style={{background:"#fef3c7",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",fontSize:11,color:"#92400e",marginBottom:8}}>⚠️ Toronto buyers pay <b>double LTT</b> — provincial + municipal. This is included.</div>}
         <div style={{marginBottom:9}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={cfirst} onChange={e=>setCfirst(e.target.checked)}/>First-time buyer (LTT rebate)</label></div>
         <div style={{marginBottom:12}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={cnew} onChange={e=>setCnew(e.target.checked)}/>New construction (GST applies)</label></div>
         <button onClick={calcClosing} style={calcBtn}>Calculate Closing Costs</button>
@@ -1481,13 +1535,26 @@ function ClosingCostTab({prov:initProv}:{prov:string}){
             <div style={{fontSize:28,fontWeight:800}}>{cur(cResult.total)}</div>
             <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:4}}>In addition to your down payment</div>
           </div>
-          {[["Land Transfer Tax",cur(cResult.ltt),cResult.lttRebate>0?`-${cur(cResult.lttRebate)} rebate → ${cur(cResult.lttNet)} net`:""],["Legal Fees",cur(cResult.legal),"Real estate lawyer"],["Title Insurance",cur(cResult.titleIns),"One-time premium"],["Home Inspection",cur(cResult.homeInsp),"Strongly recommended"],["Appraisal",cur(cResult.appraisal),"May be required by lender"],["Moving Costs",cur(cResult.moving),"Local estimate"],...(cResult.hst>0?[["GST/HST (New Build)",cur(cResult.hst),`-${cur(cResult.hstRebate)} rebate → ${cur(cResult.hstNet)} net`]]:[])].map(([l,v,note])=>(
-            <div key={l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"7px 0",borderBottom:`1px solid ${s.light}`}}>
-              <div><div style={{fontSize:12,fontWeight:600,color:s.navy}}>{l}</div>{note&&<div style={{fontSize:10,color:s.green}}>{note}</div>}</div>
-              <div style={{fontSize:13,fontWeight:700,color:s.navy}}>{v}</div>
+          {[
+            {l:"Land Transfer Tax",v:cur(cResult.ltt),note:cResult.lttRebate>0?`-${cur(cResult.lttRebate)} rebate → ${cur(cResult.lttNet)} net`:(cResult.isToronto?"Includes Toronto municipal LTT":cResult.cprov==="AB"?"Title transfer fee (estimate)":""),est:false},
+            {l:"Legal Fees",v:cur(cResult.legal),note:"Range: $1,200–$2,500",est:true},
+            {l:"Title Insurance",v:cur(cResult.titleIns),note:"Range: $200–$500",est:true},
+            {l:"Home Inspection",v:cur(cResult.homeInsp),note:"Range: $400–$700",est:true},
+            {l:"Appraisal",v:cur(cResult.appraisal),note:"Range: $300–$500 — may be waived",est:true},
+            {l:"Moving Costs",v:cur(cResult.moving),note:"Range: $500–$5,000+",est:true},
+            ...(cResult.hst>0?[{l:"GST/HST (New Build)",v:cur(cResult.hst),note:`-${cur(cResult.hstRebate)} rebate → ${cur(cResult.hstNet)} net`,est:false}]:[]),
+          ].map(({l,v,note,est})=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"8px 0",borderBottom:`1px solid ${s.light}`}}>
+              <div>
+                <div style={{fontSize:12,fontWeight:600,color:s.navy,display:"flex",alignItems:"center"}}>
+                  {l}{est&&<span style={{background:"#fef3c7",color:"#92400e",borderRadius:4,padding:"1px 5px",fontSize:9,fontWeight:700,marginLeft:6}}>EST</span>}
+                </div>
+                {note&&<div style={{fontSize:10,color:est?s.muted:s.green,marginTop:2}}>{note}</div>}
+              </div>
+              <div style={{fontSize:13,fontWeight:700,color:s.navy,flexShrink:0,marginLeft:8}}>{v}</div>
             </div>
           ))}
-          <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Always get quotes from your lawyer and inspector.</p>
+          <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* <b>EST</b> items are typical Canadian averages. Get real quotes before closing.</p>
         </Card>
       )}</div>
     </div>
