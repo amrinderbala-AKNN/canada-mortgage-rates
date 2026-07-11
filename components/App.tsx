@@ -2764,6 +2764,82 @@ function LawyersTab(){
         </Card>
       </div>
 
+      {/* Closing Timeline */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📅 Closing Timeline — From Offer to Keys</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Here's exactly when your real estate lawyer gets involved during a typical Canadian home purchase.</p>
+        <div style={{position:"relative"}}>
+          <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.navy},${s.blue},${s.green})`,borderRadius:2}}/>
+          {[
+            {day:"Day 1",label:"Offer Accepted",desc:"Your offer is accepted. Start looking for a real estate lawyer immediately — don't wait.",lawyer:false,icon:"🏠"},
+            {day:"Day 2–5",label:"Hire Your Lawyer",desc:"Retain a real estate lawyer. Send them your signed purchase agreement. They begin the title search.",lawyer:true,icon:"⚖️"},
+            {day:"Day 5–15",label:"Lawyer Reviews Agreement",desc:"Your lawyer reviews the purchase agreement for red flags, conditions, and closing requirements.",lawyer:true,icon:"📋"},
+            {day:"Day 7–14",label:"Mortgage Commitment",desc:"Your lender issues a mortgage commitment letter. Your lawyer receives instructions from the lender.",lawyer:true,icon:"🏦"},
+            {day:"Day 10–20",label:"Title Search Complete",desc:"Your lawyer completes the title search, confirms no liens, and arranges title insurance.",lawyer:true,icon:"🔍"},
+            {day:"3–5 Days Before Closing",label:"Closing Package Prepared",desc:"Your lawyer prepares all closing documents, calculates adjustments, and requests closing funds from you.",lawyer:true,icon:"📄"},
+            {day:"1–2 Days Before",label:"Sign Documents",desc:"You meet with your lawyer to sign all documents including the mortgage and transfer of title.",lawyer:true,icon:"✍️"},
+            {day:"Closing Day",label:"Funds Transfer & Title Transfer",desc:"Your lawyer transfers funds to the seller's lawyer, registers the title in your name, and receives the keys.",lawyer:true,icon:"🔑"},
+            {day:"After Closing",label:"Registration Confirmed",desc:"Your lawyer confirms mortgage and title registration, sends you a reporting letter with all documents.",lawyer:true,icon:"✅"},
+          ].map((step,i)=>(
+            <div key={i} style={{display:"flex",gap:16,marginBottom:14,paddingLeft:8}}>
+              <div style={{width:22,height:22,borderRadius:"50%",background:step.lawyer?s.navy:"#e2e8f0",border:`2px solid ${step.lawyer?s.navy:s.border}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10}}>{step.icon}</div>
+              <div style={{flex:1,background:step.lawyer?"#f8fafc":s.white,borderRadius:10,padding:"10px 14px",border:`1px solid ${step.lawyer?s.border:"#f1f5f9"}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                  <span style={{fontSize:10,fontWeight:700,color:s.muted,background:"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{step.day}</span>
+                  <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{step.label}</span>
+                  {step.lawyer&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.navy,borderRadius:20,padding:"1px 7px"}}>LAWYER INVOLVED</span>}
+                </div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{step.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#1e40af",marginTop:4}}>
+          💡 <b>Key tip:</b> Hire your lawyer within 48 hours of your offer being accepted. The earlier they start, the smoother your closing will be.
+        </div>
+      </Card>
+
+      {/* Province Cost Comparison */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>💰 Legal Closing Costs by Province</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Typical all-in legal costs for a $500,000 home purchase. Includes lawyer fees, title insurance, disbursements, and land transfer tax.</p>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",minWidth:480}}>
+            <thead>
+              <tr style={{background:"#f8fafc"}}>
+                {["Province","Land Transfer Tax","Legal Fees (est.)","Title Insurance","Total Closing Costs","First-Time Rebate"].map(h=>(
+                  <th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {prov:"Ontario",ltt:"$6,475",legal:"$1,500",title:"$350","total":"$8,325","rebate":"Up to $4,000"},
+                {prov:"Toronto (ON)",ltt:"$12,950",legal:"$1,500",title:"$350","total":"$14,800","rebate":"Up to $8,000"},
+                {prov:"British Columbia",ltt:"$8,000",legal:"$1,400",title:"$300","total":"$9,700","rebate":"Up to $8,000"},
+                {prov:"Alberta",ltt:"$400",legal:"$1,200",title:"$300","total":"$1,900","rebate":"None"},
+                {prov:"Manitoba",ltt:"$6,650",legal:"$1,300",title:"$300","total":"$8,250","rebate":"Up to $4,500"},
+                {prov:"Quebec",ltt:"$5,145",legal:"$1,500",title:"$300","total":"$6,945","rebate":"None (varies by city)"},
+                {prov:"Saskatchewan",ltt:"$1,500",legal:"$1,100",title:"$300","total":"$2,900","rebate":"None"},
+                {prov:"Nova Scotia",ltt:"$7,500",legal:"$1,300",title:"$300","total":"$9,100","rebate":"None"},
+                {prov:"New Brunswick",ltt:"$7,500",legal:"$1,200",title:"$300","total":"$9,000","rebate":"None"},
+                {prov:"PEI",ltt:"$7,500",legal:"$1,200",title:"$300","total":"$9,000","rebate":"Up to $3,000"},
+              ].map((row,i)=>(
+                <tr key={row.prov} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.navy,whiteSpace:"nowrap"}}>{row.prov}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,color:"#dc2626",fontWeight:600}}>{row.ltt}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,color:s.muted}}>{row.legal}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,color:s.muted}}>{row.title}</td>
+                  <td style={{padding:"10px 12px",fontSize:13,fontWeight:800,color:s.navy}}>{row.total}</td>
+                  <td style={{padding:"10px 12px",fontSize:11,color:row.rebate==="None"?s.muted:s.green,fontWeight:row.rebate==="None"?400:700}}>{row.rebate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Based on $500,000 purchase price. LTT calculated using 2026 provincial rates. Legal fees are estimates — always get a quote. Alberta shows title transfer fee only (no LTT).</p>
+      </Card>
+
       {/* FAQ */}
       <Card style={{marginBottom:16}}>
         <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Real Estate Lawyer FAQ</h3>
