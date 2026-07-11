@@ -2684,6 +2684,15 @@ function LawyersTab(){
         </div>
       </div>
 
+      {/* Partner CTA — moved to top for visibility */}
+      <div style={{background:"linear-gradient(135deg,#fffbeb,#fef3c7)",border:"1px solid #fde68a",borderRadius:12,padding:"14px 20px",marginBottom:14,display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+        <div style={{flex:1,minWidth:200}}>
+          <div style={{fontSize:13,fontWeight:800,color:"#92400e",marginBottom:3}}>⚖️ Are You a Real Estate Lawyer?</div>
+          <div style={{fontSize:11,color:"#92400e",lineHeight:1.5}}>Join our referral network. We connect qualified buyers directly to you. Pay only per referred lead — no monthly or setup fees.</div>
+        </div>
+        <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 20px",background:"#92400e",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,border:"none",cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</button>
+      </div>
+
       {/* Filters */}
       <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
         <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
@@ -2770,14 +2779,6 @@ function LawyersTab(){
       </Card>
 
       {/* Are you a lawyer CTA */}
-      <div style={{background:"linear-gradient(135deg,#fffbeb,#fef3c7)",border:"1px solid #fde68a",borderRadius:12,padding:"16px 20px",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
-        <div style={{flex:1,minWidth:200}}>
-          <div style={{fontSize:13,fontWeight:800,color:"#92400e",marginBottom:4}}>⚖️ Are You a Real Estate Lawyer?</div>
-          <div style={{fontSize:11,color:"#92400e",lineHeight:1.5}}>Join our referral network. We connect qualified buyers directly to you. Pay only per referred lead — no monthly fees.</div>
-        </div>
-        <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 20px",background:"#92400e",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,border:"none",cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</button>
-      </div>
-
       {/* Partner Form Modal */}
       {showPartnerForm&&(
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
@@ -2789,7 +2790,7 @@ function LawyersTab(){
             <div style={{padding:18}}>
               {!pOk?(
                 <>
-                  <p style={{fontSize:12,color:s.muted,marginBottom:14,lineHeight:1.6}}>Fill out your details and we'll be in touch about our referral program — $75–$100 per qualified lead, no monthly fees.</p>
+                  <p style={{fontSize:12,color:s.muted,marginBottom:14,lineHeight:1.6}}>Fill out your details and we'll be in touch about our referral program. Pay only per referred lead — no monthly or setup fees.</p>
                   <Field label="Your Name *"><input type="text" value={pName} onChange={e=>setPName(e.target.value)} placeholder="Full name" style={inp}/></Field>
                   <Field label="Law Firm *"><input type="text" value={pFirm} onChange={e=>setPFirm(e.target.value)} placeholder="Firm name" style={inp}/></Field>
                   <Field label="Email *"><input type="email" value={pEmail} onChange={e=>setPEmail(e.target.value)} placeholder="your@firm.com" style={inp}/></Field>
