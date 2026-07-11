@@ -486,10 +486,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Renewal","Consult"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Renewal","Lawyers","Consult"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Consult"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Lawyers","Consult"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -2574,6 +2574,138 @@ function RenewalTab(){
   );
 }
 
+function LawyersTab(){
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");
+  const [lprov,setLprov]=useState("MB");
+  const [lcity,setLcity]=useState("");
+  const [price,setPrice]=useState("");
+  const [closing,setClosing]=useState("");
+  const [firstTime,setFirstTime]=useState(false);
+  const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+
+  const LAW_SOCIETIES:{[k:string]:{name:string,url:string}}={
+    AB:{name:"Law Society of Alberta",url:"https://www.lawsociety.ab.ca/public-resources/finding-a-lawyer/"},
+    BC:{name:"Law Society of BC",url:"https://www.lawsociety.bc.ca/lsbc/apps/lkup/mbr-search.cfm"},
+    MB:{name:"Law Society of Manitoba",url:"https://www.lawsociety.mb.ca/public/find-a-lawyer/"},
+    NB:{name:"Law Society of New Brunswick",url:"https://www.lsnb.ca/en/public-resources/find-a-lawyer/"},
+    NL:{name:"Law Society of NL",url:"https://www.lsnl.ca/public/find-a-lawyer"},
+    NS:{name:"Nova Scotia Barristers' Society",url:"https://nsbs.org/find-a-lawyer/"},
+    ON:{name:"Law Society of Ontario",url:"https://lso.ca/public-resources/finding-a-lawyer-or-paralegal"},
+    PE:{name:"Law Society of PEI",url:"https://www.lspei.pe.ca/public/find-a-lawyer/"},
+    QC:{name:"Barreau du Québec",url:"https://www.barreau.qc.ca/en/public/find-a-lawyer/"},
+    SK:{name:"Law Society of Saskatchewan",url:"https://www.lawsociety.sk.ca/for-the-public/find-a-lawyer/"},
+  };
+
+  async function submit(){
+    if(!name||!email||!lcity){alert("Please fill in name, email, and city.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        name,email,phone,province:PDATA[lprov]?.name,city:lcity,
+        purchase_price:price,closing_date:closing,
+        first_time_buyer:firstTime?"Yes":"No",
+        message:msg,type:"Real Estate Lawyer Referral"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  const ls=LAW_SOCIETIES[lprov];
+
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px 20px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>⚖️</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Find a Real Estate Lawyer</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>A real estate lawyer is required for every home purchase in Canada. They handle title transfer, mortgage registration, and closing funds — typically costing $1,200–$2,500.</p>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
+        <Card>
+          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:4}}>📋 Request a Lawyer Connection</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Fill out this form and we'll connect you with a qualified real estate lawyer in your area.</p>
+
+          {!ok?(
+            <>
+              <Field label="Your Name *"><input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" style={inp}/></Field>
+              <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={inp}/></Field>
+              <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Optional" style={inp}/></Field>
+              <Field label="Province *"><select value={lprov} onChange={e=>setLprov(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+              <Field label="City *"><input type="text" value={lcity} onChange={e=>setLcity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+              <Field label="Purchase Price (approx.)"><input type="text" value={price} onChange={e=>setPrice(e.target.value)} placeholder="e.g. $500,000" style={inp}/></Field>
+              <Field label="Expected Closing Date"><input type="text" value={closing} onChange={e=>setClosing(e.target.value)} placeholder="e.g. August 2026" style={inp}/></Field>
+              <div style={{marginBottom:10}}>
+                <label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}>
+                  <input type="checkbox" checked={firstTime} onChange={e=>setFirstTime(e.target.checked)}/>
+                  First-time buyer
+                </label>
+              </div>
+              <Field label="Additional Notes"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Any questions or special circumstances?" rows={3} style={{...inp,resize:"none"}}/></Field>
+              <button onClick={submit} disabled={submitting} style={{width:"100%",padding:10,background:submitting?"#aaa":s.green,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:submitting?"not-allowed":"pointer",marginTop:4}}>
+                {submitting?"Submitting...":"⚖️ Connect Me with a Lawyer →"}
+              </button>
+              <p style={{fontSize:10,color:s.muted,marginTop:8,lineHeight:1.5}}>* This is a referral connection service. Canada Mortgage Rates is not a law firm and does not provide legal advice. A licensed real estate lawyer will contact you directly.</p>
+            </>
+          ):(
+            <div style={{textAlign:"center",padding:"24px 0"}}>
+              <div style={{fontSize:40,marginBottom:10}}>✅</div>
+              <div style={{fontSize:15,fontWeight:800,color:s.navy,marginBottom:6}}>Request Received!</div>
+              <div style={{fontSize:12,color:s.muted,lineHeight:1.7}}>We'll connect you with a qualified real estate lawyer in {lcity} within 1 business day.</div>
+            </div>
+          )}
+        </Card>
+
+        <div style={{display:"flex",flexDirection:"column",gap:12}}>
+          <Card style={{background:"#f0fdf4",border:`1px solid #bbf7d0`}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:10}}>⚖️ What Does a Real Estate Lawyer Do?</h3>
+            {[
+              ["Title Search","Verifies the seller legally owns the property and there are no liens or encumbrances."],
+              ["Title Insurance","Arranges title insurance to protect you from title defects and fraud."],
+              ["Mortgage Registration","Registers your mortgage with the Land Titles Office on behalf of your lender."],
+              ["Closing Funds","Receives and distributes closing funds — pays the seller, lender fees, and land transfer tax."],
+              ["Key Transfer","Confirms title is transferred to your name and hands over the keys."],
+            ].map(([t,d])=>(
+              <div key={t} style={{background:s.white,borderRadius:8,padding:10,marginBottom:7,border:"1px solid #dcfce7"}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#15803d",marginBottom:2}}>{t}</div>
+                <div style={{fontSize:11,color:"#374151"}}>{d}</div>
+              </div>
+            ))}
+          </Card>
+
+          <Card>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🔍 Find Your Own Lawyer</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:10}}>Prefer to search yourself? Each province's Law Society maintains a public directory of licensed lawyers.</p>
+            {ls&&(
+              <a href={ls.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,textDecoration:"none",marginBottom:8}}>
+                <span style={{fontSize:20}}>⚖️</span>
+                <div><div style={{fontSize:12,fontWeight:700,color:s.navy}}>{ls.name}</div><div style={{fontSize:10,color:s.blue}}>Search licensed lawyers →</div></div>
+              </a>
+            )}
+            <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e"}}>
+              💡 <b>Tip:</b> Always verify your lawyer is in good standing with their provincial Law Society before retaining them.
+            </div>
+          </Card>
+
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:700,color:"#fff",marginBottom:10}}>💰 Typical Legal Fee Breakdown</h3>
+            {[["Professional fee","$800–$1,500"],["Title insurance","$200–$400"],["Disbursements","$200–$500"],["Land title registration","$50–$200"],["Total (est.)","$1,200–$2,500"]].map(([l,v],i)=>(
+              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:i<4?`1px solid rgba(255,255,255,0.1)`:"none"}}>
+                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{l}</span>
+                <span style={{fontSize:11,fontWeight:i===4?800:600,color:i===4?s.gold:"#fff"}}>{v}</span>
+              </div>
+            ))}
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ConsultTab(){
   const [cName,setCName]=useState("");const [cPhone,setCPhone]=useState("");const [cEmail,setCEmail]=useState("");const [cCity,setCCity]=useState("");const [cPurpose,setCPurpose]=useState("");const [cMsg,setCMsg]=useState("");const [cOk,setCOk]=useState(false);
   const [nName,setNName]=useState("");const [nEmail,setNEmail]=useState("");const [nCity,setNCity]=useState("");const [nConsent,setNConsent]=useState(false);const [nOk,setNOk]=useState(false);
@@ -2935,6 +3067,7 @@ export default function App(){
     if(active==="Learn")return <LearnTab/>;
     if(active==="Glossary")return <GlossaryTab/>;
     if(active==="Renewal")return <RenewalTab/>;
+    if(active==="Lawyers")return <LawyersTab/>;
     if(active==="Consult")return <ConsultTab/>;
     return null;
   }
