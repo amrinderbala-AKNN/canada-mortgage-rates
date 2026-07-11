@@ -2655,7 +2655,8 @@ function LawyersTab(){
             <div style={{textAlign:"center",padding:"24px 0"}}>
               <div style={{fontSize:40,marginBottom:10}}>✅</div>
               <div style={{fontSize:15,fontWeight:800,color:s.navy,marginBottom:6}}>Request Received!</div>
-              <div style={{fontSize:12,color:s.muted,lineHeight:1.7}}>We'll connect you with a qualified real estate lawyer in {lcity} within 1 business day.</div>
+              <div style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:16}}>We'll connect you with a qualified real estate lawyer in {lcity} within 1 business day.</div>
+              <button onClick={()=>{setOk(false);setName("");setEmail("");setPhone("");setLcity("");setPrice("");setClosing("");setFirstTime(false);setMsg("");}} style={{padding:"9px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Submit Another Request</button>
             </div>
           )}
         </Card>
