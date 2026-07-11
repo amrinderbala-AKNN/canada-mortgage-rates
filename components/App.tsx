@@ -1345,254 +1345,196 @@ function CalcTab({prov}:{prov:string}){
           </Card>
         </div>
       )}
-      {tab==="amort"&&(()=>{
-        const [ahp,setAhp]=useState(500000);
-        const [adp,setAdp]=useState(20);
-        const [ar2,setAr2]=useState(5.0);
-        const [aam,setAam]=useState(25);
-        const [aResult,setAResult]=useState<any[]|null>(null);
-        const aRef=useRef<any>(null);
-        function calcAmort(){
-          const down=Math.round(ahp*adp/100);
-          const cmhc=getCMHC(ahp,adp);
-          const principal=ahp-down+(cmhc.req?cmhc.premium:0);
-          const monthlyRate=ar2/100/12;
-          const n=aam*12;
-          const pmt=monthlyRate===0?principal/n:principal*(monthlyRate*Math.pow(1+monthlyRate,n))/(Math.pow(1+monthlyRate,n)-1);
-          let bal=principal;
-          const schedule=[];
-          let cumInt=0,cumPrin=0;
-          for(let yr=1;yr<=aam;yr++){
-            let yInt=0,yPrin=0;
-            for(let m=0;m<12;m++){
-              const intPmt=bal*monthlyRate;
-              const prinPmt=pmt-intPmt;
-              yInt+=intPmt;yPrin+=prinPmt;bal-=prinPmt;
-              if(bal<0)bal=0;
-            }
-            cumInt+=yInt;cumPrin+=yPrin;
-            schedule.push({yr,pmt:pmt*12,interest:yInt,principal:yPrin,balance:Math.max(0,bal),cumInt,cumPrin});
-          }
-          setAResult(schedule);
-          setTimeout(()=>aRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
-        }
-        const totalInt=aResult?aResult[aResult.length-1]?.cumInt:0;
-        const totalCost=aResult?(parseFloat((ahp*(1-adp/100)).toFixed(0))*1+totalInt):0;
-        return(
-          <div>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
-              <Card>
-                <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>📅 Amortization Schedule</h3>
-                <Field label="Home Price ($)"><input type="number" value={ahp} onChange={e=>setAhp(parseFloat(e.target.value)||0)} style={inp}/></Field>
-                <Field label="Down Payment (%)"><input type="number" value={adp} onChange={e=>setAdp(parseFloat(e.target.value)||0)} style={inp}/></Field>
-                <Field label="Interest Rate (%)"><input type="number" step="0.05" value={ar2} onChange={e=>setAr2(parseFloat(e.target.value)||0)} style={inp}/></Field>
-                <Field label="Amortization"><select value={aam} onChange={e=>setAam(parseInt(e.target.value))} style={inp}><option value={10}>10 years</option><option value={15}>15 years</option><option value={20}>20 years</option><option value={25}>25 years</option><option value={30}>30 years</option></select></Field>
-                <button onClick={calcAmort} style={calcBtn}>Generate Schedule</button>
-              </Card>
-              {aResult&&(
-                <Card style={{background:s.navy}}>
-                  <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:12}}>💡 Total Cost Summary</h3>
-                  {[[cur(aResult[0].pmt/12)+"/mo","Monthly Payment"],[cur(totalInt),"Total Interest Paid"],[cur(ahp*(adp/100)),"Down Payment"],[cur(ahp+totalInt),"Total Cost of Home"]].map(([v,l])=>(
-                    <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:7,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                      <div style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{l}</div>
-                      <div style={{fontSize:14,fontWeight:800,color:s.gold}}>{v}</div>
-                    </div>
-                  ))}
-                  <div style={{marginTop:10,fontSize:10,color:"rgba(255,255,255,0.4)"}}>Interest is {aResult?Math.round(totalInt/(ahp+totalInt)*100):0}% of total cost</div>
-                </Card>
-              )}
-            </div>
-            <div ref={aRef}>{aResult&&(
-              <div style={{marginTop:14,background:s.white,borderRadius:12,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.07)"}}>
-                <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 16px"}}>
-                  <div style={{color:"#fff",fontSize:14,fontWeight:700}}>Year-by-Year Breakdown</div>
-                  <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>{aam}-year amortization · {ar2}% rate</div>
-                </div>
-                <div style={{overflowX:"auto"}}>
-                  <table style={{width:"100%",borderCollapse:"collapse",minWidth:500}}>
-                    <thead><tr style={{background:"#f8fafc"}}>{["Year","Annual Payment","Interest","Principal","Balance","% Paid"].map(h=><th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"center",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
-                    <tbody>{aResult.map((row,i)=>{
-                      const pctPaid=Math.round((1-row.balance/(ahp*(1-adp/100)))*100);
-                      return(
-                        <tr key={row.yr} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
-                          <td style={{padding:"9px 12px",textAlign:"center",fontWeight:700,color:s.navy}}>{row.yr}</td>
-                          <td style={{padding:"9px 12px",textAlign:"center",fontSize:12}}>{cur(row.pmt)}</td>
-                          <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,color:"#dc2626"}}>{cur(row.interest)}</td>
-                          <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,color:s.green}}>{cur(row.principal)}</td>
-                          <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,fontWeight:row.balance===0?800:400,color:row.balance===0?s.green:s.navy}}>{cur(row.balance)}</td>
-                          <td style={{padding:"9px 12px",textAlign:"center"}}>
-                            <div style={{display:"flex",alignItems:"center",gap:6}}>
-                              <div style={{flex:1,background:"#e2e8f0",borderRadius:20,height:6}}><div style={{width:pctPaid+"%",height:"100%",background:`linear-gradient(90deg,${s.red},${s.gold})`,borderRadius:20}}/></div>
-                              <span style={{fontSize:10,fontWeight:700,color:s.muted,minWidth:28}}>{pctPaid}%</span>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}</tbody>
-                  </table>
-                </div>
-              </div>
-            )}</div>
-          </div>
-        );
-      })()}
+      {tab==="amort"&&<AmortTab/>}
+      {tab==="closing"&&<ClosingCostTab prov={prov}/>}
+      {tab==="docs"&&<DocChecklistTab/>}
+    </div>
+  );
+}
 
-      {tab==="closing"&&(()=>{
-        const [chp,setChp]=useState(500000);
-        const [cprov,setCprov]=useState("MB");
-        const [cfirst,setCfirst]=useState(true);
-        const [cnew,setCnew]=useState(false);
-        const [cResult,setCResult]=useState<any>(null);
-        const cRef=useRef<any>(null);
-        function calcClosing(){
-          const ltt=getLTT(chp,cprov);
-          const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?4000:cprov==="BC"?8000:cprov==="MB"?4500:cprov==="PE"?3000:0):0;
-          const lttNet=ltt-lttRebate;
-          const legal=1500;
-          const titleIns=350;
-          const homeInsp=500;
-          const appraisal=300;
-          const moving=1500;
-          const hst=cnew?Math.min(chp*0.05,25000):0;
-          const hstRebate=cnew?Math.min(hst,6300):0;
-          const hstNet=hst-hstRebate;
-          const total=lttNet+legal+titleIns+homeInsp+appraisal+moving+hstNet;
-          setCResult({ltt,lttRebate,lttNet,legal,titleIns,homeInsp,appraisal,moving,hst,hstRebate,hstNet,total});
-          setTimeout(()=>cRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
-        }
-        return(
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
-            <Card>
-              <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>🏷️ Closing Cost Calculator</h3>
-              <Field label="Purchase Price ($)"><input type="number" value={chp} onChange={e=>setChp(parseFloat(e.target.value)||0)} style={inp}/></Field>
-              <Field label="Province"><select value={cprov} onChange={e=>setCprov(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
-              <div style={{marginBottom:9}}>
-                <label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}>
-                  <input type="checkbox" checked={cfirst} onChange={e=>setCfirst(e.target.checked)}/>
-                  First-time buyer (LTT rebate)
-                </label>
+function AmortTab(){
+  const [ahp,setAhp]=useState(500000);
+  const [adp,setAdp]=useState(20);
+  const [ar2,setAr2]=useState(5.0);
+  const [aam,setAam]=useState(25);
+  const [aResult,setAResult]=useState<any[]|null>(null);
+  const aRef=useRef<any>(null);
+  function calcAmort(){
+    const down=Math.round(ahp*adp/100);
+    const cmhc=getCMHC(ahp,adp);
+    const principal=ahp-down+(cmhc.req?cmhc.premium:0);
+    const monthlyRate=ar2/100/12;
+    const n=aam*12;
+    const pmt=monthlyRate===0?principal/n:principal*(monthlyRate*Math.pow(1+monthlyRate,n))/(Math.pow(1+monthlyRate,n)-1);
+    let bal=principal;
+    const schedule=[];
+    let cumInt=0,cumPrin=0;
+    for(let yr=1;yr<=aam;yr++){
+      let yInt=0,yPrin=0;
+      for(let m=0;m<12;m++){
+        const intPmt=bal*monthlyRate;
+        const prinPmt=Math.min(pmt-intPmt,bal);
+        yInt+=intPmt;yPrin+=prinPmt;bal-=prinPmt;
+        if(bal<0)bal=0;
+      }
+      cumInt+=yInt;cumPrin+=yPrin;
+      schedule.push({yr,pmt:pmt*12,interest:yInt,principal:yPrin,balance:Math.max(0,bal),cumInt,cumPrin});
+    }
+    setAResult(schedule);
+    setTimeout(()=>aRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
+  }
+  const totalInt=aResult?aResult[aResult.length-1]?.cumInt:0;
+  return(
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
+        <Card>
+          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>📅 Amortization Schedule</h3>
+          <Field label="Home Price ($)"><input type="number" value={ahp} onChange={e=>setAhp(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Down Payment (%)"><input type="number" value={adp} onChange={e=>setAdp(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Interest Rate (%)"><input type="number" step="0.05" value={ar2} onChange={e=>setAr2(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Amortization"><select value={aam} onChange={e=>setAam(parseInt(e.target.value))} style={inp}><option value={10}>10 years</option><option value={15}>15 years</option><option value={20}>20 years</option><option value={25}>25 years</option><option value={30}>30 years</option></select></Field>
+          <button onClick={calcAmort} style={calcBtn}>Generate Schedule</button>
+        </Card>
+        {aResult&&(
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:12}}>💡 Total Cost Summary</h3>
+            {[[cur(aResult[0].pmt/12)+"/mo","Monthly Payment"],[cur(totalInt),"Total Interest Paid"],[cur(ahp*(adp/100)),"Down Payment"],[cur(ahp+totalInt),"Total Cost of Home"]].map(([v,l])=>(
+              <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:7,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{l}</div>
+                <div style={{fontSize:14,fontWeight:800,color:s.gold}}>{v}</div>
               </div>
-              <div style={{marginBottom:12}}>
-                <label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}>
-                  <input type="checkbox" checked={cnew} onChange={e=>setCnew(e.target.checked)}/>
-                  New construction (GST applies)
-                </label>
-              </div>
-              <button onClick={calcClosing} style={calcBtn}>Calculate Closing Costs</button>
-            </Card>
-            <div ref={cRef}>{cResult&&(
-              <Card>
-                <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>💰 Estimated Closing Costs</h3>
-                <div style={{...resultBox,marginTop:0,marginBottom:12}}>
-                  <div style={{fontSize:10,color:"rgba(255,255,255,0.7)",marginBottom:2}}>Total Cash Needed at Closing</div>
-                  <div style={{fontSize:28,fontWeight:800}}>{cur(cResult.total)}</div>
-                  <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:4}}>In addition to your down payment</div>
-                </div>
-                {[
-                  ["Land Transfer Tax",cur(cResult.ltt),cResult.lttRebate>0?`-${cur(cResult.lttRebate)} rebate → ${cur(cResult.lttNet)} net`:""],
-                  ["Legal Fees",cur(cResult.legal),"Real estate lawyer"],
-                  ["Title Insurance",cur(cResult.titleIns),"One-time premium"],
-                  ["Home Inspection",cur(cResult.homeInsp),"Strongly recommended"],
-                  ["Appraisal",cur(cResult.appraisal),"May be required by lender"],
-                  ["Moving Costs",cur(cResult.moving),"Local estimate"],
-                  ...(cResult.hst>0?[["GST/HST (New Build)",cur(cResult.hst),`-${cur(cResult.hstRebate)} rebate → ${cur(cResult.hstNet)} net`]]:[]),
-                ].map(([l,v,note])=>(
-                  <div key={l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"7px 0",borderBottom:`1px solid ${s.light}`}}>
-                    <div><div style={{fontSize:12,fontWeight:600,color:s.navy}}>{l}</div>{note&&<div style={{fontSize:10,color:s.green}}>{note}</div>}</div>
-                    <div style={{fontSize:13,fontWeight:700,color:s.navy}}>{v}</div>
-                  </div>
-                ))}
-                <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Legal fees, inspection, and moving costs vary. Always get quotes.</p>
-              </Card>
-            )}</div>
-          </div>
-        );
-      })()}
-
-      {tab==="docs"&&(()=>{
-        const DOC_SECTIONS=[
-          {title:"💼 Employment & Income",docs:[
-            {label:"Letter of employment (on company letterhead)",tip:"Must show position, start date, salary, and be signed by HR"},
-            {label:"Last 2 pay stubs",tip:"Must be recent (within 30 days)"},
-            {label:"Last 2 years T4 slips",tip:"Both years required for income verification"},
-            {label:"Last 2 years Notice of Assessment (NOA)",tip:"Download from CRA My Account"},
-            {label:"Last 3 months bank statements",tip:"All pages, showing regular deposits"},
-          ]},
-          {title:"🧾 Self-Employed (additional)",docs:[
-            {label:"Last 2 years T1 General tax returns",tip:"Full return, all schedules"},
-            {label:"Last 2 years NOA from CRA",tip:"Must match what you declared"},
-            {label:"Business registration or incorporation documents",tip:"Proves business legitimacy"},
-            {label:"Last 2 years business financial statements",tip:"Prepared by accountant preferred"},
-            {label:"6 months business bank statements",tip:"Shows business cash flow"},
-          ]},
-          {title:"🏦 Down Payment & Assets",docs:[
-            {label:"90-day bank account history (down payment source)",tip:"Must show funds were in account for 90 days"},
-            {label:"Investment/RRSP/FHSA statements",tip:"If using for down payment"},
-            {label:"Gift letter (if down payment is gifted)",tip:"Must state no repayment required, signed by donor"},
-            {label:"Sale agreement of existing home (if applicable)",tip:"Proof of proceeds for down payment"},
-          ]},
-          {title:"🆔 Identification",docs:[
-            {label:"Government-issued photo ID (passport or driver's licence)",tip:"Must be valid and not expired"},
-            {label:"Secondary ID (credit card, health card, etc.)",tip:"Two pieces of ID typically required"},
-            {label:"SIN (Social Insurance Number)",tip:"Required for credit check and CRA verification"},
-          ]},
-          {title:"🏠 Property Documents (after offer accepted)",docs:[
-            {label:"Signed purchase and sale agreement",tip:"All schedules and addendums included"},
-            {label:"MLS listing or feature sheet",tip:"Property details for lender review"},
-            {label:"Home inspection report",tip:"Strongly recommended before waiving conditions"},
-            {label:"Condo status certificate (if condo)",tip:"Required for condo purchases — lender reviews financials"},
-            {label:"Property tax bill",tip:"Shows current assessed value and taxes"},
-          ]},
-        ];
-        const [checked,setChecked]=useState<{[k:string]:boolean}>({});
-        const allDocs=DOC_SECTIONS.flatMap(s=>s.docs);
-        const total=allDocs.length;
-        const done=Object.values(checked).filter(Boolean).length;
-        const pct=Math.round(done/total*100);
-        function toggle(key:string){setChecked(prev=>({...prev,[key]:!prev[key]}));}
-        return(
-          <div>
-            <Card style={{marginBottom:14}}>
-              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12,flexWrap:"wrap",gap:8}}>
-                <div>
-                  <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:2}}>📁 Mortgage Document Checklist</h2>
-                  <p style={{fontSize:12,color:s.muted}}>Everything your lender will ask for. Check items off as you gather them.</p>
-                </div>
-                <div style={{textAlign:"center"}}>
-                  <div style={{fontSize:22,fontWeight:800,color:pct===100?s.green:s.navy}}>{done}/{total}</div>
-                  <div style={{fontSize:10,color:s.muted}}>documents ready</div>
-                </div>
-              </div>
-              <div style={{background:"#e2e8f0",borderRadius:20,height:10,marginBottom:4}}>
-                <div style={{width:pct+"%",height:"100%",background:pct===100?`linear-gradient(90deg,${s.green},#22c55e)`:`linear-gradient(90deg,${s.navy},${s.blue})`,borderRadius:20,transition:"width 0.3s"}}/>
-              </div>
-              <div style={{fontSize:11,color:s.muted,marginBottom:4}}>{pct}% complete{pct===100?" — You're ready to apply! ✅":""}</div>
-              {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:"none",cursor:"pointer",textDecoration:"underline",padding:0}}>Reset</button>}
-            </Card>
-            {DOC_SECTIONS.map((section,si)=>(
-              <Card key={si} style={{marginBottom:12}}>
-                <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>{section.title}</h3>
-                {section.docs.map((doc,di)=>{
-                  const key=`${si}-${di}`;
-                  const isChecked=!!checked[key];
-                  return(
-                    <div key={di} onClick={()=>toggle(key)} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"9px 0",borderBottom:`1px solid ${s.light}`,cursor:"pointer"}}>
-                      <div style={{width:20,height:20,borderRadius:5,border:`2px solid ${isChecked?s.green:s.border}`,background:isChecked?s.green:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:1}}>
-                        {isChecked&&<span style={{color:"#fff",fontSize:12,fontWeight:800}}>✓</span>}
-                      </div>
-                      <div style={{flex:1}}>
-                        <div style={{fontSize:12,fontWeight:600,color:isChecked?s.muted:s.navy,textDecoration:isChecked?"line-through":"none"}}>{doc.label}</div>
-                        <div style={{fontSize:10,color:s.muted,marginTop:2}}>{doc.tip}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </Card>
             ))}
-            <p style={{fontSize:10,color:"#bbb"}}>* Requirements vary by lender and borrower profile. Your mortgage professional may request additional documents.</p>
+            <div style={{marginTop:10,fontSize:10,color:"rgba(255,255,255,0.4)"}}>Interest is {aResult?Math.round(totalInt/(ahp+totalInt)*100):0}% of total cost</div>
+          </Card>
+        )}
+      </div>
+      <div ref={aRef}>{aResult&&(
+        <div style={{marginTop:14,background:s.white,borderRadius:12,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.07)"}}>
+          <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 16px"}}>
+            <div style={{color:"#fff",fontSize:14,fontWeight:700}}>Year-by-Year Breakdown</div>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>{aam}-year amortization · {ar2}% rate</div>
           </div>
-        );
-      })()}
+          <div style={{overflowX:"auto"}}>
+            <table style={{width:"100%",borderCollapse:"collapse",minWidth:500}}>
+              <thead><tr style={{background:"#f8fafc"}}>{["Year","Annual Payment","Interest","Principal","Balance","% Paid"].map(h=><th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"center",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
+              <tbody>{aResult.map((row,i)=>{
+                const principal2=ahp*(1-adp/100);
+                const pctPaid=principal2>0?Math.round((1-row.balance/principal2)*100):100;
+                return(
+                  <tr key={row.yr} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                    <td style={{padding:"9px 12px",textAlign:"center",fontWeight:700,color:s.navy}}>{row.yr}</td>
+                    <td style={{padding:"9px 12px",textAlign:"center",fontSize:12}}>{cur(row.pmt)}</td>
+                    <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,color:"#dc2626"}}>{cur(row.interest)}</td>
+                    <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,color:s.green}}>{cur(row.principal)}</td>
+                    <td style={{padding:"9px 12px",textAlign:"center",fontSize:12,fontWeight:row.balance===0?800:400,color:row.balance===0?s.green:s.navy}}>{cur(row.balance)}</td>
+                    <td style={{padding:"9px 12px",textAlign:"center"}}>
+                      <div style={{display:"flex",alignItems:"center",gap:6}}>
+                        <div style={{flex:1,background:"#e2e8f0",borderRadius:20,height:6}}><div style={{width:Math.min(pctPaid,100)+"%",height:"100%",background:`linear-gradient(90deg,${s.red},${s.gold})`,borderRadius:20}}/></div>
+                        <span style={{fontSize:10,fontWeight:700,color:s.muted,minWidth:28}}>{pctPaid}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}</tbody>
+            </table>
+          </div>
+        </div>
+      )}</div>
+    </div>
+  );
+}
+
+function ClosingCostTab({prov:initProv}:{prov:string}){
+  const [chp,setChp]=useState(500000);
+  const [cprov,setCprov]=useState(initProv);
+  const [cfirst,setCfirst]=useState(true);
+  const [cnew,setCnew]=useState(false);
+  const [cResult,setCResult]=useState<any>(null);
+  const cRef=useRef<any>(null);
+  function calcClosing(){
+    const ltt=getLTT(chp,cprov);
+    const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?4000:cprov==="BC"?8000:cprov==="MB"?4500:cprov==="PE"?3000:0):0;
+    const lttNet=ltt-lttRebate;
+    const legal=1500,titleIns=350,homeInsp=500,appraisal=300,moving=1500;
+    const hst=cnew?Math.min(chp*0.05,25000):0;
+    const hstRebate=cnew?Math.min(hst,6300):0;
+    const hstNet=hst-hstRebate;
+    const total=lttNet+legal+titleIns+homeInsp+appraisal+moving+hstNet;
+    setCResult({ltt,lttRebate,lttNet,legal,titleIns,homeInsp,appraisal,moving,hst,hstRebate,hstNet,total});
+    setTimeout(()=>cRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
+  }
+  return(
+    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
+      <Card>
+        <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>🏷️ Closing Cost Calculator</h3>
+        <Field label="Purchase Price ($)"><input type="number" value={chp} onChange={e=>setChp(parseFloat(e.target.value)||0)} style={inp}/></Field>
+        <Field label="Province"><select value={cprov} onChange={e=>setCprov(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+        <div style={{marginBottom:9}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={cfirst} onChange={e=>setCfirst(e.target.checked)}/>First-time buyer (LTT rebate)</label></div>
+        <div style={{marginBottom:12}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={cnew} onChange={e=>setCnew(e.target.checked)}/>New construction (GST applies)</label></div>
+        <button onClick={calcClosing} style={calcBtn}>Calculate Closing Costs</button>
+      </Card>
+      <div ref={cRef}>{cResult&&(
+        <Card>
+          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>💰 Estimated Closing Costs</h3>
+          <div style={{...resultBox,marginTop:0,marginBottom:12}}>
+            <div style={{fontSize:10,color:"rgba(255,255,255,0.7)",marginBottom:2}}>Total Cash Needed at Closing</div>
+            <div style={{fontSize:28,fontWeight:800}}>{cur(cResult.total)}</div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:4}}>In addition to your down payment</div>
+          </div>
+          {[["Land Transfer Tax",cur(cResult.ltt),cResult.lttRebate>0?`-${cur(cResult.lttRebate)} rebate → ${cur(cResult.lttNet)} net`:""],["Legal Fees",cur(cResult.legal),"Real estate lawyer"],["Title Insurance",cur(cResult.titleIns),"One-time premium"],["Home Inspection",cur(cResult.homeInsp),"Strongly recommended"],["Appraisal",cur(cResult.appraisal),"May be required by lender"],["Moving Costs",cur(cResult.moving),"Local estimate"],...(cResult.hst>0?[["GST/HST (New Build)",cur(cResult.hst),`-${cur(cResult.hstRebate)} rebate → ${cur(cResult.hstNet)} net`]]:[])].map(([l,v,note])=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"7px 0",borderBottom:`1px solid ${s.light}`}}>
+              <div><div style={{fontSize:12,fontWeight:600,color:s.navy}}>{l}</div>{note&&<div style={{fontSize:10,color:s.green}}>{note}</div>}</div>
+              <div style={{fontSize:13,fontWeight:700,color:s.navy}}>{v}</div>
+            </div>
+          ))}
+          <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Always get quotes from your lawyer and inspector.</p>
+        </Card>
+      )}</div>
+    </div>
+  );
+}
+
+function DocChecklistTab(){
+  const DOC_SECTIONS=[
+    {title:"💼 Employment & Income",docs:[{label:"Letter of employment (on company letterhead)",tip:"Must show position, start date, salary, and be signed by HR"},{label:"Last 2 pay stubs",tip:"Must be recent (within 30 days)"},{label:"Last 2 years T4 slips",tip:"Both years required for income verification"},{label:"Last 2 years Notice of Assessment (NOA)",tip:"Download from CRA My Account"},{label:"Last 3 months bank statements",tip:"All pages, showing regular deposits"}]},
+    {title:"🧾 Self-Employed (additional)",docs:[{label:"Last 2 years T1 General tax returns",tip:"Full return, all schedules"},{label:"Last 2 years NOA from CRA",tip:"Must match what you declared"},{label:"Business registration or incorporation documents",tip:"Proves business legitimacy"},{label:"Last 2 years business financial statements",tip:"Prepared by accountant preferred"},{label:"6 months business bank statements",tip:"Shows business cash flow"}]},
+    {title:"🏦 Down Payment & Assets",docs:[{label:"90-day bank account history (down payment source)",tip:"Must show funds were in account for 90 days"},{label:"Investment/RRSP/FHSA statements",tip:"If using for down payment"},{label:"Gift letter (if down payment is gifted)",tip:"Must state no repayment required, signed by donor"},{label:"Sale agreement of existing home (if applicable)",tip:"Proof of proceeds for down payment"}]},
+    {title:"🆔 Identification",docs:[{label:"Government-issued photo ID (passport or driver's licence)",tip:"Must be valid and not expired"},{label:"Secondary ID (credit card, health card, etc.)",tip:"Two pieces of ID typically required"},{label:"SIN (Social Insurance Number)",tip:"Required for credit check and CRA verification"}]},
+    {title:"🏠 Property Documents (after offer accepted)",docs:[{label:"Signed purchase and sale agreement",tip:"All schedules and addendums included"},{label:"MLS listing or feature sheet",tip:"Property details for lender review"},{label:"Home inspection report",tip:"Strongly recommended before waiving conditions"},{label:"Condo status certificate (if condo)",tip:"Required for condo purchases — lender reviews financials"},{label:"Property tax bill",tip:"Shows current assessed value and taxes"}]},
+  ];
+  const [checked,setChecked]=useState<{[k:string]:boolean}>({});
+  const allDocs=DOC_SECTIONS.flatMap(sec=>sec.docs);
+  const total=allDocs.length;
+  const done=Object.values(checked).filter(Boolean).length;
+  const pct=Math.round(done/total*100);
+  function toggle(key:string){setChecked(prev=>({...prev,[key]:!prev[key]}));}
+  return(
+    <div>
+      <Card style={{marginBottom:14}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12,flexWrap:"wrap",gap:8}}>
+          <div><h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:2}}>📁 Mortgage Document Checklist</h2><p style={{fontSize:12,color:s.muted}}>Everything your lender will ask for. Check items off as you gather them.</p></div>
+          <div style={{textAlign:"center"}}><div style={{fontSize:22,fontWeight:800,color:pct===100?s.green:s.navy}}>{done}/{total}</div><div style={{fontSize:10,color:s.muted}}>documents ready</div></div>
+        </div>
+        <div style={{background:"#e2e8f0",borderRadius:20,height:10,marginBottom:4}}><div style={{width:pct+"%",height:"100%",background:pct===100?`linear-gradient(90deg,${s.green},#22c55e)`:`linear-gradient(90deg,${s.navy},${s.blue})`,borderRadius:20,transition:"width 0.3s"}}/></div>
+        <div style={{fontSize:11,color:s.muted,marginBottom:4}}>{pct}% complete{pct===100?" — You're ready to apply! ✅":""}</div>
+        {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:"none",cursor:"pointer",textDecoration:"underline",padding:0}}>Reset</button>}
+      </Card>
+      {DOC_SECTIONS.map((section,si)=>(
+        <Card key={si} style={{marginBottom:12}}>
+          <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>{section.title}</h3>
+          {section.docs.map((doc,di)=>{
+            const key=`${si}-${di}`;
+            const isChecked=!!checked[key];
+            return(
+              <div key={di} onClick={()=>toggle(key)} style={{display:"flex",alignItems:"flex-start",gap:10,padding:"9px 0",borderBottom:`1px solid ${s.light}`,cursor:"pointer"}}>
+                <div style={{width:20,height:20,borderRadius:5,border:`2px solid ${isChecked?s.green:s.border}`,background:isChecked?s.green:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:1}}>{isChecked&&<span style={{color:"#fff",fontSize:12,fontWeight:800}}>✓</span>}</div>
+                <div style={{flex:1}}><div style={{fontSize:12,fontWeight:600,color:isChecked?s.muted:s.navy,textDecoration:isChecked?"line-through":"none"}}>{doc.label}</div><div style={{fontSize:10,color:s.muted,marginTop:2}}>{doc.tip}</div></div>
+              </div>
+            );
+          })}
+        </Card>
+      ))}
+      <p style={{fontSize:10,color:"#bbb"}}>* Requirements vary by lender. Your mortgage professional may request additional documents.</p>
     </div>
   );
 }
