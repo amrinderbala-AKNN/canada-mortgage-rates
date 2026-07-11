@@ -2592,6 +2592,24 @@ function LawyersTab(){
   const [showForm,setShowForm]=useState(false);
   const [faqOpen,setFaqOpen]=useState<string|null>(null);
 
+  const [showPartnerForm,setShowPartnerForm]=useState(false);
+  const [pName,setPName]=useState("");
+  const [pEmail,setPEmail]=useState("");
+  const [pFirm,setPFirm]=useState("");
+  const [pCity,setPCity]=useState("");
+  const [pOk,setPOk]=useState(false);
+  const [pSubmitting,setPSubmitting]=useState(false);
+
+  async function submitPartner(){
+    if(!pName||!pEmail||!pFirm){alert("Please fill in name, email, and firm.");return;}
+    setPSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:pName,email:pEmail,firm:pFirm,city:pCity,type:"Lawyer Partner Inquiry"})});
+      setPOk(true);
+    }catch{alert("Something went wrong.");}
+    setPSubmitting(false);
+  }
+
   const LAW_SOCIETIES:{[k:string]:{name:string,url:string}}={
     AB:{name:"Law Society of Alberta",url:"https://www.lawsociety.ab.ca/public-resources/finding-a-lawyer/"},
     BC:{name:"Law Society of BC",url:"https://www.lawsociety.bc.ca/lsbc/apps/lkup/mbr-search.cfm"},
@@ -2757,8 +2775,38 @@ function LawyersTab(){
           <div style={{fontSize:13,fontWeight:800,color:"#92400e",marginBottom:4}}>⚖️ Are You a Real Estate Lawyer?</div>
           <div style={{fontSize:11,color:"#92400e",lineHeight:1.5}}>Join our referral network. We connect qualified buyers directly to you. Pay only per referred lead — no monthly fees.</div>
         </div>
-        <a href="mailto:info@canadamortgagerates.net?subject=Lawyer Partner Inquiry" style={{padding:"10px 20px",background:"#92400e",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textDecoration:"none",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</a>
+        <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 20px",background:"#92400e",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,border:"none",cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</button>
       </div>
+
+      {/* Partner Form Modal */}
+      {showPartnerForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:"#92400e",padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>⚖️ Lawyer Partner Inquiry</div>
+              <button onClick={()=>setShowPartnerForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{padding:18}}>
+              {!pOk?(
+                <>
+                  <p style={{fontSize:12,color:s.muted,marginBottom:14,lineHeight:1.6}}>Fill out your details and we'll be in touch about our referral program — $75–$100 per qualified lead, no monthly fees.</p>
+                  <Field label="Your Name *"><input type="text" value={pName} onChange={e=>setPName(e.target.value)} placeholder="Full name" style={inp}/></Field>
+                  <Field label="Law Firm *"><input type="text" value={pFirm} onChange={e=>setPFirm(e.target.value)} placeholder="Firm name" style={inp}/></Field>
+                  <Field label="Email *"><input type="email" value={pEmail} onChange={e=>setPEmail(e.target.value)} placeholder="your@firm.com" style={inp}/></Field>
+                  <Field label="City"><input type="text" value={pCity} onChange={e=>setPCity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+                  <button onClick={submitPartner} disabled={pSubmitting} style={{width:"100%",padding:10,background:pSubmitting?"#aaa":"#92400e",color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:pSubmitting?"not-allowed":"pointer",marginTop:4}}>{pSubmitting?"Submitting...":"Send Inquiry →"}</button>
+                </>
+              ):(
+                <div style={{textAlign:"center",padding:"20px 0"}}>
+                  <div style={{fontSize:36,marginBottom:8}}>✅</div>
+                  <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:6}}>Thanks {pName}!</div>
+                  <div style={{fontSize:12,color:s.muted,lineHeight:1.7}}>We'll be in touch within 1 business day to discuss the referral program.</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Connection Form Modal */}
       {showForm&&(
