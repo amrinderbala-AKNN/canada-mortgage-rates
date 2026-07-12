@@ -2140,7 +2140,125 @@ function InsuranceTab({initProv}){
   );
 }
 
+function RateImpactTab(){
+  const [mortgage,setMortgage]=useState(400000);
+  const [rate1,setRate1]=useState(4.5);
+  const [rate2,setRate2]=useState(5.0);
+  const [amortI,setAmortI]=useState(25);
+  const [compared,setCompared]=useState<any>(null);
+
+  function calcImpact(){
+    function pmt(p:number,r:number,n:number){const m=r/100/12;return m===0?p/n:p*(m*Math.pow(1+m,n))/(Math.pow(1+m,n)-1);}
+    const n=amortI*12;
+    const p1=pmt(mortgage,rate1,n);
+    const p2=pmt(mortgage,rate2,n);
+    const diff=p2-p1;
+    const totalDiff=diff*n;
+    const p1Total=p1*n;
+    const p2Total=p2*n;
+    setCompared({p1,p2,diff,totalDiff,p1Total,p2Total,p1Int:p1Total-mortgage,p2Int:p2Total-mortgage});
+  }
+
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🧮</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Rate Impact Calculator</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>See exactly how much a rate difference costs you in dollars — per month and over your full amortization.</p>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14,marginBottom:14}}>
+        <Card>
+          <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>Compare Two Rates</h3>
+          <Field label="Mortgage Amount ($)"><input type="number" value={mortgage} onChange={e=>setMortgage(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Rate A (%) — e.g. your bank's offer"><input type="number" step="0.05" value={rate1} onChange={e=>setRate1(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Rate B (%) — e.g. competing offer"><input type="number" step="0.05" value={rate2} onChange={e=>setRate2(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Amortization">
+            <select value={amortI} onChange={e=>setAmortI(parseInt(e.target.value))} style={inp}>
+              {[10,15,20,25,30].map(y=><option key={y} value={y}>{y} years</option>)}
+            </select>
+          </Field>
+          <button onClick={calcImpact} style={calcBtn}>Calculate Rate Impact</button>
+        </Card>
+
+        {compared&&(
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:12}}>💰 The Dollar Difference</h3>
+            <div style={{background:"rgba(255,255,255,0.1)",borderRadius:10,padding:12,marginBottom:10,textAlign:"center"}}>
+              <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginBottom:2}}>Monthly Savings at {rate1}% vs {rate2}%</div>
+              <div style={{fontSize:32,fontWeight:800,color:s.gold}}>{cur(compared.diff)}/mo</div>
+              <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginTop:2}}>That's {cur(compared.totalDiff)} over {amortI} years</div>
+            </div>
+            {[
+              [`Rate A (${rate1}%)`,cur(compared.p1)+"/mo",cur(compared.p1Int)+" interest"],
+              [`Rate B (${rate2}%)`,cur(compared.p2)+"/mo",cur(compared.p2Int)+" interest"],
+            ].map(([l,v,note])=>(
+              <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:7}}>
+                <div style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:3}}>{l}</div>
+                <div style={{fontSize:16,fontWeight:800,color:"#fff"}}>{v}</div>
+                <div style={{fontSize:10,color:"rgba(255,255,255,0.5)",marginTop:2}}>{note} total</div>
+              </div>
+            ))}
+          </Card>
+        )}
+      </div>
+
+      {compared&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📊 What {cur(compared.diff)}/month Means Over Time</h3>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:10}}>
+            {[[1,"1 Year"],[3,"3 Years"],[5,"5 Years"],[amortI,`${amortI} Years`]].map(([yrs,label])=>(
+              <div key={label as string} style={{background:"#f8fafc",borderRadius:8,padding:10,textAlign:"center",border:`1px solid ${s.border}`}}>
+                <div style={{fontSize:14,fontWeight:800,color:s.green}}>{cur(compared.diff*12*(yrs as number))}</div>
+                <div style={{fontSize:10,color:s.muted,marginTop:3}}>{label}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 12px",marginTop:10,fontSize:11,color:"#15803d"}}>
+            💡 Even a 0.25% rate difference on a $400K mortgage saves ~$65/month or ~$19,500 over 25 years. This is why shopping around matters.
+          </div>
+        </Card>
+      )}
+
+      {/* Common rate scenarios */}
+      <Card>
+        <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>💡 Common Rate Scenarios — $400K Mortgage, 25 Years</h3>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",minWidth:360}}>
+            <thead><tr style={{background:"#f8fafc"}}>{["Scenario","Rate","Monthly Payment","Total Interest","vs Best Rate"].map(h=><th key={h} style={{padding:"8px 10px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+            <tbody>
+              {[
+                {sc:"Best variable rate",r:3.35,color:s.green},
+                {sc:"Best fixed rate",r:4.89,color:s.blue},
+                {sc:"Bank posted rate",r:5.50,color:"#92400e"},
+                {sc:"No negotiation",r:6.00,color:s.red},
+              ].map((row,i)=>{
+                const m=row.r/100/12,n=300;
+                const pmt=400000*(m*Math.pow(1+m,n))/(Math.pow(1+m,n)-1);
+                const totalInt=pmt*300-400000;
+                const bestPmt=400000*(3.35/100/12*Math.pow(1+3.35/100/12,300))/(Math.pow(1+3.35/100/12,300)-1);
+                const bestInt=bestPmt*300-400000;
+                const extra=totalInt-bestInt;
+                return(
+                  <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i===0?"#f0fdf4":i%2===0?s.white:"#fafbfc"}}>
+                    <td style={{padding:"9px 10px",fontSize:12,fontWeight:i===0?800:400,color:row.color}}>{row.sc}</td>
+                    <td style={{padding:"9px 10px",fontSize:12,fontWeight:700,color:row.color}}>{row.r}%</td>
+                    <td style={{padding:"9px 10px",fontSize:12,fontWeight:700,color:s.navy}}>{cur(pmt)}/mo</td>
+                    <td style={{padding:"9px 10px",fontSize:12,color:s.muted}}>{cur(totalInt)}</td>
+                    <td style={{padding:"9px 10px",fontSize:12,color:extra>0?"#dc2626":s.green,fontWeight:700}}>{extra>0?`+${cur(extra)} extra`:"Baseline"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
+  );
+}
+
 function RateFinderTab(){
+  const [subTab,setSubTab]=useState<"finder"|"compare"|"impact"|"preapproval">("finder");
   const [step,setStep]=useState(0);const [answers,setAnswers]=useState<any>({});const [result,setResult]=useState<any>(null);
   const steps=[
     {q:"What is the purpose of your mortgage?",key:"purpose",hint:"This affects which programs and lenders you qualify for.",opts:[{v:"🏠 First Home Purchase",tip:"First-time buyers get access to FHSA, HBP, and provincial grants."},{v:"🏡 Subsequent Purchase",tip:"Standard qualification rules apply. Your existing equity can help."},{v:"🔄 Renewal / Transfer",tip:"No penalty at renewal. Shop around — your lender's first offer is rarely best."},{v:"💳 Refinance",tip:"Breaking early triggers a penalty. We'll factor this into your analysis."}]},
@@ -2184,71 +2302,301 @@ function RateFinderTab(){
   const selectedOpt=result?null:currentStep?.opts.find((o:any)=>o.v===answers[currentStep?.key]);
 
   return(
-    <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
-      <Card>
-        <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:4}}>🎯 Personalized Rate Finder</h2>
-        <p style={{fontSize:12,color:s.muted,marginBottom:14}}>Answer 5 questions to get your estimated rate range and a personalized action plan.</p>
-        {!result?(
-          <>
-            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
-              {step>0&&<button onClick={goBack} style={{background:"none",border:`1.5px solid ${s.border}`,borderRadius:8,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer",color:s.muted}}>← Back</button>}
-              <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
-                <div style={{width:28,height:28,background:s.navy,color:"#fff",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,flexShrink:0}}>{step+1}</div>
-                <div style={{fontSize:14,fontWeight:700,color:s.navy}}>{currentStep.q}</div>
+    <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setSubTab("finder")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="finder"?s.navy:s.border}`,background:subTab==="finder"?s.navy:s.white,color:subTab==="finder"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🎯 Rate Finder</button>
+        <button onClick={()=>setSubTab("compare")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="compare"?s.navy:s.border}`,background:subTab==="compare"?s.navy:s.white,color:subTab==="compare"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📊 Fixed vs Variable</button>
+        <button onClick={()=>setSubTab("impact")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="impact"?s.navy:s.border}`,background:subTab==="impact"?s.navy:s.white,color:subTab==="impact"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🧮 Rate Impact</button>
+        <button onClick={()=>setSubTab("preapproval")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="preapproval"?s.navy:s.border}`,background:subTab==="preapproval"?s.navy:s.white,color:subTab==="preapproval"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📋 Pre-Approval</button>
+      </div>
+
+      {subTab==="finder"&&(
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
+        <Card>
+          <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:4}}>🎯 Personalized Rate Finder</h2>
+          <p style={{fontSize:12,color:s.muted,marginBottom:14}}>Answer 5 questions to get your estimated rate range and a personalized action plan.</p>
+          {!result?(
+            <>
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}>
+                {step>0&&<button onClick={goBack} style={{background:"none",border:`1.5px solid ${s.border}`,borderRadius:8,padding:"5px 12px",fontSize:12,fontWeight:600,cursor:"pointer",color:s.muted}}>← Back</button>}
+                <div style={{display:"flex",alignItems:"center",gap:8,flex:1}}>
+                  <div style={{width:28,height:28,background:s.navy,color:"#fff",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,flexShrink:0}}>{step+1}</div>
+                  <div style={{fontSize:14,fontWeight:700,color:s.navy}}>{currentStep.q}</div>
+                </div>
               </div>
-            </div>
-            <div style={{fontSize:11,color:s.muted,marginBottom:10,marginLeft:36}}>{currentStep.hint}</div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
-              {currentStep.opts.map((opt:any)=>(
-                <button key={opt.v} onClick={()=>pick(currentStep.key,opt.v)} style={{padding:"10px 12px",border:`1.5px solid ${s.border}`,borderRadius:10,background:s.white,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer",textAlign:"left",lineHeight:1.4}}>{opt.v}</button>
-              ))}
-            </div>
-            {selectedOpt&&<div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#1e40af",marginBottom:10}}>💡 {selectedOpt.tip}</div>}
-            <div style={{background:"#f1f5f9",borderRadius:20,height:6,marginBottom:5}}><div style={{background:s.red,height:6,borderRadius:20,width:((step+1)/5*100)+"%",transition:"width 0.3s"}}/></div>
-            <div style={{fontSize:10,color:s.muted}}>Step {step+1} of 5</div>
-          </>
-        ):(
-          <div>
-            <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:16,marginBottom:12,color:"#fff"}}>
-              <div style={{fontSize:10,color:"rgba(255,255,255,0.7)",marginBottom:3}}>Your Estimated Rate Range</div>
-              <div style={{fontSize:38,fontWeight:800,marginBottom:3}}>{result.lo}% — {result.hi}%</div>
-              <div style={{fontSize:11,color:"rgba(255,255,255,0.65)"}}>{result.term} · {result.lenderType}</div>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
-              <div style={{background:s.white,border:`2px solid ${riskColor[result.risk]}`,borderRadius:10,padding:10,textAlign:"center"}}>
-                <div style={{fontSize:13,fontWeight:800,color:riskColor[result.risk]}}>{result.risk} Risk</div>
-                <div style={{fontSize:10,color:s.muted,marginTop:2}}>Borrower Profile</div>
+              <div style={{fontSize:11,color:s.muted,marginBottom:10,marginLeft:36}}>{currentStep.hint}</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+                {currentStep.opts.map((opt:any)=>(
+                  <button key={opt.v} onClick={()=>pick(currentStep.key,opt.v)} style={{padding:"10px 12px",border:`1.5px solid ${s.border}`,borderRadius:10,background:s.white,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer",textAlign:"left",lineHeight:1.4}}>{opt.v}</button>
+                ))}
               </div>
-              <div style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:10,padding:10,textAlign:"center"}}>
-                <div style={{fontSize:13,fontWeight:800,color:s.navy}}>{result.lenderType.split("(")[0].trim()}</div>
-                <div style={{fontSize:10,color:s.muted,marginTop:2}}>Recommended Lenders</div>
+              {selectedOpt&&<div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#1e40af",marginBottom:10}}>💡 {selectedOpt.tip}</div>}
+              <div style={{background:"#f1f5f9",borderRadius:20,height:6,marginBottom:5}}><div style={{background:s.red,height:6,borderRadius:20,width:((step+1)/5*100)+"%",transition:"width 0.3s"}}/></div>
+              <div style={{fontSize:10,color:s.muted}}>Step {step+1} of 5</div>
+            </>
+          ):(
+            <div>
+              <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:16,marginBottom:12,color:"#fff"}}>
+                <div style={{fontSize:10,color:"rgba(255,255,255,0.7)",marginBottom:3}}>Your Estimated Rate Range</div>
+                <div style={{fontSize:38,fontWeight:800,marginBottom:3}}>{result.lo}% — {result.hi}%</div>
+                <div style={{fontSize:11,color:"rgba(255,255,255,0.65)"}}>{result.term} · {result.lenderType}</div>
               </div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:12}}>
+                <div style={{background:s.white,border:`2px solid ${riskColor[result.risk]}`,borderRadius:10,padding:10,textAlign:"center"}}>
+                  <div style={{fontSize:13,fontWeight:800,color:riskColor[result.risk]}}>{result.risk} Risk</div>
+                  <div style={{fontSize:10,color:s.muted,marginTop:2}}>Borrower Profile</div>
+                </div>
+                <div style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:10,padding:10,textAlign:"center"}}>
+                  <div style={{fontSize:13,fontWeight:800,color:s.navy}}>{result.lenderType.split("(")[0].trim()}</div>
+                  <div style={{fontSize:10,color:s.muted,marginTop:2}}>Recommended Lenders</div>
+                </div>
+              </div>
+              <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:12,marginBottom:12}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#15803d",marginBottom:8}}>✅ Your Profile Summary</div>
+                {[["Purpose",result.purpose],["Credit",result.credit],["Down Payment",result.down],["Employment",result.emp],["Term",result.term]].map(([l,v])=><div key={l} style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span style={{color:s.muted}}>{l}</span><span style={{fontWeight:600,color:s.navy}}>{v.replace(/[🏠🏡🔄💳🟢🔵🟡🔴💼🧾📋🎯📉📅]/g,"").trim()}</span></div>)}
+              </div>
+              <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:12,marginBottom:12}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#1e40af",marginBottom:8}}>🏦 {result.risk==="High"?"You Need a Mortgage Broker":"Broker Recommendation"}</div>
+                <div style={{fontSize:11,color:"#1e40af",lineHeight:1.6}}>{result.tip}</div>
+              </div>
+              <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:12,marginBottom:12}}>
+                <div style={{fontSize:11,fontWeight:700,color:"#c2410c",marginBottom:8}}>📋 Your Personal Action Plan</div>
+                {result.nextSteps.map((step:string,i:number)=><div key={i} style={{display:"flex",gap:8,marginBottom:6,alignItems:"flex-start"}}><div style={{width:20,height:20,background:s.navy,color:"#fff",borderRadius:"50%",fontSize:10,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:1}}>{i+1}</div><div style={{fontSize:11,color:"#374151",lineHeight:1.5}}>{step}</div></div>)}
+              </div>
+              <div style={{display:"flex",gap:8}}>
+                <button onClick={reset} style={{flex:1,padding:"9px 18px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Retake Quiz</button>
+                <a href="https://www.ratehub.ca/mortgages" target="_blank" rel="noopener noreferrer" style={{flex:1,padding:"9px 18px",background:s.green,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textDecoration:"none",textAlign:"center",display:"flex",alignItems:"center",justifyContent:"center"}}>Compare Live Rates →</a>
+              </div>
+              <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Estimates only. Consult a licensed mortgage broker for your actual rate.</p>
             </div>
-            <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:12,marginBottom:12}}>
-              <div style={{fontSize:11,fontWeight:700,color:"#15803d",marginBottom:8}}>✅ Your Profile Summary</div>
-              {[["Purpose",result.purpose],["Credit",result.credit],["Down Payment",result.down],["Employment",result.emp],["Term",result.term]].map(([l,v])=><div key={l} style={{display:"flex",justifyContent:"space-between",fontSize:11,marginBottom:3}}><span style={{color:s.muted}}>{l}</span><span style={{fontWeight:600,color:s.navy}}>{v.replace(/[🏠🏡🔄💳🟢🔵🟡🔴💼🧾📋🎯📉📅]/g,"").trim()}</span></div>)}
+          )}
+        </Card>
+        <Card style={{background:s.navy}}>
+          <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:4}}>📊 Rate Factors Explained</h3>
+          <p style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginBottom:12}}>What determines your mortgage rate — and by how much.</p>
+          {[["CREDIT SCORE — BIGGEST FACTOR","750+: Best rates (-0.30%). 700–749: Good rates (-0.10%). 650–699: Small premium (+0.45%). Below 650: B-lender territory (+1.0%+)."],["DOWN PAYMENT","20%+ opens all lenders including credit unions and avoids CMHC. Under 20% requires CMHC and limits you to insured-rate lenders."],["EMPLOYMENT TYPE","Salaried: easiest to qualify. Self-employed: need 2yr income history. Contract: need 2yr history of same income type."],["MORTGAGE TERM","Variable rates are currently lower than fixed (~3.5% vs ~5%). Fixed gives payment certainty. Variable has lower break penalty."],["LENDER TYPE","Big banks are convenient but rarely offer best rates. Credit unions and online lenders often beat banks by 0.25–0.75%. Mortgage brokers compare them all."],["STRESS TEST IMPACT","You must qualify at your rate +2% or 5.25%. This reduces your maximum purchase price — factor this in when house hunting."]].map(([t,d])=><div key={t} style={{background:"rgba(255,255,255,0.07)",borderRadius:8,padding:10,marginBottom:7,borderLeft:`3px solid ${s.gold}`}}><div style={{fontSize:10,color:s.gold,fontWeight:700,marginBottom:3}}>{t}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.8)",lineHeight:1.5}}>{d}</div></div>)}
+        </Card>
+      </div>
+      )}
+
+      {subTab==="compare"&&(
+      <div>
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+          <div style={{fontSize:28,marginBottom:6}}>📊</div>
+          <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Fixed vs Variable — Which is Right for You?</h2>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>With BoC at 2.25% and variable rates below fixed, here's the full comparison for 2026.</p>
+        </div>
+
+        {/* Side by side comparison */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:14}}>
+          <Card style={{borderTop:`4px solid ${s.blue}`}}>
+            <div style={{fontSize:14,fontWeight:800,color:s.blue,marginBottom:10}}>📅 Fixed Rate</div>
+            <div style={{fontSize:28,fontWeight:800,color:s.navy,marginBottom:4}}>~4.89%</div>
+            <div style={{fontSize:11,color:s.muted,marginBottom:12}}>5-year fixed · July 2026</div>
+            {[["✓ Payment certainty","Your payment never changes during the term"],["✓ Protection from hikes","If rates rise, you're protected"],["✓ Easy to budget","Know your cost for 1–5 years"],["✗ Higher rate now","Currently 1.5% above variable"],["✗ High break penalty","IRD can be $10,000–$30,000+"],["✗ Miss rate drops","If BoC cuts again, you don't benefit"]].map(([t,d])=>(
+              <div key={t} style={{display:"flex",gap:8,padding:"5px 0",borderBottom:`1px solid ${s.light}`,fontSize:11}}>
+                <span style={{color:t.startsWith("✓")?s.green:s.red,flexShrink:0,fontWeight:700}}>{t.split(" ")[0]}</span>
+                <div><span style={{fontWeight:700,color:s.navy}}>{t.slice(2)} </span><span style={{color:s.muted}}>{d}</span></div>
+              </div>
+            ))}
+            <div style={{background:"#eff6ff",borderRadius:8,padding:"8px 10px",marginTop:10,fontSize:11,color:"#1e40af"}}>
+              <b>Best for:</b> Risk-averse buyers who need payment predictability. First-time buyers who can't absorb payment increases.
             </div>
-            <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:12,marginBottom:12}}>
-              <div style={{fontSize:11,fontWeight:700,color:"#1e40af",marginBottom:8}}>🏦 {result.risk==="High"?"You Need a Mortgage Broker":"Broker Recommendation"}</div>
-              <div style={{fontSize:11,color:"#1e40af",lineHeight:1.6}}>{result.tip}</div>
+          </Card>
+          <Card style={{borderTop:`4px solid ${s.green}`}}>
+            <div style={{fontSize:14,fontWeight:800,color:s.green,marginBottom:10}}>📉 Variable Rate</div>
+            <div style={{fontSize:28,fontWeight:800,color:s.navy,marginBottom:4}}>~3.35%</div>
+            <div style={{fontSize:11,color:s.muted,marginBottom:12}}>Variable · Prime −1.10% · July 2026</div>
+            {[["✓ Lower rate now","1.5% below 5-yr fixed = significant savings"],["✓ Low break penalty","Only 3 months interest to break"],["✓ Benefit from cuts","If BoC cuts again, your rate drops automatically"],["✗ Payment can rise","If BoC hikes, your payment increases"],["✗ Uncertainty","Hard to budget long-term"],["✗ Psychological stress","Rate announcements 8x/year can be stressful"]].map(([t,d])=>(
+              <div key={t} style={{display:"flex",gap:8,padding:"5px 0",borderBottom:`1px solid ${s.light}`,fontSize:11}}>
+                <span style={{color:t.startsWith("✓")?s.green:s.red,flexShrink:0,fontWeight:700}}>{t.split(" ")[0]}</span>
+                <div><span style={{fontWeight:700,color:s.navy}}>{t.slice(2)} </span><span style={{color:s.muted}}>{d}</span></div>
+              </div>
+            ))}
+            <div style={{background:"#f0fdf4",borderRadius:8,padding:"8px 10px",marginTop:10,fontSize:11,color:"#15803d"}}>
+              <b>Best for:</b> Buyers who can absorb payment fluctuations and want to take advantage of the current rate differential.
             </div>
-            <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:12,marginBottom:12}}>
-              <div style={{fontSize:11,fontWeight:700,color:"#c2410c",marginBottom:8}}>📋 Your Personal Action Plan</div>
-              {result.nextSteps.map((step:string,i:number)=><div key={i} style={{display:"flex",gap:8,marginBottom:6,alignItems:"flex-start"}}><div style={{width:20,height:20,background:s.navy,color:"#fff",borderRadius:"50%",fontSize:10,fontWeight:700,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:1}}>{i+1}</div><div style={{fontSize:11,color:"#374151",lineHeight:1.5}}>{step}</div></div>)}
-            </div>
-            <div style={{display:"flex",gap:8}}>
-              <button onClick={reset} style={{flex:1,padding:"9px 18px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Retake Quiz</button>
-              <a href="https://www.ratehub.ca/mortgages" target="_blank" rel="noopener noreferrer" style={{flex:1,padding:"9px 18px",background:s.green,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textDecoration:"none",textAlign:"center",display:"flex",alignItems:"center",justifyContent:"center"}}>Compare Live Rates →</a>
-            </div>
-            <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Estimates only. Consult a licensed mortgage broker for your actual rate.</p>
+          </Card>
+        </div>
+
+        {/* Rate comparison by term */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>📋 Current Rates by Term — July 2026</h3>
+          <div style={{overflowX:"auto"}}>
+            <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+              <thead><tr style={{background:"#f8fafc"}}>{["Term","Fixed Rate","Variable Rate","Best Choice","Why"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+              <tbody>
+                {[
+                  {term:"1-Year",fixed:"4.65%",variable:"3.35%",best:"Variable",why:"1.3% gap is large. 1yr fixed hedges risk with quick renewal."},
+                  {term:"2-Year",fixed:"4.75%",variable:"3.35%",best:"Variable",why:"Still significant gap. Rates likely stable or lower in 2 years."},
+                  {term:"3-Year",fixed:"4.85%",variable:"3.35%",best:"Variable",why:"1.5% gap. Economists expect cuts may continue into 2027."},
+                  {term:"5-Year",fixed:"4.89%",variable:"3.35%",best:"Depends",why:"Larger gap but more uncertainty. Risk tolerance determines best choice."},
+                ].map((row,i)=>(
+                  <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                    <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.term}</td>
+                    <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.blue}}>{row.fixed}</td>
+                    <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.green}}>{row.variable}</td>
+                    <td style={{padding:"10px 12px"}}><span style={{background:row.best==="Variable"?"#dcfce7":row.best==="Fixed"?"#dbeafe":"#fef3c7",color:row.best==="Variable"?"#15803d":row.best==="Fixed"?"#1e40af":"#92400e",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{row.best}</span></td>
+                    <td style={{padding:"10px 12px",fontSize:11,color:s.muted}}>{row.why}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        )}
-      </Card>
-      <Card style={{background:s.navy}}>
-        <h3 style={{fontSize:14,fontWeight:700,color:"#fff",marginBottom:4}}>📊 Rate Factors Explained</h3>
-        <p style={{fontSize:11,color:"rgba(255,255,255,0.6)",marginBottom:12}}>What determines your mortgage rate — and by how much.</p>
-        {[["CREDIT SCORE — BIGGEST FACTOR","750+: Best rates (-0.30%). 700–749: Good rates (-0.10%). 650–699: Small premium (+0.45%). Below 650: B-lender territory (+1.0%+)."],["DOWN PAYMENT","20%+ opens all lenders including credit unions and avoids CMHC. Under 20% requires CMHC and limits you to insured-rate lenders."],["EMPLOYMENT TYPE","Salaried: easiest to qualify. Self-employed: need 2yr income history. Contract: need 2yr history of same income type."],["MORTGAGE TERM","Variable rates are currently lower than fixed (~3.5% vs ~5%). Fixed gives payment certainty. Variable has lower break penalty."],["LENDER TYPE","Big banks are convenient but rarely offer best rates. Credit unions and online lenders often beat banks by 0.25–0.75%. Mortgage brokers compare them all."],["STRESS TEST IMPACT","You must qualify at your rate +2% or 5.25%. This reduces your maximum purchase price — factor this in when house hunting."]].map(([t,d])=><div key={t} style={{background:"rgba(255,255,255,0.07)",borderRadius:8,padding:10,marginBottom:7,borderLeft:`3px solid ${s.gold}`}}><div style={{fontSize:10,color:s.gold,fontWeight:700,marginBottom:3}}>{t}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.8)",lineHeight:1.5}}>{d}</div></div>)}
-      </Card>
+        </Card>
+
+        <Card style={{background:"#fffbeb",border:"1px solid #fde68a",marginBottom:14}}>
+          <h3 style={{fontSize:13,fontWeight:800,color:"#92400e",marginBottom:8}}>⚖️ The 2026 Verdict</h3>
+          <p style={{fontSize:12,color:"#92400e",lineHeight:1.7,marginBottom:8}}>Variable rates are currently ~1.5% below fixed rates. Historically, variable rate borrowers have paid less interest over time in about 2 out of 3 rate cycles. However, the BoC could hold or even reverse course if inflation spikes.</p>
+          <p style={{fontSize:12,color:"#92400e",lineHeight:1.7}}>If you can absorb a $200–$400/month payment increase without financial stress, variable is likely the better choice right now. If you're at your maximum affordability, fixed gives you certainty that your payments won't increase.</p>
+        </Card>
+
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📞 Get a Free Personalized Rate Recommendation →</button>
+      </div>
+      )}
+
+      {subTab==="impact"&&<RateImpactTab/>}
+      {subTab==="preapproval"&&(
+      <div>
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+          <div style={{fontSize:28,marginBottom:6}}>📋</div>
+          <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Mortgage Pre-Approval Guide</h2>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Everything you need to get pre-approved — documents, timeline, and what to expect.</p>
+        </div>
+
+        {/* Timeline */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>⏱️ Pre-Approval Timeline</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>From application to keys — here's how long each step takes.</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:10}}>
+            {[
+              {step:"Day 1",title:"Apply",desc:"Submit application online or with a broker. Takes 30–60 minutes.",color:s.navy},
+              {step:"1–3 Days",title:"Credit Check",desc:"Lender pulls your credit report. Soft pull for pre-approval.",color:s.blue},
+              {step:"2–5 Days",title:"Document Review",desc:"Lender reviews income, employment, and assets.",color:"#7c3aed"},
+              {step:"3–7 Days",title:"Pre-Approval Issued",desc:"You receive a pre-approval letter with maximum amount and rate hold.",color:s.green},
+              {step:"Rate Hold",title:"90–120 Days",desc:"Your rate is locked while you house hunt. Renewable if expired.",color:s.gold},
+              {step:"After Offer",title:"Full Approval",desc:"Once your offer is accepted, full underwriting begins (5–10 days).",color:s.red},
+            ].map((item,i)=>(
+              <div key={i} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderTop:`3px solid ${item.color}`}}>
+                <div style={{fontSize:10,fontWeight:700,color:item.color,marginBottom:3}}>{item.step}</div>
+                <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{item.title}</div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Document checklist */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📁 Documents You'll Need</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Have these ready before you apply — it speeds up approval significantly.</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+            {[
+              {cat:"💼 Income",items:["Last 2 pay stubs (within 30 days)","Employment letter on company letterhead","Last 2 years T4 slips","Last 2 years Notice of Assessment (NOA)"]},
+              {cat:"🏦 Assets & Down Payment",items:["90-day bank statements (all pages)","RRSP/FHSA/investment statements","Gift letter if receiving down payment help","Sale proceeds if selling current home"]},
+              {cat:"🆔 Identity",items:["Government photo ID (passport or licence)","Secondary ID","Social Insurance Number (SIN)"]},
+              {cat:"📊 Debt & Liabilities",items:["Credit card statements","Car loan statements","Student loan balance","Any other monthly debt obligations"]},
+            ].map(cat=>(
+              <div key={cat.cat} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:8}}>{cat.cat}</div>
+                {cat.items.map(item=>(
+                  <div key={item} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:s.muted}}>
+                    <span style={{color:s.green,flexShrink:0}}>✓</span>{item}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"8px 12px",marginTop:10,fontSize:11,color:"#1e40af"}}>
+            💡 <b>Pro tip:</b> Scan and organize all documents into a folder before applying. Lenders who receive complete packages approve faster.
+          </div>
+        </Card>
+
+        {/* What lenders look at */}
+        <Card style={{background:s.navy,marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:"#fff",marginBottom:10}}>🔍 What Lenders Actually Look At</h3>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+            {[
+              {factor:"Credit Score",weight:"High",detail:"Minimum 680 for A-lenders. 750+ for best rates. Checked via Equifax or TransUnion.",color:s.red},
+              {factor:"GDS Ratio",weight:"High",detail:"Gross Debt Service — housing costs must be under 39% of gross income.",color:s.red},
+              {factor:"TDS Ratio",weight:"High",detail:"Total Debt Service — all debts must be under 44% of gross income.",color:s.red},
+              {factor:"Employment",weight:"Medium",detail:"2+ years at same employer preferred. Self-employed needs 2yr income history.",color:s.gold},
+              {factor:"Down Payment Source",weight:"Medium",detail:"Must be verified — 90 days in your account or documented gift.",color:s.gold},
+              {factor:"Property Value",weight:"Medium",detail:"Lender orders appraisal to confirm property is worth what you're paying.",color:s.gold},
+            ].map(f=>(
+              <div key={f.factor} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,borderLeft:`3px solid ${f.color}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:4}}>
+                  <span style={{fontSize:12,fontWeight:800,color:"#fff"}}>{f.factor}</span>
+                  <span style={{fontSize:9,fontWeight:700,color:f.color,background:"rgba(255,255,255,0.1)",borderRadius:20,padding:"1px 7px"}}>{f.weight}</span>
+                </div>
+                <div style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.5}}>{f.detail}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Common mistakes */}
+        <Card style={{marginBottom:14,borderLeft:`4px solid ${s.red}`}}>
+          <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>⚠️ Pre-Approval Mistakes to Avoid</h3>
+          {[
+            ["Don't apply for new credit","Every new credit application lowers your score. Avoid new cards, car loans, or lines of credit for 90 days before applying."],
+            ["Don't change jobs","Lenders want employment stability. Changing jobs during the application — even for more money — can delay or kill your approval."],
+            ["Don't make large deposits without documentation","Unexplained deposits into your bank account raise red flags. Keep receipts and be prepared to explain all deposits."],
+            ["Don't max out your credit cards","High credit utilization (over 30%) significantly hurts your score. Pay down balances before applying."],
+            ["Don't co-sign for anyone else","Co-signing adds debt to your name and reduces your qualifying amount, even if the other person makes all payments."],
+          ].map(([t,d])=>(
+            <div key={t} style={{display:"flex",gap:10,padding:"8px 0",borderBottom:`1px solid ${s.light}`}}>
+              <span style={{color:s.red,flexShrink:0,fontSize:14}}>✗</span>
+              <div><div style={{fontSize:12,fontWeight:700,color:s.navy,marginBottom:2}}>{t}</div><div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{d}</div></div>
+            </div>
+          ))}
+        </Card>
+
+        <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{flex:1,padding:"12px",background:s.green,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Start Your Pre-Approval Process →</button>
+          <button onClick={()=>{
+            const html=`<html><head><title>Mortgage Pre-Approval Guide — Canada Mortgage Rates</title>
+            <style>body{font-family:Arial,sans-serif;padding:32px;max-width:750px;margin:0 auto;color:#0d2240}
+            h1{color:#0d2240;border-bottom:3px solid #f5a623;padding-bottom:8px;font-size:22px}
+            h2{color:#0d2240;font-size:15px;margin:20px 0 8px;border-left:4px solid #0d2240;padding-left:10px}
+            h3{color:#0d2240;font-size:13px;margin:14px 0 6px}
+            .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+            .card{border:1px solid #e2e8f0;border-radius:8px;padding:10px;border-top:3px solid #0d2240}
+            .item{padding:4px 0;font-size:12px;border-bottom:1px solid #f1f5f9}
+            .check{color:#16a34a;margin-right:6px}
+            .cross{color:#dc2626;margin-right:6px}
+            .factor{background:#f8fafc;border-radius:6px;padding:8px;margin-bottom:6px;border-left:3px solid #0d2240}
+            .footer{font-size:10px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px}
+            .print-btn{padding:10px 20px;background:#0d2240;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px;margin-top:16px}
+            @media print{.print-btn{display:none}}</style></head>
+            <body>
+            <h1>📋 Mortgage Pre-Approval Guide</h1>
+            <p style="color:#64748b;font-size:12px">Generated: ${new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'})} · canadamortgagerates.net</p>
+
+            <h2>⏱️ Pre-Approval Timeline</h2>
+            <div class="grid">
+              ${[["Day 1","Apply","Submit application online or with a broker. 30–60 minutes."],["1–3 Days","Credit Check","Lender pulls credit report. Soft pull for pre-approval."],["2–5 Days","Document Review","Lender reviews income, employment, and assets."],["3–7 Days","Pre-Approval Issued","Receive letter with maximum amount and rate hold."],["90–120 Days","Rate Hold","Rate locked while house hunting. Renewable if expired."],["After Offer","Full Approval","Once offer accepted, full underwriting begins (5–10 days)."]].map(([t,n,d])=>`<div class="card"><div style="font-size:10px;color:#64748b">${t}</div><div style="font-weight:700;margin:3px 0">${n}</div><div style="font-size:11px;color:#64748b">${d}</div></div>`).join('')}
+            </div>
+
+            <h2>📁 Documents You'll Need</h2>
+            ${[["💼 Income",["Last 2 pay stubs (within 30 days)","Employment letter on company letterhead","Last 2 years T4 slips","Last 2 years Notice of Assessment (NOA)"]],["🏦 Assets & Down Payment",["90-day bank statements (all pages)","RRSP/FHSA/investment statements","Gift letter if receiving down payment help","Sale proceeds if selling current home"]],["🆔 Identity",["Government photo ID (passport or licence)","Secondary ID","Social Insurance Number (SIN)"]],["📊 Debt & Liabilities",["Credit card statements","Car loan statements","Student loan balance","Any other monthly debt obligations"]]].map(([cat,items])=>`<h3>${cat}</h3>${(items as string[]).map(i=>`<div class="item"><span class="check">✓</span>${i}</div>`).join('')}`).join('')}
+
+            <h2>🔍 What Lenders Look At</h2>
+            ${[["Credit Score (High)","Minimum 680 for A-lenders. 750+ for best rates."],["GDS Ratio (High)","Housing costs must be under 39% of gross income."],["TDS Ratio (High)","All debts must be under 44% of gross income."],["Employment (Medium)","2+ years at same employer preferred."],["Down Payment Source (Medium)","Must be in your account 90 days or documented gift."],["Property Value (Medium)","Lender orders appraisal to confirm purchase price."]].map(([f,d])=>`<div class="factor"><b>${f}</b><br/><span style="font-size:11px;color:#64748b">${d}</span></div>`).join('')}
+
+            <h2>⚠️ Mistakes to Avoid</h2>
+            ${[["Don't apply for new credit","Avoid new cards, car loans, or lines of credit for 90 days before applying."],["Don't change jobs","Employment stability is critical. Even a raise can delay approval."],["Don't make large unexplained deposits","Keep receipts and be prepared to explain all deposits."],["Don't max out credit cards","High utilization hurts your score. Stay under 30%."],["Don't co-sign for anyone else","Co-signing adds debt to your name and reduces your qualifying amount."]].map(([t,d])=>`<div class="item"><span class="cross">✗</span><b>${t}</b> — ${d}</div>`).join('')}
+
+            <div class="footer">This guide is for informational purposes only. Canada Mortgage Rates is not a licensed mortgage broker. Always consult a licensed mortgage professional before making financial decisions. · canadamortgagerates.net</div>
+            <button class="print-btn" onclick="window.print()">🖨️ Print This Guide</button>
+            </body></html>`;
+            const w=window.open("","_blank");
+            if(w){w.document.write(html);w.document.close();}
+          }} style={{padding:"12px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>🖨️ Print / Save PDF</button>
+        </div>
+      </div>
+      )}
     </div>
   );
 }
