@@ -502,7 +502,7 @@ function NavBar({active,setActive}){
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",marginLeft:"auto",maxWidth:"calc(100% - 180px)",position:"relative"}}>
-          <div style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none"}}>
+          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none"}}>
             {TABS.map(t=>{
               const isActive=active===t;
               const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
@@ -514,9 +514,9 @@ function NavBar({active,setActive}){
               );
             })}
           </div>
-          <div style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 40%)",paddingLeft:16,paddingRight:4,display:"flex",alignItems:"center",height:"100%",position:"sticky",right:0}}>
-            <span style={{color:s.gold,fontSize:20,fontWeight:800,lineHeight:1}}>›</span>
-          </div>
+          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 50%)",paddingLeft:20,paddingRight:6,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",right:0,top:0}}>
+            <span style={{color:s.gold,fontSize:28,fontWeight:800,lineHeight:1}}>›</span>
+          </button>
         </div>
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:8,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
