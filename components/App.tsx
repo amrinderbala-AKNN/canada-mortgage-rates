@@ -1305,8 +1305,15 @@ function CalcTab({prov}:{prov:string}){
           </Card>
         </div>
       )}
-
-      {tab==="stress"&&(
+      {tab==="renewal"&&(
+        <div style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:"1px solid #bbf7d0",borderRadius:10,padding:"12px 16px",marginTop:14,display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,flexWrap:"wrap"}}>
+          <div>
+            <div style={{fontSize:12,fontWeight:700,color:"#15803d",marginBottom:2}}>Want the full renewal playbook?</div>
+            <div style={{fontSize:11,color:"#16a34a"}}>Renewal timeline, negotiation script, top lenders, and FAQ — all in one place.</div>
+          </div>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Renewal"}))} style={{padding:"8px 16px",background:"#15803d",color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>Go to Renewal Tab →</button>
+        </div>
+      )}
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
           <Card>
             <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:4}}>📋 Mortgage Stress Test</h3>
