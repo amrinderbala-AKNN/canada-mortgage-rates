@@ -1702,6 +1702,73 @@ function PropertyTaxTab({initProv,initCity}){
             <div style={{fontSize:11,fontWeight:700,color:"#1e40af",marginBottom:4}}>💡 Why does the same home value result in different taxes across cities?</div>
             <div style={{fontSize:11,color:"#1e40af",lineHeight:1.6}}>Property tax = <b>Mill Rate × Assessed Value</b>. Each city sets its own mill rate based on its budget needs and the total assessed value of all properties in the city. Cities with lower average home prices typically need higher mill rates to generate enough revenue for services like roads, water, schools, and emergency services. Cities with higher average home values can fund the same services with a lower mill rate. This means comparing property taxes across cities using the same home value can produce surprising results — and that's completely normal across Canada.</div>
           </div>
+
+          {/* Tax-to-Income Ratio */}
+          <div style={{background:s.navy,borderRadius:10,padding:14,marginTop:12}}>
+            <div style={{fontSize:12,fontWeight:800,color:"#fff",marginBottom:10}}>📊 Property Tax as % of Income</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:8}}>
+              {[[60000,"$60K"],[80000,"$80K"],[100000,"$100K"],[120000,"$120K"],[150000,"$150K"]].map(([income,label])=>{
+                const pct=((result as any).total/income*100).toFixed(1);
+                const color=parseFloat(pct)<2?"#4ade80":parseFloat(pct)<4?"#fbbf24":"#f87171";
+                return(
+                  <div key={label} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 10px",textAlign:"center"}}>
+                    <div style={{fontSize:14,fontWeight:800,color}}>{pct}%</div>
+                    <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:2}}>{label} income</div>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)",marginTop:8}}>🟢 Under 2% = comfortable · 🟡 2–4% = moderate · 🔴 Over 4% = high burden</div>
+          </div>
+
+          {/* Payment Options */}
+          <Card style={{marginTop:12}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>💳 Property Tax Payment Options</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {title:"Monthly Pre-Authorized",desc:"Most municipalities let you spread payments across 12 months via PAP. Set up through your municipality's website or call your city hall.",badge:"✅ Recommended",color:s.green},
+                {title:"Through Your Mortgage",desc:"Your lender may collect property tax monthly as part of your mortgage payment and pay the city on your behalf. Ask your lender.",badge:"🏦 Convenient",color:s.blue},
+                {title:"Annual Lump Sum",desc:"Pay once per year by the due date (usually June/July). Some municipalities offer a discount for early payment.",badge:"💰 Potential Discount",color:s.gold},
+                {title:"Installments",desc:"Many cities offer 2–4 installment options throughout the year. Check your municipality's tax portal for exact dates.",badge:"📅 Flexible",color:s.navy},
+              ].map(p=>(
+                <div key={p.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,borderLeft:`3px solid ${p.color}`}}>
+                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:3}}>{p.title}</div>
+                  <div style={{fontSize:9,fontWeight:700,color:p.color,marginBottom:5}}>{p.badge}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{p.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Assessment Appeal Guide */}
+          <Card style={{marginTop:12,borderLeft:`4px solid ${s.gold}`}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:4}}>⚖️ Think Your Assessment is Too High? How to Appeal</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>In Canada, you have the right to appeal your property assessment if you believe it's inaccurate. Successful appeals can save homeowners $500–$3,000+ per year.</p>
+            <div style={{position:"relative"}}>
+              <div style={{position:"absolute",left:14,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.gold},${s.green})`,borderRadius:2}}/>
+              {[
+                {step:"Step 1",title:"Review Your Assessment Notice",desc:"Check the assessed value, property classification, and land vs building split. Compare to recent sales of similar homes nearby.",time:"When notice arrives"},
+                {step:"Step 2",title:"Research Comparable Sales",desc:"Find 3–5 similar homes that sold near your assessment date. If they sold for less than your assessed value, you have grounds to appeal.",time:"Within 30 days"},
+                {step:"Step 3",title:"Contact the Assessment Office",desc:"Call your municipality's assessment office first — many errors are fixed informally without a formal appeal. Get the assessor's reasoning.",time:"Before deadline"},
+                {step:"Step 4",title:"File a Formal Appeal",desc:"If informal resolution fails, file an appeal with your provincial assessment review board. Deadlines vary by province (typically 60–90 days from notice).",time:"Before deadline"},
+                {step:"Step 5",title:"Attend the Hearing",desc:"Present your comparable sales evidence. You don't need a lawyer — most homeowners represent themselves. Board decisions are usually made within 30–60 days.",time:"At hearing"},
+              ].map((s2,i)=>(
+                <div key={i} style={{display:"flex",gap:14,marginBottom:12,paddingLeft:6}}>
+                  <div style={{width:20,height:20,borderRadius:"50%",background:s.gold,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10,fontWeight:800,color:"#fff"}}>{i+1}</div>
+                  <div style={{flex:1,background:"#fffbeb",borderRadius:8,padding:"8px 12px",border:"1px solid #fde68a"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:4}}>
+                      <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{s2.title}</span>
+                      <span style={{fontSize:9,color:"#92400e",background:"#fef3c7",borderRadius:20,padding:"1px 7px",fontWeight:700}}>{s2.time}</span>
+                    </div>
+                    <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{s2.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 12px",marginTop:4,fontSize:11,color:"#15803d"}}>
+              💡 <b>Success rate:</b> Roughly 40–60% of residential property tax appeals in Canada result in a reduced assessment. The most important factor is having comparable sales data.
+            </div>
+          </Card>
         </div>
       )}</div>
     </Card>
@@ -1771,6 +1838,86 @@ function InsuranceTab({initProv}){
             {results.map((p,i)=><div key={p.name} style={{border:`1px solid ${i===0?"#bbf7d0":s.border}`,borderRadius:10,padding:13,background:i===0?"#f0fdf4":s.white}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:7}}><div style={{fontSize:13,fontWeight:800,color:s.navy}}>{p.name}</div><div style={{color:s.gold,fontSize:11}}>{p.stars}</div></div>{i===0&&<div style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,display:"inline-block",marginBottom:6}}>⭐ Best Price</div>}<div style={{fontSize:18,fontWeight:800,color:i===0?"#15803d":s.navy}}>{cur(p.annual)}/yr</div><div style={{fontSize:11,color:s.muted,marginBottom:7}}>{cur(Math.round(p.annual/12))}/month</div><div style={{background:"#f0fdf4",borderRadius:6,padding:"5px 9px",fontSize:11,color:"#15803d",fontWeight:600,marginBottom:7}}>💡 {p.discount}</div><div style={{fontSize:11,color:s.muted,marginBottom:9,lineHeight:1.5}}>{p.desc}</div><a href={p.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:8,background:i===0?"#15803d":s.navy,color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none"}}>Get Real Quote →</a></div>)}
           </div>
           <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Actual premiums vary by insurer and risk profile.</p>
+
+          {/* Coverage Types Explainer */}
+          <div style={{marginTop:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🛡️ What Does Home Insurance Actually Cover?</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:12}}>
+              {[
+                {title:"✅ Dwelling Coverage",color:s.green,items:["Fire and smoke damage","Wind and hail damage","Lightning strikes","Explosion damage","Vandalism","Falling objects (trees, aircraft)","Weight of ice or snow","Burst pipes (sudden & accidental)"]},
+                {title:"✅ Contents Coverage",color:s.blue,items:["Furniture and appliances","Electronics and computers","Clothing and personal items","Jewellery (up to policy limit)","Bicycles (up to policy limit)","Tools and equipment","Sports equipment","Musical instruments"]},
+                {title:"✅ Liability Coverage",color:s.navy,items:["Someone injured on your property","You accidentally damage neighbour's property","Legal defence costs","Medical payments to injured guests","Dog bites (most policies)","Incidents away from home","Rental property liability (add-on)"]},
+                {title:"⚠️ Usually NOT Covered",color:s.red,items:["Overland flooding (separate rider needed)","Sewer backup (separate rider needed)","Earthquakes (BC especially — add rider)","Normal wear and tear","Mould (unless sudden water damage)","Vacant home over 30 days","Home business equipment (limited)","High-value jewellery over $5K"]},
+              ].map(cat=>(
+                <div key={cat.title} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${cat.color}`}}>
+                  <div style={{fontSize:12,fontWeight:800,color:cat.color,marginBottom:8}}>{cat.title}</div>
+                  {cat.items.map(item=>(
+                    <div key={item} style={{fontSize:11,color:s.muted,padding:"3px 0",display:"flex",gap:6,alignItems:"flex-start"}}>
+                      <span style={{color:cat.color,flexShrink:0,fontSize:10}}>{cat.title.startsWith("⚠️")?"✗":"✓"}</span>{item}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#fee2e2",border:"1px solid #fca5a5",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#dc2626"}}>
+              ⚠️ <b>Critical for Canadian homeowners:</b> Standard home insurance does NOT cover overland flooding (water coming in from outside) or sewer backup. With increasing extreme weather events in Canada, these riders are strongly recommended. Ask your insurer about adding them — typically $100–$300/year extra.
+            </div>
+          </div>
+
+          {/* Deductible Impact Calculator */}
+          <div style={{marginTop:14,background:s.navy,borderRadius:12,padding:16}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:4}}>💰 Deductible Impact Calculator</h3>
+            <p style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:12}}>Your deductible is what you pay out-of-pocket when you make a claim. Higher deductible = lower premium. See the tradeoff:</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:8}}>
+              {[
+                {ded:"$500",mult:1.15,label:"Low deductible"},
+                {ded:"$1,000",mult:1.00,label:"Standard"},
+                {ded:"$2,500",mult:0.85,label:"Higher savings"},
+                {ded:"$5,000",mult:0.72,label:"Max savings"},
+              ].map((d,i)=>{
+                const baseAmt=(results as any[])[0]?.annual||1800;
+                const adj=Math.round(baseAmt*d.mult/100)*100;
+                const saving=Math.round(baseAmt*1.15/100)*100-adj;
+                return(
+                  <div key={d.ded} style={{background:i===1?"rgba(255,255,255,0.2)":"rgba(255,255,255,0.08)",borderRadius:10,padding:10,textAlign:"center",border:i===1?"1px solid rgba(255,255,255,0.4)":"1px solid rgba(255,255,255,0.1)"}}>
+                    <div style={{fontSize:14,fontWeight:800,color:s.gold}}>{d.ded}</div>
+                    <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginBottom:6}}>{d.label}</div>
+                    <div style={{fontSize:13,fontWeight:700,color:"#fff"}}>{cur(adj)}/yr</div>
+                    {saving>0&&<div style={{fontSize:10,color:"#4ade80",marginTop:3}}>Save {cur(saving)}/yr</div>}
+                    {i===1&&<div style={{fontSize:9,color:"rgba(255,255,255,0.5)",marginTop:3}}>baseline</div>}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{fontSize:10,color:"rgba(255,255,255,0.4)",marginTop:10}}>💡 Rule of thumb: If you can afford the higher deductible out of pocket, take it. You'll save more in premiums over time than you'll pay in claims.</div>
+          </div>
+
+          {/* Claims Guide */}
+          <Card style={{marginTop:14,borderLeft:`4px solid ${s.red}`}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:4}}>🚨 What to Do After a Home Insurance Claim</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12}}>The first 24 hours after damage are critical. Most claim mistakes happen here.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+              {[
+                {step:"1",title:"Ensure Safety First",desc:"Don't enter a structurally damaged home. Turn off gas, water, or electricity if safe to do so. Call 911 if there's fire, gas leak, or structural collapse.",color:s.red},
+                {step:"2",title:"Document Everything",desc:"Take photos and video of ALL damage before touching anything. This is your most important evidence. More photos = better claim.",color:s.navy},
+                {step:"3",title:"Prevent Further Damage",desc:"You're required by your policy to take reasonable steps to prevent additional damage — board up windows, tarp the roof, stop a leak. Keep all receipts.",color:"#7c3aed"},
+                {step:"4",title:"Call Your Insurer",desc:"Report the claim as soon as possible. Have your policy number ready. Ask for a claim number and your adjuster's contact info.",color:s.blue},
+                {step:"5",title:"Don't Throw Anything Away",desc:"Keep all damaged items until the adjuster has seen them. Even if something seems worthless, it may be replaceable under your policy.",color:s.gold},
+                {step:"6",title:"Track All Expenses",desc:"If you need temporary accommodation, meals, or storage — keep every receipt. Additional Living Expenses (ALE) coverage pays these costs.",color:s.green},
+              ].map(s2=>(
+                <div key={s2.step} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,borderLeft:`3px solid ${s2.color}`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                    <div style={{width:20,height:20,borderRadius:"50%",background:s2.color,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:10,fontWeight:800,flexShrink:0}}>{s2.step}</div>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{s2.title}</div>
+                  </div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{s2.desc}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",marginTop:10,fontSize:11,color:"#92400e"}}>
+              💡 <b>Pro tip:</b> Never admit fault or agree to a settlement amount on the spot. Review the adjuster's estimate carefully — you can dispute it or hire a public adjuster if you disagree.
+            </div>
+          </Card>
         </div>
       )}</div>
     </Card>
