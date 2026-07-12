@@ -2345,6 +2345,7 @@ function NeighbourhoodChecklist(){
 }
 
 function RealtorsTab(){
+  const [subTab,setSubTab]=useState<"find"|"guide">("find");
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterSpec,setFilterSpec]=useState("all");
@@ -2417,6 +2418,13 @@ function RealtorsTab(){
 
   return(
     <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setSubTab("find")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="find"?s.navy:s.border}`,background:subTab==="find"?s.navy:s.white,color:subTab==="find"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 Find a Realtor</button>
+        <button onClick={()=>setSubTab("guide")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="guide"?s.navy:s.border}`,background:subTab==="guide"?s.navy:s.white,color:subTab==="guide"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Buyer's Guide</button>
+      </div>
+
+      {subTab==="find"&&<>
       {/* Header */}
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:14}}>
         <div style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
@@ -2494,7 +2502,9 @@ function RealtorsTab(){
           </div>
         )}
       </div>
+      </>}
 
+      {subTab==="guide"&&<>
       {/* Info Strip */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,marginBottom:16}}>
         <Card style={{background:"#f0fdf4",border:`1px solid #bbf7d0`}}>
@@ -2641,6 +2651,7 @@ function RealtorsTab(){
           </div>
         </div>
       )}
+      </>}
 
       {/* Cross-promotion banners */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:16}}>
@@ -3116,6 +3127,7 @@ function RenewalTab(){
 }
 
 function LawyersTab(){
+  const [subTab,setSubTab]=useState<"find"|"guide">("find");
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterType,setFilterType]=useState("all");
@@ -3206,6 +3218,13 @@ function LawyersTab(){
 
   return(
     <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setSubTab("find")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="find"?s.navy:s.border}`,background:subTab==="find"?s.navy:s.white,color:subTab==="find"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>⚖️ Find a Lawyer</button>
+        <button onClick={()=>setSubTab("guide")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="guide"?s.navy:s.border}`,background:subTab==="guide"?s.navy:s.white,color:subTab==="guide"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Closing Guide</button>
+      </div>
+
+      {subTab==="find"&&<>
       {/* Header */}
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:16}}>
         <div style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
@@ -3304,7 +3323,9 @@ function LawyersTab(){
           <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",fontSize:10,color:"#92400e"}}>Always verify your lawyer is in good standing before retaining them.</div>
         </Card>
       </div>
+      </>}
 
+      {subTab==="guide"&&<>
       {/* Closing Timeline */}
       <Card style={{marginBottom:16}}>
         <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📅 Closing Timeline — From Offer to Keys</h3>
@@ -3467,6 +3488,8 @@ function LawyersTab(){
           </div>
         </div>
       )}
+      </>}
+
       {/* Cross-promotion banners */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:4,marginBottom:16}}>
         <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Listings"}))} style={{background:`linear-gradient(135deg,#f59e0b,#d97706)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
