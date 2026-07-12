@@ -486,10 +486,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Realtors","Listings","Consult","News","Resources"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","Realtors","Lawyers","Consult","News","Resources"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Realtors","Consult"]},{label:"Resources",tabs:["News","Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -507,7 +507,7 @@ function NavBar({active,setActive}){
               const isActive=active===t;
               const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
               return(
-                <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
+                <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
                   {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
                   {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t}
                 </button>
@@ -529,7 +529,7 @@ function NavBar({active,setActive}){
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
               {g.tabs.map(t=>{
                 const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
-                return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
+                return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
               })}
             </div>
           ))}
@@ -2195,53 +2195,66 @@ const CHECKS=[
 
 function NeighbourhoodChecklist(){
   const [checked,setChecked]=useState<{[k:string]:boolean}>({});
-  const [showSummary,setShowSummary]=useState(false);
+  const [showModal,setShowModal]=useState(false);
   const allItems=CHECKS.flatMap(c=>c.items);
   const total=allItems.length;
   const done=Object.values(checked).filter(Boolean).length;
   const pct=Math.round(done/total*100);
   function toggle(key:string){setChecked(prev=>({...prev,[key]:!prev[key]}));}
 
+  const risk=pct<40?"High":(pct<70?"Medium":"Low");
+  const riskColor=pct<40?s.red:(pct<70?"#f59e0b":s.green);
+  const riskBg=pct<40?"#fee2e2":(pct<70?"#fef3c7":"#dcfce7");
+
   function printSummary(){
-    const checkedItems=CHECKS.map(cat=>({
-      cat:cat.cat,
-      done:cat.items.filter((_,ii)=>checked[`${CHECKS.indexOf(cat)}-${ii}`]),
-      missing:cat.items.filter((_,ii)=>!checked[`${CHECKS.indexOf(cat)}-${ii}`]),
-    }));
-    const risk=pct<40?"High":(pct<70?"Medium":"Low");
     const html=`
       <html><head><title>Neighbourhood Due Diligence Report</title>
-      <style>body{font-family:Arial,sans-serif;padding:32px;max-width:700px;margin:0 auto;color:#0d2240}
-      h1{color:#0d2240;border-bottom:3px solid #f5a623;padding-bottom:8px}
-      h2{color:#0d2240;font-size:14px;margin-top:20px}
-      .done{color:#16a34a}.missing{color:#dc2626}
-      .summary-box{background:#f4f6f9;border-radius:8px;padding:16px;margin-bottom:20px}
-      .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-      .low{background:#dcfce7;color:#15803d}.medium{background:#fef3c7;color:#92400e}.high{background:#fee2e2;color:#dc2626}
-      li{margin-bottom:4px;font-size:13px}
-      @media print{button{display:none}}</style></head>
+      <style>
+        body{font-family:Arial,sans-serif;padding:32px;max-width:700px;margin:0 auto;color:#0d2240}
+        h1{color:#0d2240;border-bottom:3px solid #f5a623;padding-bottom:8px;font-size:22px}
+        h2{color:#0d2240;font-size:14px;margin-top:20px;margin-bottom:8px}
+        .summary-box{background:#f4f6f9;border-radius:8px;padding:16px;margin-bottom:20px;display:flex;gap:20px;flex-wrap:wrap}
+        .stat{text-align:center;flex:1;min-width:80px}
+        .stat-val{font-size:24px;font-weight:800;margin-bottom:4px}
+        .badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700}
+        .Low{background:#dcfce7;color:#15803d}
+        .Medium{background:#fef3c7;color:#92400e}
+        .High{background:#fee2e2;color:#dc2626}
+        .done-item{color:#16a34a;padding:3px 0;font-size:13px}
+        .missing-item{color:#dc2626;padding:3px 0;font-size:13px}
+        .cat-block{margin-bottom:16px;padding:12px;border:1px solid #e2e8f0;border-radius:8px}
+        .footer{font-size:11px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px}
+        .print-btn{margin-top:16px;padding:10px 20px;background:#0d2240;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px}
+        @media print{.print-btn{display:none}}
+      </style></head>
       <body>
       <h1>🏘️ Neighbourhood Due Diligence Report</h1>
       <div class="summary-box">
-        <p><strong>Completion:</strong> ${done}/${total} items checked (${pct}%)</p>
-        <p><strong>Risk Level:</strong> <span class="badge ${risk.toLowerCase()}">${risk} Risk</span></p>
-        <p style="font-size:12px;color:#64748b">Generated: ${new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'})}</p>
+        <div class="stat"><div class="stat-val" style="color:#16a34a">${done}</div><div style="font-size:11px;color:#64748b">Completed</div></div>
+        <div class="stat"><div class="stat-val" style="color:#dc2626">${total-done}</div><div style="font-size:11px;color:#64748b">Still Needed</div></div>
+        <div class="stat"><div class="stat-val">${pct}%</div><div style="font-size:11px;color:#64748b">Complete</div></div>
+        <div class="stat"><span class="badge ${risk}">${risk} Risk</span><div style="font-size:11px;color:#64748b;margin-top:4px">Assessment</div></div>
       </div>
-      ${checkedItems.map(cat=>`
-        <h2>${cat.cat}</h2>
-        ${cat.done.length>0?`<p class="done">✅ Completed (${cat.done.length})</p><ul>${cat.done.map(i=>`<li class="done">✓ ${i}</li>`).join("")}</ul>`:""}
-        ${cat.missing.length>0?`<p class="missing">❌ Still needed (${cat.missing.length})</p><ul>${cat.missing.map(i=>`<li class="missing">✗ ${i}</li>`).join("")}</ul>`:""}
-      `).join("")}
-      <p style="font-size:11px;color:#94a3b8;margin-top:24px;border-top:1px solid #e2e8f0;padding-top:12px">Generated by Canada Mortgage Rates — canadamortgagerates.net. For informational purposes only.</p>
-      <button onclick="window.print()" style="margin-top:16px;padding:10px 20px;background:#0d2240;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:13px">🖨️ Print Report</button>
+      <p style="font-size:11px;color:#64748b;margin-bottom:20px">Generated: ${new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'})}</p>
+      ${CHECKS.map((cat,ci)=>{
+        const catDone=cat.items.filter((_,ii)=>checked[`${ci}-${ii}`]);
+        const catMissing=cat.items.filter((_,ii)=>!checked[`${ci}-${ii}`]);
+        return`<div class="cat-block">
+          <h2>${cat.cat}</h2>
+          ${catDone.map(i=>`<div class="done-item">✓ ${i}</div>`).join("")}
+          ${catMissing.map(i=>`<div class="missing-item">✗ ${i}</div>`).join("")}
+        </div>`;
+      }).join("")}
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px;font-size:12px;color:#92400e;margin-top:8px">
+        💡 Share this report with your realtor — they can help you address unchecked items before you make an offer.
+      </div>
+      <div class="footer">Generated by Canada Mortgage Rates — canadamortgagerates.net · For informational purposes only</div>
+      <button class="print-btn" onclick="window.print()">🖨️ Print This Report</button>
       </body></html>
     `;
     const w=window.open("","_blank");
     if(w){w.document.write(html);w.document.close();}
   }
-
-  const risk=pct<40?"High — many items unchecked":(pct<70?"Medium — some gaps remain":"Low — well researched");
-  const riskColor=pct<40?s.red:(pct<70?"#f59e0b":s.green);
 
   return(
     <>
@@ -2253,44 +2266,7 @@ function NeighbourhoodChecklist(){
         <div style={{textAlign:"center"}}><div style={{fontSize:20,fontWeight:800,color:pct===100?s.green:s.navy}}>{done}/{total}</div><div style={{fontSize:10,color:s.muted}}>checked</div></div>
       </div>
       <div style={{background:"#e2e8f0",borderRadius:20,height:8,marginBottom:4}}><div style={{width:pct+"%",height:"100%",background:pct===100?`linear-gradient(90deg,${s.green},#22c55e)`:`linear-gradient(90deg,${s.navy},${s.blue})`,borderRadius:20,transition:"width 0.3s"}}/></div>
-      <div style={{fontSize:11,color:s.muted,marginBottom:8}}>{pct}% complete{pct===100?" — You've done your homework! ✅":""}</div>
-      <div style={{display:"flex",gap:8,marginBottom:12,flexWrap:"wrap"}}>
-        {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:`1px solid ${s.border}`,borderRadius:6,cursor:"pointer",padding:"4px 10px"}}>Reset</button>}
-      </div>
-
-      {showSummary&&done>=5&&(
-        <div style={{background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:12,padding:16,marginBottom:14}}>
-          <div style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📋 Your Due Diligence Summary</div>
-          <div style={{display:"flex",gap:10,marginBottom:12,flexWrap:"wrap"}}>
-            <div style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:8,padding:"8px 14px",textAlign:"center"}}>
-              <div style={{fontSize:18,fontWeight:800,color:s.green}}>{done}</div>
-              <div style={{fontSize:10,color:s.muted}}>Items Done</div>
-            </div>
-            <div style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:8,padding:"8px 14px",textAlign:"center"}}>
-              <div style={{fontSize:18,fontWeight:800,color:s.red}}>{total-done}</div>
-              <div style={{fontSize:10,color:s.muted}}>Still Needed</div>
-            </div>
-            <div style={{background:s.white,border:`1px solid ${s.border}`,borderRadius:8,padding:"8px 14px",flex:1,minWidth:120}}>
-              <div style={{fontSize:12,fontWeight:800,color:riskColor}}>Risk Level</div>
-              <div style={{fontSize:11,color:riskColor,fontWeight:600}}>{risk}</div>
-            </div>
-          </div>
-          {CHECKS.map((cat,ci)=>{
-            const catDone=cat.items.filter((_,ii)=>checked[`${ci}-${ii}`]);
-            const catMissing=cat.items.filter((_,ii)=>!checked[`${ci}-${ii}`]);
-            return(
-              <div key={ci} style={{marginBottom:10}}>
-                <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{cat.cat}</div>
-                {catDone.length>0&&catDone.map((item,i)=><div key={i} style={{fontSize:11,color:s.green,padding:"2px 0"}}>✓ {item}</div>)}
-                {catMissing.length>0&&catMissing.map((item,i)=><div key={i} style={{fontSize:11,color:"#dc2626",padding:"2px 0"}}>✗ {item}</div>)}
-              </div>
-            );
-          })}
-          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e",marginTop:8}}>
-            💡 Share this summary with your realtor — they can help you address the unchecked items before you make an offer.
-          </div>
-        </div>
-      )}
+      <div style={{fontSize:11,color:s.muted,marginBottom:12}}>{pct}% complete{pct===100?" — You've done your homework! ✅":""}</div>
 
       {CHECKS.map((cat,ci)=>(
         <div key={ci} style={{marginBottom:12}}>
@@ -2309,14 +2285,59 @@ function NeighbourhoodChecklist(){
           })}
         </div>
       ))}
-      <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Check at least 5 items to generate a summary and print report.</p>
-      {done>=5&&(
-        <div style={{marginTop:12,paddingTop:12,borderTop:`1px solid ${s.border}`}}>
-          <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:6}}>
-            <button onClick={()=>setShowSummary(!showSummary)} style={{fontSize:11,color:"#fff",background:s.navy,border:"none",borderRadius:6,cursor:"pointer",padding:"7px 14px",fontWeight:700}}>{showSummary?"Hide Summary":"📋 Generate Summary"}</button>
-            <button onClick={printSummary} style={{fontSize:11,color:"#fff",background:s.green,border:"none",borderRadius:6,cursor:"pointer",padding:"7px 14px",fontWeight:700}}>🖨️ Print / Save PDF</button>
+
+      <div style={{marginTop:12,paddingTop:12,borderTop:`1px solid ${s.border}`,display:"flex",gap:8,flexWrap:"wrap",alignItems:"center"}}>
+        {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:`1px solid ${s.border}`,borderRadius:6,cursor:"pointer",padding:"6px 12px"}}>Reset</button>}
+        {done>0&&<button onClick={()=>setShowModal(true)} style={{fontSize:12,color:"#fff",background:s.navy,border:"none",borderRadius:6,cursor:"pointer",padding:"8px 16px",fontWeight:700}}>📋 Generate Summary</button>}
+        {done>0&&<button onClick={printSummary} style={{fontSize:12,color:"#fff",background:s.green,border:"none",borderRadius:6,cursor:"pointer",padding:"8px 16px",fontWeight:700}}>🖨️ Print / Save PDF</button>}
+        {done===0&&<span style={{fontSize:11,color:s.muted}}>Check items above to generate a summary and save as PDF.</span>}
+      </div>
+
+      {/* Summary Modal */}
+      {showModal&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowModal(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:520,maxHeight:"85vh",display:"flex",flexDirection:"column",overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            {/* Modal Header */}
+            <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>📋 Your Due Diligence Summary</div>
+              <button onClick={()=>setShowModal(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            {/* Modal Body */}
+            <div style={{padding:18,overflowY:"auto",flex:1}}>
+              {/* Stats */}
+              <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8,marginBottom:16}}>
+                {[[String(done),"Completed",s.green],[String(total-done),"Still Needed",s.red],[pct+"%","Complete",s.navy],[risk+" Risk","Assessment",riskColor]].map(([v,l,c])=>(
+                  <div key={l} style={{background:l==="Assessment"?riskBg:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:8,padding:"10px 8px",textAlign:"center"}}>
+                    <div style={{fontSize:16,fontWeight:800,color:c as string,marginBottom:2}}>{v}</div>
+                    <div style={{fontSize:9,color:s.muted,fontWeight:600}}>{l}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Category breakdown */}
+              {CHECKS.map((cat,ci)=>{
+                const catDone=cat.items.filter((_,ii)=>checked[`${ci}-${ii}`]);
+                const catMissing=cat.items.filter((_,ii)=>!checked[`${ci}-${ii}`]);
+                return(
+                  <div key={ci} style={{marginBottom:12,background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`}}>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:6,display:"flex",justifyContent:"space-between"}}>
+                      <span>{cat.cat}</span>
+                      <span style={{fontSize:10,color:catMissing.length===0?s.green:s.muted}}>{catDone.length}/{cat.items.length}</span>
+                    </div>
+                    {catDone.map((item,i)=><div key={i} style={{fontSize:11,color:s.green,padding:"2px 0",display:"flex",gap:6}}><span>✓</span>{item}</div>)}
+                    {catMissing.map((item,i)=><div key={i} style={{fontSize:11,color:"#dc2626",padding:"2px 0",display:"flex",gap:6}}><span>✗</span>{item}</div>)}
+                  </div>
+                );
+              })}
+              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e",marginTop:4}}>
+                💡 Share this with your realtor — they can help address unchecked items before you make an offer.
+              </div>
+            </div>
+            {/* Modal Footer */}
+            <div style={{padding:"12px 18px",borderTop:`1px solid ${s.border}`,display:"flex",gap:8,flexShrink:0,background:"#f8fafc"}}>
+              <button onClick={printSummary} style={{flex:1,padding:"10px",background:s.green,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🖨️ Print / Save as PDF</button>
+              <button onClick={()=>setShowModal(false)} style={{padding:"10px 16px",background:s.white,color:s.navy,border:`1px solid ${s.border}`,borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer"}}>Close</button>
+            </div>
           </div>
-          <div style={{fontSize:10,color:s.muted}}>💡 In the print dialog, choose "Save as PDF" to save a copy to your device.</div>
         </div>
       )}
     </>
@@ -2535,51 +2556,6 @@ function RealtorsTab(){
         </div>
       </Card>
 
-      {/* Province Price Table */}
-      <Card style={{marginBottom:16}}>
-        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Average Home Prices by Province — 2026</h3>
-        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Current average home prices, year-over-year change, and minimum down payment required across Canada.</p>
-        <div style={{overflowX:"auto"}}>
-          <table style={{width:"100%",borderCollapse:"collapse",minWidth:480}}>
-            <thead>
-              <tr style={{background:"#f8fafc"}}>
-                {["Province","Avg. Home Price","YoY Change","Min. Down Payment","5-yr Fixed Rate"].map(h=>(
-                  <th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                {prov:"British Columbia",price:"$1,050,000",change:"+2.1%",down:"$205,000 (20%)",rate:"4.94%",up:true},
-                {prov:"Ontario",price:"$850,000",change:"+3.2%",down:"$67,500 (mixed)",rate:"4.89%",up:true},
-                {prov:"Alberta",price:"$520,000",change:"+6.5%",down:"$26,000 (5%)",rate:"4.89%",up:true},
-                {prov:"Quebec",price:"$450,000",change:"+4.1%",down:"$22,500 (5%)",rate:"4.85%",up:true},
-                {prov:"Manitoba",price:"$380,000",change:"+4.2%",down:"$19,000 (5%)",rate:"4.85%",up:true},
-                {prov:"Saskatchewan",price:"$310,000",change:"+3.8%",down:"$15,500 (5%)",rate:"4.84%",up:true},
-                {prov:"Nova Scotia",price:"$420,000",change:"+5.1%",down:"$21,000 (5%)",rate:"4.87%",up:true},
-                {prov:"New Brunswick",price:"$320,000",change:"+4.8%",down:"$16,000 (5%)",rate:"4.86%",up:true},
-                {prov:"PEI",price:"$380,000",change:"+3.5%",down:"$19,000 (5%)",rate:"4.87%",up:true},
-                {prov:"Newfoundland",price:"$295,000",change:"+2.9%",down:"$14,750 (5%)",rate:"4.88%",up:true},
-              ].map((row,i)=>(
-                <tr key={row.prov} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
-                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.prov}</td>
-                  <td style={{padding:"10px 12px",fontSize:13,fontWeight:800,color:s.navy}}>{row.price}</td>
-                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:row.up?"#16a34a":"#dc2626"}}>{row.change}</td>
-                  <td style={{padding:"10px 12px",fontSize:11,color:s.muted}}>{row.down}</td>
-                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:600,color:s.blue}}>{row.rate}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Average prices are estimates based on 2026 market data. Prices vary significantly by city and neighbourhood. Always verify with a local realtor.</p>
-      </Card>
-
-      {/* Neighbourhood Checklist */}
-      <Card style={{marginBottom:16}}>
-        <NeighbourhoodChecklist/>
-      </Card>
-
       {/* FAQ */}
       <Card style={{marginBottom:16}}>
         <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Realtor FAQ</h3>
@@ -2665,6 +2641,20 @@ function RealtorsTab(){
           </div>
         </div>
       )}
+
+      {/* Cross-promotion banners */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:16}}>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Listings"}))} style={{background:`linear-gradient(135deg,#f59e0b,#d97706)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>🏘️</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Browse listings first?</div>
+          <div style={{color:"rgba(255,255,255,0.9)",fontSize:11}}>Search homes across Canada on top listing sites →</div>
+        </button>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Lawyers"}))} style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>⚖️</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Ready to close?</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Find a real estate lawyer for your closing →</div>
+        </button>
+      </div>
     </div>
   );
 }
@@ -2765,8 +2755,48 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
         </div>
       </Card>
 
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Average Home Prices by Province — 2026</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Current average home prices, year-over-year change, and minimum down payment required across Canada.</p>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",minWidth:480}}>
+            <thead><tr style={{background:"#f8fafc"}}>{["Province","Avg. Home Price","YoY Change","Min. Down Payment","5-yr Fixed Rate"].map(h=><th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+            <tbody>
+              {[{prov:"British Columbia",price:"$1,050,000",change:"+2.1%",down:"$205,000 (20%)",rate:"4.94%"},{prov:"Ontario",price:"$850,000",change:"+3.2%",down:"$67,500 (mixed)",rate:"4.89%"},{prov:"Alberta",price:"$520,000",change:"+6.5%",down:"$26,000 (5%)",rate:"4.89%"},{prov:"Quebec",price:"$450,000",change:"+4.1%",down:"$22,500 (5%)",rate:"4.85%"},{prov:"Manitoba",price:"$380,000",change:"+4.2%",down:"$19,000 (5%)",rate:"4.85%"},{prov:"Saskatchewan",price:"$310,000",change:"+3.8%",down:"$15,500 (5%)",rate:"4.84%"},{prov:"Nova Scotia",price:"$420,000",change:"+5.1%",down:"$21,000 (5%)",rate:"4.87%"},{prov:"New Brunswick",price:"$320,000",change:"+4.8%",down:"$16,000 (5%)",rate:"4.86%"},{prov:"PEI",price:"$380,000",change:"+3.5%",down:"$19,000 (5%)",rate:"4.87%"},{prov:"Newfoundland",price:"$295,000",change:"+2.9%",down:"$14,750 (5%)",rate:"4.88%"}].map((row,i)=>(
+                <tr key={row.prov} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.prov}</td>
+                  <td style={{padding:"10px 12px",fontSize:13,fontWeight:800,color:s.navy}}>{row.price}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:"#16a34a"}}>{row.change}</td>
+                  <td style={{padding:"10px 12px",fontSize:11,color:s.muted}}>{row.down}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:600,color:s.blue}}>{row.rate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates based on 2026 market data. Prices vary by city and neighbourhood.</p>
+      </Card>
+
+      <Card style={{marginBottom:14}}>
+        <NeighbourhoodChecklist/>
+      </Card>
+
       <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:"12px 16px",fontSize:11,color:"#92400e"}}>
         ⚠️ <b>Disclaimer:</b> We link directly to third-party listing platforms. Canada Mortgage Rates is not affiliated with Realtor.ca, CREA, MLS®, Zolo, RE/MAX, Royal LePage, Kijiji, or ComFree. Always verify listings and work with a licensed REALTOR® before making any real estate decisions.
+      </div>
+
+      {/* Cross-promotion banners */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:14}}>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Realtors"}))} style={{background:`linear-gradient(135deg,${s.green},#15803d)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>🤝</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Found a home you like?</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Connect with a local REALTOR® who can help you make an offer →</div>
+        </button>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Lawyers"}))} style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>⚖️</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Ready to close?</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Find a real estate lawyer to handle your closing →</div>
+        </button>
       </div>
     </div>
   );
@@ -3427,6 +3457,19 @@ function LawyersTab(){
           </div>
         </div>
       )}
+      {/* Cross-promotion banners */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:4,marginBottom:16}}>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Listings"}))} style={{background:`linear-gradient(135deg,#f59e0b,#d97706)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>🏘️</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Still looking for a home?</div>
+          <div style={{color:"rgba(255,255,255,0.9)",fontSize:11}}>Browse listings across Canada →</div>
+        </button>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Realtors"}))} style={{background:`linear-gradient(135deg,${s.green},#15803d)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{fontSize:20,marginBottom:4}}>🤝</div>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Need a realtor first?</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Find a local REALTOR® to help with your purchase →</div>
+        </button>
+      </div>
     </div>
   );
 }
@@ -3774,7 +3817,7 @@ export default function App(){
   const bocRates=useBocRates();
 
   useEffect(()=>{
-    const handler=(e:any)=>setActive(e.detail);
+    const handler=(e:any)=>{setActive(e.detail);window.scrollTo({top:0,behavior:"smooth"});};
     window.addEventListener("switchTab",handler);
     const alertHandler=()=>setShowRateAlert(true);
     window.addEventListener("openRateAlert",alertHandler);
