@@ -2363,6 +2363,130 @@ function RealtorsTab(){
         </Card>
       </div>
 
+      {/* Home Buying Timeline */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏠 Home Buying Process — Step by Step</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Here's the complete Canadian home buying journey and exactly when your realtor is involved.</p>
+        <div style={{position:"relative"}}>
+          <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.blue},${s.navy},${s.green})`,borderRadius:2}}/>
+          {[
+            {step:"1–3 Months Before",label:"Get Pre-Approved",desc:"Get a mortgage pre-approval before house hunting. This tells you your budget and shows sellers you're serious. Your realtor will recommend trusted mortgage brokers.",realtor:false,icon:"🏦"},
+            {step:"Start of Search",label:"Hire Your Realtor",desc:"Retain a buyer's agent — it costs you nothing. They set up MLS alerts, book showings, and give you access to listings before they hit public sites.",realtor:true,icon:"🤝"},
+            {step:"Weeks 1–4",label:"House Hunting",desc:"Your realtor books showings, provides comparable sales data, and advises on neighbourhood trends, flood zones, and future development.",realtor:true,icon:"🔍"},
+            {step:"When Ready",label:"Making an Offer",desc:"Your realtor prepares the offer, advises on price strategy, conditions (financing, inspection), and deposit amount. In multiple offer situations, they guide your bidding strategy.",realtor:true,icon:"📋"},
+            {step:"Offer Accepted",label:"Conditions Period (7–10 days)",desc:"Typically 7–10 days to complete financing approval and home inspection. Your realtor coordinates with your lender and inspector, and advises whether to waive or renegotiate.",realtor:true,icon:"⏱"},
+            {step:"Conditions Waived",label:"Firm Sale",desc:"You're legally committed. Your realtor sends the firm deal to your lawyer. Now the legal closing process begins — hire a real estate lawyer immediately.",realtor:true,icon:"✍️"},
+            {step:"2–4 Weeks Before Closing",label:"Pre-Closing Prep",desc:"Your realtor arranges a final walkthrough to confirm the property's condition matches the agreement. They coordinate with all parties on closing details.",realtor:true,icon:"🏗️"},
+            {step:"Closing Day",label:"Keys!",desc:"Your lawyer completes the title transfer. Your realtor hands you the keys. You're a homeowner.",realtor:true,icon:"🔑"},
+          ].map((step,i)=>(
+            <div key={i} style={{display:"flex",gap:16,marginBottom:14,paddingLeft:8}}>
+              <div style={{width:22,height:22,borderRadius:"50%",background:step.realtor?s.navy:"#e2e8f0",border:`2px solid ${step.realtor?s.navy:s.border}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10}}>{step.icon}</div>
+              <div style={{flex:1,background:step.realtor?"#f8fafc":s.white,borderRadius:10,padding:"10px 14px",border:`1px solid ${step.realtor?s.border:"#f1f5f9"}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                  <span style={{fontSize:10,fontWeight:700,color:s.muted,background:"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{step.step}</span>
+                  <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{step.label}</span>
+                  {step.realtor&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.navy,borderRadius:20,padding:"1px 7px"}}>REALTOR INVOLVED</span>}
+                </div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{step.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#1e40af",marginTop:4}}>
+          💡 <b>Key tip:</b> Get pre-approved before you start looking — it saves time, sets your budget, and makes your offers more competitive.
+        </div>
+      </Card>
+
+      {/* Province Price Table */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Average Home Prices by Province — 2026</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Current average home prices, year-over-year change, and minimum down payment required across Canada.</p>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",minWidth:480}}>
+            <thead>
+              <tr style={{background:"#f8fafc"}}>
+                {["Province","Avg. Home Price","YoY Change","Min. Down Payment","5-yr Fixed Rate"].map(h=>(
+                  <th key={h} style={{padding:"9px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {prov:"British Columbia",price:"$1,050,000",change:"+2.1%",down:"$205,000 (20%)",rate:"4.94%",up:true},
+                {prov:"Ontario",price:"$850,000",change:"+3.2%",down:"$67,500 (mixed)",rate:"4.89%",up:true},
+                {prov:"Alberta",price:"$520,000",change:"+6.5%",down:"$26,000 (5%)",rate:"4.89%",up:true},
+                {prov:"Quebec",price:"$450,000",change:"+4.1%",down:"$22,500 (5%)",rate:"4.85%",up:true},
+                {prov:"Manitoba",price:"$380,000",change:"+4.2%",down:"$19,000 (5%)",rate:"4.85%",up:true},
+                {prov:"Saskatchewan",price:"$310,000",change:"+3.8%",down:"$15,500 (5%)",rate:"4.84%",up:true},
+                {prov:"Nova Scotia",price:"$420,000",change:"+5.1%",down:"$21,000 (5%)",rate:"4.87%",up:true},
+                {prov:"New Brunswick",price:"$320,000",change:"+4.8%",down:"$16,000 (5%)",rate:"4.86%",up:true},
+                {prov:"PEI",price:"$380,000",change:"+3.5%",down:"$19,000 (5%)",rate:"4.87%",up:true},
+                {prov:"Newfoundland",price:"$295,000",change:"+2.9%",down:"$14,750 (5%)",rate:"4.88%",up:true},
+              ].map((row,i)=>(
+                <tr key={row.prov} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.prov}</td>
+                  <td style={{padding:"10px 12px",fontSize:13,fontWeight:800,color:s.navy}}>{row.price}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:700,color:row.up?"#16a34a":"#dc2626"}}>{row.change}</td>
+                  <td style={{padding:"10px 12px",fontSize:11,color:s.muted}}>{row.down}</td>
+                  <td style={{padding:"10px 12px",fontSize:12,fontWeight:600,color:s.blue}}>{row.rate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Average prices are estimates based on 2026 market data. Prices vary significantly by city and neighbourhood. Always verify with a local realtor.</p>
+      </Card>
+
+      {/* Neighbourhood Checklist */}
+      <Card style={{marginBottom:16}}>
+        {(()=>{
+          const CHECKS=[
+            {cat:"📍 Location & Access",items:["Walking distance to groceries and essentials","Transit access (bus, LRT, subway)","Highway/commute route to work","Proximity to schools (if applicable)","Airport noise or industrial areas nearby"]},
+            {cat:"🏫 Schools & Community",items:["School ratings in the catchment area","Daycares and childcare availability","Community centres and recreation facilities","Parks, trails, and green space","Places of worship if important to you"]},
+            {cat:"🏗️ Development & Future Value",items:["Check city zoning for future development plans","New infrastructure projects planned nearby","Neighbourhood age and condition of homes","Condo/highrise development planned nearby","Historical price appreciation in the area"]},
+            {cat:"⚠️ Risk Factors",items:["Flood zone or floodplain designation","Past basement flooding in the neighbourhood","Crime statistics (check local police data)","Soil contamination or brownfield sites","Power line or cell tower proximity"]},
+            {cat:"🏠 The Property Itself",items:["Age of roof, furnace, and major systems","Previous permits pulled (check city records)","Neighbours and condition of adjacent properties","Street parking and garage situation","Sun exposure and yard orientation"]},
+          ];
+          const [checked,setChecked]=useState<{[k:string]:boolean}>({});
+          const allItems=CHECKS.flatMap(c=>c.items);
+          const total=allItems.length;
+          const done=Object.values(checked).filter(Boolean).length;
+          const pct=Math.round(done/total*100);
+          function toggle(key:string){setChecked(prev=>({...prev,[key]:!prev[key]}));}
+          return(
+            <>
+              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12,flexWrap:"wrap",gap:8}}>
+                <div>
+                  <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:2}}>🏘️ Neighbourhood Due Diligence Checklist</h3>
+                  <p style={{fontSize:11,color:s.muted}}>Check these before making an offer. Your realtor can help with most of these.</p>
+                </div>
+                <div style={{textAlign:"center"}}><div style={{fontSize:20,fontWeight:800,color:pct===100?s.green:s.navy}}>{done}/{total}</div><div style={{fontSize:10,color:s.muted}}>checked</div></div>
+              </div>
+              <div style={{background:"#e2e8f0",borderRadius:20,height:8,marginBottom:4}}><div style={{width:pct+"%",height:"100%",background:pct===100?`linear-gradient(90deg,${s.green},#22c55e)`:`linear-gradient(90deg,${s.navy},${s.blue})`,borderRadius:20,transition:"width 0.3s"}}/></div>
+              <div style={{fontSize:11,color:s.muted,marginBottom:12}}>{pct}% complete{pct===100?" — You've done your homework! ✅":""}</div>
+              {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:"none",cursor:"pointer",textDecoration:"underline",padding:0,marginBottom:12}}>Reset</button>}
+              {CHECKS.map((cat,ci)=>(
+                <div key={ci} style={{marginBottom:12}}>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:6}}>{cat.cat}</div>
+                  {cat.items.map((item,ii)=>{
+                    const key=`${ci}-${ii}`;
+                    const isChecked=!!checked[key];
+                    return(
+                      <div key={ii} onClick={()=>toggle(key)} style={{display:"flex",alignItems:"center",gap:10,padding:"7px 0",borderBottom:`1px solid ${s.light}`,cursor:"pointer"}}>
+                        <div style={{width:18,height:18,borderRadius:4,border:`2px solid ${isChecked?s.green:s.border}`,background:isChecked?s.green:"#fff",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
+                          {isChecked&&<span style={{color:"#fff",fontSize:11,fontWeight:800}}>✓</span>}
+                        </div>
+                        <div style={{fontSize:12,color:isChecked?s.muted:s.navy,textDecoration:isChecked?"line-through":"none"}}>{item}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </>
+          );
+        })()}
+      </Card>
+
       {/* FAQ */}
       <Card style={{marginBottom:16}}>
         <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Realtor FAQ</h3>
