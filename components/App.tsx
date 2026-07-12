@@ -570,6 +570,7 @@ function Hero({prov,city,locLoading}){
 
 // ── RATES TAB ─────────────────────────────────────────────────────────────────
 function RatesTab({initProv,initCity,onLocationChange,bocRates}){
+  const [subTab,setSubTab]=useState<"compare"|"history"|"lenders">("compare");
   const [prov,setProv]=useState(initProv);
   const [city,setCity]=useState(initCity);
   const [term,setTerm]=useState("1-year");
@@ -640,6 +641,15 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
 
   return(
     <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setSubTab("compare")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="compare"?s.navy:s.border}`,background:subTab==="compare"?s.navy:s.white,color:subTab==="compare"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📊 Compare Rates</button>
+        <button onClick={()=>setSubTab("offers")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="offers"?s.gold:s.border}`,background:subTab==="offers"?s.gold:s.white,color:subTab==="offers"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🎁 Current Offers</button>
+        <button onClick={()=>setSubTab("history")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="history"?s.navy:s.border}`,background:subTab==="history"?s.navy:s.white,color:subTab==="history"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📈 Rate History</button>
+        <button onClick={()=>setSubTab("lenders")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lenders"?s.navy:s.border}`,background:subTab==="lenders"?s.navy:s.white,color:subTab==="lenders"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏦 Lender Guide</button>
+      </div>
+
+      {subTab==="compare"&&<>
       <div style={{background:s.white,borderBottom:`1px solid ${s.border}`,padding:"10px 14px",display:"flex",flexWrap:"wrap",gap:8,alignItems:"center",position:"sticky",top:54,zIndex:90,boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
         <select value={prov} onChange={e=>changeProv(e.target.value)} style={{padding:"6px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600,background:s.white}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
         <select value={showCustom?"__custom__":city} onChange={e=>changeCity(e.target.value)} style={{padding:"6px 10px",borderRadius:8,border:`1.5px solid ${showCustom||!PDATA[prov]?.cities.includes(city)?s.gold:s.border}`,fontSize:12,background:s.white}}>
@@ -712,22 +722,47 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         </table>
       </div>
 
-      {/* OFFERS SECTION */}
-      <div style={{marginTop:20}}>
-        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12,flexWrap:"wrap"}}>
-          <div style={{fontSize:16,fontWeight:800,color:s.navy}}>🎁 Current Lender Offers & Promotions</div>
-          <span style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Updated July 2026</span>
+      </>}
+
+
+      {subTab==="offers"&&<>
+      <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🎁</div>
+        <h2 style={{color:s.navy,fontSize:18,fontWeight:800,marginBottom:6}}>Current Lender Offers & Promotions</h2>
+        <p style={{color:"rgba(0,0,0,0.6)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Cash back, switch incentives, and bundle deals — filtered for your province.</p>
+      </div>
+
+      {/* Province selector */}
+      <div style={{background:s.white,borderRadius:10,padding:"10px 14px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+        <span style={{fontSize:12,fontWeight:700,color:s.navy,flexShrink:0}}>📍 Showing offers for:</span>
+        <select value={prov} onChange={e=>changeProv(e.target.value)} style={{padding:"6px 10px",borderRadius:8,border:`1.5px solid ${s.gold}`,fontSize:12,fontWeight:700,background:"#fffbeb",color:s.navy,flex:1,maxWidth:200}}>
+          {Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+        </select>
+        <span style={{fontSize:11,color:s.muted}}>
+          {OFFERS.filter((o:any)=>o.provinces.length===0||o.provinces.includes(prov)).length} offers available
+        </span>
+      </div>
+
+      {/* National/Federal Offers */}
+      <div style={{marginBottom:20}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+          <div style={{fontSize:14,fontWeight:800,color:s.navy}}>🍁 National Offers — Available Across Canada</div>
+          <span style={{background:"#dbeafe",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>
+            {OFFERS.filter((o:any)=>o.provinces.length===0).length} offers
+          </span>
         </div>
-        <p style={{fontSize:12,color:s.muted,marginBottom:12}}>Limited-time offers from Canadian lenders — cash back, switch incentives, and bundle deals. Always verify terms directly with the lender.</p>
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
-          {OFFERS.filter((o:any)=>o.provinces.length===0||o.provinces.includes(prov)).map((offer:any,i:number)=>(
+          {OFFERS.filter((o:any)=>o.provinces.length===0).map((offer:any,i:number)=>(
             <div key={i} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
               <div style={{background:offer.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                 <div style={{color:offer.textColor,fontSize:13,fontWeight:800}}>{offer.bank}</div>
                 <span style={{background:"rgba(255,255,255,0.2)",color:offer.textColor,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{offer.tag}</span>
               </div>
               <div style={{padding:14}}>
-                <div style={{display:"inline-block",background:"#f1f5f9",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:s.navy,marginBottom:8}}>{offer.badge}</div>
+                <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                  <span style={{background:"#f1f5f9",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:s.navy}}>{offer.badge}</span>
+                  <span style={{background:"#dbeafe",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:"#1e40af"}}>🍁 All Provinces</span>
+                </div>
                 <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:6}}>{offer.offer}</div>
                 <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{offer.detail}</div>
                 <div style={{fontSize:10,color:s.muted,marginBottom:10}}>⏰ Expires: <strong>{offer.expires}</strong></div>
@@ -736,8 +771,189 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
             </div>
           ))}
         </div>
-        <p style={{fontSize:10,color:"#bbb",marginTop:8}}>⚠️ Offers subject to change. Always verify current terms directly with the lender. Canada Mortgage Rates is not affiliated with any lender.</p>
       </div>
+
+      {/* Provincial Offers */}
+      {OFFERS.filter((o:any)=>o.provinces.length>0&&o.provinces.includes(prov)).length>0&&(
+        <div style={{marginBottom:14}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
+            <div style={{fontSize:14,fontWeight:800,color:s.navy}}>📍 {PDATA[prov]?.name} — Province-Specific Offers</div>
+            <span style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>
+              {OFFERS.filter((o:any)=>o.provinces.length>0&&o.provinces.includes(prov)).length} offers
+            </span>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
+            {OFFERS.filter((o:any)=>o.provinces.length>0&&o.provinces.includes(prov)).map((offer:any,i:number)=>(
+              <div key={i} style={{background:s.white,borderRadius:12,border:`2px solid ${s.green}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.06)"}}>
+                <div style={{background:offer.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{color:offer.textColor,fontSize:13,fontWeight:800}}>{offer.bank}</div>
+                  <span style={{background:"rgba(255,255,255,0.2)",color:offer.textColor,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{offer.tag}</span>
+                </div>
+                <div style={{padding:14}}>
+                  <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                    <span style={{background:"#f1f5f9",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:s.navy}}>{offer.badge}</span>
+                    <span style={{background:"#dcfce7",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,color:"#15803d"}}>📍 {PDATA[prov]?.name} Only</span>
+                  </div>
+                  <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:6}}>{offer.offer}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{offer.detail}</div>
+                  <div style={{fontSize:10,color:s.muted,marginBottom:10}}>⏰ Expires: <strong>{offer.expires}</strong></div>
+                  <a href={offer.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px 12px",background:offer.color,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textAlign:"center",textDecoration:"none"}}>View Offer →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {OFFERS.filter((o:any)=>o.provinces.length>0&&o.provinces.includes(prov)).length===0&&(
+        <div style={{background:"#f8fafc",borderRadius:10,padding:"16px",textAlign:"center",marginBottom:14,border:`1px solid ${s.border}`}}>
+          <div style={{fontSize:20,marginBottom:6}}>📍</div>
+          <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:4}}>No province-specific offers for {PDATA[prov]?.name} right now</div>
+          <div style={{fontSize:11,color:s.muted}}>All national offers above are available to you. Check back — provincial offers are updated regularly.</div>
+        </div>
+      )}
+
+      <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#92400e"}}>
+        ⚠️ Offers subject to change. Always verify current terms directly with the lender. Canada Mortgage Rates is not affiliated with any lender.
+      </div>
+      </>}
+
+      {subTab==="history"&&<>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>📈</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Bank of Canada Rate History</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>How the BoC overnight rate has moved since 2020 — and what it means for your mortgage.</p>
+      </div>
+
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>📅 BoC Rate Timeline — 2020 to Present</h3>
+        <div style={{overflowX:"auto"}}>
+          <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+            <thead><tr style={{background:"#f8fafc"}}>{["Date","Rate Change","Overnight Rate","Prime Rate","Context"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+            <tbody>
+              {[
+                {date:"Mar 2020",change:"−1.50%",rate:"0.25%",prime:"2.45%",context:"COVID-19 emergency cuts",dir:"down"},
+                {date:"Mar 2022",change:"+0.25%",rate:"0.50%",prime:"2.70%",context:"First post-COVID hike",dir:"up"},
+                {date:"Jun 2022",change:"+0.50%",rate:"1.50%",prime:"3.70%",context:"Aggressive inflation fight",dir:"up"},
+                {date:"Sep 2022",change:"+0.75%",rate:"3.25%",prime:"5.45%",context:"Largest single hike in 30 years",dir:"up"},
+                {date:"Jan 2023",change:"+0.25%",rate:"4.50%",prime:"6.70%",context:"Rate hike cycle peak approached",dir:"up"},
+                {date:"Jul 2023",change:"+0.25%",rate:"5.00%",prime:"7.20%",context:"Peak rate — 22-year high",dir:"up"},
+                {date:"Jun 2024",change:"−0.25%",rate:"4.75%",prime:"6.95%",context:"First cut since COVID",dir:"down"},
+                {date:"Sep 2024",change:"−0.25%",rate:"4.25%",prime:"6.45%",context:"Cutting cycle accelerates",dir:"down"},
+                {date:"Dec 2024",change:"−0.50%",rate:"3.25%",prime:"5.45%",context:"Large cut as inflation cools",dir:"down"},
+                {date:"Mar 2025",change:"−0.25%",rate:"2.75%",prime:"4.95%",context:"Continued easing",dir:"down"},
+                {date:"Jun 2025",change:"−0.25%",rate:"2.50%",prime:"4.70%",context:"Near neutral rate",dir:"down"},
+                {date:"Jan 2026",change:"−0.25%",rate:"2.25%",prime:"4.45%",context:"Hold — inflation at target",dir:"down"},
+                {date:"Jun 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"5th consecutive hold",dir:"hold"},
+              ].map((row,i)=>(
+                <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:s.navy,whiteSpace:"nowrap"}}>{row.date}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:800,color:row.dir==="up"?"#dc2626":row.dir==="down"?s.green:s.muted}}>{row.change}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.rate}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,color:s.muted}}>{row.prime}</td>
+                  <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>{row.context}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:12,marginBottom:14}}>
+        <Card style={{background:s.navy}}>
+          <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>📊 Key Rate Milestones</h3>
+          {[["Mar 2020","0.25%","COVID low — cheapest mortgages ever"],["Jul 2023","5.00%","22-year high — peak of hike cycle"],["Today","2.25%","Well below peak — rates near neutral"]].map(([d,r,n])=>(
+            <div key={d} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:8}}>
+              <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
+                <span style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>{d}</span>
+                <span style={{fontSize:14,fontWeight:800,color:s.gold}}>{r}</span>
+              </div>
+              <div style={{fontSize:11,color:"rgba(255,255,255,0.7)"}}>{n}</div>
+            </div>
+          ))}
+        </Card>
+        <Card>
+          <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🔮 What Economists Expect</h3>
+          {[
+            ["Late 2026","1–2 more cuts possible if inflation stays at 2%","#16a34a"],
+            ["2027","Rates may stabilize at 2.00–2.25% (neutral zone)","#2563eb"],
+            ["Risk","Trade disruptions or housing surge could pause cuts","#dc2626"],
+          ].map(([t,d,c])=>(
+            <div key={t} style={{background:"#f8fafc",borderRadius:8,padding:10,marginBottom:8,borderLeft:`3px solid ${c}`}}>
+              <div style={{fontSize:11,fontWeight:800,color:c,marginBottom:3}}>{t}</div>
+              <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{d}</div>
+            </div>
+          ))}
+          <p style={{fontSize:10,color:"#bbb",marginTop:6}}>* Forecasts are not guarantees. Always consult a licensed mortgage professional.</p>
+        </Card>
+      </div>
+
+      <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"12px 16px",fontSize:11,color:"#92400e"}}>
+        💡 <b>What this means for your mortgage:</b> With rates down from 5% to 2.25%, variable rate holders have seen significant payment relief. Fixed rate borrowers renewing now face lower rates than their original 2021–2022 terms. If you're renewing in 2026–2027, this is a good time to compare offers.
+      </div>
+      </>}
+
+      {subTab==="lenders"&&<>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🏦</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Canadian Mortgage Lender Guide</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Not all lenders are equal. Understanding the difference can save you thousands.</p>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
+        {[
+          {type:"Big 6 Banks",emoji:"🏛️",color:"#1e40af",pros:["Branch network across Canada","One-stop for all banking","Rate holds up to 120 days","Familiar and trusted"],cons:["Rarely offer best rates","High IRD break penalties","Less flexible on qualifying","Push proprietary products"],best:"If you value convenience and full-service banking.",examples:"RBC, TD, BMO, Scotiabank, CIBC, National Bank"},
+          {type:"Credit Unions",emoji:"🤝",color:s.green,pros:["Often 0.25–0.50% below banks","Member-owned = profit sharing","Fairer IRD calculations","More flexible qualifying"],cons:["Provincial only — can't switch provinces","Smaller branch networks","May have membership fees","Less product variety"],best:"If you want better rates with local service.",examples:"Servus, Vancity, Steinbach CU, First West"},
+          {type:"Monoline Lenders",emoji:"⚡",color:"#7c3aed",pros:["Mortgage specialists only","Very competitive rates","Fair IRD calculations","Strong service"],cons:["No branches — phone/online only","Can't bundle with other banking","Less known by consumers","Must use broker to access"],best:"If you want the best rates without a broker.",examples:"MCAP, First National, RMG, Radius Financial"},
+          {type:"Mortgage Brokers",emoji:"🔍",color:s.red,pros:["Access to 30+ lenders at once","Free for borrowers (paid by lender)","Specialists in complex situations","Best for self-employed, renewals"],cons:["Not all brokers are equal","Some push higher-commission lenders","No direct relationship with lender","Quality varies significantly"],best:"For first-time buyers, self-employed, or renewals.",examples:"Butler Mortgage, Nesto, True North, Dominion"},
+          {type:"Online Lenders",emoji:"💻",color:"#0891b2",pros:["Often lowest rates in Canada","Fast digital application","No branch pressure","Transparent pricing"],cons:["No in-person support","Limited flexibility","Not suitable for complex files","Newer — less track record"],best:"If you have a straightforward application and want the lowest rate.",examples:"Nesto, Homewise, Breezeful, Neo Mortgage"},
+          {type:"Private Lenders",emoji:"🔒",color:"#92400e",pros:["Approve when banks won't","No income verification required","Fast closing (1–2 weeks)","Short-term solution"],cons:["Much higher rates (8–15%+)","Significant fees (1–3%)","Short terms only","Exit strategy required"],best:"Last resort only — use to bridge to bank qualification.",examples:"Atrium, Romspen, various MICs"},
+        ].map(l=>(
+          <div key={l.type} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.04)"}}>
+            <div style={{background:l.color,padding:"12px 14px",display:"flex",alignItems:"center",gap:10}}>
+              <span style={{fontSize:22}}>{l.emoji}</span>
+              <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{l.type}</div>
+            </div>
+            <div style={{padding:12}}>
+              <div style={{marginBottom:8}}>
+                <div style={{fontSize:10,fontWeight:700,color:s.green,marginBottom:4,textTransform:"uppercase"}}>✓ Pros</div>
+                {l.pros.map(p=><div key={p} style={{fontSize:11,color:"#374151",padding:"2px 0",display:"flex",gap:5}}><span style={{color:s.green,flexShrink:0}}>✓</span>{p}</div>)}
+              </div>
+              <div style={{marginBottom:8}}>
+                <div style={{fontSize:10,fontWeight:700,color:s.red,marginBottom:4,textTransform:"uppercase"}}>✗ Cons</div>
+                {l.cons.map(c=><div key={c} style={{fontSize:11,color:"#374151",padding:"2px 0",display:"flex",gap:5}}><span style={{color:s.red,flexShrink:0}}>✗</span>{c}</div>)}
+              </div>
+              <div style={{background:"#f0fdf4",borderRadius:6,padding:"6px 8px",marginBottom:6}}>
+                <div style={{fontSize:10,fontWeight:700,color:s.green,marginBottom:2}}>BEST FOR</div>
+                <div style={{fontSize:11,color:"#15803d"}}>{l.best}</div>
+              </div>
+              <div style={{fontSize:10,color:s.muted}}><b>Examples:</b> {l.examples}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🤔 Which Lender Type is Right for You?</h3>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+          {[
+            {q:"First-time buyer, good credit, salaried",a:"Start with a mortgage broker — they'll compare banks, credit unions, and monolines to find you the best rate."},
+            {q:"Renewal coming up",a:"Get 2–3 competing quotes from brokers + your bank's renewal offer. Never sign the first renewal offer."},
+            {q:"Self-employed or irregular income",a:"Mortgage broker is essential — they know which lenders are flexible on income documentation."},
+            {q:"Want the absolute lowest rate",a:"Online lender (Nesto) or monoline via broker. Expect to do everything digitally."},
+            {q:"Credit score under 650",a:"B-lender via mortgage broker. Work on credit for 6–12 months then refinance with an A-lender."},
+            {q:"Need quick approval",a:"Mortgage broker — they can shop multiple lenders simultaneously and often close faster than banks."},
+          ].map(({q,a})=>(
+            <div key={q} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+              <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:5}}>📋 {q}</div>
+              <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>→ {a}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Get a Free Mortgage Consultation — We'll Match You to the Right Lender →</button>
+      </>}
     </div>
   );
 }
