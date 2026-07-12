@@ -2661,6 +2661,7 @@ function RealtorsTab(){
 
 function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [type,setType]=useState("any");const [beds,setBeds]=useState("any");const [maxPrice,setMaxPrice]=useState("");const [area,setArea]=useState("");
+  const [subTab,setSubTab]=useState<"listings"|"tools">("listings");
 
   useEffect(()=>{setProv(initProv);setCity(initCity);},[initProv,initCity]);
   useEffect(()=>{const cities=PDATA[prov]?.cities||[];if(!cities.includes(city))setCity(cities[0]||"");},[prov]);
@@ -2706,6 +2707,13 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
 
   return(
     <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setSubTab("listings")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="listings"?s.navy:s.border}`,background:subTab==="listings"?s.navy:s.white,color:subTab==="listings"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏘️ Find Listings</button>
+        <button onClick={()=>setSubTab("tools")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="tools"?s.navy:s.border}`,background:subTab==="tools"?s.navy:s.white,color:subTab==="tools"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📊 Market Tools</button>
+      </div>
+
+      {subTab==="listings"&&<>
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"16px 20px",marginBottom:14}}>
         <div style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:4}}>🏠 Find Your Home</div>
         <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.6}}>We connect you directly to Canada's top listing platforms — where the real, verified listings live. Select your criteria and we'll take you straight to the search results.</div>
@@ -2754,7 +2762,9 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
           {[["GET PRE-APPROVED FIRST","Sellers take pre-approved buyers more seriously. You'll also know exactly what you can afford before falling in love with a home."],["USE A BUYER'S AGENT","A REALTOR® representing you costs you nothing — they're paid by the seller. They have access to MLS® listings before they hit public sites."],["CHECK DAYS ON MARKET","Listings sitting 30+ days often have room to negotiate. Fresh listings in hot markets may sell over asking."],["LOOK BEYOND LISTING PHOTOS","Photos are staged and edited. Always visit in person. Check the neighbourhood at different times of day."],["BUDGET FOR CLOSING COSTS","Beyond your down payment, budget 1.5–4% of purchase price for legal fees, inspection, land transfer tax, and moving costs."],["DON'T SKIP THE INSPECTION","A home inspection ($400–$700) can reveal thousands in hidden issues. In a competitive market, some waive this — be very cautious."]].map(([t,d])=><div key={t} style={{background:"rgba(255,255,255,0.07)",borderRadius:8,padding:10,borderLeft:`3px solid ${s.gold}`}}><div style={{fontSize:10,color:s.gold,fontWeight:700,marginBottom:3}}>{t}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.8)",lineHeight:1.5}}>{d}</div></div>)}
         </div>
       </Card>
+      </>}
 
+      {subTab==="tools"&&<>
       <Card style={{marginBottom:16}}>
         <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Average Home Prices by Province — 2026</h3>
         <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Current average home prices, year-over-year change, and minimum down payment required across Canada.</p>
@@ -2776,10 +2786,10 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
         </div>
         <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates based on 2026 market data. Prices vary by city and neighbourhood.</p>
       </Card>
-
       <Card style={{marginBottom:14}}>
         <NeighbourhoodChecklist/>
       </Card>
+      </>}
 
       <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:"12px 16px",fontSize:11,color:"#92400e"}}>
         ⚠️ <b>Disclaimer:</b> We link directly to third-party listing platforms. Canada Mortgage Rates is not affiliated with Realtor.ca, CREA, MLS®, Zolo, RE/MAX, Royal LePage, Kijiji, or ComFree. Always verify listings and work with a licensed REALTOR® before making any real estate decisions.
