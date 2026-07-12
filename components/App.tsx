@@ -486,10 +486,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","News","Listings","Learn","Glossary","Renewal","Lawyers","Consult"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Listings","Consult","News","Glossary","Learn"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates","News"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Learn","Glossary"]},{label:"Help",tabs:["Lawyers","Consult"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Consult"]},{label:"Resources",tabs:["News","Glossary","Learn"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -502,7 +502,16 @@ function NavBar({active,setActive}){
           </div>
         </div>
         <div style={{display:"flex",gap:1,marginLeft:"auto",overflowX:"auto",maxWidth:"calc(100% - 180px)",scrollbarWidth:"none"}}>
-          {TABS.map(t=><button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:active===t?"rgba(255,255,255,0.15)":"none",border:"none",color:active===t?"#fff":"rgba(255,255,255,0.65)",fontSize:12,padding:"8px 12px",borderRadius:6,cursor:"pointer",fontWeight:active===t?700:400,whiteSpace:"nowrap",flexShrink:0,borderBottom:active===t?`2px solid ${s.gold}`:"2px solid transparent"}}>{t==="Rates"?<>📊 {t}<span style={{background:"#4ade80",color:"#14532d",borderRadius:20,padding:"1px 6px",fontSize:9,fontWeight:800,marginLeft:5}}>LIVE</span></>:t}</button>)}
+          {TABS.map(t=>{
+            const isActive=active===t;
+            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Listings:"🏘️",Consult:"📞",News:"📰",Glossary:"📖",Learn:"🎓",Home:"🍁"}[t]||"";
+            return(
+              <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
+                {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
+                {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t}
+              </button>
+            );
+          })}
         </div>
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:8,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
@@ -513,7 +522,10 @@ function NavBar({active,setActive}){
           {groups.map(g=>(
             <div key={g.label}>
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
-              {g.tabs.map(t=><button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{t}</button>)}
+              {g.tabs.map(t=>{
+                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Listings:"🏘️",Consult:"📞",News:"📰",Glossary:"📖",Learn:"🎓",Home:"🍁"}[t]||"";
+                return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
+              })}
             </div>
           ))}
         </div>
