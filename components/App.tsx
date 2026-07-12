@@ -502,7 +502,10 @@ function NavBar({active,setActive}){
           </div>
         </div>
         <div style={{display:"flex",alignItems:"center",marginLeft:"auto",maxWidth:"calc(100% - 180px)",position:"relative"}}>
-          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none"}}>
+          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:-200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to left,transparent,#0d2240 50%)",paddingRight:16,paddingLeft:6,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",left:0,top:0,zIndex:1}}>
+            <span style={{color:s.gold,fontSize:28,fontWeight:800,lineHeight:1}}>‹</span>
+          </button>
+          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none",paddingLeft:24}}>
             {TABS.map(t=>{
               const isActive=active===t;
               const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
@@ -3009,7 +3012,36 @@ BoC Rate: 2.25% (held) · Prime: 4.45% · Inflation: 2.8% · GDP Growth: 1.2% ·
   );
 }
 
+const RENEWAL_FAQS=[
+  {q:"Can I change my amortization at renewal?",a:"Yes — renewal is your opportunity to reset the amortization period. You can extend it (lower payments, more interest) or shorten it (higher payments, less interest). If switching lenders, the new lender sets the amortization based on your qualification."},
+  {q:"What happens if I miss my renewal date?",a:"If you do nothing, your lender automatically renews you — usually at a 6-month closed term at their posted rate, which is typically 0.50–1.00% above competitive rates. You then have to wait until that short term expires to get a better rate, often with a penalty."},
+  {q:"Is there a penalty to switch lenders at renewal?",a:"No — switching lenders at your maturity date is completely penalty-free. This is one of the most important things to know. Your lender counts on you not knowing this."},
+  {q:"How long does it take to switch lenders?",a:"Typically 1–2 weeks if you have your documents ready. Start the process at least 4 weeks before your maturity date to be safe. Your new lender handles most of the paperwork."},
+  {q:"Should I take a shorter or longer term at renewal?",a:"With the Bank of Canada holding rates in mid-2026, many borrowers are choosing shorter terms (1–2 years) to bet on rates dropping further. A 5-year fixed offers certainty. A 1-year fixed lets you renegotiate sooner if rates fall."},
+  {q:"Can I take cash out at renewal?",a:"Not at renewal — that would be a refinance, which requires breaking your mortgage if done before maturity. At renewal you can only change your rate, term, and payment frequency. To access equity, you need to refinance or set up a HELOC."},
+  {q:"What documents do I need to switch lenders?",a:"Typically: recent mortgage statement, property tax bill, proof of income (T4 + NOA or pay stubs), and ID. If your financial situation hasn't changed significantly, qualification is usually straightforward."},
+  {q:"Can I negotiate my renewal rate with my current lender?",a:"Absolutely — and you should. Most lenders have discretionary rate authority meaning your advisor can go below the posted renewal rate. The negotiation script in this tab gives you the exact words to use."},
+];
+
+function RenewalFAQ(){
+  const [open,setOpen]=useState<string|null>(null);
+  return(
+    <>
+      {RENEWAL_FAQS.map((f,i)=>(
+        <div key={i} style={{borderBottom:`1px solid ${s.light}`}}>
+          <button onClick={()=>setOpen(open===String(i)?null:String(i))} style={{width:"100%",textAlign:"left",padding:"12px 0",background:"none",border:"none",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+            <span style={{fontSize:12,fontWeight:700,color:s.navy,lineHeight:1.4}}>{f.q}</span>
+            <span style={{fontSize:16,color:s.muted,flexShrink:0,transform:open===String(i)?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+          </button>
+          {open===String(i)&&<div style={{fontSize:12,color:s.muted,lineHeight:1.8,paddingBottom:12}}>{f.a}</div>}
+        </div>
+      ))}
+    </>
+  );
+}
+
 function RenewalTab(){
+  const [subTab,setSubTab]=useState<"calculator"|"guide"|"negotiate">("calculator");
   const [balance,setBalance]=useState(350000);
   const [currentRate,setCurrentRate]=useState(5.5);
   const [offerRate,setOfferRate]=useState(5.1);
@@ -3035,6 +3067,14 @@ function RenewalTab(){
 
   return(
     <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setSubTab("calculator")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="calculator"?s.navy:s.border}`,background:subTab==="calculator"?s.navy:s.white,color:subTab==="calculator"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Compare Offer</button>
+        <button onClick={()=>setSubTab("guide")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="guide"?s.navy:s.border}`,background:subTab==="guide"?s.navy:s.white,color:subTab==="guide"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📅 Renewal Guide</button>
+        <button onClick={()=>setSubTab("negotiate")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="negotiate"?s.red:s.border}`,background:subTab==="negotiate"?s.red:s.white,color:subTab==="negotiate"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>💬 Negotiate Script</button>
+      </div>
+
+      {subTab==="calculator"&&<>
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px 20px",marginBottom:16,textAlign:"center"}}>
         <div style={{fontSize:28,marginBottom:6}}>🔄</div>
         <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Compare Your Renewal Offer</h2>
@@ -3122,6 +3162,125 @@ function RenewalTab(){
           <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Estimates only. Actual rates depend on your credit, income, and lender. Consult a licensed mortgage professional.</p>
         </div>
       )}</div>
+      </>}
+
+      {subTab==="guide"&&<>
+      {/* Renewal Timeline */}
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📅 Renewal Timeline — What to Do & When</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Most Canadians leave money on the table by waiting too long. Start this process 120 days before your maturity date.</p>
+        <div style={{position:"relative"}}>
+          <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.red},${s.gold},${s.green})`,borderRadius:2}}/>
+          {[
+            {time:"120 Days Before",label:"Start Shopping Now",desc:"Request competing rate quotes from brokers and other lenders. Most will hold a rate for 120 days. You lose nothing by getting quotes early.",urgent:true,icon:"🚀"},
+            {time:"90 Days Before",label:"Get Your First Competing Quote",desc:"Have at least one competing offer in hand. This is your negotiating leverage with your current lender. A mortgage broker can get you multiple quotes in one call.",urgent:true,icon:"📋"},
+            {time:"21 Days Before",label:"Your Lender Sends Renewal Offer",desc:"By law, your lender must send your renewal offer at least 21 days before maturity. This is usually their posted rate — not their best rate. Don't sign yet.",urgent:false,icon:"📬"},
+            {time:"14 Days Before",label:"Negotiate or Switch",desc:"Call your lender with your competing offer. If they won't match, switch. Switching lenders at renewal is penalty-free and takes 1–2 weeks with proper notice.",urgent:false,icon:"💬"},
+            {time:"7 Days Before",label:"Sign & Confirm",desc:"Sign your renewal agreement once you're satisfied with the rate. Confirm your payment date and any changes to payment frequency or amortization.",urgent:false,icon:"✍️"},
+            {time:"Maturity Date",label:"New Term Begins",desc:"Your new rate and term take effect. If you did nothing, your lender automatically renews you at their posted rate — often 0.50–1.00% above what you could have gotten.",urgent:false,icon:"🔄"},
+            {time:"After Renewal",label:"Set a Reminder for Next Time",desc:"Set a calendar reminder for 120 days before your next maturity date. Do this now while it's fresh.",urgent:false,icon:"📅"},
+          ].map((step,i)=>(
+            <div key={i} style={{display:"flex",gap:16,marginBottom:14,paddingLeft:8}}>
+              <div style={{width:22,height:22,borderRadius:"50%",background:step.urgent?s.red:s.navy,border:`2px solid ${step.urgent?s.red:s.navy}`,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10}}>{step.icon}</div>
+              <div style={{flex:1,background:step.urgent?"#fff5f5":"#f8fafc",borderRadius:10,padding:"10px 14px",border:`1px solid ${step.urgent?"#fed7d7":s.border}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                  <span style={{fontSize:10,fontWeight:700,color:step.urgent?s.red:s.muted,background:step.urgent?"#fee2e2":"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{step.time}</span>
+                  <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{step.label}</span>
+                  {step.urgent&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>ACT NOW</span>}
+                </div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{step.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Top Renewal Lenders */}
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏆 Best Lenders for Renewal Rates</h3>
+        <p style={{fontSize:11,color:s.muted,marginBottom:12}}>These lenders consistently offer competitive renewal rates. Use them as negotiating leverage with your current lender.</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+          {[
+            {name:"Nesto",type:"Online Broker",strength:"Often 0.20–0.40% below big banks. No commission model.",badge:"💰 Best Rates",url:"https://www.nesto.ca",color:"#6366f1"},
+            {name:"Butler Mortgage",type:"Mortgage Broker",strength:"30+ lender access. Renewal specialists. Strong negotiators.",badge:"🤝 Best Service",url:"https://www.butlermortgage.ca",color:"#0891b2"},
+            {name:"Local Credit Unions",type:"Credit Union",strength:"Member-owned, lower rates than banks, fairer IRD penalties.",badge:"🏦 Best Value",url:"#",color:s.green},
+            {name:"Ratehub.ca",type:"Rate Comparison",strength:"Compare 30+ lenders at once. Free rate comparison tool.",badge:"📊 Best Comparison",url:"https://www.ratehub.ca",color:s.red},
+            {name:"MCAP",type:"Monoline Lender",strength:"Competitive rates, fairer penalties than big banks.",badge:"⭐ Underrated",url:"https://www.mcap.com",color:"#7c3aed"},
+            {name:"First National",type:"Monoline Lender",strength:"No branch overhead = lower rates. Strong renewal offers.",badge:"⭐ Underrated",url:"https://www.firstnational.ca",color:"#b45309"},
+          ].map(l=>(
+            <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer" style={{display:"block",background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:10,padding:12,textDecoration:"none",borderLeft:`3px solid ${l.color}`}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                <div style={{fontSize:13,fontWeight:800,color:s.navy}}>{l.name}</div>
+                <span style={{fontSize:9,fontWeight:700,color:l.color,background:"#f1f5f9",borderRadius:20,padding:"2px 7px"}}>{l.badge}</span>
+              </div>
+              <div style={{fontSize:10,color:s.muted,marginBottom:4}}>{l.type}</div>
+              <div style={{fontSize:11,color:"#374151",lineHeight:1.5}}>{l.strength}</div>
+            </a>
+          ))}
+        </div>
+        <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Not sponsored. Listed based on competitive rates and service quality. Always compare multiple quotes.</p>
+      </Card>
+
+      {/* Renewal FAQ */}
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Renewal FAQ</h3>
+        <RenewalFAQ/>
+      </Card>
+
+      {/* Rate Alert CTA */}
+      <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:12,padding:"16px 20px",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap",marginBottom:14}}>
+        <div style={{fontSize:28,flexShrink:0}}>🔔</div>
+        <div style={{flex:1,minWidth:180}}>
+          <div style={{color:"#fff",fontSize:14,fontWeight:800,marginBottom:3}}>Get Notified When Rates Drop</div>
+          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11,lineHeight:1.5}}>Sign up for BoC rate alerts. Be the first to know when rates change — before your renewal.</div>
+        </div>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"10px 20px",background:"#fff",color:s.red,border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer",flexShrink:0}}>🔔 Get Alerts →</button>
+      </div>
+      </>}
+
+      {subTab==="negotiate"&&<>
+      <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>💬</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Renewal Negotiation Script</h2>
+        <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Exact words to say to your lender to get a better renewal rate. Most Canadians never negotiate — those who do save an average of 0.25–0.50%.</p>
+      </div>
+
+      <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"12px 16px",marginBottom:14,fontSize:12,color:"#92400e"}}>
+        💡 <b>Before you call:</b> Get at least one competing quote from a broker or another lender. You need a real number to reference — don't bluff.
+      </div>
+
+      {[
+        {step:"Step 1",title:"Opening — Set the tone",color:s.navy,script:`"Hi, I'm calling about my mortgage renewal. My maturity date is coming up and before I sign the renewal offer you sent, I wanted to discuss the rate."`,tip:"Be friendly and direct. Don't apologize for calling. You're a customer with options."},
+        {step:"Step 2",title:"State your position",color:s.blue,script:`"I've been a customer for [X] years and I've received a competing offer of [X.XX]% from [lender/broker]. I'd like to give you the opportunity to match or beat it before I make a decision."`,tip:"Use your actual competing rate. If you have multiple quotes, use the lowest. Mention how long you've been a customer — loyalty matters to some lenders."},
+        {step:"Step 3",title:"Handle their counter-offer",color:"#7c3aed",script:`"Thank you — I appreciate that. Can you check if there's any flexibility to go lower? I'm also looking at [other lender] who offered [X.XX]% for a [X]-year term."`,tip:"Their first counter is rarely their best. Push once more. Ask specifically about promotional rates or loyalty discounts."},
+        {step:"Step 4a",title:"If they match — confirm in writing",color:s.green,script:`"That works for me. Can you send me the updated renewal agreement with the [X.XX]% rate in writing today? I want to review it before signing."`,tip:"Always get it in writing before agreeing. Verbal commitments from bank advisors are not binding."},
+        {step:"Step 4b",title:"If they won't move — signal you'll leave",color:s.red,script:`"I appreciate you checking, but I'm not able to leave that much money on the table. I'll be moving forward with [competing lender] at [X.XX]%. Is there anything else you can do?"`,tip:"This is your nuclear option. Many lenders will make one more offer when they realize you're serious about leaving. Be prepared to actually switch if they don't move."},
+        {step:"Step 5",title:"If switching — close professionally",color:s.muted,script:`"I've decided to go with [new lender] for this term. Can you confirm the discharge process and any documentation you'll need from me?"`,tip:"Stay professional. You may come back to this lender in future terms. Ask about the discharge timeline — it typically takes 1–2 weeks."},
+      ].map((s2,i)=>(
+        <Card key={i} style={{marginBottom:10,borderLeft:`4px solid ${s2.color}`}}>
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:8}}>
+            <span style={{fontSize:10,fontWeight:700,color:"#fff",background:s2.color,borderRadius:20,padding:"2px 10px"}}>{s2.step}</span>
+            <span style={{fontSize:13,fontWeight:800,color:s.navy}}>{s2.title}</span>
+          </div>
+          <div style={{background:"#f8fafc",borderRadius:8,padding:"10px 14px",marginBottom:8,borderLeft:`3px solid ${s2.color}`}}>
+            <div style={{fontSize:11,color:"#374151",lineHeight:1.8,fontStyle:"italic"}}>{s2.script}</div>
+          </div>
+          <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>💡 {s2.tip}</div>
+        </Card>
+      ))}
+
+      <Card style={{background:s.navy,marginBottom:14}}>
+        <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>📊 What to Expect</h3>
+        {[["Lenders that typically negotiate","Credit unions, monolines, some regional banks"],["Lenders that rarely negotiate","Big 6 banks — but not impossible"],["Average discount achieved","0.10–0.50% off posted renewal rate"],["Best time to call","Tuesday–Thursday, 10am–3pm when advisors are less busy"],["What to never do","Sign the renewal slip the day it arrives"]].map(([l,v])=>(
+          <div key={l} style={{display:"flex",justifyContent:"space-between",gap:12,padding:"7px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`,fontSize:11}}>
+            <span style={{color:"rgba(255,255,255,0.7)"}}>{l}</span>
+            <span style={{color:"#fff",fontWeight:600,textAlign:"right",flex:1}}>{v}</span>
+          </div>
+        ))}
+      </Card>
+
+      <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Want Help Negotiating? Get a Free Mortgage Consultation →</button>
+      </>}
     </div>
   );
 }
