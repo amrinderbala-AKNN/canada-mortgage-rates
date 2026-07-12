@@ -486,10 +486,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Listings","Consult","News","Glossary","Learn"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Realtors","Listings","Consult","News","Learn & Glossary"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Consult"]},{label:"Resources",tabs:["News","Glossary","Learn"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Realtors","Consult"]},{label:"Resources",tabs:["News","Learn & Glossary"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -504,7 +504,7 @@ function NavBar({active,setActive}){
         <div style={{display:"flex",gap:1,marginLeft:"auto",overflowX:"auto",maxWidth:"calc(100% - 180px)",scrollbarWidth:"none"}}>
           {TABS.map(t=>{
             const isActive=active===t;
-            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Listings:"🏘️",Consult:"📞",News:"📰",Glossary:"📖",Learn:"🎓",Home:"🍁"}[t]||"";
+            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Learn & Glossary":"📖",Home:"🍁"}[t]||"";
             return(
               <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
                 {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
@@ -512,6 +512,9 @@ function NavBar({active,setActive}){
               </button>
             );
           })}
+          <div style={{flexShrink:0,display:"flex",alignItems:"center",paddingLeft:4,borderLeft:"1px solid rgba(255,255,255,0.15)"}}>
+            <span style={{color:"rgba(255,255,255,0.5)",fontSize:16,animation:"pulse 1.5s infinite"}}>›</span>
+          </div>
         </div>
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:8,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
@@ -523,7 +526,7 @@ function NavBar({active,setActive}){
             <div key={g.label}>
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
               {g.tabs.map(t=>{
-                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Listings:"🏘️",Consult:"📞",News:"📰",Glossary:"📖",Learn:"🎓",Home:"🍁"}[t]||"";
+                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Learn & Glossary":"📖",Home:"🍁"}[t]||"";
                 return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
               })}
             </div>
@@ -2180,6 +2183,273 @@ category: "BoC / Rates"|"Market Update"|"First-Time Buyers"|"Policy / Government
   );
 }
 
+function RealtorsTab(){
+  const [filterProv,setFilterProv]=useState("MB");
+  const [filterCity,setFilterCity]=useState("");
+  const [filterSpec,setFilterSpec]=useState("all");
+  const [selectedRealtor,setSelectedRealtor]=useState<any>(null);
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");
+  const [rcity,setRcity]=useState("");
+  const [budget,setBudget]=useState("");
+  const [timeline,setTimeline]=useState("");
+  const [firstTime,setFirstTime]=useState(false);
+  const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+  const [showForm,setShowForm]=useState(false);
+  const [showPartnerForm,setShowPartnerForm]=useState(false);
+  const [pName,setPName]=useState("");
+  const [pEmail,setPEmail]=useState("");
+  const [pBrokerage,setPBrokerage]=useState("");
+  const [pCity,setPCity]=useState("");
+  const [pOk,setPOk]=useState(false);
+  const [pSubmitting,setPSubmitting]=useState(false);
+  const [faqOpen,setFaqOpen]=useState<string|null>(null);
+
+  const REALTORS=[
+    {id:1,name:"Coming Soon",brokerage:"RE/MAX Winnipeg",city:"Winnipeg",prov:"MB",specs:["firsttime","residential","condo"],experience:"10+ years",languages:["English"],rating:5,reviews:0,bio:"Winnipeg residential specialist coming soon. Submit your details and we'll connect you with a top-rated local realtor.",verified:false},
+    {id:2,name:"Coming Soon",brokerage:"Royal LePage Manitoba",city:"Winnipeg",prov:"MB",specs:["residential","investment"],experience:"8+ years",languages:["English","Punjabi"],rating:5,reviews:0,bio:"Specializing in Winnipeg family homes and investment properties. Submit a request to be connected.",verified:false},
+  ];
+
+  const FAQS=[
+    {q:"Do I need a realtor to buy a home in Canada?",a:"You're not legally required to use a realtor, but most buyers do. A buyer's agent costs you nothing — the seller pays both agents' commissions (typically 2.5% each). A good realtor provides market expertise, negotiation skills, and handles all paperwork."},
+    {q:"How much does a realtor cost in Canada?",a:"For buyers, typically nothing — the seller pays the commission. The total commission is usually 4–5% of the sale price, split between buyer and seller agents. On a $500K home, that's $12,500–$25,000 paid by the seller, not you."},
+    {q:"What's the difference between a realtor and a real estate agent?",a:"A REALTOR® is a licensed real estate agent who is also a member of the Canadian Real Estate Association (CREA) and bound by a strict code of ethics. All REALTORS® are agents, but not all agents are REALTORS®. Always verify your agent is licensed with your provincial real estate council."},
+    {q:"How do I choose the right realtor?",a:"Look for: local market expertise in your target neighbourhood, strong negotiation track record, responsiveness, and verified reviews. Interview at least 2–3 realtors before committing. Ask how many homes they've sold in your target area in the last 12 months."},
+    {q:"Can I use the same realtor to buy and sell?",a:"Yes — many buyers use the same agent for both transactions. However, if your agent represents both the buyer and seller in the same deal (dual agency), this creates a conflict of interest. In some provinces dual agency is restricted or banned."},
+    {q:"When should I contact a realtor?",a:"Contact a realtor as soon as you're seriously considering buying — ideally 3–6 months before you want to move. They can help you understand the market, set realistic expectations, and alert you to listings before they hit the public market."},
+  ];
+
+  async function submit(){
+    if(!name||!email||!rcity){alert("Please fill in name, email, and city.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        name,email,phone,province:PDATA[filterProv]?.name,city:rcity,
+        budget,timeline,first_time_buyer:firstTime?"Yes":"No",
+        preferred_realtor:selectedRealtor?selectedRealtor.name:"No preference",
+        message:msg,type:"Realtor Referral Request"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  async function submitPartner(){
+    if(!pName||!pEmail||!pBrokerage){alert("Please fill in name, email, and brokerage.");return;}
+    setPSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:pName,email:pEmail,brokerage:pBrokerage,city:pCity,type:"Realtor Partner Inquiry"})});
+      setPOk(true);
+    }catch{alert("Something went wrong.");}
+    setPSubmitting(false);
+  }
+
+  const filtered=REALTORS.filter(r=>{
+    const matchProv=r.prov===filterProv;
+    const matchCity=!filterCity||r.city.toLowerCase().includes(filterCity.toLowerCase());
+    const matchSpec=filterSpec==="all"||r.specs.includes(filterSpec);
+    return matchProv&&matchCity&&matchSpec;
+  });
+
+  return(
+    <div>
+      {/* Header */}
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:14}}>
+        <div style={{display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+          <div style={{flex:1,minWidth:200}}>
+            <div style={{fontSize:28,marginBottom:6}}>🤝</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Find a Real Estate Agent</h2>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.6}}>Connect with a top-rated REALTOR® in your area. Free for buyers — the seller pays the commission. Our agents are vetted local experts.</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,flexShrink:0}}>
+            {[["Free","For Buyers"],["2.5%","Typical Commission"],["3–6 mo","Before You Buy"],["Vetted","Local Experts"]].map(([v,l])=>(
+              <div key={l} style={{background:"rgba(255,255,255,0.1)",borderRadius:8,padding:"10px 12px",textAlign:"center"}}>
+                <div style={{fontSize:14,fontWeight:800,color:s.gold}}>{v}</div>
+                <div style={{fontSize:10,color:"rgba(255,255,255,0.6)",marginTop:2}}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Partner CTA */}
+      <div style={{background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:"1px solid #bbf7d0",borderRadius:12,padding:"14px 20px",marginBottom:14,display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+        <div style={{flex:1,minWidth:200}}>
+          <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:3}}>🤝 Are You a REALTOR®?</div>
+          <div style={{fontSize:11,color:"#15803d",lineHeight:1.5}}>Join our referral network. We connect motivated buyers directly to you. Pay only per referred lead — no monthly or setup fees.</div>
+        </div>
+        <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 20px",background:"#15803d",color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,border:"none",cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>Partner With Us →</button>
+      </div>
+
+      {/* Filters */}
+      <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+        <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
+        <input type="text" placeholder="Search city..." value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,width:140}}/>
+        <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
+          {[["all","All Types"],["firsttime","First-Time"],["residential","Residential"],["condo","Condo"],["investment","Investment"],["luxury","Luxury"]].map(([v,l])=>(
+            <button key={v} onClick={()=>setFilterSpec(v)} style={{padding:"5px 10px",borderRadius:20,border:`1.5px solid ${filterSpec===v?s.navy:s.border}`,background:filterSpec===v?s.navy:s.white,color:filterSpec===v?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:filterSpec===v?700:400}}>{l}</button>
+          ))}
+        </div>
+        <button onClick={()=>{setShowForm(true);setSelectedRealtor(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🤝 Find Me a Realtor</button>
+      </div>
+
+      {/* Realtor Cards */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:16}}>
+        {filtered.map(r=>(
+          <div key={r.id} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+            <div style={{background:r.verified?`linear-gradient(135deg,${s.green},#15803d)`:`linear-gradient(135deg,#94a3b8,#64748b)`,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+              <div style={{display:"flex",alignItems:"center",gap:10}}>
+                <div style={{width:40,height:40,borderRadius:"50%",background:"rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🤝</div>
+                <div>
+                  <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{r.name}</div>
+                  <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{r.brokerage}</div>
+                </div>
+              </div>
+              {r.verified?<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>✓ Verified</span>:<span style={{background:"rgba(255,255,255,0.15)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Coming Soon</span>}
+            </div>
+            <div style={{padding:14}}>
+              <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
+                <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {r.city}, {r.prov}</span>
+                <span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {r.experience}</span>
+                {r.languages.map(l=><span key={l} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{l}</span>)}
+              </div>
+              <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
+                {r.specs.map(spec=><span key={spec} style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{spec==="firsttime"?"First-Time":spec}</span>)}
+              </div>
+              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:12}}>{r.bio}</p>
+              <button onClick={()=>{setSelectedRealtor(r);setShowForm(true);setRcity(r.city);}} style={{width:"100%",padding:"9px",background:r.verified?s.green:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>{r.verified?"Connect with Agent →":"Join Waitlist →"}</button>
+            </div>
+          </div>
+        ))}
+        {filtered.length===0&&(
+          <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:s.white,borderRadius:12,border:`1px solid ${s.border}`}}>
+            <div style={{fontSize:32,marginBottom:8}}>🔍</div>
+            <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>No agents listed yet in this area</div>
+            <div style={{fontSize:12,color:s.muted,marginBottom:14}}>We're building our network. Submit a request and we'll find you a qualified agent.</div>
+            <button onClick={()=>setShowForm(true)} style={{padding:"9px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Find Me a Realtor →</button>
+          </div>
+        )}
+      </div>
+
+      {/* Info Strip */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,marginBottom:16}}>
+        <Card style={{background:"#f0fdf4",border:`1px solid #bbf7d0`}}>
+          <h3 style={{fontSize:12,fontWeight:800,color:"#15803d",marginBottom:8}}>🤝 What a Buyer's Agent Does</h3>
+          {["Finds listings matching your criteria","Books and attends showings with you","Advises on fair market value","Negotiates purchase price and conditions","Coordinates with lawyers and lenders","Guides you from offer to closing"].map(item=>(
+            <div key={item} style={{display:"flex",alignItems:"center",gap:6,padding:"4px 0",fontSize:11,color:"#374151"}}><span style={{color:s.green,fontSize:10}}>✓</span>{item}</div>
+          ))}
+        </Card>
+        <Card style={{background:s.navy}}>
+          <h3 style={{fontSize:12,fontWeight:800,color:"#fff",marginBottom:8}}>💰 Commission Breakdown</h3>
+          {[["Total commission","4–5% of sale price"],["Seller's agent","2–2.5%"],["Buyer's agent","2–2.5%"],["Who pays?","The seller"],["Cost to buyer","$0"]].map(([l,v],i)=>(
+            <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:i<4?`1px solid rgba(255,255,255,0.08)`:"none",fontSize:11}}>
+              <span style={{color:"rgba(255,255,255,0.7)"}}>{l}</span>
+              <span style={{fontWeight:i===4?800:500,color:i===4?s.gold:"#fff"}}>{v}</span>
+            </div>
+          ))}
+        </Card>
+        <Card>
+          <h3 style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:8}}>📋 Questions to Ask a Realtor</h3>
+          {["How many homes have you sold in my target area?","What's your average sale-to-list price ratio?","How many buyers are you currently working with?","What's your availability for showings?","How do you handle multiple offer situations?","Can you provide 3 recent client references?"].map((q,i)=>(
+            <div key={i} style={{display:"flex",gap:6,padding:"4px 0",fontSize:11,color:s.muted,borderBottom:i<5?`1px solid ${s.light}`:"none"}}>
+              <span style={{color:s.navy,fontWeight:700,flexShrink:0}}>{i+1}.</span>{q}
+            </div>
+          ))}
+        </Card>
+      </div>
+
+      {/* FAQ */}
+      <Card style={{marginBottom:16}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Realtor FAQ</h3>
+        {FAQS.map((f,i)=>(
+          <div key={i} style={{borderBottom:`1px solid ${s.light}`,overflow:"hidden"}}>
+            <button onClick={()=>setFaqOpen(faqOpen===String(i)?null:String(i))} style={{width:"100%",textAlign:"left",padding:"12px 0",background:"none",border:"none",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+              <span style={{fontSize:12,fontWeight:700,color:s.navy,lineHeight:1.4}}>{f.q}</span>
+              <span style={{fontSize:16,color:s.muted,flexShrink:0,transform:faqOpen===String(i)?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+            </button>
+            {faqOpen===String(i)&&<div style={{fontSize:12,color:s.muted,lineHeight:1.8,paddingBottom:12}}>{f.a}</div>}
+          </div>
+        ))}
+      </Card>
+
+      {/* Connection Form Modal */}
+      {showForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:480,overflow:"hidden",maxHeight:"90vh",display:"flex",flexDirection:"column"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between",flexShrink:0}}>
+              <div>
+                <div style={{color:"#fff",fontSize:14,fontWeight:700}}>🤝 Find Me a Realtor</div>
+                {selectedRealtor&&<div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:2}}>{selectedRealtor.brokerage}</div>}
+              </div>
+              <button onClick={()=>setShowForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{padding:18,overflowY:"auto",flex:1}}>
+              {!ok?(
+                <>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                    <Field label="Your Name *"><input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="Full name" style={inp}/></Field>
+                    <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Optional" style={inp}/></Field>
+                  </div>
+                  <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={{...inp,marginBottom:8}}/></Field>
+                  <Field label="Your City *"><input type="text" value={rcity} onChange={e=>setRcity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:8}}>
+                    <Field label="Budget"><input type="text" value={budget} onChange={e=>setBudget(e.target.value)} placeholder="e.g. $500,000" style={inp}/></Field>
+                    <Field label="Timeline"><input type="text" value={timeline} onChange={e=>setTimeline(e.target.value)} placeholder="e.g. 3 months" style={inp}/></Field>
+                  </div>
+                  <div style={{marginBottom:10}}><label style={{display:"flex",alignItems:"center",gap:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer"}}><input type="checkbox" checked={firstTime} onChange={e=>setFirstTime(e.target.checked)}/>First-time buyer</label></div>
+                  <Field label="What are you looking for?"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="e.g. 3-bedroom detached in south Winnipeg, under $500K" rows={3} style={{...inp,resize:"none"}}/></Field>
+                  <button onClick={submit} disabled={submitting} style={{width:"100%",padding:11,background:submitting?"#aaa":s.green,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:submitting?"not-allowed":"pointer",marginTop:8}}>{submitting?"Submitting...":"🤝 Connect Me with a Realtor →"}</button>
+                  <p style={{fontSize:10,color:s.muted,marginTop:8,lineHeight:1.5}}>Free for buyers. A licensed REALTOR® will contact you directly. Canada Mortgage Rates is not a real estate brokerage.</p>
+                </>
+              ):(
+                <div style={{textAlign:"center",padding:"24px 0"}}>
+                  <div style={{fontSize:40,marginBottom:10}}>✅</div>
+                  <div style={{fontSize:15,fontWeight:800,color:s.navy,marginBottom:6}}>Request Received!</div>
+                  <div style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:16}}>We'll connect you with a qualified REALTOR® in {rcity} within 1 business day.</div>
+                  <button onClick={()=>{setOk(false);setShowForm(false);setName("");setEmail("");setPhone("");setRcity("");setBudget("");setTimeline("");setFirstTime(false);setMsg("");}} style={{padding:"9px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Done</button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Partner Form Modal */}
+      {showPartnerForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:"#15803d",padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>🤝 Realtor Partner Inquiry</div>
+              <button onClick={()=>setShowPartnerForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <div style={{padding:18}}>
+              {!pOk?(
+                <>
+                  <p style={{fontSize:12,color:s.muted,marginBottom:14,lineHeight:1.6}}>Fill out your details and we'll be in touch about our referral program. Pay only per referred lead — no monthly or setup fees.</p>
+                  <Field label="Your Name *"><input type="text" value={pName} onChange={e=>setPName(e.target.value)} placeholder="Full name" style={inp}/></Field>
+                  <Field label="Brokerage *"><input type="text" value={pBrokerage} onChange={e=>setPBrokerage(e.target.value)} placeholder="e.g. RE/MAX Winnipeg" style={inp}/></Field>
+                  <Field label="Email *"><input type="email" value={pEmail} onChange={e=>setPEmail(e.target.value)} placeholder="your@brokerage.com" style={inp}/></Field>
+                  <Field label="City"><input type="text" value={pCity} onChange={e=>setPCity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+                  <button onClick={submitPartner} disabled={pSubmitting} style={{width:"100%",padding:10,background:pSubmitting?"#aaa":"#15803d",color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:pSubmitting?"not-allowed":"pointer",marginTop:4}}>{pSubmitting?"Submitting...":"Send Inquiry →"}</button>
+                </>
+              ):(
+                <div style={{textAlign:"center",padding:"20px 0"}}>
+                  <div style={{fontSize:36,marginBottom:8}}>✅</div>
+                  <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:6}}>Thanks {pName}!</div>
+                  <div style={{fontSize:12,color:s.muted,lineHeight:1.7}}>We'll be in touch within 1 business day to discuss the referral program.</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [type,setType]=useState("any");const [beds,setBeds]=useState("any");const [maxPrice,setMaxPrice]=useState("");const [area,setArea]=useState("");
 
@@ -3199,6 +3469,19 @@ function GlossaryTab(){
   );
 }
 
+function LearnGlossaryTab(){
+  const [subTab,setSubTab]=useState<"learn"|"glossary">("learn");
+  return(
+    <div>
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setSubTab("learn")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="learn"?s.navy:s.border}`,background:subTab==="learn"?s.navy:s.white,color:subTab==="learn"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>🎓 Learn</button>
+        <button onClick={()=>setSubTab("glossary")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="glossary"?s.navy:s.border}`,background:subTab==="glossary"?s.navy:s.white,color:subTab==="glossary"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📖 Glossary</button>
+      </div>
+      {subTab==="learn"?<LearnTab/>:<GlossaryTab/>}
+    </div>
+  );
+}
+
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
@@ -3302,8 +3585,10 @@ export default function App(){
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
     if(active==="Learn")return <LearnTab/>;
     if(active==="Glossary")return <GlossaryTab/>;
+    if(active==="Learn & Glossary")return <LearnGlossaryTab/>;
     if(active==="Renewal")return <RenewalTab/>;
     if(active==="Lawyers")return <LawyersTab/>;
+    if(active==="Realtors")return <RealtorsTab/>;
     if(active==="Consult")return <ConsultTab/>;
     return null;
   }
