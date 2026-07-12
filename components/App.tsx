@@ -2256,10 +2256,7 @@ function NeighbourhoodChecklist(){
       <div style={{fontSize:11,color:s.muted,marginBottom:8}}>{pct}% complete{pct===100?" — You've done your homework! ✅":""}</div>
       <div style={{display:"flex",gap:8,marginBottom:12,flexWrap:"wrap"}}>
         {done>0&&<button onClick={()=>setChecked({})} style={{fontSize:11,color:s.muted,background:"none",border:`1px solid ${s.border}`,borderRadius:6,cursor:"pointer",padding:"4px 10px"}}>Reset</button>}
-        {done>=5&&<button onClick={()=>setShowSummary(!showSummary)} style={{fontSize:11,color:"#fff",background:s.navy,border:"none",borderRadius:6,cursor:"pointer",padding:"5px 12px",fontWeight:700}}>{showSummary?"Hide Summary":"📋 Generate Summary"}</button>}
-        {done>=5&&<button onClick={printSummary} style={{fontSize:11,color:"#fff",background:s.green,border:"none",borderRadius:6,cursor:"pointer",padding:"5px 12px",fontWeight:700}}>🖨️ Print / Save PDF</button>}
       </div>
-      {done>=5&&<div style={{fontSize:10,color:s.muted,marginBottom:8}}>💡 In the print dialog, choose "Save as PDF" to save a copy to your device.</div>}
 
       {showSummary&&done>=5&&(
         <div style={{background:"#f8fafc",border:`1px solid ${s.border}`,borderRadius:12,padding:16,marginBottom:14}}>
@@ -2313,6 +2310,15 @@ function NeighbourhoodChecklist(){
         </div>
       ))}
       <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Check at least 5 items to generate a summary and print report.</p>
+      {done>=5&&(
+        <div style={{marginTop:12,paddingTop:12,borderTop:`1px solid ${s.border}`}}>
+          <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:6}}>
+            <button onClick={()=>setShowSummary(!showSummary)} style={{fontSize:11,color:"#fff",background:s.navy,border:"none",borderRadius:6,cursor:"pointer",padding:"7px 14px",fontWeight:700}}>{showSummary?"Hide Summary":"📋 Generate Summary"}</button>
+            <button onClick={printSummary} style={{fontSize:11,color:"#fff",background:s.green,border:"none",borderRadius:6,cursor:"pointer",padding:"7px 14px",fontWeight:700}}>🖨️ Print / Save PDF</button>
+          </div>
+          <div style={{fontSize:10,color:s.muted}}>💡 In the print dialog, choose "Save as PDF" to save a copy to your device.</div>
+        </div>
+      )}
     </>
   );
 }
