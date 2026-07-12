@@ -67,7 +67,7 @@ export default function About() {
             <h2 style={{fontSize:20,fontWeight:800,color:"#0d2240",marginBottom:12}}>Contact Us</h2>
             <p style={{fontSize:14,color:"#64748b",lineHeight:1.8,marginBottom:8}}>Have a question, suggestion, or want to partner with us? We'd love to hear from you.</p>
             <p style={{fontSize:14,color:"#64748b",marginBottom:4}}>📧 Email: <a href="mailto:info@canadamortgagerates.net" style={{color:"#2563eb",fontWeight:600}}>info@canadamortgagerates.net</a></p>
-            <p style={{fontSize:14,color:"#64748b",marginBottom:4}}>🐦 Twitter: <a href="https://twitter.com/cdnmortgagerates" target="_blank" rel="noopener noreferrer" style={{color:"#2563eb",fontWeight:600}}>@cdnmortgagerates</a></p>
+            <p style={{fontSize:14,color:"#64748b",marginBottom:4}}>🐦 Twitter: <a href="https://twitter.com/Cdnmortgagerate" target="_blank" rel="noopener noreferrer" style={{color:"#2563eb",fontWeight:600}}>@Cdnmortgagerate</a></p>
             <p style={{fontSize:14,color:"#64748b"}}>🌐 Website: <a href="https://www.canadamortgagerates.net" style={{color:"#2563eb",fontWeight:600}}>canadamortgagerates.net</a></p>
           </div>
 
