@@ -486,10 +486,10 @@ function InstallPrompt(){
   );
 }
 
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Realtors","Listings","Consult","News","Learn & Glossary"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Lawyers","Realtors","Listings","Consult","News","Resources"];
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Realtors","Consult"]},{label:"Resources",tabs:["News","Learn & Glossary"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings"]},{label:"Help",tabs:["Lawyers","Realtors","Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
@@ -501,19 +501,21 @@ function NavBar({active,setActive}){
             <a href="/fr" style={{color:"rgba(255,255,255,0.65)",fontSize:10,fontWeight:700,border:"1px solid rgba(255,255,255,0.2)",borderRadius:5,padding:"2px 6px",textDecoration:"none"}}>FR</a>
           </div>
         </div>
-        <div style={{display:"flex",gap:1,marginLeft:"auto",overflowX:"auto",maxWidth:"calc(100% - 180px)",scrollbarWidth:"none"}}>
-          {TABS.map(t=>{
-            const isActive=active===t;
-            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Learn & Glossary":"📖",Home:"🍁"}[t]||"";
-            return(
-              <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
-                {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
-                {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t}
-              </button>
-            );
-          })}
-          <div style={{flexShrink:0,display:"flex",alignItems:"center",paddingLeft:4,borderLeft:"1px solid rgba(255,255,255,0.15)"}}>
-            <span style={{color:"rgba(255,255,255,0.5)",fontSize:16,animation:"pulse 1.5s infinite"}}>›</span>
+        <div style={{display:"flex",alignItems:"center",marginLeft:"auto",maxWidth:"calc(100% - 180px)",position:"relative"}}>
+          <div style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none"}}>
+            {TABS.map(t=>{
+              const isActive=active===t;
+              const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+              return(
+                <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
+                  {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
+                  {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 40%)",paddingLeft:16,paddingRight:4,display:"flex",alignItems:"center",height:"100%",position:"sticky",right:0}}>
+            <span style={{color:s.gold,fontSize:20,fontWeight:800,lineHeight:1}}>›</span>
           </div>
         </div>
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:8,flexShrink:0}}>
@@ -526,7 +528,7 @@ function NavBar({active,setActive}){
             <div key={g.label}>
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
               {g.tabs.map(t=>{
-                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Learn & Glossary":"📖",Home:"🍁"}[t]||"";
+                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
                 return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
               })}
             </div>
@@ -3585,7 +3587,7 @@ export default function App(){
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
     if(active==="Learn")return <LearnTab/>;
     if(active==="Glossary")return <GlossaryTab/>;
-    if(active==="Learn & Glossary")return <LearnGlossaryTab/>;
+    if(active==="Resources")return <LearnGlossaryTab/>;
     if(active==="Renewal")return <RenewalTab/>;
     if(active==="Lawyers")return <LawyersTab/>;
     if(active==="Realtors")return <RealtorsTab/>;
