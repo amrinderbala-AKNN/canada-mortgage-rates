@@ -1316,6 +1316,8 @@ function CalcTab({prov}:{prov:string}){
       )}
       {tab==="stress"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
+          <Card>
+            <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:4}}>📋 Mortgage Stress Test</h3>
             <p style={{fontSize:11,color:s.muted,marginBottom:12}}>See exactly what you qualify for — and what levers you can pull to qualify for more.</p>
             <Field label="Annual Income — Applicant 1 ($)"><input type="number" value={si} onChange={e=>setSi(parseFloat(e.target.value)||0)} style={inp}/></Field>
             <Field label="Annual Income — Applicant 2 ($)"><input type="number" value={si2} onChange={e=>setSi2(parseFloat(e.target.value)||0)} style={inp} placeholder="0 if single applicant"/></Field>
