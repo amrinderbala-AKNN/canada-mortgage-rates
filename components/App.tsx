@@ -487,8 +487,137 @@ function InstallPrompt(){
 }
 
 const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","Realtors","Lawyers","Consult","News","Resources"];
+const SEARCH_INDEX=[
+  // Tabs
+  {title:"Home",desc:"Overview, BoC rates, rate alerts, testimonials",tab:"Home",icon:"🍁",type:"Tab"},
+  {title:"Rates",desc:"Compare mortgage rates across 20+ lenders by province",tab:"Rates",icon:"📊",type:"Tab"},
+  {title:"Calculators",desc:"Payment, affordability, stress test, amortization, closing costs",tab:"Calculators",icon:"🧮",type:"Tab"},
+  {title:"Property Tax",desc:"Estimate property tax by city, appeal assessment, payment options",tab:"Property Tax",icon:"🏛️",type:"Tab"},
+  {title:"Insurance",desc:"Home insurance estimates, coverage explainer, claims guide",tab:"Insurance",icon:"🛡️",type:"Tab"},
+  {title:"Rate Finder",desc:"Personalized rate quiz, fixed vs variable, pre-approval guide",tab:"Rate Finder",icon:"🔍",type:"Tab"},
+  {title:"First-Time Buyers",desc:"FHSA, HBP, provincial programs, down payment help",tab:"First-Time Buyers",icon:"🏠",type:"Tab"},
+  {title:"Renewal",desc:"Compare renewal offer, negotiation script, renewal timeline",tab:"Renewal",icon:"🔄",type:"Tab"},
+  {title:"Listings",desc:"Search homes, average prices by province, neighbourhood checklist",tab:"Listings",icon:"🏘️",type:"Tab"},
+  {title:"Realtors",desc:"Find a realtor, buyer's guide, home buying timeline",tab:"Realtors",icon:"🤝",type:"Tab"},
+  {title:"Lawyers",desc:"Find a real estate lawyer, closing costs, closing timeline",tab:"Lawyers",icon:"⚖️",type:"Tab"},
+  {title:"Consult",desc:"Free mortgage consultation, newsletter, BoC alerts",tab:"Consult",icon:"📞",type:"Tab"},
+  {title:"News",desc:"Latest Canadian mortgage and real estate news",tab:"News",icon:"📰",type:"Tab"},
+  {title:"Resources",desc:"Mortgage glossary and learning articles",tab:"Resources",icon:"📚",type:"Tab"},
+  // Calculators
+  {title:"Payment Calculator",desc:"Calculate your monthly mortgage payment",tab:"Calculators",icon:"💰",type:"Calculator"},
+  {title:"Affordability Calculator",desc:"How much house can you afford?",tab:"Calculators",icon:"🏡",type:"Calculator"},
+  {title:"Stress Test Calculator",desc:"Will you pass the mortgage stress test?",tab:"Calculators",icon:"📋",type:"Calculator"},
+  {title:"Amortization Schedule",desc:"Year-by-year breakdown of your mortgage payments",tab:"Calculators",icon:"📅",type:"Calculator"},
+  {title:"Closing Cost Calculator",desc:"Land transfer tax, legal fees, title insurance by province",tab:"Calculators",icon:"🏷️",type:"Calculator"},
+  {title:"Document Checklist",desc:"Everything you need to apply for a mortgage",tab:"Calculators",icon:"📁",type:"Calculator"},
+  {title:"Renewal Calculator",desc:"Compare your renewal offer vs shopping around",tab:"Renewal",icon:"🔄",type:"Calculator"},
+  // Topics
+  {title:"CMHC Insurance",desc:"What is mortgage default insurance? How much does it cost?",tab:"First-Time Buyers",icon:"🛡️",type:"Topic"},
+  {title:"FHSA — First Home Savings Account",desc:"Tax-free savings for first-time buyers, $8K/year max",tab:"First-Time Buyers",icon:"💰",type:"Topic"},
+  {title:"Home Buyers' Plan (HBP)",desc:"Withdraw up to $60K from RRSP tax-free for a home",tab:"First-Time Buyers",icon:"🏦",type:"Topic"},
+  {title:"Land Transfer Tax",desc:"Provincial tax when buying a home. Toronto pays double.",tab:"Lawyers",icon:"🏛️",type:"Topic"},
+  {title:"Fixed vs Variable Rate",desc:"Which mortgage type is right for you in 2026?",tab:"Rate Finder",icon:"📊",type:"Topic"},
+  {title:"Mortgage Stress Test",desc:"Must qualify at your rate +2% or 5.25%",tab:"Calculators",icon:"📋",type:"Topic"},
+  {title:"Bank of Canada Rate",desc:"Current BoC overnight rate, history, and next announcement",tab:"Rates",icon:"🏦",type:"Topic"},
+  {title:"Mortgage Glossary",desc:"36 mortgage terms explained in plain English",tab:"Resources",icon:"📖",type:"Topic"},
+  {title:"Pre-Approval Guide",desc:"Documents needed, timeline, what lenders look at",tab:"Rate Finder",icon:"📋",type:"Topic"},
+  {title:"Negotiation Script",desc:"Word-for-word script to negotiate your renewal rate",tab:"Renewal",icon:"💬",type:"Topic"},
+  {title:"Property Tax Appeal",desc:"How to appeal your assessment and potentially save $500–$3,000",tab:"Property Tax",icon:"⚖️",type:"Topic"},
+  {title:"Home Insurance Coverage",desc:"What's covered, what's not (flooding, earthquakes, sewer)",tab:"Insurance",icon:"🛡️",type:"Topic"},
+  {title:"Lender Types",desc:"Banks vs credit unions vs brokers vs monolines explained",tab:"Rates",icon:"🏦",type:"Topic"},
+  {title:"Average Home Prices",desc:"Average prices by province with down payment required",tab:"Listings",icon:"📊",type:"Topic"},
+  {title:"Neighbourhood Checklist",desc:"Due diligence before making an offer on a home",tab:"Listings",icon:"🏘️",type:"Topic"},
+  {title:"Closing Timeline",desc:"From offer accepted to keys — what happens when",tab:"Lawyers",icon:"📅",type:"Topic"},
+];
+
+function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:string)=>void}){
+  const [query,setQuery]=useState("");
+  const inputRef=useRef<any>(null);
+
+  useEffect(()=>{
+    setTimeout(()=>inputRef.current?.focus(),100);
+    const handler=(e:KeyboardEvent)=>{if(e.key==="Escape")onClose();};
+    window.addEventListener("keydown",handler);
+    return()=>window.removeEventListener("keydown",handler);
+  },[]);
+
+  const results=query.trim().length<2?[]:SEARCH_INDEX.filter(item=>
+    item.title.toLowerCase().includes(query.toLowerCase())||
+    item.desc.toLowerCase().includes(query.toLowerCase())
+  ).slice(0,8);
+
+  const typeColor:{[k:string]:string}={Tab:s.navy,Calculator:s.green,Topic:s.blue};
+
+  return(
+    <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.7)",zIndex:99999,display:"flex",alignItems:"flex-start",justifyContent:"center",padding:"60px 16px 16px"}} onClick={onClose}>
+      <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:560,overflow:"hidden",boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}} onClick={e=>e.stopPropagation()}>
+        {/* Search input */}
+        <div style={{display:"flex",alignItems:"center",gap:10,padding:"14px 16px",borderBottom:`1px solid ${s.border}`}}>
+          <span style={{fontSize:18,flexShrink:0}}>🔍</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={query}
+            onChange={e=>setQuery(e.target.value)}
+            placeholder="Search rates, calculators, topics..."
+            style={{flex:1,border:"none",outline:"none",fontSize:15,color:s.navy,background:"transparent"}}
+          />
+          {query&&<button onClick={()=>setQuery("")} style={{background:"none",border:"none",color:s.muted,cursor:"pointer",fontSize:16,padding:0}}>✕</button>}
+          <button onClick={onClose} style={{background:"#f1f5f9",border:"none",color:s.muted,cursor:"pointer",fontSize:11,padding:"4px 8px",borderRadius:6}}>Esc</button>
+        </div>
+
+        {/* Results */}
+        <div style={{maxHeight:420,overflowY:"auto"}}>
+          {query.trim().length<2?(
+            <div>
+              <div style={{padding:"10px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>Quick Access</div>
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,padding:"0 12px 12px"}}>
+                {["Rates","Calculators","Renewal","Rate Finder","Listings","Lawyers","Realtors","Consult"].map(tab=>(
+                  <button key={tab} onClick={()=>onNavigate(tab)} style={{display:"flex",alignItems:"center",gap:8,padding:"8px 10px",borderRadius:8,border:`1px solid ${s.border}`,background:"#f8fafc",cursor:"pointer",fontSize:12,color:s.navy,fontWeight:600,textAlign:"left"}}>
+                    <span>{SEARCH_INDEX.find(i=>i.title===tab&&i.type==="Tab")?.icon||"📄"}</span>{tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ):results.length===0?(
+            <div style={{padding:"32px 16px",textAlign:"center",color:s.muted}}>
+              <div style={{fontSize:24,marginBottom:8}}>🔍</div>
+              <div style={{fontSize:14,fontWeight:600,color:s.navy,marginBottom:4}}>No results for "{query}"</div>
+              <div style={{fontSize:12}}>Try searching for "calculator", "rates", "FHSA", "renewal", or "lawyer"</div>
+            </div>
+          ):(
+            <div style={{padding:"8px 0"}}>
+              <div style={{padding:"4px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>{results.length} result{results.length>1?"s":""} for "{query}"</div>
+              {results.map((item,i)=>(
+                <button key={i} onClick={()=>onNavigate(item.tab)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 16px",width:"100%",border:"none",background:"none",cursor:"pointer",textAlign:"left",borderBottom:`1px solid ${s.light}`}}>
+                  <div style={{width:36,height:36,borderRadius:10,background:"#f1f5f9",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{item.icon}</div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:2}}>
+                      <span style={{fontSize:13,fontWeight:700,color:s.navy}}>{item.title}</span>
+                      <span style={{fontSize:9,fontWeight:700,color:typeColor[item.type]||s.muted,background:"#f1f5f9",borderRadius:20,padding:"1px 6px",flexShrink:0}}>{item.type}</span>
+                    </div>
+                    <div style={{fontSize:11,color:s.muted,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{item.desc}</div>
+                  </div>
+                  <div style={{fontSize:11,color:s.muted,flexShrink:0,background:"#f1f5f9",borderRadius:6,padding:"3px 8px"}}>{item.tab} →</div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div style={{padding:"8px 16px",borderTop:`1px solid ${s.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <div style={{fontSize:10,color:s.muted}}>Press <b>Esc</b> to close · Click result to navigate</div>
+          <div style={{fontSize:10,color:s.muted}}>{SEARCH_INDEX.length} items indexed</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
+  const [searchOpen,setSearchOpen]=useState(false);
   const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
@@ -521,7 +650,8 @@ function NavBar({active,setActive}){
             <span style={{color:s.gold,fontSize:28,fontWeight:800,lineHeight:1}}>›</span>
           </button>
         </div>
-        <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:8,flexShrink:0}}>
+        <button onClick={()=>setSearchOpen(true)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:4,flexShrink:0}} title="Search site">🔍</button>
+        <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:4,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
       </div>
@@ -538,6 +668,7 @@ function NavBar({active,setActive}){
           ))}
         </div>
       )}
+      {searchOpen&&<SiteSearch onClose={()=>setSearchOpen(false)} onNavigate={(tab)=>{setActive(tab);setSearchOpen(false);window.scrollTo({top:0,behavior:"smooth"});}}/>}
     </div>
   );
 }
@@ -1079,6 +1210,594 @@ function LegalModal({type,onClose}){
     </div>
   );
 }
+function RefiCalcTab(){
+  const [refiTab,setRefiTab]=useState<"calculator"|"penalty"|"blend"|"cashout"|"heloc"|"guide">("calculator");
+  // Calculator state
+  const [balance,setBalance]=useState(350000);
+  const [currentRate,setCurrentRate]=useState(5.5);
+  const [currentAmort,setCurrentAmort]=useState(20);
+  const [newRate,setNewRate]=useState(4.89);
+  const [newAmort,setNewAmort]=useState(20);
+  const [penalty,setPenalty]=useState(5000);
+  const [legalFees,setLegalFees]=useState(1500);
+  const [cashOutAmount,setCashOutAmount]=useState(0);
+  const [cashOutPurpose,setCashOutPurpose]=useState("none");
+  const [debtAmount,setDebtAmount]=useState(0);
+  const [debtRate,setDebtRate]=useState(19.99);
+  const [homeValue,setHomeValue]=useState(600000);
+  const [result,setResult]=useState<any>(null);
+  const resultRef=useRef<any>(null);
+  // Penalty estimator state
+  const [penBalance,setPenBalance]=useState(350000);
+  const [penRate,setPenRate]=useState(5.5);
+  const [penMonths,setPenMonths]=useState(24);
+  const [penType,setPenType]=useState("variable");
+  const [penPosted,setPenPosted]=useState(6.5);
+  const [penCurrentPosted,setPenCurrentPosted]=useState(5.5);
+  const [penResult,setPenResult]=useState<any>(null);
+  // Cash-out state
+  const [coHomeVal,setCoHomeVal]=useState(600000);
+  const [coBalance,setCoBalance]=useState(350000);
+  const [coRate,setCoRate]=useState(4.89);
+  const [coAmort,setCoAmort]=useState(20);
+  const [coResult,setCoResult]=useState<any>(null);
+
+  function calcPmt(p:number,r:number,y:number){const m=r/100/12,n=y*12;return m===0?p/n:p*(m*Math.pow(1+m,n))/(Math.pow(1+m,n)-1);}
+
+  function calculate(){
+    const ltvLimit=homeValue*0.80;
+    const maxCashOut=Math.max(0,ltvLimit-balance);
+    const actualCashOut=Math.min(cashOutAmount,maxCashOut);
+    const newBalance=balance+actualCashOut;
+    const currentPmt=calcPmt(balance,currentRate,currentAmort);
+    const newPmt=calcPmt(newBalance,newRate,newAmort);
+    const monthlySaving=currentPmt-newPmt;
+    const totalCost=penalty+legalFees;
+    const breakEvenMonths=monthlySaving>0?Math.ceil(totalCost/monthlySaving):null;
+    const fiveYearSaving=monthlySaving*60-totalCost;
+    const tenYearSaving=monthlySaving*120-totalCost;
+    const currentTotal=currentPmt*currentAmort*12;
+    const newTotal=newPmt*newAmort*12;
+    const lifetimeSaving=currentTotal-(newTotal+totalCost);
+    // Debt consolidation savings
+    const debtMonthlyInterest=debtAmount*debtRate/100/12;
+    const newDebtInterest=debtAmount*newRate/100/12;
+    const debtSaving=debtMonthlyInterest-newDebtInterest;
+    const rateDiff=currentRate-newRate;
+    const worthIt=breakEvenMonths!==null&&breakEvenMonths<=36;
+    const recommendation=rateDiff<0.5?"Marginal — rate difference under 0.5%":breakEvenMonths===null?"Not recommended — no monthly saving":breakEvenMonths<=18?"Strong case — break-even under 18 months":breakEvenMonths<=36?"Reasonable — break-even under 3 years":"Caution — break-even over 3 years";
+    setResult({currentPmt,newPmt,monthlySaving,totalCost,breakEvenMonths,fiveYearSaving,tenYearSaving,lifetimeSaving,worthIt,rateDiff,recommendation,actualCashOut,newBalance,maxCashOut,debtSaving,debtMonthlyInterest});
+    setTimeout(()=>resultRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
+  }
+
+  function calcPenalty(){
+    let pen=0;let method="";let breakdown:any[]=[];
+    if(penType==="variable"){
+      const monthly=penBalance*penRate/100/12;
+      pen=monthly*3;
+      method="3 Months Interest";
+      breakdown=[["Balance",cur(penBalance)],["Monthly Interest",cur(monthly)],["× 3 months",""],["Estimated Penalty",cur(pen)]];
+    }else{
+      const postedDiff=penPosted-penCurrentPosted;
+      const irdAnnual=penBalance*Math.max(0,postedDiff)/100;
+      const irdTotal=irdAnnual*(penMonths/12);
+      const threeMonths=penBalance*penRate/100/12*3;
+      pen=Math.max(irdTotal,threeMonths);
+      method=penType==="fixed_bank"?"IRD (Posted Rate Method — Bank)":"IRD (Fair Method — Credit Union)";
+      breakdown=[["Balance",cur(penBalance)],["Rate differential",`${postedDiff.toFixed(2)}%`],["Months remaining",penMonths+" mo"],["IRD estimate",cur(irdTotal)],["3-month interest",cur(threeMonths)],["Penalty (higher of two)",cur(pen)]];
+    }
+    setPenResult({penalty:pen,method,breakdown});
+  }
+
+  function calcCashOut(){
+    const ltvLimit=coHomeVal*0.80;
+    const equity=coHomeVal-coBalance;
+    const maxCash=Math.max(0,ltvLimit-coBalance);
+    const newBalance=coBalance+maxCash;
+    const newPmt=calcPmt(newBalance,coRate,coAmort);
+    setCoResult({ltvLimit,equity,maxCash,newBalance,newPmt});
+  }
+
+  return(
+    <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        {[["calculator","💳 Should I Refi?"],["penalty","⚖️ Penalty Estimator"],["blend","🔀 Blend & Extend"],["cashout","💵 Cash-Out"],["heloc","🔄 Refi vs HELOC"],["guide","📋 Full Guide"]].map(([id,label])=>(
+          <button key={id} onClick={()=>setRefiTab(id as any)} style={{flex:1,minWidth:100,padding:"9px 8px",borderRadius:8,border:`2px solid ${refiTab===id?s.navy:s.border}`,background:refiTab===id?s.navy:s.white,color:refiTab===id?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>{label}</button>
+        ))}
+      </div>
+
+      {/* Sub-tab 1: Calculator */}
+      {refiTab==="calculator"&&(
+      <div>
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:16,textAlign:"center"}}>
+          <div style={{fontSize:28,marginBottom:6}}>💳</div>
+          <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Refinancing Calculator</h2>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Should you break your mortgage early to get a lower rate? Find out if refinancing makes sense — and exactly when you break even.</p>
+        </div>
+        <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#92400e"}}>
+          ⚠️ <b>Important:</b> Refinancing means breaking your current mortgage before maturity. Get your lender's exact penalty amount before deciding.
+        </div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
+          <Card>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12}}>📊 Current Mortgage</h3>
+            <Field label="Home Value ($)"><input type="number" value={homeValue} onChange={e=>setHomeValue(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="Remaining Balance ($)"><input type="number" value={balance} onChange={e=>setBalance(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="Current Rate (%)"><input type="number" step="0.05" value={currentRate} onChange={e=>setCurrentRate(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="Remaining Amortization"><select value={currentAmort} onChange={e=>setCurrentAmort(parseInt(e.target.value))} style={inp}>{[5,10,15,20,25].map(y=><option key={y} value={y}>{y} years</option>)}</select></Field>
+
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12,marginTop:14}}>✨ New Mortgage Terms</h3>
+            <Field label="New Rate (%)"><input type="number" step="0.05" value={newRate} onChange={e=>setNewRate(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="New Amortization"><select value={newAmort} onChange={e=>setNewAmort(parseInt(e.target.value))} style={inp}>{[5,10,15,20,25].map(y=><option key={y} value={y}>{y} years</option>)}</select></Field>
+
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12,marginTop:14}}>💵 Cash-Out (Optional)</h3>
+            <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 10px",marginBottom:8,fontSize:10,color:"#15803d"}}>
+              Max available: <b>{cur(Math.max(0,(homeValue*0.80)-balance))}</b> (80% LTV limit)
+            </div>
+            <Field label="Cash-Out Amount ($)"><input type="number" value={cashOutAmount} onChange={e=>setCashOutAmount(parseFloat(e.target.value)||0)} placeholder="0 if rate change only" style={inp}/></Field>
+            {cashOutAmount>0&&(
+              <Field label="Purpose">
+                <select value={cashOutPurpose} onChange={e=>setCashOutPurpose(e.target.value)} style={inp}>
+                  <option value="none">Select purpose</option>
+                  <option value="renovation">Home Renovation</option>
+                  <option value="debt">Debt Consolidation</option>
+                  <option value="investment">Investment</option>
+                  <option value="education">Education</option>
+                  <option value="business">Business</option>
+                  <option value="other">Other</option>
+                </select>
+              </Field>
+            )}
+
+            {cashOutPurpose==="debt"&&cashOutAmount>0&&(
+              <>
+                <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:8,marginTop:10}}>💳 Debt Being Consolidated</h3>
+                <Field label="Total Debt Amount ($)"><input type="number" value={debtAmount} onChange={e=>setDebtAmount(parseFloat(e.target.value)||0)} style={inp}/></Field>
+                <Field label="Current Debt Interest Rate (%)"><input type="number" step="0.5" value={debtRate} onChange={e=>setDebtRate(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              </>
+            )}
+
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12,marginTop:14}}>💸 Refinancing Costs</h3>
+            <Field label="Break Penalty ($)"><input type="number" value={penalty} onChange={e=>setPenalty(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <div style={{fontSize:10,color:s.muted,marginBottom:8,marginTop:-4}}>
+              Variable: ~3 months interest. Fixed: IRD. <button onClick={()=>setRefiTab("penalty")} style={{background:"none",border:"none",color:s.blue,cursor:"pointer",fontSize:10,textDecoration:"underline",padding:0}}>Estimate penalty →</button>
+            </div>
+            <Field label="Legal & Admin Fees ($)"><input type="number" value={legalFees} onChange={e=>setLegalFees(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <button onClick={calculate} style={calcBtn}>Calculate Refinancing</button>
+          </Card>
+
+          <div ref={resultRef}>{result&&(
+            <div style={{display:"flex",flexDirection:"column",gap:12}}>
+              {/* Recommendation banner */}
+              <div style={{background:result.worthIt?`linear-gradient(135deg,${s.green},#15803d)`:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:12,padding:16}}>
+                <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:6}}>
+                  <span style={{fontSize:28}}>{result.worthIt?"✅":"⚠️"}</span>
+                  <div>
+                    <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{result.worthIt?"Refinancing Looks Worth It":"Proceed With Caution"}</div>
+                    <div style={{color:"rgba(255,255,255,0.8)",fontSize:11,marginTop:2}}>{result.recommendation}</div>
+                  </div>
+                </div>
+                {result.breakEvenMonths&&<div style={{background:"rgba(255,255,255,0.15)",borderRadius:8,padding:"6px 10px",fontSize:11,color:"#fff"}}>
+                  Break-even: <b>{result.breakEvenMonths} months</b> · Rate diff: <b>{result.rateDiff.toFixed(2)}%</b> · Rule of thumb: need 0.50%+
+                </div>}
+              </div>
+
+              {/* Key numbers */}
+              <Card>
+                <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📊 Payment Comparison</h3>
+                {([
+                  ["Current Payment",cur(result.currentPmt)+"/mo",s.muted],
+                  ["New Payment",cur(result.newPmt)+"/mo",result.newPmt<result.currentPmt?s.green:s.red],
+                  ["Monthly Change",`${result.monthlySaving>=0?"-":"+"}${cur(Math.abs(result.monthlySaving))}/mo`,result.monthlySaving>0?s.green:s.red],
+                  ...(result.actualCashOut>0?[["Cash-Out Amount",cur(result.actualCashOut),s.blue],["New Mortgage Balance",cur(result.newBalance),s.navy]]:[]),
+                  ["Total Refi Cost",cur(result.totalCost),s.red],
+                  ["Break-Even",result.breakEvenMonths?result.breakEvenMonths+" months":"No saving",result.breakEvenMonths&&result.breakEvenMonths<=36?s.green:s.red],
+                ] as [string,string,string][]).map(([l,v,c])=>(
+                  <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${s.light}`}}>
+                    <span style={{fontSize:11,color:s.muted}}>{l}</span>
+                    <span style={{fontSize:12,fontWeight:700,color:c}}>{v}</span>
+                  </div>
+                ))}
+              </Card>
+
+              {/* Savings over time */}
+              <Card style={{background:s.navy}}>
+                <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💰 Net Savings Over Time</h3>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:8,marginBottom:10}}>
+                  {[["5 Yrs",result.fiveYearSaving],["10 Yrs",result.tenYearSaving],["Full",result.lifetimeSaving]].map(([l,v])=>(
+                    <div key={l as string} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:8,textAlign:"center"}}>
+                      <div style={{fontSize:13,fontWeight:800,color:(v as number)>0?s.gold:"#f87171"}}>{(v as number)>0?`+${cur(v as number)}`:`-${cur(Math.abs(v as number))}`}</div>
+                      <div style={{fontSize:9,color:"rgba(255,255,255,0.5)",marginTop:2}}>{l}</div>
+                    </div>
+                  ))}
+                </div>
+                <div style={{fontSize:10,color:"rgba(255,255,255,0.4)"}}>After penalty & fees of {cur(result.totalCost)}</div>
+              </Card>
+
+              {/* Cash-out summary */}
+              {result.actualCashOut>0&&(
+                <Card style={{borderLeft:`4px solid ${s.green}`}}>
+                  <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:8}}>💵 Cash-Out Summary</h3>
+                  <div style={{display:"flex",justifyContent:"space-between",padding:"5px 0",fontSize:12}}>
+                    <span style={{color:s.muted}}>Cash received</span><span style={{fontWeight:700,color:s.green}}>{cur(result.actualCashOut)}</span>
+                  </div>
+                  <div style={{display:"flex",justifyContent:"space-between",padding:"5px 0",fontSize:12}}>
+                    <span style={{color:s.muted}}>Purpose</span><span style={{fontWeight:700,color:s.navy,textTransform:"capitalize"}}>{cashOutPurpose!=="none"?cashOutPurpose:"Not specified"}</span>
+                  </div>
+                  {cashOutPurpose==="debt"&&debtAmount>0&&result.debtSaving>0&&(
+                    <div style={{background:"#f0fdf4",borderRadius:8,padding:"8px 10px",marginTop:8,fontSize:11,color:"#15803d"}}>
+                      💡 Rolling {cur(debtAmount)} debt from {debtRate}% → {newRate}% saves <b>{cur(result.debtSaving)}/month</b> on interest alone
+                    </div>
+                  )}
+                  <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"6px 10px",marginTop:8,fontSize:10,color:"#92400e"}}>
+                    ⚠️ Cash-out increases your mortgage balance and total interest paid. Only use for investments with clear return.
+                  </div>
+                </Card>
+              )}
+
+              {/* Next steps */}
+              <Card style={{borderLeft:`4px solid ${s.gold}`}}>
+                <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:8}}>📋 Next Steps</h3>
+                {["Get your lender's exact break penalty in writing","Get 2–3 competing rate quotes via a mortgage broker","Consider blend-and-extend to avoid the full penalty","Check your prepayment privilege — use it before breaking"].map((step,i)=>(
+                  <div key={i} style={{display:"flex",gap:8,padding:"5px 0",fontSize:11,color:s.muted,borderBottom:`1px solid ${s.light}`}}>
+                    <span style={{color:s.gold,fontWeight:800,flexShrink:0}}>{i+1}.</span>{step}
+                  </div>
+                ))}
+              </Card>
+              <p style={{fontSize:10,color:"#bbb"}}>* Estimates only. Get your exact penalty from your lender. Consult a licensed mortgage professional.</p>
+            </div>
+          )}</div>
+        </div>
+      </div>
+      )}
+
+      {/* Sub-tab 2: IRD Penalty Estimator */}
+      {refiTab==="penalty"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>⚖️</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Break Penalty Estimator</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Estimate your mortgage break penalty before calling your lender. Variable and fixed calculations included.</p>
+          </div>
+          <div style={{background:"#fee2e2",border:"1px solid #fca5a5",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#dc2626"}}>
+            ⚠️ <b>This is an estimate only.</b> Fixed-rate IRD penalties vary significantly between lenders. Your bank's posted rate used for IRD can differ from the discount rate — always get the exact number from your lender in writing.
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
+            <Card>
+              <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>Enter Your Mortgage Details</h3>
+              <Field label="Mortgage Balance ($)"><input type="number" value={penBalance} onChange={e=>setPenBalance(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              <Field label="Your Current Rate (%)"><input type="number" step="0.05" value={penRate} onChange={e=>setPenRate(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              <Field label="Months Remaining in Term"><input type="number" value={penMonths} onChange={e=>setPenMonths(parseInt(e.target.value)||0)} style={inp}/></Field>
+              <Field label="Mortgage Type">
+                <select value={penType} onChange={e=>setPenType(e.target.value)} style={inp}>
+                  <option value="variable">Variable Rate</option>
+                  <option value="fixed_cu">Fixed — Credit Union / Monoline</option>
+                  <option value="fixed_bank">Fixed — Big 6 Bank</option>
+                </select>
+              </Field>
+              {penType!=="variable"&&<Field label="Posted Rate When You Got Mortgage (%)"><input type="number" step="0.05" value={penPosted} onChange={e=>setPenPosted(parseFloat(e.target.value)||0)} style={inp}/></Field>}
+              {penType!=="variable"&&<Field label="Current Posted Rate for Remaining Term (%)"><input type="number" step="0.05" value={penCurrentPosted} onChange={e=>setPenCurrentPosted(parseFloat(e.target.value)||0)} style={inp}/></Field>}
+              <button onClick={calcPenalty} style={calcBtn}>Estimate My Penalty</button>
+            </Card>
+            {penResult&&(
+              <div style={{display:"flex",flexDirection:"column",gap:12}}>
+                <Card style={{background:s.navy,textAlign:"center"}}>
+                  <div style={{fontSize:12,color:"rgba(255,255,255,0.6)",marginBottom:4}}>Estimated Break Penalty</div>
+                  <div style={{fontSize:36,fontWeight:800,color:s.gold,marginBottom:4}}>{cur(penResult.penalty)}</div>
+                  <div style={{fontSize:11,color:"rgba(255,255,255,0.6)"}}>Method: {penResult.method}</div>
+                </Card>
+                <Card>
+                  <h3 style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:10}}>📊 Calculation Breakdown</h3>
+                  {penResult.breakdown.map(([l,v]:any)=>(
+                    <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:11}}>
+                      <span style={{color:s.muted}}>{l}</span>
+                      <span style={{fontWeight:700,color:s.navy}}>{v}</span>
+                    </div>
+                  ))}
+                </Card>
+                <Card style={{background:"#fffbeb",border:"1px solid #fde68a"}}>
+                  <h3 style={{fontSize:12,fontWeight:800,color:"#92400e",marginBottom:6}}>💡 How to Reduce Your Penalty</h3>
+                  {["Make your maximum annual prepayment (10–20%) before breaking — this reduces the balance the penalty is calculated on","Ask your lender about a blend-and-extend option — may avoid the full penalty","Wait until your renewal date — no penalty at maturity","Port your mortgage to a new property if you're moving"].map((tip,i)=>(
+                    <div key={i} style={{fontSize:11,color:"#92400e",padding:"3px 0",display:"flex",gap:6}}><span>•</span>{tip}</div>
+                  ))}
+                </Card>
+              </div>
+            )}
+          </div>
+          <Card style={{marginTop:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📚 Variable vs Fixed Penalty — Explained</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+              {[
+                {type:"Variable Rate",penalty:"3 Months Interest",formula:"Balance × Rate ÷ 12 × 3",example:"$400K at 4.5% = ~$4,500",color:s.green,note:"Simple, predictable, rarely exceeds $5,000"},
+                {type:"Fixed — Credit Union / Monoline",penalty:"IRD (fair calculation)",formula:"(Your rate − today's rate for remaining term) × balance × years remaining",example:"More reasonable than big banks",color:s.blue,note:"Uses your actual discount rate, not posted rate"},
+                {type:"Fixed — Big 6 Bank",penalty:"IRD (posted rate method)",formula:"(Posted rate at signing − current posted rate) × balance × years remaining",example:"Can reach $15,000–$40,000+",color:s.red,note:"Uses inflated posted rates — can be 3–5× higher than credit union IRD"},
+              ].map(p=>(
+                <div key={p.type} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${p.color}`}}>
+                  <div style={{fontSize:12,fontWeight:800,color:p.color,marginBottom:4}}>{p.type}</div>
+                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:3}}>Penalty: {p.penalty}</div>
+                  <div style={{fontSize:10,color:s.muted,marginBottom:5}}>{p.formula}</div>
+                  <div style={{fontSize:11,color:"#374151",marginBottom:5,fontStyle:"italic"}}>{p.example}</div>
+                  <div style={{fontSize:10,background:"#fff",borderRadius:6,padding:"4px 8px",color:p.color,fontWeight:600}}>{p.note}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Sub-tab 3: Blend & Extend */}
+      {refiTab==="blend"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,#7c3aed,#6d28d9)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>🔀</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Blend & Extend — The Hidden Option</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Most lenders offer a way to get a lower rate without paying the full break penalty. Most Canadians don't know it exists.</p>
+          </div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:8}}>What is Blend & Extend?</h3>
+            <p style={{fontSize:12,color:s.muted,lineHeight:1.7,marginBottom:10}}>A blend-and-extend lets you "blend" your current rate with today's lower rate into a new blended rate — without paying a full break penalty. In exchange, you extend your term (usually to 5 years).</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10,marginBottom:12}}>
+              {[
+                {title:"How Your New Rate is Calculated",desc:"Weighted average of your current rate and today's rate, based on time remaining vs new term length. You won't get today's best rate — but you'll get something between your current rate and today's rate.",icon:"🧮"},
+                {title:"The Tradeoff",desc:"You avoid the break penalty but you're locked in for another full term (usually 5 years). If rates drop further, you're stuck. If rates rise, you're protected.",icon:"⚖️"},
+                {title:"Who Offers It",desc:"Most major banks and many credit unions offer blend-and-extend. Not all lenders do — ask specifically. Some call it 'blend-to-term' or 'early renewal'.",icon:"🏦"},
+                {title:"When It Makes Sense",desc:"Best when: your current rate is significantly above today's rates, you want to avoid a large penalty, and you're comfortable with another 5-year commitment.",icon:"✅"},
+              ].map(item=>(
+                <div key={item.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:20,marginBottom:6}}>{item.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{item.title}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📊 Blend & Extend vs Full Refinancing — Example</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:10}}>$400,000 mortgage · Current rate 5.5% · 2 years remaining · Today's rate 4.89%</p>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+                <thead><tr style={{background:"#f8fafc"}}>{["Option","New Rate","Break Penalty","Monthly Saving","Best For"].map(h=><th key={h} style={{padding:"8px 10px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    {opt:"Do Nothing",rate:"5.50%",pen:"$0",saving:"$0",best:"If renewal is less than 6 months away",color:s.muted},
+                    {opt:"Blend & Extend",rate:"~5.15%",pen:"$0–500",saving:"~$80/mo",best:"Avoid penalty, get some savings now",color:"#7c3aed"},
+                    {opt:"Full Refinance",rate:"4.89%",pen:"~$8,000",saving:"~$165/mo",best:"Maximum savings, break-even ~4 years",color:s.green},
+                    {opt:"Wait for Renewal",rate:"4.89%",pen:"$0",saving:"~$165/mo",best:"Best if renewal is within 4–6 months",color:s.blue},
+                  ].map((row,i)=>(
+                    <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                      <td style={{padding:"9px 10px",fontSize:12,fontWeight:700,color:row.color}}>{row.opt}</td>
+                      <td style={{padding:"9px 10px",fontSize:12,color:s.navy}}>{row.rate}</td>
+                      <td style={{padding:"9px 10px",fontSize:12,color:s.muted}}>{row.pen}</td>
+                      <td style={{padding:"9px 10px",fontSize:12,fontWeight:700,color:s.green}}>{row.saving}</td>
+                      <td style={{padding:"9px 10px",fontSize:11,color:s.muted}}>{row.best}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+          <Card style={{background:"#f5f3ff",border:"1px solid #ddd6fe"}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#6d28d9",marginBottom:8}}>💬 What to Ask Your Lender</h3>
+            {[`"Do you offer a blend-and-extend or early renewal option?"`,`"What blended rate would I qualify for if I extend to a 5-year term today?"`,`"What would the full break penalty be if I refinanced instead?"`,`"Can I see the calculation in writing before I decide?"`].map((q,i)=>(
+              <div key={i} style={{background:"#fff",borderRadius:8,padding:"8px 12px",marginBottom:6,fontSize:12,color:"#4c1d95",fontStyle:"italic",border:"1px solid #ddd6fe"}}>{q}</div>
+            ))}
+          </Card>
+        </div>
+      )}
+
+      {/* Sub-tab 4: Cash-Out Refinancing */}
+      {refiTab==="cashout"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.green},#15803d)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>💵</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Cash-Out Refinancing</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Access your home equity by refinancing for more than you owe. Calculate how much you can take out.</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14,marginBottom:14}}>
+            <Card>
+              <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>💵 Cash-Out Calculator</h3>
+              <Field label="Current Home Value ($)"><input type="number" value={coHomeVal} onChange={e=>setCoHomeVal(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              <Field label="Current Mortgage Balance ($)"><input type="number" value={coBalance} onChange={e=>setCoBalance(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              <Field label="New Rate (%)"><input type="number" step="0.05" value={coRate} onChange={e=>setCoRate(parseFloat(e.target.value)||0)} style={inp}/></Field>
+              <Field label="New Amortization"><select value={coAmort} onChange={e=>setCoAmort(parseInt(e.target.value))} style={inp}>{[10,15,20,25].map(y=><option key={y} value={y}>{y} years</option>)}</select></Field>
+              <button onClick={calcCashOut} style={calcBtn}>Calculate Cash Available</button>
+            </Card>
+            {coResult&&(
+              <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                <Card style={{background:s.green,textAlign:"center"}}>
+                  <div style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:3}}>Maximum Cash You Can Access</div>
+                  <div style={{fontSize:36,fontWeight:800,color:"#fff",marginBottom:3}}>{cur(coResult.maxCash)}</div>
+                  <div style={{fontSize:10,color:"rgba(255,255,255,0.7)"}}>Based on 80% LTV limit</div>
+                </Card>
+                {[
+                  ["Home Value",cur(coHomeVal)],
+                  ["80% LTV Limit",cur(coResult.ltvLimit)],
+                  ["Current Balance",cur(coBalance)],
+                  ["Available Equity",cur(coResult.equity)],
+                  ["Max Cash-Out",cur(coResult.maxCash)],
+                  ["New Mortgage Balance",cur(coResult.newBalance)],
+                  ["New Monthly Payment",cur(coResult.newPmt)+"/mo"],
+                ].map(([l,v])=>(
+                  <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:12}}>
+                    <span style={{color:s.muted}}>{l}</span>
+                    <span style={{fontWeight:700,color:s.navy}}>{v}</span>
+                  </div>
+                ))}
+                <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e"}}>
+                  ⚠️ Increasing your mortgage balance means more interest paid over time. Only cash-out for investments with higher returns than your mortgage rate.
+                </div>
+              </div>
+            )}
+          </div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>✅ Good vs ❌ Bad Reasons to Cash Out</h3>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              <div>
+                <div style={{fontSize:11,fontWeight:700,color:s.green,marginBottom:8}}>✅ Generally Good Uses</div>
+                {["Home renovations that increase property value","Debt consolidation (high-interest credit cards)","Investment property down payment","Education (if ROI is clear)","Emergency fund establishment","Starting a business (with clear plan)"].map(item=>(
+                  <div key={item} style={{fontSize:11,color:"#374151",padding:"4px 0",borderBottom:`1px solid ${s.light}`,display:"flex",gap:6}}><span style={{color:s.green,flexShrink:0}}>✓</span>{item}</div>
+                ))}
+              </div>
+              <div>
+                <div style={{fontSize:11,fontWeight:700,color:s.red,marginBottom:8}}>❌ Generally Bad Uses</div>
+                {["Vacations or luxury purchases","Buying a depreciating asset (new car)","Covering everyday living expenses","Gambling or speculation","Paying off mortgage penalties on another property","No clear plan for the funds"].map(item=>(
+                  <div key={item} style={{fontSize:11,color:"#374151",padding:"4px 0",borderBottom:`1px solid ${s.light}`,display:"flex",gap:6}}><span style={{color:s.red,flexShrink:0}}>✗</span>{item}</div>
+                ))}
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Sub-tab 5: Refi vs HELOC */}
+      {refiTab==="heloc"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,#0891b2,#0e7490)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>🔄</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Refinancing vs HELOC</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Two ways to access your home equity — which is right for you?</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:14}}>
+            <Card style={{borderTop:`4px solid ${s.navy}`}}>
+              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💳 Cash-Out Refinancing</h3>
+              {[["Rate","Your mortgage rate (currently ~4.89% fixed)"],["Access","Lump sum — get all money upfront"],["Flexibility","Fixed payment, structured repayment"],["Cost","Break penalty + legal fees (~$6,500–$10,000+)"],["Credit Impact","Full mortgage application required"],["Best For","Large, one-time expenses (renovation, investment)"]].map(([l,v])=>(
+                <div key={l} style={{padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:11}}>
+                  <div style={{fontWeight:700,color:s.navy,marginBottom:1}}>{l}</div>
+                  <div style={{color:s.muted}}>{v}</div>
+                </div>
+              ))}
+              <div style={{background:"#eff6ff",borderRadius:6,padding:"6px 10px",marginTop:10,fontSize:11,color:"#1e40af"}}>Best when: you want the lowest possible rate and need all funds at once.</div>
+            </Card>
+            <Card style={{borderTop:`4px solid #0891b2`}}>
+              <h3 style={{fontSize:14,fontWeight:800,color:"#0891b2",marginBottom:10}}>🏦 HELOC</h3>
+              {[["Rate","Prime + 0.5% (currently ~4.95% variable)"],["Access","Revolving credit — draw as needed"],["Flexibility","Interest-only payments available"],["Cost","$500–$1,500 setup; no break penalty"],["Credit Impact","Mortgage application required once"],["Best For","Ongoing expenses (renovations over time, emergency fund)"]].map(([l,v])=>(
+                <div key={l} style={{padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:11}}>
+                  <div style={{fontWeight:700,color:s.navy,marginBottom:1}}>{l}</div>
+                  <div style={{color:s.muted}}>{v}</div>
+                </div>
+              ))}
+              <div style={{background:"#ecfeff",borderRadius:6,padding:"6px 10px",marginTop:10,fontSize:11,color:"#0e7490"}}>Best when: you need flexible access to funds over time, not all at once.</div>
+            </Card>
+          </div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🤔 Which Should You Choose?</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+              {[
+                {q:"I need all the money now for a specific expense",a:"Cash-Out Refinancing — lower rate, structured repayment"},
+                {q:"I need money over time (e.g. ongoing renovation)",a:"HELOC — draw what you need, when you need it"},
+                {q:"I want the lowest possible interest rate",a:"Cash-Out Refinancing — mortgage rates are lower than HELOC rates"},
+                {q:"I don't want to pay a break penalty",a:"HELOC — set up at renewal, no penalty"},
+                {q:"I want an emergency fund I can access anytime",a:"HELOC — revolving credit, only pay interest when you draw"},
+                {q:"I'm worried about variable rate risk",a:"Cash-Out Refinancing — fixed rate gives payment certainty"},
+              ].map(({q,a})=>(
+                <div key={q} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:5}}>📋 {q}</div>
+                  <div style={{fontSize:11,color:s.muted}}>→ {a}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.navy,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📞 Get Free Advice on the Best Option for You →</button>
+        </div>
+      )}
+
+      {/* Sub-tab 6: Full Refinancing Guide */}
+      {refiTab==="guide"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>📋</div>
+            <h2 style={{color:s.navy,fontSize:18,fontWeight:800,marginBottom:6}}>Complete Refinancing Guide</h2>
+            <p style={{color:"rgba(0,0,0,0.6)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Step-by-step from "I'm thinking about refinancing" to money in hand — including all reasons Canadians refinance.</p>
+          </div>
+
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏠 Why Do Canadians Refinance?</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {reason:"Access Home Equity",pct:"#1 Reason",desc:"Home appreciated. Refinance for more than you owe, receive cash — for renovations, investments, debt payoff, education, or business.",icon:"💵",color:s.green},
+                {reason:"Get a Lower Rate",pct:"#2 Reason",desc:"Rates dropped. Break mortgage early, pay penalty, save more in interest than the penalty costs over the remaining term.",icon:"📉",color:s.blue},
+                {reason:"Consolidate Debt",pct:"#3 Reason",desc:"Roll credit cards (19–29%) and car loans into your mortgage at 4–5%. Lowers monthly cash flow significantly.",icon:"💳",color:"#7c3aed"},
+                {reason:"Change Amortization",pct:"#4 Reason",desc:"Extend to lower payments or shorten to pay off faster. Can only be changed via a full refinance application.",icon:"📅",color:s.gold},
+                {reason:"Switch Lender",pct:"#5 Reason",desc:"Move for better rates, fairer penalties, or service. Free at renewal — mid-term requires paying break penalty.",icon:"🔄",color:s.navy},
+                {reason:"Remove from Title",pct:"Other",desc:"Divorce, separation, or death of co-signer. Requires new mortgage application to remove someone from the mortgage.",icon:"📝",color:s.muted},
+              ].map(r=>(
+                <div key={r.reason} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${r.color}`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                    <span style={{fontSize:20}}>{r.icon}</span>
+                    <div><div style={{fontSize:12,fontWeight:800,color:s.navy}}>{r.reason}</div><div style={{fontSize:9,fontWeight:700,color:r.color,background:"#f1f5f9",borderRadius:20,padding:"1px 6px",display:"inline-block"}}>{r.pct}</div></div>
+                  </div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{r.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🗺️ Step-by-Step Refinancing Process</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:14}}>From first thought to funds in your account — typically 3–6 weeks.</p>
+            <div style={{position:"relative"}}>
+              <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.gold},${s.green})`,borderRadius:2}}/>
+              {[
+                {title:"Define Your Goal",time:"Day 1",desc:"Be clear on WHY you're refinancing — lower rate, equity access, debt consolidation, or amortization change. Your goal determines your strategy.",urgent:false,icon:"🎯"},
+                {title:"Know Your Numbers",time:"Day 1–2",desc:"Get your current mortgage balance from your lender. Get your home's estimated value (Zolo, Realtor.ca, or agent). Equity = Value − Balance.",urgent:false,icon:"🔢"},
+                {title:"Get Your Break Penalty",time:"Day 2–3",desc:"Call your lender: 'What is my current mortgage break penalty?' Get it in writing. This single number determines if refinancing makes financial sense.",urgent:true,icon:"⚖️"},
+                {title:"Shop for New Rates",time:"Day 3–7",desc:"Contact a mortgage broker — they compare 30+ lenders. Get rate holds (120 days) from at least 3 lenders before committing.",urgent:false,icon:"🔍"},
+                {title:"Run the Numbers",time:"Day 5–7",desc:"Use our 💳 Should I Refi? calculator. Enter penalty, new rate, fees. Break-even under 36 months = usually worth it.",urgent:false,icon:"🧮"},
+                {title:"Consider Alternatives",time:"Day 5–7",desc:"Ask about blend-and-extend (no penalty), HELOC (equity without changing mortgage), or waiting for renewal (if maturity is within 4–6 months).",urgent:false,icon:"🔀"},
+                {title:"Submit Application",time:"Week 2",desc:"Choose your lender and apply. Need: T4s, NOAs, pay stubs, current mortgage statement, ID. Lender orders property appraisal ($300–$500).",urgent:false,icon:"📋"},
+                {title:"Appraisal",time:"Week 2–3",desc:"Lender orders independent appraisal to confirm home value. For cash-out: they lend up to 80% of appraised value — not your estimate.",urgent:false,icon:"🏠"},
+                {title:"Mortgage Approval",time:"Week 3–4",desc:"Lender issues commitment letter. Review carefully: rate, amortization, prepayment privileges, IRD penalty method. Sign within deadline.",urgent:false,icon:"✅"},
+                {title:"Lawyer & Closing",time:"Week 4–6",desc:"Real estate lawyer discharges old mortgage, registers new one. You pay: break penalty + legal fees ($1,000–$1,500) + discharge fee ($200–$400).",urgent:false,icon:"⚖️"},
+                {title:"Funds Released",time:"Closing Day",desc:"For cash-out refinancing, lawyer releases equity funds after paying old mortgage. Money typically arrives within 1–3 business days.",urgent:false,icon:"💵"},
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:16,marginBottom:12,paddingLeft:8}}>
+                  <div style={{width:22,height:22,borderRadius:"50%",background:item.urgent?s.red:s.navy,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10}}>{item.icon}</div>
+                  <div style={{flex:1,background:item.urgent?"#fff5f5":"#f8fafc",borderRadius:10,padding:"10px 14px",border:`1px solid ${item.urgent?"#fed7d7":s.border}`}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                      <span style={{fontSize:10,fontWeight:700,color:item.urgent?s.red:s.muted,background:item.urgent?"#fee2e2":"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{item.time}</span>
+                      <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</span>
+                      {item.urgent&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>CRITICAL</span>}
+                    </div>
+                    <div style={{fontSize:11,color:s.muted,lineHeight:1.7}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card style={{marginBottom:14,background:s.navy}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:"#fff",marginBottom:10}}>💰 Typical Refinancing Costs</h3>
+            {[
+              ["Break Penalty","Variable: ~$3K–$5K · Fixed bank: $5K–$40K · Fixed CU: $2K–$10K","Biggest variable — get exact from lender"],
+              ["Legal Fees","$1,000–$1,500","Real estate lawyer"],
+              ["Appraisal","$300–$500","Required by new lender"],
+              ["Discharge Fee","$200–$400","Current lender charges to release mortgage"],
+              ["Title Insurance","$200–$300","May be required by new lender"],
+              ["Total","$2,000–$43,000+","Dominated by the break penalty"],
+            ].map(([l,v,note],i)=>(
+              <div key={l} style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",padding:"8px 0",borderBottom:i<5?`1px solid rgba(255,255,255,0.1)`:"none",gap:8}}>
+                <div><div style={{fontSize:12,fontWeight:700,color:"#fff"}}>{l}</div><div style={{fontSize:10,color:"rgba(255,255,255,0.5)"}}>{note}</div></div>
+                <div style={{fontSize:12,fontWeight:i===5?800:600,color:i===5?s.gold:"rgba(255,255,255,0.8)",textAlign:"right",flexShrink:0}}>{v}</div>
+              </div>
+            ))}
+          </Card>
+
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.red}`}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>❓ Key Questions Before You Refinance</h3>
+            {["What is my exact break penalty today? (Call lender — get in writing)","What is my home's current market value?","How much equity do I have? (Value − Balance)","What is the lowest rate I qualify for today? (Get 3 quotes)","What is my break-even point? (Penalty ÷ Monthly saving)","Is my renewal date within 6 months? (If yes, consider waiting)","What are the penalty terms on the NEW mortgage?","Do I have prepayment privileges I can use first? (Reduces penalty base)"].map((q,i)=>(
+              <div key={i} style={{display:"flex",gap:8,padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:11,color:s.muted}}>
+                <span style={{color:s.red,flexShrink:0,fontWeight:700}}>{i+1}.</span>{q}
+              </div>
+            ))}
+          </Card>
+
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Get a Free Refinancing Consultation →</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CalcTab({prov}:{prov:string}){
   const [tab,setTab]=useState("payment");
   const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
@@ -1091,7 +1810,7 @@ function CalcTab({prov}:{prov:string}){
 
   function scrollAfter(ref:any,fn:()=>void){fn();setTimeout(()=>ref.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);}
   const freqs=[{id:"monthly",label:"📅 Monthly"},{id:"semimonthly",label:"📅 Semi-Monthly"},{id:"biweekly",label:"📅 Bi-Weekly"},{id:"accelerated",label:"⚡ Accel. Bi-Wkly"}];
-  const tabList=[{id:"payment",label:"💰 Payment"},{id:"afford",label:"🏡 Affordability"},{id:"rentvbuy",label:"🏠 Rent vs Buy"},{id:"renewal",label:"🔄 Renewal"},{id:"stress",label:"📋 Stress Test"},{id:"amort",label:"📅 Amortization"},{id:"closing",label:"🏷️ Closing Costs"},{id:"docs",label:"📁 Doc Checklist"}];
+  const tabList=[{id:"payment",label:"💰 Payment"},{id:"afford",label:"🏡 Affordability"},{id:"rentvbuy",label:"🏠 Rent vs Buy"},{id:"renewal",label:"🔄 Renewal"},{id:"stress",label:"📋 Stress Test"},{id:"amort",label:"📅 Amortization"},{id:"closing",label:"🏷️ Closing Costs"},{id:"docs",label:"📁 Doc Checklist"},{id:"refi",label:"💳 Refinancing"}];
 
   function doPayment(){
     const down=Math.round(hp*dp/100);
@@ -1634,6 +2353,7 @@ function CalcTab({prov}:{prov:string}){
       {tab==="amort"&&<AmortTab/>}
       {tab==="closing"&&<ClosingCostTab prov={prov}/>}
       {tab==="docs"&&<DocChecklistTab/>}
+      {tab==="refi"&&<RefiCalcTab/>}
     </div>
   );
 }
