@@ -1798,6 +1798,43 @@ function RefiCalcTab(){
   );
 }
 
+function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"}){
+  const banners:{[k:string]:any[]}={
+    rates:[
+      {label:"📊 Compare Live Rates",desc:"See current rates from 20+ lenders",tab:"Rates",bg:s.navy,color:"#fff"},
+      {label:"🔍 Find My Rate",desc:"Get a personalized rate estimate",tab:"Rate Finder",bg:s.blue,color:"#fff"},
+    ],
+    renewal:[
+      {label:"🔄 Compare Your Renewal",desc:"See the full renewal guide & negotiation script",tab:"Renewal",bg:s.navy,color:"#fff"},
+      {label:"📊 Compare Rates Now",desc:"See if you can do better than your lender's offer",tab:"Rates",bg:s.gold,color:s.navy},
+    ],
+    refi:[
+      {label:"⚖️ Find a Real Estate Lawyer",desc:"Need help closing your refinance? Find a lawyer",tab:"Lawyers",bg:s.navy,color:"#fff"},
+      {label:"📞 Free Consultation",desc:"Get personalized refinancing advice",tab:"Consult",bg:s.red,color:"#fff"},
+      {label:"📊 Compare Rates",desc:"Find the best new rate before you refinance",tab:"Rates",bg:s.green,color:"#fff"},
+    ],
+    closing:[
+      {label:"⚖️ Find a Real Estate Lawyer",desc:"A lawyer handles your closing — find one here",tab:"Lawyers",bg:s.navy,color:"#fff"},
+      {label:"🤝 Find a Realtor",desc:"Still looking for a home?",tab:"Realtors",bg:s.green,color:"#fff"},
+    ],
+    consult:[
+      {label:"📞 Book a Free Consultation",desc:"Get personalized mortgage advice",tab:"Consult",bg:s.red,color:"#fff"},
+      {label:"🔍 Find My Rate",desc:"Get a personalized rate estimate in 5 questions",tab:"Rate Finder",bg:s.navy,color:"#fff"},
+    ],
+  };
+  const items=banners[type]||[];
+  return(
+    <div style={{display:"grid",gridTemplateColumns:`repeat(${items.length},1fr)`,gap:10,marginTop:16}}>
+      {items.map((b,i)=>(
+        <button key={i} onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:b.tab}))} style={{background:b.bg,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+          <div style={{color:b.color,fontSize:13,fontWeight:800,marginBottom:3}}>{b.label}</div>
+          <div style={{color:b.color,fontSize:11,opacity:0.8}}>{b.desc} →</div>
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function CalcTab({prov}:{prov:string}){
   const [tab,setTab]=useState("payment");
   const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
@@ -1810,7 +1847,7 @@ function CalcTab({prov}:{prov:string}){
 
   function scrollAfter(ref:any,fn:()=>void){fn();setTimeout(()=>ref.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);}
   const freqs=[{id:"monthly",label:"📅 Monthly"},{id:"semimonthly",label:"📅 Semi-Monthly"},{id:"biweekly",label:"📅 Bi-Weekly"},{id:"accelerated",label:"⚡ Accel. Bi-Wkly"}];
-  const tabList=[{id:"payment",label:"💰 Payment"},{id:"afford",label:"🏡 Affordability"},{id:"rentvbuy",label:"🏠 Rent vs Buy"},{id:"renewal",label:"🔄 Renewal"},{id:"stress",label:"📋 Stress Test"},{id:"amort",label:"📅 Amortization"},{id:"closing",label:"🏷️ Closing Costs"},{id:"docs",label:"📁 Doc Checklist"},{id:"refi",label:"💳 Refinancing"}];
+  const tabList=[{id:"payment",label:"💰 Payment"},{id:"afford",label:"🏡 Affordability"},{id:"stress",label:"📋 Stress Test"},{id:"renewal",label:"🔄 Renewal"},{id:"refi",label:"💳 Refinancing"},{id:"amort",label:"📅 Amortization"},{id:"closing",label:"🏷️ Closing Costs"},{id:"docs",label:"📁 Doc Checklist"},{id:"rentvbuy",label:"🏠 Rent vs Buy"}];
 
   function doPayment(){
     const down=Math.round(hp*dp/100);
@@ -2024,6 +2061,7 @@ function CalcTab({prov}:{prov:string}){
           )}
         </div>
       )}
+      {tab==="payment"&&<CalcBanners type="rates"/>}
 
       {tab==="afford"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
@@ -2128,6 +2166,7 @@ function CalcTab({prov}:{prov:string}){
           </Card>
         </div>
       )}
+      {tab==="afford"&&<CalcBanners type="rates"/>}
 
       {tab==="rentvbuy"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
@@ -2350,10 +2389,12 @@ function CalcTab({prov}:{prov:string}){
           </Card>
         </div>
       )}
-      {tab==="amort"&&<AmortTab/>}
-      {tab==="closing"&&<ClosingCostTab prov={prov}/>}
-      {tab==="docs"&&<DocChecklistTab/>}
-      {tab==="refi"&&<RefiCalcTab/>}
+      {tab==="stress"&&<CalcBanners type="rates"/>}
+      {tab==="renewal"&&tab!=="renewal"&&null}
+      {tab==="amort"&&<><AmortTab/><CalcBanners type="rates"/></>}
+      {tab==="closing"&&<><ClosingCostTab prov={prov}/><CalcBanners type="closing"/></>}
+      {tab==="docs"&&<><DocChecklistTab/><CalcBanners type="consult"/></>}
+      {tab==="refi"&&<><RefiCalcTab/><CalcBanners type="refi"/></>}
     </div>
   );
 }
