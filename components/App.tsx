@@ -2876,7 +2876,7 @@ function InsuranceTab({initProv}){
           </div>
           <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Actual premiums vary by insurer and risk profile.</p>
         </div>
-      )}
+      )}</div>
       </Card>
       )}
 
