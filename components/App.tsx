@@ -1862,7 +1862,7 @@ function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"})
 
 function CalcTab({prov}:{prov:string}){
   const [tab,setTab]=useState("payment");
-  const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
+  const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [rateType,setRateType]=useState<"fixed"|"variable">("fixed");const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
   const [inc,setInc]=useState(90000);const [inc2,setInc2]=useState(0);const [dbt,setDbt]=useState(500);const [ad,setAd]=useState(20);const [aa,setAa]=useState(25);const [ar,setAr]=useState(5.0);const [condoFeeA,setCondoFeeA]=useState(0);const [affR,setAffR]=useState(null);const affRef=useRef(null);
   const [rent,setRent]=useState(2000);const [rentInc,setRentInc]=useState(3);const [rp,setRp]=useState(500000);const [rd,setRd]=useState(20);const [rr,setRr]=useState(5.0);const [ry,setRy]=useState(10);const [rapr,setRapr]=useState(3);const [rvbR,setRvbR]=useState(null);const rvbRef=useRef(null);
   const [rb,setRb]=useState(350000);const [ro,setRo]=useState(5.5);const [rn,setRn]=useState(4.8);const [rma,setRma]=useState(20);const [rt,setRt]=useState(5);const [renewR,setRenewR]=useState(null);const renewRef=useRef(null);
@@ -2007,6 +2007,14 @@ function CalcTab({prov}:{prov:string}){
                 <p style={{fontSize:11,color:s.muted,marginBottom:12}}>See your true monthly housing cost — not just the mortgage payment.</p>
                 <Field label="Home Price ($)"><input type="number" value={hp} onChange={e=>setHp(parseFloat(e.target.value)||0)} style={inp}/></Field>
                 <Field label="Down Payment (%)"><input type="number" value={dp} onChange={e=>setDp(parseFloat(e.target.value)||0)} style={inp}/></Field>
+                <Field label="Interest Rate Type">
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                    <button onClick={()=>{setRateType("fixed");setPr(4.89);}} style={{padding:"8px",border:`2px solid ${rateType==="fixed"?s.navy:s.border}`,borderRadius:8,background:rateType==="fixed"?s.navy:s.white,color:rateType==="fixed"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📅 Fixed</button>
+                    <button onClick={()=>{setRateType("variable");setPr(3.35);}} style={{padding:"8px",border:`2px solid ${rateType==="variable"?s.green:s.border}`,borderRadius:8,background:rateType==="variable"?s.green:s.white,color:rateType==="variable"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📉 Variable</button>
+                  </div>
+                </Field>
+                {rateType==="variable"&&<div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"6px 10px",marginBottom:8,fontSize:10,color:"#15803d"}}>💡 Variable rate set to current prime −1.10% (3.35%). Your rate moves with the Bank of Canada.</div>}
+                {rateType==="fixed"&&<div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"6px 10px",marginBottom:8,fontSize:10,color:"#1e40af"}}>💡 Fixed rate set to current 5-year average (4.89%). Your rate is locked for the term.</div>}
                 <Field label="Interest Rate (%)"><input type="number" step={0.05} value={pr} onChange={e=>setPr(parseFloat(e.target.value)||0)} style={inp}/></Field>
                 <Field label="Amortization"><select value={am} onChange={e=>setAm(parseInt(e.target.value))} style={inp}><option value={15}>15 years</option><option value={20}>20 years</option><option value={25}>25 years</option><option value={30}>30 years</option></select></Field>
                 <Field label="Monthly Condo Fee ($)"><input type="number" value={condoFeeP} onChange={e=>setCondoFeeP(parseFloat(e.target.value)||0)} style={inp} placeholder="0 if not a condo"/></Field>
@@ -2017,7 +2025,7 @@ function CalcTab({prov}:{prov:string}){
                     <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:10,padding:14,marginBottom:10,color:"#fff"}}>
                       <div style={{fontSize:10,color:"rgba(255,255,255,0.7)",marginBottom:2}}>{(payR as any).fr==="monthly"?"Monthly":(payR as any).fr==="semimonthly"?"Semi-Monthly":(payR as any).fr==="biweekly"?"Bi-Weekly":"Accelerated Bi-Weekly"} Mortgage Payment</div>
                       <div style={{fontSize:34,fontWeight:800,marginBottom:2}}>{cur((payR as any).fpmt)}</div>
-                      <div style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>{(payR as any).am} year amortization · {(payR as any).pr}% rate</div>
+                      <div style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>{(payR as any).am} year amortization · {(payR as any).pr}% {rateType} rate</div>
                     </div>
                     <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:12,marginBottom:10}}>
                       <div style={{fontSize:11,fontWeight:700,color:"#c2410c",marginBottom:8}}>🏠 True Monthly Housing Cost (PITH)</div>
@@ -2098,6 +2106,12 @@ function CalcTab({prov}:{prov:string}){
             <Field label="Monthly Debt Payments ($)"><input type="number" value={dbt} onChange={e=>setDbt(parseFloat(e.target.value)||0)} style={inp} placeholder="Car, student loans, credit cards"/></Field>
             <Field label="Monthly Condo Fee ($)"><input type="number" value={condoFeeA} onChange={e=>setCondoFeeA(parseFloat(e.target.value)||0)} style={inp} placeholder="0 if not a condo"/></Field>
             <Field label="Down Payment (%)"><input type="number" value={ad} onChange={e=>setAd(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="Rate Type">
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                <button onClick={()=>setAr(4.89)} style={{padding:"7px",border:`2px solid ${ar===4.89?s.navy:s.border}`,borderRadius:8,background:ar===4.89?s.navy:s.white,color:ar===4.89?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📅 Fixed (4.89%)</button>
+                <button onClick={()=>setAr(3.35)} style={{padding:"7px",border:`2px solid ${ar===3.35?s.green:s.border}`,borderRadius:8,background:ar===3.35?s.green:s.white,color:ar===3.35?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📉 Variable (3.35%)</button>
+              </div>
+            </Field>
             <Field label="Interest Rate (%)"><input type="number" step={0.05} value={ar} onChange={e=>setAr(parseFloat(e.target.value)||0)} style={inp}/></Field>
             <Field label="Amortization"><select value={aa} onChange={e=>setAa(parseInt(e.target.value))} style={inp}><option value={25}>25 years</option><option value={20}>20 years</option><option value={15}>15 years</option><option value={30}>30 years (new builds)</option></select></Field>
             <button onClick={doAfford} style={calcBtn}>Calculate Maximum Purchase Price</button>
@@ -2261,6 +2275,12 @@ function CalcTab({prov}:{prov:string}){
             <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Compare staying vs switching — including IRD penalty and break-even analysis.</p>
             <Field label="Remaining Balance ($)"><input type="number" value={rb} onChange={e=>setRb(parseFloat(e.target.value)||0)} style={inp}/></Field>
             <Field label="Current Rate (%)"><input type="number" step={0.05} value={ro} onChange={e=>setRo(parseFloat(e.target.value)||0)} style={inp}/></Field>
+            <Field label="New Rate Type">
+              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+                <button onClick={()=>setRn(4.89)} style={{padding:"7px",border:`2px solid ${rn===4.89?s.navy:s.border}`,borderRadius:8,background:rn===4.89?s.navy:s.white,color:rn===4.89?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📅 Fixed (4.89%)</button>
+                <button onClick={()=>setRn(3.35)} style={{padding:"7px",border:`2px solid ${rn===3.35?s.green:s.border}`,borderRadius:8,background:rn===3.35?s.green:s.white,color:rn===3.35?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📉 Variable (3.35%)</button>
+              </div>
+            </Field>
             <Field label="New Rate Offered (%)"><input type="number" step={0.05} value={rn} onChange={e=>setRn(parseFloat(e.target.value)||0)} style={inp}/></Field>
             <Field label="Remaining Amortization (years)"><input type="number" value={rma} onChange={e=>setRma(parseFloat(e.target.value)||0)} style={inp}/></Field>
             <Field label="New Term"><select value={rt} onChange={e=>setRt(parseInt(e.target.value))} style={inp}><option value={1}>1 year</option><option value={2}>2 years</option><option value={3}>3 years</option><option value={5}>5 years</option></select></Field>
@@ -2463,6 +2483,12 @@ function AmortTab(){
           <h3 style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:12}}>📅 Amortization Schedule</h3>
           <Field label="Home Price ($)"><input type="number" value={ahp} onChange={e=>setAhp(parseFloat(e.target.value)||0)} style={inp}/></Field>
           <Field label="Down Payment (%)"><input type="number" value={adp} onChange={e=>setAdp(parseFloat(e.target.value)||0)} style={inp}/></Field>
+          <Field label="Rate Type">
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+              <button onClick={()=>setAr2(4.89)} style={{padding:"7px",border:`2px solid ${ar2===4.89?s.navy:s.border}`,borderRadius:8,background:ar2===4.89?s.navy:s.white,color:ar2===4.89?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📅 Fixed (4.89%)</button>
+              <button onClick={()=>setAr2(3.35)} style={{padding:"7px",border:`2px solid ${ar2===3.35?s.green:s.border}`,borderRadius:8,background:ar2===3.35?s.green:s.white,color:ar2===3.35?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📉 Variable (3.35%)</button>
+            </div>
+          </Field>
           <Field label="Interest Rate (%)"><input type="number" step="0.05" value={ar2} onChange={e=>setAr2(parseFloat(e.target.value)||0)} style={inp}/></Field>
           <Field label="Amortization"><select value={aam} onChange={e=>setAam(parseInt(e.target.value))} style={inp}><option value={10}>10 years</option><option value={15}>15 years</option><option value={20}>20 years</option><option value={25}>25 years</option><option value={30}>30 years</option></select></Field>
           <button onClick={calcAmort} style={calcBtn}>Generate Schedule</button>
