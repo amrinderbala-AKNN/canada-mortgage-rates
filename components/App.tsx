@@ -159,7 +159,24 @@ const PT_RATES={
   QC:{Montreal:{res:0.00767,edu:0.00189},"Quebec City":{res:0.01036,edu:0.00189},Laval:{res:0.00812,edu:0.00189},Gatineau:{res:0.01089,edu:0.00189},Longueuil:{res:0.00934,edu:0.00189},Sherbrooke:{res:0.01178,edu:0.00189},Saguenay:{res:0.01234,edu:0.00189},"Trois-Rivières":{res:0.01156,edu:0.00189},def:{res:0.009,edu:0.00189}},
   SK:{Saskatoon:{res:0.00612,edu:0.00345},Regina:{res:0.00678,edu:0.00345},"Prince Albert":{res:0.00812,edu:0.00345},"Moose Jaw":{res:0.00756,edu:0.00345},"Swift Current":{res:0.00734,edu:0.00345},Yorkton:{res:0.00789,edu:0.00345},"North Battleford":{res:0.00845,edu:0.00345},def:{res:0.0066,edu:0.00345}}
 };
-const INS_PROVIDERS=[{name:"Intact Insurance",stars:"★★★★★",desc:"Canada's largest insurer. Fast claims and comprehensive coverage.",discount:"Bundle with auto: save 15%",mult:1.12,url:"https://www.intact.net"},{name:"TD Insurance",stars:"★★★★☆",desc:"Great for TD banking customers. Strong digital experience.",discount:"TD customer discount available",mult:0.88,url:"https://www.tdinsurance.com"},{name:"Aviva Canada",stars:"★★★★☆",desc:"Flexible coverage with strong claims support.",discount:"New home discount: 10%",mult:1.05,url:"https://www.avivacanada.com"},{name:"Desjardins Insurance",stars:"★★★★★",desc:"Top choice in Quebec and Ontario. Excellent claims service.",discount:"Claim-free discount: 20%",mult:0.79,url:"https://www.desjardinsgeneralinsurance.com"},{name:"Wawanesa Insurance",stars:"★★★★☆",desc:"Competitive Canadian-owned insurer with strong reputation.",discount:"Loyalty discount after 3 years",mult:0.93,url:"https://www.wawanesa.com"},{name:"Co-operators",stars:"★★★★☆",desc:"Co-operative insurer with competitive rates across Canada.",discount:"Multi-policy discount: 12%",mult:0.97,url:"https://www.cooperators.ca"},{name:"Economical Insurance",stars:"★★★★☆",desc:"One of Canada's oldest insurers with broad coverage options.",discount:"New customer discount: 8%",mult:0.91,url:"https://www.economical.com"},{name:"Gore Mutual",stars:"★★★★☆",desc:"Strong presence in Ontario and BC with personalized service.",discount:"Claims-free discount available",mult:0.95,url:"https://www.goremutual.ca"},{name:"Pembridge Insurance",stars:"★★★☆☆",desc:"Affordable option for budget-conscious homeowners.",discount:"Online quote discount: 5%",mult:0.84,url:"https://www.pembridge.com"},{name:"SGI Canada",stars:"★★★★☆",desc:"Strong in Saskatchewan and western Canada.",discount:"Multi-line discount: 10%",mult:0.90,url:"https://www.sgicanada.ca"},{name:"Northbridge Insurance",stars:"★★★★☆",desc:"Comprehensive coverage with flexible deductible options.",discount:"New home discount: 12%",mult:1.02,url:"https://www.northbridgeinsurance.ca"},{name:"Belairdirect",stars:"★★★★☆",desc:"Online-first insurer with competitive pricing and fast quotes.",discount:"Online purchase discount: 10%",mult:0.86,url:"https://www.belairdirect.com"},{name:"La Capitale",stars:"★★★★☆",desc:"Quebec-based insurer with strong local presence and service.",discount:"Loyalty discount: 10%",mult:0.83,url:"https://www.lacapitale.com"},{name:"BCAA Insurance",stars:"★★★★☆",desc:"BC's most trusted insurer, backed by the BC Automobile Association.",discount:"BCAA member discount: 20%",mult:0.89,url:"https://www.bcaa.com/insurance/home"}];
+const INS_PROVIDERS=[
+  {name:"Square One Insurance",stars:"★★★★★",desc:"Canada's best online home insurance. Instant quotes, flexible coverage, condo and renters specialists.",discount:"Online quote: instant approval",mult:0.82,url:"https://www.squareoneinsurance.ca/get-a-quote",provinces:[]},
+  {name:"Intact Insurance",stars:"★★★★★",desc:"Canada's largest home insurer. Fast claims, comprehensive coverage, all provinces.",discount:"Bundle with auto: save 15%",mult:1.12,url:"https://www.intact.net/en/personal-insurance/home-insurance/get-a-quote.aspx",provinces:[]},
+  {name:"TD Insurance",stars:"★★★★☆",desc:"Great for TD banking customers. Strong digital experience and online quotes.",discount:"TD customer discount available",mult:0.88,url:"https://www.tdinsurance.com/products-services/home-insurance/quote",provinces:[]},
+  {name:"Aviva Canada",stars:"★★★★☆",desc:"Flexible coverage with strong claims support across Canada.",discount:"New home discount: 10%",mult:1.05,url:"https://www.avivacanada.com/get-a-quote",provinces:[]},
+  {name:"Desjardins Insurance",stars:"★★★★★",desc:"Top choice in Quebec and Ontario. Excellent claims service.",discount:"Claim-free discount: 20%",mult:0.79,url:"https://www.desjardinsgeneralinsurance.com/en/home-insurance",provinces:["QC","ON"]},
+  {name:"Wawanesa Insurance",stars:"★★★★☆",desc:"Competitive Canadian-owned insurer with strong reputation in western Canada.",discount:"Loyalty discount after 3 years",mult:0.93,url:"https://www.wawanesa.com/canada/insurance/home-insurance",provinces:["MB","SK","AB","BC","ON"]},
+  {name:"Co-operators",stars:"★★★★☆",desc:"Co-operative insurer with competitive rates across Canada.",discount:"Multi-policy discount: 12%",mult:0.97,url:"https://www.cooperators.ca/en/Insurance/Property/Home.aspx",provinces:[]},
+  {name:"Economical Insurance",stars:"★★★★☆",desc:"One of Canada's oldest insurers with broad coverage options.",discount:"New customer discount: 8%",mult:0.91,url:"https://www.economical.com/en/personal/home-insurance",provinces:[]},
+  {name:"SGI Canada",stars:"★★★★☆",desc:"Saskatchewan's trusted insurer. Strong coverage for prairies homeowners.",discount:"Multi-line discount: 10%",mult:0.90,url:"https://www.sgicanada.ca/insurance/home-insurance",provinces:["SK","MB","AB"]},
+  {name:"Gore Mutual",stars:"★★★★☆",desc:"Strong presence in Ontario and BC with personalized service.",discount:"Claims-free discount available",mult:0.95,url:"https://www.goremutual.ca/personal-insurance/home-insurance",provinces:["ON","BC"]},
+  {name:"Pembridge Insurance",stars:"★★★☆☆",desc:"Affordable option for budget-conscious Ontario homeowners.",discount:"Online quote discount: 5%",mult:0.84,url:"https://www.pembridge.com/home-insurance",provinces:["ON","NS","NB","PE","NL"]},
+  {name:"Belairdirect",stars:"★★★★☆",desc:"Online-first insurer with competitive pricing and fast quotes.",discount:"Online purchase discount: 10%",mult:0.86,url:"https://www.belairdirect.com/en/home-insurance/get-a-quote",provinces:["ON","QC","AB","NS","NB"]},
+  {name:"La Capitale",stars:"★★★★☆",desc:"Quebec-based insurer with strong local presence and service.",discount:"Loyalty discount: 10%",mult:0.83,url:"https://www.lacapitale.com/en/insurance/home",provinces:["QC"]},
+  {name:"BCAA Insurance",stars:"★★★★☆",desc:"BC's most trusted insurer, backed by the BC Automobile Association.",discount:"BCAA member discount: 20%",mult:0.89,url:"https://www.bcaa.com/insurance/home",provinces:["BC"]},
+  {name:"Northbridge Insurance",stars:"★★★★☆",desc:"Comprehensive coverage with flexible deductible options.",discount:"New home discount: 12%",mult:1.02,url:"https://www.northbridgeinsurance.ca/personal-insurance/home-insurance",provinces:["ON","AB","BC"]},
+  {name:"Rates.ca",stars:"★★★★★",desc:"Compare quotes from 30+ Canadian insurers in one place. Find the lowest rate instantly.",discount:"Compare all providers at once",mult:0.80,url:"https://rates.ca/home-insurance",provinces:[]},
+];
 const INS_BASE={AB:0.42,BC:0.52,MB:0.38,NB:0.35,NL:0.36,NS:0.37,ON:0.48,PE:0.32,QC:0.28,SK:0.36};
 const TYPE_MULT={detached:1.0,semi:0.82,condo:0.38,townhouse:0.72};
 const YEAR_MULT={new:0.82,mid:1.0,old:1.32};
@@ -2754,8 +2771,37 @@ function PropertyTaxTab({initProv,initCity}){
   );
 }
 
+const INSURANCE_FAQS=[
+  {q:"Is home insurance mandatory in Canada?",a:"Not legally — but practically yes. Every mortgage lender requires proof of home insurance before closing. Without it, your mortgage will not be approved and your closing will be delayed or cancelled. Even if you own your home outright, insurance is strongly recommended to protect your most valuable asset."},
+  {q:"Does home insurance cover flooding?",a:"Standard policies do NOT cover overland flooding (water coming from outside). You need a separate flood coverage rider, typically $100–$300/year extra. Sewer backup is also excluded from standard policies. With extreme weather increasing across Canada, both riders are now strongly recommended."},
+  {q:"How much home insurance do I need?",a:"Your dwelling coverage should equal the full replacement cost of your home — what it would cost to rebuild from scratch at today's construction prices, not the market value. Reconstruction costs are typically 20–40% lower than market value in most Canadian cities, but higher in BC and Ontario."},
+  {q:"Can I insure a rental property?",a:"Yes, but you need a landlord policy, not a standard homeowner policy. Landlord insurance covers the structure, liability if a tenant is injured, and loss of rental income if the property becomes uninhabitable. Standard home insurance will not cover a property you rent to others."},
+  {q:"What if I work from home?",a:"Declare it to your insurer. Standard policies have limited or no coverage for business equipment or business liability. If you have clients visit your home, you definitely need a home business endorsement. Failing to disclose a home business can void your claim."},
+  {q:"What is the lender named as 'loss payee' mean?",a:"Your mortgage lender requires you to list them as the 'loss payee' on your home insurance policy. This means if your home is destroyed, insurance proceeds go to the lender first to pay off the mortgage, then any remaining funds go to you. Your insurer can add this designation with a simple phone call."},
+  {q:"How do I know if I'm underinsured?",a:"Calculate your home's replacement cost — not market value. A licensed appraiser or your insurer can do a reconstruction cost estimate. Signs you may be underinsured: your coverage limit is close to your purchase price, you've renovated without updating your policy, or your policy is more than 2 years old without review."},
+  {q:"Can I cancel home insurance anytime?",a:"Yes, you can cancel at any time. However, if you have a mortgage, allowing your insurance to lapse is a mortgage default — your lender will be notified and may force-place insurance on your behalf at a much higher rate. Always have replacement insurance in place before cancelling."},
+];
+
+function InsuranceFAQ(){
+  const [open,setOpen]=useState<string|null>(null);
+  return(
+    <>
+      {INSURANCE_FAQS.map((f,i)=>(
+        <div key={i} style={{borderBottom:`1px solid ${s.light}`}}>
+          <button onClick={()=>setOpen(open===String(i)?null:String(i))} style={{width:"100%",textAlign:"left",padding:"11px 0",background:"none",border:"none",cursor:"pointer",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+            <span style={{fontSize:12,fontWeight:700,color:s.navy,lineHeight:1.4}}>{f.q}</span>
+            <span style={{fontSize:16,color:s.muted,flexShrink:0,transform:open===String(i)?"rotate(180deg)":"none",transition:"transform 0.2s"}}>▾</span>
+          </button>
+          {open===String(i)&&<div style={{fontSize:12,color:s.muted,lineHeight:1.8,paddingBottom:12}}>{f.a}</div>}
+        </div>
+      ))}
+    </>
+  );
+}
+
 function InsuranceTab({initProv}){
   const [homeVal,setHomeVal]=useState(500000);const [homeType,setHomeType]=useState("detached");const [yearBuilt,setYearBuilt]=useState("mid");const [prov,setProv]=useState(initProv);const [city,setCity]=useState(PDATA[initProv]?.cities[0]||"");const [results,setResults]=useState(null);const resultRef=useRef(null);
+  const [insTab,setInsTab]=useState<"quote"|"coverage"|"deductible"|"claims"|"guide">("quote");
   useEffect(()=>{setProv(initProv);setCity(PDATA[initProv]?.cities[0]||"");},[initProv]);
   useEffect(()=>{setCity(PDATA[prov]?.cities[0]||"");},[prov]);
 
@@ -2789,7 +2835,7 @@ function InsuranceTab({initProv}){
   };
 
   const providerNames=PROV_PROVIDERS[prov]||INS_PROVIDERS.map(p=>p.name);
-  const filteredProviders=INS_PROVIDERS.filter(p=>providerNames.includes(p.name));
+  const filteredProviders=INS_PROVIDERS.filter(p=>p.provinces.length===0||p.provinces.includes(prov)).filter(p=>providerNames.includes(p.name)||p.name==="Square One Insurance"||p.name==="Rates.ca");
 
   function calc(){
     const base=(INS_BASE[prov]||0.13)*(TYPE_MULT[homeType]||1)*(YEAR_MULT[yearBuilt]||1);
@@ -2798,8 +2844,20 @@ function InsuranceTab({initProv}){
     setResults(filteredProviders.map(p=>({...p,annual:Math.round(baseAnnual*p.mult/100)*100})).sort((a,b)=>a.annual-b.annual));
     setTimeout(()=>resultRef.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);
   }
+
   return(
-    <Card>
+    <div>
+      {/* Sub-tab buttons */}
+      <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setInsTab("quote")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${insTab==="quote"?s.navy:s.border}`,background:insTab==="quote"?s.navy:s.white,color:insTab==="quote"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏠 Get Quotes</button>
+        <button onClick={()=>setInsTab("coverage")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${insTab==="coverage"?s.navy:s.border}`,background:insTab==="coverage"?s.navy:s.white,color:insTab==="coverage"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🛡️ What's Covered</button>
+        <button onClick={()=>setInsTab("deductible")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${insTab==="deductible"?s.navy:s.border}`,background:insTab==="deductible"?s.navy:s.white,color:insTab==="deductible"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💰 Deductible</button>
+        <button onClick={()=>setInsTab("claims")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${insTab==="claims"?s.red:s.border}`,background:insTab==="claims"?s.red:s.white,color:insTab==="claims"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🚨 Claims</button>
+        <button onClick={()=>setInsTab("guide")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${insTab==="guide"?s.gold:s.border}`,background:insTab==="guide"?s.gold:s.white,color:insTab==="guide"?s.navy:s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📖 Guide</button>
+      </div>
+
+      {insTab==="quote"&&(
+      <Card>
       <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:5}}>🏠 Home Insurance Estimator</h2>
       <p style={{fontSize:12,color:s.muted,marginBottom:14}}>Required by all mortgage lenders — compare top Canadian home insurance providers.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:10,marginBottom:12}}>
@@ -2814,12 +2872,18 @@ function InsuranceTab({initProv}){
         <div style={{marginTop:14}}>
           <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 14px",marginBottom:12,fontSize:11,color:"#15803d"}}>✅ Sorted lowest to highest — {filteredProviders.length} providers available in {PDATA[prov]?.name}</div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:12}}>
-            {results.map((p,i)=><div key={p.name} style={{border:`1px solid ${i===0?"#bbf7d0":s.border}`,borderRadius:10,padding:13,background:i===0?"#f0fdf4":s.white}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:7}}><div style={{fontSize:13,fontWeight:800,color:s.navy}}>{p.name}</div><div style={{color:s.gold,fontSize:11}}>{p.stars}</div></div>{i===0&&<div style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,display:"inline-block",marginBottom:6}}>⭐ Best Price</div>}<div style={{fontSize:18,fontWeight:800,color:i===0?"#15803d":s.navy}}>{cur(p.annual)}/yr</div><div style={{fontSize:11,color:s.muted,marginBottom:7}}>{cur(Math.round(p.annual/12))}/month</div><div style={{background:"#f0fdf4",borderRadius:6,padding:"5px 9px",fontSize:11,color:"#15803d",fontWeight:600,marginBottom:7}}>💡 {p.discount}</div><div style={{fontSize:11,color:s.muted,marginBottom:9,lineHeight:1.5}}>{p.desc}</div><a href={p.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:8,background:i===0?"#15803d":s.navy,color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none"}}>Get Real Quote →</a></div>)}
+            {results.map((p,i)=><div key={p.name} style={{border:`1px solid ${i===0?"#bbf7d0":s.border}`,borderRadius:10,padding:13,background:i===0?"#f0fdf4":s.white}}><div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:7}}><div style={{fontSize:13,fontWeight:800,color:s.navy}}>{p.name}</div><div style={{color:s.gold,fontSize:11}}>{p.stars}</div></div>{i===0&&<div style={{background:"#dcfce7",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700,display:"inline-block",marginBottom:6}}>⭐ Best Price</div>}<div style={{fontSize:18,fontWeight:800,color:i===0?"#15803d":s.navy}}>{cur(p.annual)}/yr</div><div style={{fontSize:11,color:s.muted,marginBottom:7}}>{cur(Math.round(p.annual/12))}/month</div><div style={{background:"#f0fdf4",borderRadius:6,padding:"5px 9px",fontSize:11,color:"#15803d",fontWeight:600,marginBottom:7}}>💡 {p.discount}</div><div style={{fontSize:11,color:s.muted,marginBottom:9,lineHeight:1.5}}>{p.desc}</div><a href={p.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:8,background:i===0?"#15803d":p.name==="Rates.ca"?s.gold:s.navy,color:p.name==="Rates.ca"?s.navy:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none"}}>{p.name==="Rates.ca"?"Compare All Providers →":"Get Real Quote →"}</a></div>)}
           </div>
           <p style={{fontSize:10,color:"#bbb",marginTop:10}}>* Estimates only. Actual premiums vary by insurer and risk profile.</p>
+        </div>
+      )}
+      </Card>
+      )}
 
+      {insTab==="coverage"&&(
+      <div>
           {/* Coverage Types Explainer */}
-          <div style={{marginTop:14}}>
+          <div style={{marginTop:0}}>
             <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🛡️ What Does Home Insurance Actually Cover?</h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:12}}>
               {[
@@ -2842,9 +2906,13 @@ function InsuranceTab({initProv}){
               ⚠️ <b>Critical for Canadian homeowners:</b> Standard home insurance does NOT cover overland flooding (water coming in from outside) or sewer backup. With increasing extreme weather events in Canada, these riders are strongly recommended. Ask your insurer about adding them — typically $100–$300/year extra.
             </div>
           </div>
+      </div>
+      )}
 
+      {insTab==="deductible"&&(
+      <div>
           {/* Deductible Impact Calculator */}
-          <div style={{marginTop:14,background:s.navy,borderRadius:12,padding:16}}>
+          <div style={{marginTop:0,background:s.navy,borderRadius:12,padding:16}}>
             <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:4}}>💰 Deductible Impact Calculator</h3>
             <p style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:12}}>Your deductible is what you pay out-of-pocket when you make a claim. Higher deductible = lower premium. See the tradeoff:</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:8}}>
@@ -2854,7 +2922,7 @@ function InsuranceTab({initProv}){
                 {ded:"$2,500",mult:0.85,label:"Higher savings"},
                 {ded:"$5,000",mult:0.72,label:"Max savings"},
               ].map((d,i)=>{
-                const baseAmt=(results as any[])[0]?.annual||1800;
+                const baseAmt=(results as any[])?.[0]?.annual||1800;
                 const adj=Math.round(baseAmt*d.mult/100)*100;
                 const saving=Math.round(baseAmt*1.15/100)*100-adj;
                 return(
@@ -2870,9 +2938,16 @@ function InsuranceTab({initProv}){
             </div>
             <div style={{fontSize:10,color:"rgba(255,255,255,0.4)",marginTop:10}}>💡 Rule of thumb: If you can afford the higher deductible out of pocket, take it. You'll save more in premiums over time than you'll pay in claims.</div>
           </div>
+          <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:"10px 16px",marginTop:14,fontSize:11,color:"#1e40af"}}>
+            💡 <b>Tip:</b> Run the estimator in the Get Quotes tab first to get your base premium, then come back here to see how your deductible choice affects the final cost.
+          </div>
+      </div>
+      )}
 
+      {insTab==="claims"&&(
+      <div>
           {/* Claims Guide */}
-          <Card style={{marginTop:14,borderLeft:`4px solid ${s.red}`}}>
+          <Card style={{marginTop:0,borderLeft:`4px solid ${s.red}`}}>
             <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:4}}>🚨 What to Do After a Home Insurance Claim</h3>
             <p style={{fontSize:11,color:s.muted,marginBottom:12}}>The first 24 hours after damage are critical. Most claim mistakes happen here.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
@@ -2897,9 +2972,136 @@ function InsuranceTab({initProv}){
               💡 <b>Pro tip:</b> Never admit fault or agree to a settlement amount on the spot. Review the adjuster's estimate carefully — you can dispute it or hire a public adjuster if you disagree.
             </div>
           </Card>
-        </div>
-      )}</div>
-    </Card>
+      </div>
+      )}
+
+      {insTab==="guide"&&(
+      <div>
+        {/* Province cost comparison */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Average Home Insurance Cost by Province — 2026</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Premiums are rising across Canada — <cite index="25-1">average premiums increased 8.6% year-over-year as of Q1 2026</cite>, driven by severe weather events. Here's what homeowners pay by province:</p>
+          <div style={{overflowX:"auto"}}>
+            <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+              <thead><tr style={{background:"#f8fafc"}}>{["Province","Avg Annual Premium","YoY Change","Notes"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+              <tbody>
+                {[
+                  {p:"British Columbia",avg:"$924",change:"+9.1%",note:"Wildfire and earthquake risk drives premiums",color:s.red},
+                  {p:"Alberta",avg:"$1,200",change:"+16.2%",note:"Highest increase in Canada — hail and flooding",color:s.red},
+                  {p:"Ontario",avg:"$1,350",change:"+6.2%",note:"High claims density in GTA area",color:"#f59e0b"},
+                  {p:"Quebec",avg:"$768",change:"+4.1%",note:"Lowest in Canada — fewer severe weather events",color:s.green},
+                  {p:"Manitoba",avg:"$950",change:"+7.8%",note:"Flooding risk in low-lying areas",color:"#f59e0b"},
+                  {p:"Saskatchewan",avg:"$880",change:"+8.2%",note:"Hail risk in summer months",color:"#f59e0b"},
+                  {p:"Nova Scotia",avg:"$1,050",change:"+9.5%",note:"Hurricane and wind exposure on coast",color:s.red},
+                  {p:"New Brunswick",avg:"$920",change:"+7.2%",note:"Moderate risk profile",color:"#f59e0b"},
+                  {p:"PEI",avg:"$890",change:"+6.8%",note:"Wind and coastal storm risk",color:"#f59e0b"},
+                  {p:"Newfoundland",avg:"$1,100",change:"+8.9%",note:"Wind, ice, and remote location factors",color:s.red},
+                ].map((row,i)=>(
+                  <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                    <td style={{padding:"9px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.p}</td>
+                    <td style={{padding:"9px 12px",fontSize:13,fontWeight:800,color:s.navy}}>{row.avg}</td>
+                    <td style={{padding:"9px 12px",fontSize:12,fontWeight:700,color:row.color}}>{row.change}</td>
+                    <td style={{padding:"9px 12px",fontSize:11,color:s.muted}}>{row.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p style={{fontSize:10,color:"#bbb",marginTop:8}}>* Estimates based on industry data. Your actual premium depends on home value, location, coverage type, and claims history.</p>
+        </Card>
+
+        {/* How to lower your premium */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💰 How to Lower Your Home Insurance Premium</h3>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+            {[
+              {tip:"Bundle Home + Auto",saving:"Save 10–25%",desc:"Most insurers offer significant discounts when you combine home and auto insurance. Easiest way to reduce your premium.",icon:"🚗"},
+              {tip:"Increase Your Deductible",saving:"Save 10–20%",desc:"Moving from $500 to $2,500 deductible can cut your premium significantly. Only do this if you can afford the deductible out of pocket.",icon:"💰"},
+              {tip:"Claims-Free Discount",saving:"Save 10–20%",desc:"Going years without a claim earns discounts with most insurers. Think twice before filing small claims — they can raise your premium.",icon:"🏆"},
+              {tip:"Install Monitored Alarm",saving:"Save 5–15%",desc:"A monitored security or fire alarm system reduces risk. Show proof of monitoring to your insurer to qualify.",icon:"🔒"},
+              {tip:"New Home Discount",saving:"Save 5–20%",desc:"Homes built after 2010 often qualify for lower premiums due to modern building codes and electrical systems.",icon:"🏠"},
+              {tip:"Shop Around Annually",saving:"Save up to 40%",desc:"Loyalty doesn't pay in insurance. Comparing quotes every year at renewal is the single biggest way to save money.",icon:"🔍"},
+              {tip:"Mortgage-Free Discount",saving:"Save 5–10%",desc:"Some insurers discount premiums once your mortgage is paid off — you're seen as a lower risk.",icon:"📋"},
+              {tip:"Pay Annually",saving:"Save 3–5%",desc:"Paying your full premium upfront rather than monthly avoids instalment fees charged by most insurers.",icon:"📅"},
+            ].map(item=>(
+              <div key={item.tip} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
+                  <span style={{fontSize:18}}>{item.icon}</span>
+                  <div>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.tip}</div>
+                    <div style={{fontSize:10,fontWeight:700,color:s.green}}>{item.saving}</div>
+                  </div>
+                </div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Mortgage vs Home Insurance explainer */}
+        <Card style={{marginBottom:14,borderLeft:`4px solid ${s.blue}`}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏦 Mortgage Insurance vs Home Insurance — What's the Difference?</h3>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+            <div style={{background:"#eff6ff",borderRadius:10,padding:12,border:"1px solid #bfdbfe"}}>
+              <div style={{fontSize:13,fontWeight:800,color:"#1e40af",marginBottom:8}}>🏦 CMHC Mortgage Insurance</div>
+              {[["What it is","Protects the LENDER if you default on your mortgage"],["Who needs it","Anyone with less than 20% down payment"],["Cost","2.80%–4.00% of mortgage amount added to your loan"],["Who pays","You — but it protects the lender, not you"],["Required by","Federal law for insured mortgages"],["Covers","Lender's loss if you stop paying your mortgage"]].map(([l,v])=>(
+                <div key={l} style={{display:"flex",gap:8,padding:"4px 0",borderBottom:"1px solid rgba(30,64,175,0.1)",fontSize:11}}>
+                  <span style={{fontWeight:700,color:"#1e40af",flexShrink:0,minWidth:90}}>{l}</span>
+                  <span style={{color:"#1e40af"}}>{v}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#f0fdf4",borderRadius:10,padding:12,border:"1px solid #bbf7d0"}}>
+              <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:8}}>🏠 Home Insurance</div>
+              {[["What it is","Protects YOUR home and belongings from damage or loss"],["Who needs it","All homeowners — required by mortgage lenders"],["Cost","$768–$1,350/year depending on province and home"],["Who pays","You — and it actually protects YOU"],["Required by","Your mortgage lender as a condition of the loan"],["Covers","Fire, theft, liability, weather damage, and more"]].map(([l,v])=>(
+                <div key={l} style={{display:"flex",gap:8,padding:"4px 0",borderBottom:"1px solid rgba(21,128,61,0.1)",fontSize:11}}>
+                  <span style={{fontWeight:700,color:"#15803d",flexShrink:0,minWidth:90}}>{l}</span>
+                  <span style={{color:"#15803d"}}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",marginTop:10,fontSize:11,color:"#92400e"}}>
+            💡 <b>Key point:</b> Your lender will require you to show proof of home insurance AND name them as the "loss payee" on the policy before your mortgage closes. Without this, your closing will be delayed.
+          </div>
+        </Card>
+
+        {/* Add-Ons / Riders Guide */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🌊 Optional Add-Ons & Riders — What You Should Know</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Standard policies exclude many common risks. These riders add coverage for an extra $50–$500/year.</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+            {[
+              {rider:"Overland Flood Coverage",cost:"+$100–$300/yr",must:true,desc:"Protects against water entering your home from outside — rivers, heavy rain, spring runoff. NOT included in standard policies. Strongly recommended in flood-prone areas.",provinces:"All provinces"},
+              {rider:"Sewer Backup Coverage",cost:"+$50–$150/yr",must:true,desc:"Covers damage from sewage backing up into your basement. Very common claim in older cities. NOT included in standard policies. Essential for homes with finished basements.",provinces:"All provinces"},
+              {rider:"Earthquake Coverage",cost:"+$200–$500/yr",must:false,desc:"Covers structural damage from earthquakes. Critical in BC, where a major earthquake is considered overdue. Lower priority in prairie provinces.",provinces:"Critical in BC"},
+              {rider:"High-Value Items",cost:"+$50–$200/yr",must:false,desc:"Standard policies cap jewellery at $5,000 and electronics at $10,000. If you own expensive jewellery, art, or cameras, schedule them separately.",provinces:"All provinces"},
+              {rider:"Home Business Coverage",cost:"+$100–$400/yr",must:false,desc:"If you work from home or run a business from your property, standard policies may not cover business equipment or liability. Declare it to avoid voided claims.",provinces:"All provinces"},
+              {rider:"Identity Theft Protection",cost:"+$25–$75/yr",must:false,desc:"Covers costs of recovering from identity theft — legal fees, lost wages, credit monitoring. Inexpensive add-on with growing relevance.",provinces:"All provinces"},
+            ].map(r=>(
+              <div key={r.rider} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${r.must?s.red:s.blue}`}}>
+                <div style={{display:"flex",justifyContent:"space-between",marginBottom:4,flexWrap:"wrap",gap:4}}>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{r.rider}</div>
+                  {r.must&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>RECOMMENDED</span>}
+                </div>
+                <div style={{fontSize:11,fontWeight:700,color:s.green,marginBottom:4}}>{r.cost}</div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:4}}>{r.desc}</div>
+                <div style={{fontSize:10,color:s.blue,fontWeight:600}}>📍 {r.provinces}</div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Insurance FAQ */}
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>❓ Home Insurance FAQ</h3>
+          <InsuranceFAQ/>
+        </Card>
+
+        <button onClick={()=>setInsTab("quote")} style={{width:"100%",padding:"12px",background:s.navy,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>🏠 Get Your Insurance Quotes →</button>
+      </div>
+      )}
+    </div>
   );
 }
 
