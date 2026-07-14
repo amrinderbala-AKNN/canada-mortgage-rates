@@ -4155,6 +4155,193 @@ function RealtorsTab(){
   );
 }
 
+function ValueTabInner(){
+  const [vTab,setVTab]=useState<"tools"|"guide"|"eval">("eval");
+  return(
+    <div>
+      <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setVTab("eval")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="eval"?s.gold:s.border}`,background:vTab==="eval"?s.gold:s.white,color:vTab==="eval"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏡 Get Free Evaluation</button>
+        <button onClick={()=>setVTab("guide")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="guide"?s.navy:s.border}`,background:vTab==="guide"?s.navy:s.white,color:vTab==="guide"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📋 How It Works</button>
+        <button onClick={()=>setVTab("tools")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="tools"?s.navy:s.border}`,background:vTab==="tools"?s.navy:s.white,color:vTab==="tools"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔧 Online Tools</button>
+      </div>
+
+      {vTab==="tools"&&(
+        <div>
+          <div style={{background:"#fee2e2",border:"1px solid #fca5a5",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#dc2626"}}>
+            ⚠️ <b>These are automated estimates only</b> — they can vary 5–15% from actual market value and don't account for your home's condition, renovations, or recent local sales. For a real number, <button onClick={()=>setVTab("eval")} style={{background:"none",border:"none",color:"#dc2626",cursor:"pointer",fontSize:11,textDecoration:"underline",fontWeight:700,padding:0}}>request a free professional evaluation →</button>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
+            {[
+              {name:"Zolo",desc:"Best all-around Canadian estimator. Nationwide coverage, uses real MLS sold data.",badge:"🏆 Best Overall",url:"https://www.zolo.ca/home-estimate",color:"#6366f1",pros:["Nationwide","Real sold data","Free & instant"]},
+              {name:"HouseSigma",desc:"Best for Ontario. Shows actual sold prices, DOM trends, and price history.",badge:"📊 Best Ontario",url:"https://housesigma.com",color:"#0891b2",pros:["Real sold prices","Price history","Agent-level detail"]},
+              {name:"Bungol",desc:"Strong Ontario tool with sold data and heat maps. Good cross-reference for Zolo.",badge:"🔍 Cross-Check",url:"https://bungol.ca",color:"#7c3aed",pros:["Sold price data","Heat maps","Good for condos"]},
+              {name:"Realtor.ca",desc:"Official MLS platform. Most complete listing data. Use for comparable active listings.",badge:"🍁 Official MLS",url:"https://www.realtor.ca",color:s.red,pros:["Most complete","All provinces","CREA verified"]},
+              {name:"WOWA.ca",desc:"Uses assessed value + market data. Good for provinces where Zolo data is thinner.",badge:"📋 Assessed Value",url:"https://wowa.ca/home-value-estimator",color:s.green,pros:["All provinces","Simple inputs","Free estimate"]},
+              {name:"Royal LePage",desc:"Free professional evaluation from a licensed agent. Most accurate for unique properties.",badge:"🤝 Professional",url:"https://www.royallepage.ca/en/realestate/tools-and-resources/home-value-estimator/",color:"#92400e",pros:["Agent-verified","Comparable sales","Free CMA"]},
+            ].map(tool=>(
+              <div key={tool.name} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
+                <div style={{background:tool.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{tool.name}</div>
+                  <span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>{tool.badge}</span>
+                </div>
+                <div style={{padding:12}}>
+                  <p style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:8}}>{tool.desc}</p>
+                  {tool.pros.map(p=><div key={p} style={{fontSize:11,color:"#374151",padding:"2px 0",display:"flex",gap:6}}><span style={{color:s.green,flexShrink:0}}>✓</span>{p}</div>)}
+                  <a href={tool.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"7px 12px",background:tool.color,color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none",marginTop:10}}>Get Free Estimate →</a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 14px",fontSize:10,color:"#92400e",marginBottom:12}}>
+            ⚠️ Automated estimates can vary 5–15% from actual market value. For mortgage or legal decisions, always get a professional appraisal or CMA.
+          </div>
+          <button onClick={()=>setVTab("eval")} style={{width:"100%",padding:"12px",background:s.gold,color:s.navy,border:"none",borderRadius:10,fontSize:13,fontWeight:800,cursor:"pointer"}}>🏡 Get a Free Professional Evaluation Instead →</button>
+        </div>
+      )}
+
+      {vTab==="guide"&&(
+        <div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📋 How to Get the Most Accurate Estimate</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {step:"1",title:"Get 3 estimates",desc:"Run your address through Zolo, WOWA, and one other tool. Average the results — no single tool is perfectly accurate."},
+                {step:"2",title:"Check recent sold prices",desc:"Look at what similar homes sold for in the last 3–6 months using HouseSigma or Bungol."},
+                {step:"3",title:"Adjust for condition",desc:"Automated tools don't know your renovations. Add value for upgrades, subtract for deferred maintenance."},
+                {step:"4",title:"Get a professional CMA",desc:"For refinancing or listing, get a free Comparative Market Analysis from a local REALTOR®. Most accurate."},
+              ].map(item=>(
+                <div key={item.step} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                    <div style={{width:22,height:22,borderRadius:"50%",background:s.navy,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:800,flexShrink:0}}>{item.step}</div>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</div>
+                  </div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💡 How Home Value Affects Your Mortgage</h3>
+            {[
+              ["Refinancing","Lenders approve up to 80% LTV. Higher value = more equity = more options"],
+              ["Cash-Out","Max cash-out = (Value × 80%) − Balance. Know your value first."],
+              ["HELOC Limit","HELOCs capped at 65% LTV. Your value sets your credit limit."],
+              ["Renewal Leverage","Higher equity = stronger negotiating position at renewal."],
+              ["CMHC Insurance","20%+ equity may let you avoid re-insuring at renewal."],
+              ["Property Tax","Assessed value (for tax) differs from market value — know both."],
+            ].map(([l,v])=>(
+              <div key={l} style={{display:"flex",gap:12,padding:"6px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
+                <span style={{fontSize:11,fontWeight:700,color:s.gold,flexShrink:0,minWidth:110}}>{l}</span>
+                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.5}}>{v}</span>
+              </div>
+            ))}
+          </Card>
+        </div>
+      )}
+
+      {vTab==="eval"&&(
+        <div>
+          <HomeEvalForm/>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:14}}>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Realtors"}))} style={{background:`linear-gradient(135deg,${s.green},#15803d)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+              <div style={{fontSize:20,marginBottom:4}}>🤝</div>
+              <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Find a Realtor for a Free CMA</div>
+              <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Most accurate home value — directly from a local REALTOR® →</div>
+            </button>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Calculators"}))} style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+              <div style={{fontSize:20,marginBottom:4}}>💳</div>
+              <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Calculate Refinancing Potential</div>
+              <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Use your home value to see how much equity you can access →</div>
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HomeEvalForm(){
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");
+  const [address,setAddress]=useState("");
+  const [city,setCity]=useState("");
+  const [prov,setProv]=useState("MB");
+  const [reason,setReason]=useState("");
+  const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+
+  async function submit(){
+    if(!name||!email||!address||!reason){alert("Please fill in all required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Home Evaluation Request — ${city||prov}`,
+        name,email,phone,address,city,province:prov,reason,message:msg,
+        source:"Canada Mortgage Rates — Home Value Tab"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  return(
+    <Card style={{marginBottom:14,borderLeft:`4px solid ${s.gold}`}}>
+      <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12,flexWrap:"wrap"}}>
+        <div style={{fontSize:24}}>🏡</div>
+        <div>
+          <div style={{fontSize:14,fontWeight:800,color:s.navy}}>Request a Free Home Evaluation</div>
+          <div style={{fontSize:11,color:s.muted}}>Connect with a local professional who will assess your home's value — free, no obligation.</div>
+        </div>
+      </div>
+      {ok?(
+        <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"20px",textAlign:"center"}}>
+          <div style={{fontSize:28,marginBottom:8}}>✅</div>
+          <div style={{fontSize:14,fontWeight:800,color:"#15803d",marginBottom:4}}>Request Received!</div>
+          <div style={{fontSize:12,color:"#16a34a",lineHeight:1.6}}>We'll connect you with a local professional in your area within 1–2 business days. Check your email for confirmation.</div>
+        </div>
+      ):(
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+          <div>
+            <Field label="Full Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="John Smith" style={inp}/></Field>
+            <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="john@email.com" style={inp}/></Field>
+            <Field label="Phone (optional)"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+          </div>
+          <div>
+            <Field label="Property Address *"><input value={address} onChange={e=>setAddress(e.target.value)} placeholder="123 Main St" style={inp}/></Field>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+              <Field label="City"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Winnipeg" style={inp}/></Field>
+              <Field label="Province">
+                <select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>
+                  {Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}
+                </select>
+              </Field>
+            </div>
+            <Field label="Reason for Evaluation *">
+              <select value={reason} onChange={e=>setReason(e.target.value)} style={inp}>
+                <option value="">Select a reason</option>
+                <option value="selling">Thinking about selling</option>
+                <option value="refinancing">Planning to refinance</option>
+                <option value="heloc">Setting up a HELOC</option>
+                <option value="curious">Just curious about my home's value</option>
+                <option value="estate">Estate planning</option>
+                <option value="divorce">Separation / divorce</option>
+                <option value="other">Other</option>
+              </select>
+            </Field>
+          </div>
+          <div style={{gridColumn:"1/-1"}}>
+            <Field label="Additional Notes (optional)"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="e.g. Recently renovated kitchen, 3 bed 2 bath, detached garage..." style={{...inp,height:70,resize:"vertical" as any}}/></Field>
+            <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Request Free Evaluation →"}</button>
+            <div style={{fontSize:10,color:s.muted,marginTop:6}}>✓ Free · No obligation · We'll match you with a local professional within 1–2 business days</div>
+          </div>
+        </div>
+      )}
+    </Card>
+  );
+}
+
 function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [type,setType]=useState("any");const [beds,setBeds]=useState("any");const [maxPrice,setMaxPrice]=useState("");const [area,setArea]=useState("");
   const [subTab,setSubTab]=useState<"listings"|"tools"|"value">("listings");
@@ -4289,104 +4476,14 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
       </>}
 
       {subTab==="value"&&<>
-      <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
-        <div style={{fontSize:28,marginBottom:6}}>🏡</div>
-        <h2 style={{color:s.navy,fontSize:18,fontWeight:800,marginBottom:6}}>Estimate Your Home Value</h2>
-        <p style={{color:"rgba(0,0,0,0.6)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Canada's best free home valuation tools — find out what your home is worth before you list, refinance, or renew.</p>
+      <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"16px 20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:24,marginBottom:4}}>🏡</div>
+        <h2 style={{color:s.navy,fontSize:16,fontWeight:800,marginBottom:4}}>Estimate Your Home Value</h2>
+        <p style={{color:"rgba(0,0,0,0.6)",fontSize:11,maxWidth:500,margin:"0 auto"}}>Find out what your home is worth before you list, refinance, or renew.</p>
       </div>
 
-      <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#1e40af"}}>
-        💡 <b>Why home value matters for your mortgage:</b> Your home's value determines how much equity you have, whether you qualify for refinancing, your maximum cash-out amount (80% LTV), and your HELOC limit. An accurate estimate is the starting point for any major mortgage decision.
-      </div>
-
-      {/* Tool cards */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:12,marginBottom:16}}>
-        {[
-          {name:"Zolo",desc:"Best all-around Canadian home value estimator. Uses MLS data, sold prices, and neighbourhood trends. Available nationwide.",badge:"🏆 Best Overall",url:"https://www.zolo.ca/home-estimate",color:"#6366f1",pros:["Nationwide coverage","Uses real sold data","Free and instant","Neighbourhood trends"]},
-          {name:"HouseSigma",desc:"Best for Ontario. Shows actual sold prices (not just asking), DOM trends, and price history. Extremely detailed.",badge:"📊 Best for Ontario",url:"https://housesigma.com",color:"#0891b2",pros:["Real sold prices","Days on market data","Price history charts","Agent-level detail"]},
-          {name:"Bungol",desc:"Another strong Ontario tool with sold price data and market analytics. Good for cross-referencing Zolo estimates.",badge:"🔍 Best Cross-Check",url:"https://bungol.ca",color:"#7c3aed",pros:["Sold price data","Heat maps","Free to use","Good for condos"]},
-          {name:"Realtor.ca",desc:"Official MLS platform. Most complete and up-to-date listing data in Canada. Use for comparable active listings.",badge:"🍁 Official MLS",url:"https://www.realtor.ca",color:s.red,pros:["Most complete data","All provinces","CREA verified","Free"]},
-          {name:"WOWA.ca",desc:"Uses assessed value + market data to estimate home value. Good for provinces where Zolo data is thinner.",badge:"📋 Assessed Value",url:"https://wowa.ca/home-value-estimator",color:s.green,pros:["Uses assessed value","All provinces","Simple inputs","Free estimate"]},
-          {name:"Royal LePage",desc:"Get a free professional evaluation from a licensed agent. More accurate than automated tools for unique properties.",badge:"🤝 Professional CMA",url:"https://www.royallepage.ca/en/realestate/tools-and-resources/home-value-estimator/",color:"#92400e",pros:["Agent-verified","Comparable sales","Free CMA","Most accurate"]},
-        ].map(tool=>(
-          <div key={tool.name} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
-            <div style={{background:tool.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{tool.name}</div>
-              <span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{tool.badge}</span>
-            </div>
-            <div style={{padding:12}}>
-              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{tool.desc}</p>
-              <div style={{marginBottom:10}}>
-                {tool.pros.map(p=>(
-                  <div key={p} style={{fontSize:11,color:"#374151",padding:"2px 0",display:"flex",gap:6}}>
-                    <span style={{color:s.green,flexShrink:0}}>✓</span>{p}
-                  </div>
-                ))}
-              </div>
-              <a href={tool.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px 12px",background:tool.color,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textAlign:"center",textDecoration:"none"}}>Get Free Estimate →</a>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* How to use estimates */}
-      <Card style={{marginBottom:14}}>
-        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📋 How to Get the Most Accurate Estimate</h3>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
-          {[
-            {step:"1",title:"Get 3 estimates",desc:"Run your address through Zolo, WOWA, and one other tool. Average the results — no single tool is perfectly accurate.",icon:"🔢"},
-            {step:"2",title:"Check recent sold prices",desc:"Look at what similar homes in your neighbourhood actually sold for in the last 3–6 months using HouseSigma or Bungol.",icon:"📊"},
-            {step:"3",title:"Adjust for condition",desc:"Automated tools don't know your renovations or condition. Add value for recent upgrades, subtract for deferred maintenance.",icon:"🏠"},
-            {step:"4",title:"Get a professional CMA",desc:"For refinancing or listing decisions, get a free Comparative Market Analysis from a local REALTOR®. It's free and most accurate.",icon:"🤝"},
-          ].map(item=>(
-            <div key={item.step} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
-              <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
-                <div style={{width:24,height:24,borderRadius:"50%",background:s.navy,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:800,flexShrink:0}}>{item.step}</div>
-                <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</div>
-              </div>
-              <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
-            </div>
-          ))}
-        </div>
-      </Card>
-
-      {/* Why it matters for mortgage */}
-      <Card style={{background:s.navy,marginBottom:14}}>
-        <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💡 How Home Value Affects Your Mortgage</h3>
-        {[
-          ["Refinancing","Lenders approve up to 80% LTV. Higher value = more equity = more refinancing options"],
-          ["Cash-Out","Max cash-out = (Home Value × 80%) − Mortgage Balance. Know your value first."],
-          ["HELOC Limit","Most HELOCs are capped at 65% LTV. Your value determines your credit limit."],
-          ["Renewal Leverage","Higher equity = stronger negotiating position with your lender at renewal."],
-          ["CMHC Insurance","If value dropped and you're at 20%+ equity, you may avoid re-insuring at renewal."],
-          ["Property Tax","Assessed value (used for tax) differs from market value — knowing both matters."],
-        ].map(([l,v])=>(
-          <div key={l} style={{display:"flex",gap:12,padding:"7px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
-            <span style={{fontSize:11,fontWeight:700,color:s.gold,flexShrink:0,minWidth:120}}>{l}</span>
-            <span style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.5}}>{v}</span>
-          </div>
-        ))}
-      </Card>
-
-      <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"10px 16px",fontSize:11,color:"#92400e",marginBottom:14}}>
-        ⚠️ <b>Disclaimer:</b> Automated home value estimates are not appraisals. They can vary by 5–15% from actual market value. For mortgage, legal, or financial decisions, always get a professional appraisal or CMA from a licensed REALTOR®.
-      </div>
-
-      {/* CTA banners */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:14}}>
-        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Realtors"}))} style={{background:`linear-gradient(135deg,${s.green},#15803d)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
-          <div style={{fontSize:20,marginBottom:4}}>🤝</div>
-          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Get a Free Professional CMA</div>
-          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>A local REALTOR® will give you the most accurate home value — free →</div>
-        </button>
-        <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Calculators"}))} style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
-          <div style={{fontSize:20,marginBottom:4}}>💳</div>
-          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Calculate Refinancing Potential</div>
-          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Use your home value to see how much equity you can access →</div>
-        </button>
-      </div>
+      <ValueTabInner/>
       </>}
-
       <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:"12px 16px",fontSize:11,color:"#92400e"}}>
         ⚠️ <b>Disclaimer:</b> We link directly to third-party listing platforms. Canada Mortgage Rates is not affiliated with Realtor.ca, CREA, MLS®, Zolo, RE/MAX, Royal LePage, Kijiji, or ComFree. Always verify listings and work with a licensed REALTOR® before making any real estate decisions.
       </div>
