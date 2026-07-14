@@ -621,20 +621,26 @@ function NavBar({active,setActive}){
   const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
-      <div style={{padding:"0 14px",display:"flex",alignItems:"center",height:54,gap:8}}>
-        <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-          <div style={{width:32,height:32,background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18}}>🍁</div>
-          <div><div style={{color:"#fff",fontWeight:800,fontSize:14,lineHeight:1}}>Canada</div><div style={{color:s.gold,fontWeight:700,fontSize:11,lineHeight:1}}>Mortgage Rates</div></div>
-          <div style={{display:"flex",gap:4,marginLeft:4}}>
-            <a href="/blog" style={{color:"rgba(255,255,255,0.65)",fontSize:10,fontWeight:700,border:"1px solid rgba(255,255,255,0.2)",borderRadius:5,padding:"2px 6px",textDecoration:"none"}}>BLOG</a>
-            <a href="/fr" style={{color:"rgba(255,255,255,0.65)",fontSize:10,fontWeight:700,border:"1px solid rgba(255,255,255,0.2)",borderRadius:5,padding:"2px 6px",textDecoration:"none"}}>FR</a>
+      <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:54,gap:6}}>
+        {/* Logo */}
+        <div style={{display:"flex",alignItems:"center",gap:6,flexShrink:0}}>
+          <div onClick={()=>{setActive("Home");window.scrollTo({top:0,behavior:"smooth"});}} style={{width:28,height:28,background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,cursor:"pointer"}} title="Go to Home">🍁</div>
+          <div onClick={()=>{setActive("Home");window.scrollTo({top:0,behavior:"smooth"});}} style={{cursor:"pointer"}}>
+            <div style={{color:"#fff",fontWeight:800,fontSize:12,lineHeight:1}}>Canada</div>
+            <div style={{color:s.gold,fontWeight:700,fontSize:10,lineHeight:1}}>Mortgage Rates</div>
           </div>
         </div>
-        <div style={{display:"flex",alignItems:"center",marginLeft:"auto",maxWidth:"calc(100% - 180px)",position:"relative"}}>
-          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:-200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to left,transparent,#0d2240 50%)",paddingRight:16,paddingLeft:6,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",left:0,top:0,zIndex:1}}>
-            <span style={{color:s.gold,fontSize:28,fontWeight:800,lineHeight:1}}>‹</span>
+        {/* Search + Hamburger */}
+        <button onClick={()=>setSearchOpen(true)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}} title="Search site">🔍</button>
+        <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
+          {menuOpen?"✕":"☰"}
+        </button>
+        {/* Tab ribbon — takes remaining space */}
+        <div style={{flex:1,display:"flex",alignItems:"center",position:"relative",overflow:"hidden"}}>
+          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:-200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to left,transparent,#0d2240 50%)",paddingRight:12,paddingLeft:4,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",left:0,top:0,zIndex:1}}>
+            <span style={{color:s.gold,fontSize:24,fontWeight:800,lineHeight:1}}>‹</span>
           </button>
-          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none",paddingLeft:24}}>
+          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none",paddingLeft:20,paddingRight:20,width:"100%"}}>
             {TABS.map(t=>{
               const isActive=active===t;
               const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
@@ -646,14 +652,10 @@ function NavBar({active,setActive}){
               );
             })}
           </div>
-          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 50%)",paddingLeft:20,paddingRight:6,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",right:0,top:0}}>
-            <span style={{color:s.gold,fontSize:28,fontWeight:800,lineHeight:1}}>›</span>
+          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 50%)",paddingLeft:12,paddingRight:4,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",right:0,top:0}}>
+            <span style={{color:s.gold,fontSize:24,fontWeight:800,lineHeight:1}}>›</span>
           </button>
         </div>
-        <button onClick={()=>setSearchOpen(true)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:4,flexShrink:0}} title="Search site">🔍</button>
-        <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.1)",border:`1px solid rgba(255,255,255,0.2)`,color:"#fff",borderRadius:8,padding:"6px 10px",cursor:"pointer",fontSize:15,marginLeft:4,flexShrink:0}}>
-          {menuOpen?"✕":"☰"}
-        </button>
       </div>
       {menuOpen&&(
         <div style={{background:"#0a1628",borderTop:"1px solid rgba(255,255,255,0.1)",padding:"8px 0",maxHeight:360,overflowY:"auto"}}>
