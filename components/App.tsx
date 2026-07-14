@@ -4266,6 +4266,7 @@ function RealtorsTab(){
           </div>
         ))}
       </Card>
+      </>}
 
       {/* Connection Form Modal */}
       {showForm&&(
@@ -4338,7 +4339,6 @@ function RealtorsTab(){
           </div>
         </div>
       )}
-      </>}
 
       {/* Cross-promotion banners */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginBottom:16}}>
@@ -5456,8 +5456,8 @@ function LawyersTab(){
           </div>
         ))}
       </Card>
+      </>}
 
-      {/* Are you a lawyer CTA */}
       {/* Partner Form Modal */}
       {showPartnerForm&&(
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
@@ -5529,7 +5529,6 @@ function LawyersTab(){
           </div>
         </div>
       )}
-      </>}
 
       {/* Cross-promotion banners */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:4,marginBottom:16}}>
