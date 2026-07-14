@@ -5287,8 +5287,6 @@ function LawyersTab(){
         <button onClick={()=>{setShowForm(true);setSelectedLawyer(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer</button>
       </div>
 
-      </div>
-
       {/* Coming Soon */}
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
         <div style={{fontSize:40,marginBottom:12}}>⚖️</div>
