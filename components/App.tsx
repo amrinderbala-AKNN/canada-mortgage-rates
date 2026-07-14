@@ -5780,62 +5780,210 @@ function LearnGlossaryTab(){
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
-  const features=[
-    {icon:"📊",tab:"Rates",title:"Live Mortgage Rates",desc:"Compare rates from 20+ banks and credit unions across all 10 provinces. Updated daily via AI-powered web search."},
-    {icon:"🧮",tab:"Calculators",title:"Mortgage Calculators",desc:"Payment, affordability, rent vs buy, renewal savings, and stress test — all in one place."},
-    {icon:"🏛️",tab:"Property Tax",title:"Property Tax Estimator",desc:"Estimate your annual property tax based on your home value and city across every province."},
-    {icon:"🏠",tab:"Insurance",title:"Home Insurance",desc:"Compare quotes from Canada's top insurers — Intact, Aviva, Desjardins, and more."},
-    {icon:"🎯",tab:"Rate Finder",title:"Personalized Rate Finder",desc:"Answer 5 quick questions and get your estimated mortgage rate range based on your profile."},
-    {icon:"🇨🇦",tab:"First-Time Buyers",title:"First-Time Buyer Programs",desc:"Federal and provincial programs — FHSA, HBP, LTT rebates, and new 2026 incentives."},
-    {icon:"📰",tab:"News",title:"Mortgage & Real Estate News",desc:"AI-curated news for your province — BoC decisions, market updates, and rate forecasts."},
-    {icon:"🏡",tab:"Listings",title:"Home Listings Search",desc:"AI-powered property search across Canada. Find homes by city, type, beds, and price."},
-    {icon:"📚",tab:"Learn",title:"Learn & Education",desc:"Fixed vs variable, stress test guide, CMHC explained, FHSA complete guide, and more."},
-    {icon:"📞",tab:"Consult",title:"Free Consultation",desc:"Connect with a licensed mortgage professional — free, no obligation, within 1 business day."},
-  ];
+  const [homeTab,setHomeTab]=useState<"overview"|"tools"|"services"|"about">("overview");
+
   return(
     <div>
-      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:16,textAlign:"center"}}>
+      {/* Hero */}
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:14,textAlign:"center"}}>
         <div style={{fontSize:32,marginBottom:8}}>🍁</div>
-        <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>Welcome to Canada Mortgage Rates</h2>
-        <p style={{color:"rgba(255,255,255,0.75)",fontSize:13,lineHeight:1.7,maxWidth:600,margin:"0 auto 16px"}}>Canada's most complete mortgage platform — free, AI-powered, and built for every province. Compare rates, calculate payments, discover first-time buyer programs, and connect with experts.</p>
-        <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap"}}>
-          {[["🏦 20+ Lenders",""],["🌍 All 10 Provinces",""],["🤖 AI-Powered",""],["💰 Always Free",""]].map(([l])=>(
+        <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>Canada's Most Complete Mortgage Platform</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:600,margin:"0 auto 16px"}}>Free, AI-powered, and built for every province. Compare rates, calculate payments, discover programs, and connect with experts — all in one place.</p>
+        <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginBottom:16}}>
+          {["🏦 20+ Lenders","🌍 All 10 Provinces","🤖 AI-Powered","💰 Always Free"].map(l=>(
             <span key={l} style={{background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:20,padding:"5px 14px",color:"#fff",fontSize:11,fontWeight:600}}>{l}</span>
           ))}
         </div>
-      </div>
-      <div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:10,padding:"10px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
-        <div style={{fontSize:20}}>📢</div>
-        <div><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>Bank of Canada Rate — last decision {fmtBocDate(last)}</div><div style={{fontSize:11,color:"#92400e"}}>Overnight rate: {boc.overnight}%. Prime Rate: {boc.prime}%. Next decision: {fmtBocDate(next)}.</div></div>
-      </div>
-      <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:12,padding:"16px 20px",marginBottom:16,display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
-        <div style={{fontSize:28,flexShrink:0}}>🔔</div>
-        <div style={{flex:1,minWidth:180}}>
-          <div style={{color:"#fff",fontSize:14,fontWeight:800,marginBottom:3}}>Get BoC Rate Alerts — Free</div>
-          <div style={{color:"rgba(255,255,255,0.8)",fontSize:11,lineHeight:1.5}}>Next announcement: <b>{fmtBocDate(next)}</b>. Be the first to know when rates change.</div>
+        <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
+          <button onClick={()=>setActive("Rates")} style={{padding:"10px 20px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer"}}>📊 Compare Rates →</button>
+          <button onClick={()=>setActive("Calculators")} style={{padding:"10px 20px",background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🧮 Calculators →</button>
+          <button onClick={()=>setActive("Rate Finder")} style={{padding:"10px 20px",background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🎯 Find My Rate →</button>
         </div>
-        <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"10px 20px",background:"#fff",color:s.red,border:"none",borderRadius:8,fontSize:13,fontWeight:800,cursor:"pointer",flexShrink:0,whiteSpace:"nowrap"}}>🔔 Get Alerts →</button>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
-        {features.map(f=>(
-          <div key={f.tab} onClick={()=>setActive(f.tab)} style={{background:s.white,borderRadius:12,padding:16,border:`1px solid ${s.border}`,cursor:"pointer",transition:"all 0.2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.12)";e.currentTarget.style.borderColor=s.navy;}}
-            onMouseLeave={e=>{e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=s.border;}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
-              <div style={{fontSize:28}}>{f.icon}</div>
-              {f.badge&&<span style={{background:(f as any).badgeColor,color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:800,letterSpacing:"0.3px"}}>{f.badge}</span>}
-            </div>
-            <div style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:6}}>{f.title}</div>
-            <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{f.desc}</div>
-            <div style={{fontSize:11,color:s.blue,fontWeight:700}}>Open {f.tab} →</div>
+
+      {/* BoC Alert */}
+      <div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:10,padding:"10px 16px",marginBottom:14,display:"flex",alignItems:"center",gap:10}}>
+        <div style={{fontSize:20}}>📢</div>
+        <div style={{flex:1}}><div style={{fontSize:12,fontWeight:700,color:"#c2410c"}}>Bank of Canada — Last Decision {fmtBocDate(last)}</div><div style={{fontSize:11,color:"#92400e"}}>Overnight: <b>{boc.overnight}%</b> · Prime: <b>{boc.prime}%</b> · Next announcement: <b>{fmtBocDate(next)}</b></div></div>
+        <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"6px 12px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer",flexShrink:0}}>🔔 Get Alerts</button>
+      </div>
+
+      {/* Sub-tabs */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setHomeTab("overview")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="overview"?s.navy:s.border}`,background:homeTab==="overview"?s.navy:s.white,color:homeTab==="overview"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏠 Overview</button>
+        <button onClick={()=>setHomeTab("tools")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="tools"?s.navy:s.border}`,background:homeTab==="tools"?s.navy:s.white,color:homeTab==="tools"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🧮 Tools</button>
+        <button onClick={()=>setHomeTab("services")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="services"?s.navy:s.border}`,background:homeTab==="services"?s.navy:s.white,color:homeTab==="services"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🤝 Services</button>
+        <button onClick={()=>setHomeTab("about")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="about"?s.navy:s.border}`,background:homeTab==="about"?s.navy:s.white,color:homeTab==="about"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📋 About</button>
+      </div>
+
+      {homeTab==="overview"&&(
+        <div>
+          {/* Quick stats */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,marginBottom:14}}>
+            {[
+              {n:"20+",l:"Lenders Compared",icon:"🏦",color:s.navy},
+              {n:"10",l:"Provinces Covered",icon:"🍁",color:s.red},
+              {n:"9",l:"Calculators",icon:"🧮",color:s.blue},
+              {n:"138",l:"Pages Indexed",icon:"📄",color:s.green},
+              {n:"Free",l:"Always & Forever",icon:"💰",color:s.gold},
+            ].map(stat=>(
+              <div key={stat.l} style={{background:s.white,borderRadius:10,padding:"12px 10px",border:`1px solid ${s.border}`,textAlign:"center",borderTop:`3px solid ${stat.color}`}}>
+                <div style={{fontSize:20,marginBottom:4}}>{stat.icon}</div>
+                <div style={{fontSize:20,fontWeight:800,color:stat.color}}>{stat.n}</div>
+                <div style={{fontSize:10,color:s.muted,lineHeight:1.3}}>{stat.l}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <TestimonialsSection/>
-      <div style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,padding:16,marginTop:14}}>
-        <div style={{fontSize:13,fontWeight:700,color:s.navy,marginBottom:10}}>⚠️ Important Disclaimer</div>
-        <p style={{fontSize:11,color:s.muted,lineHeight:1.7}}>Canada Mortgage Rates is not a licensed mortgage broker, lender, or financial advisor. All rates and calculator results are for informational purposes only and may not reflect your actual qualified rate. Always verify rates directly with the financial institution and consult a licensed mortgage professional before making any financial decisions.</p>
-      </div>
+
+          {/* What's new */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.gold}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🆕 What's New — July 2026</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:8}}>
+              {[
+                {tab:"Calculators",title:"Refinancing Calculator",desc:"Should I Refi? Penalty estimator, blend & extend, cash-out, HELOC comparison, and full 11-step guide.",icon:"💳"},
+                {tab:"Listings",title:"Home Value Estimator",desc:"Request a free professional home evaluation. Connect with local appraisers and realtors.",icon:"🏡"},
+                {tab:"Renewal",title:"Renewal Negotiation Script",desc:"Word-for-word script to negotiate your renewal rate. Top lenders, timeline, and FAQ.",icon:"💬"},
+                {tab:"Insurance",title:"Insurance Guide",desc:"Province cost comparison, how to save on premiums, mortgage vs home insurance explainer, riders guide.",icon:"🛡️"},
+                {tab:"Rates",title:"Rate History & Lender Guide",desc:"Full BoC rate timeline 2020–2026, economist forecasts, and 6 lender types compared.",icon:"📈"},
+                {tab:"Rate Finder",title:"Pre-Approval Guide",desc:"Documents needed, 6-step timeline, what lenders look at, mistakes to avoid — printable PDF.",icon:"📋"},
+              ].map(f=>(
+                <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,cursor:"pointer"}}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor=s.navy;e.currentTarget.style.background="#f0f4ff";}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor=s.border;e.currentTarget.style.background="#f8fafc";}}>
+                  <div style={{fontSize:18,marginBottom:4}}>{f.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:3}}>{f.title}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Testimonials */}
+          <TestimonialsSection/>
+        </div>
+      )}
+
+      {homeTab==="tools"&&(
+        <div>
+          <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#1e40af"}}>
+            💡 All tools are free, no login required. Results are estimates — always verify with a licensed professional.
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
+            {[
+              {icon:"📊",tab:"Rates",title:"Compare Mortgage Rates",desc:"Live rates from 20+ lenders across all provinces. Filter by term, type, and lender.",badge:"🔴 LIVE"},
+              {icon:"💰",tab:"Calculators",title:"Payment Calculator",desc:"Calculate your exact monthly mortgage payment based on price, rate, and amortization."},
+              {icon:"🏡",tab:"Calculators",title:"Affordability Calculator",desc:"How much house can you afford? Based on GDS/TDS ratios lenders actually use."},
+              {icon:"📋",tab:"Calculators",title:"Stress Test Calculator",desc:"Will you pass? Calculate at your rate +2% or 5.25% — whichever is higher."},
+              {icon:"💳",tab:"Calculators",title:"Refinancing Calculator",desc:"Should you break your mortgage? Break-even point, penalty estimator, cash-out, HELOC."},
+              {icon:"🔄",tab:"Calculators",title:"Renewal Calculator",desc:"Compare your lender's renewal offer vs shopping around. See how much you'd save."},
+              {icon:"📅",tab:"Calculators",title:"Amortization Schedule",desc:"Year-by-year breakdown of payments, interest, and remaining balance."},
+              {icon:"🏷️",tab:"Calculators",title:"Closing Cost Calculator",desc:"Land transfer tax, legal fees, title insurance by province. First-time buyer rebates included."},
+              {icon:"🏛️",tab:"Property Tax",title:"Property Tax Estimator",desc:"Estimate annual property tax by city using real mill rates. Appeal guide included."},
+              {icon:"🛡️",tab:"Insurance",title:"Home Insurance Estimator",desc:"Compare quotes from Square One, Intact, Aviva, SGI, and 10+ providers by province."},
+              {icon:"🎯",tab:"Rate Finder",title:"Personalized Rate Finder",desc:"5-question quiz → estimated rate range, lender recommendation, and action plan."},
+              {icon:"🧮",tab:"Rate Finder",title:"Rate Impact Calculator",desc:"See the dollar difference between two rates — monthly and over full amortization."},
+            ].map(f=>(
+              <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:s.white,borderRadius:12,padding:14,border:`1px solid ${s.border}`,cursor:"pointer",transition:"all 0.2s"}}
+                onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
+                onMouseLeave={e=>{e.currentTarget.style.boxShadow="none";e.currentTarget.style.borderColor=s.border;}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:8}}>
+                  <div style={{fontSize:26}}>{f.icon}</div>
+                  {f.badge&&<span style={{background:s.red,color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:800}}>{f.badge}</span>}
+                </div>
+                <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{f.title}</div>
+                <div style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:8}}>{f.desc}</div>
+                <div style={{fontSize:11,color:s.blue,fontWeight:700}}>Open →</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {homeTab==="services"&&(
+        <div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
+            {[
+              {icon:"🤝",tab:"Realtors",title:"Find a REALTOR®",desc:"Connect with verified local realtors. Coming soon — be among the first listed in your city.",color:s.green,badge:"Coming Soon"},
+              {icon:"⚖️",tab:"Lawyers",title:"Find a Real Estate Lawyer",desc:"Connect with real estate lawyers for your closing. Coming soon — list your practice.",color:s.navy,badge:"Coming Soon"},
+              {icon:"🏘️",tab:"Listings",title:"Browse Home Listings",desc:"Search homes across Canada via Realtor.ca, Zolo, HouseSigma, and more.",color:"#7c3aed",badge:""},
+              {icon:"🏡",tab:"Listings",title:"Home Value Estimator",desc:"Request a free professional home evaluation from a local expert.",color:s.gold,badge:"New"},
+              {icon:"📞",tab:"Consult",title:"Free Mortgage Consultation",desc:"Connect with a licensed mortgage professional — free, no obligation, within 1 business day.",color:s.red,badge:"Free"},
+              {icon:"🏠",tab:"First-Time Buyers",title:"First-Time Buyer Programs",desc:"FHSA, HBP, LTT rebates, provincial grants — everything you qualify for in 2026.",color:"#0891b2",badge:"2026 Updated"},
+            ].map(f=>(
+              <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",cursor:"pointer",boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"all 0.2s"}}
+                onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.1)";}}
+                onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.04)";}}>
+                <div style={{background:f.color,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:10}}>
+                    <span style={{fontSize:24}}>{f.icon}</span>
+                    <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{f.title}</div>
+                  </div>
+                  {f.badge&&<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>{f.badge}</span>}
+                </div>
+                <div style={{padding:12}}>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{f.desc}</div>
+                  <div style={{fontSize:11,color:f.color,fontWeight:700}}>Learn more →</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Rate Alert CTA */}
+          <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:12,padding:"16px 20px",display:"flex",alignItems:"center",gap:16,flexWrap:"wrap"}}>
+            <div style={{fontSize:28,flexShrink:0}}>🔔</div>
+            <div style={{flex:1,minWidth:180}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:800,marginBottom:3}}>Get BoC Rate Alerts — Free</div>
+              <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Next announcement: <b>{fmtBocDate(next)}</b>. Be the first to know when rates change.</div>
+            </div>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"10px 20px",background:"#fff",color:s.red,border:"none",borderRadius:8,fontSize:13,fontWeight:800,cursor:"pointer",flexShrink:0}}>🔔 Get Alerts →</button>
+          </div>
+        </div>
+      )}
+
+      {homeTab==="about"&&(
+        <div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🍁 About Canada Mortgage Rates</h3>
+            <p style={{fontSize:12,color:s.muted,lineHeight:1.8,marginBottom:10}}>Canada Mortgage Rates (canadamortgagerates.net) is a free, independent mortgage comparison and education platform built for Canadian homebuyers and homeowners. We're not a bank, broker, or lender — we're a neutral resource designed to help you make better mortgage decisions.</p>
+            <p style={{fontSize:12,color:s.muted,lineHeight:1.8,marginBottom:10}}>Launched in June 2026, the platform covers all 10 Canadian provinces with live rate comparisons, 9 mortgage calculators, first-time buyer program guides, property tax estimators, home insurance comparisons, and a growing network of professional referrals.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10,marginTop:12}}>
+              {[
+                {title:"Our Mission",desc:"Make mortgage information accessible, free, and honest for every Canadian — not just those who can afford a broker.",icon:"🎯"},
+                {title:"Independence",desc:"We're not owned by any lender, bank, or broker. Our rate comparisons and tool results are not influenced by commercial relationships.",icon:"⚖️"},
+                {title:"How We Make Money",desc:"Through affiliate partnerships, professional referrals (lawyers, realtors), and advertising — never by charging users.",icon:"💰"},
+                {title:"Accuracy",desc:"Rates are updated via AI-powered search. Calculators use standard Canadian mortgage formulas. Always verify with your lender.",icon:"✅"},
+              ].map(item=>(
+                <div key={item.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:18,marginBottom:4}}>{item.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{item.title}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>📞 Contact & Connect</h3>
+            {[
+              ["Website","canadamortgagerates.net"],
+              ["Email","info@canadamortgagerates.net"],
+              ["X (Twitter)","@Cdnmortgagerate"],
+              ["Coverage","All 10 Canadian provinces"],
+              ["Launched","June 2026"],
+            ].map(([l,v])=>(
+              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:`1px solid ${s.light}`,fontSize:12}}>
+                <span style={{color:s.muted}}>{l}</span>
+                <span style={{fontWeight:600,color:s.navy}}>{v}</span>
+              </div>
+            ))}
+          </Card>
+
+          <Card style={{background:"#f8fafc",border:`1px solid ${s.border}`}}>
+            <div style={{fontSize:12,fontWeight:700,color:s.navy,marginBottom:8}}>⚠️ Disclaimer</div>
+            <p style={{fontSize:11,color:s.muted,lineHeight:1.7}}>Canada Mortgage Rates is not a licensed mortgage broker, lender, or financial advisor. All rates and calculator results are for informational purposes only. Always verify rates directly with the financial institution and consult a licensed mortgage professional before making any financial decisions.</p>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
