@@ -4036,6 +4036,7 @@ function RealtorsTab(){
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterSpec,setFilterSpec]=useState("all");
+  const [filterName,setFilterName]=useState("");
   const [selectedRealtor,setSelectedRealtor]=useState<any>(null);
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
@@ -4100,7 +4101,8 @@ function RealtorsTab(){
     const matchProv=r.prov===filterProv;
     const matchCity=!filterCity||r.city.toLowerCase().includes(filterCity.toLowerCase());
     const matchSpec=filterSpec==="all"||r.specs.includes(filterSpec);
-    return matchProv&&matchCity&&matchSpec;
+    const matchName=!filterName||r.name.toLowerCase().includes(filterName.toLowerCase())||r.brokerage.toLowerCase().includes(filterName.toLowerCase());
+    return matchProv&&matchCity&&matchSpec&&matchName;
   });
 
   return(
@@ -4143,7 +4145,8 @@ function RealtorsTab(){
       {/* Filters */}
       <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
         <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
-        <input type="text" placeholder="Search city..." value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,width:140}}/>
+        <select value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}><option value="">All Cities</option>{(PDATA[filterProv]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}</select>
+        <button onClick={()=>setFilterName("")} style={{padding:"7px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Search</button>
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {[["all","All Types"],["firsttime","First-Time"],["residential","Residential"],["condo","Condo"],["investment","Investment"],["luxury","Luxury"]].map(([v,l])=>(
             <button key={v} onClick={()=>setFilterSpec(v)} style={{padding:"5px 10px",borderRadius:20,border:`1.5px solid ${filterSpec===v?s.navy:s.border}`,background:filterSpec===v?s.navy:s.white,color:filterSpec===v?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:filterSpec===v?700:400}}>{l}</button>
@@ -4152,42 +4155,17 @@ function RealtorsTab(){
         <button onClick={()=>{setShowForm(true);setSelectedRealtor(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🤝 Find Me a Realtor</button>
       </div>
 
-      {/* Realtor Cards */}
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:16}}>
-        {filtered.map(r=>(
-          <div key={r.id} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
-            <div style={{background:r.verified?`linear-gradient(135deg,${s.green},#15803d)`:`linear-gradient(135deg,#94a3b8,#64748b)`,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div style={{display:"flex",alignItems:"center",gap:10}}>
-                <div style={{width:40,height:40,borderRadius:"50%",background:"rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🤝</div>
-                <div>
-                  <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{r.name}</div>
-                  <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{r.brokerage}</div>
-                </div>
-              </div>
-              {r.verified?<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>✓ Verified</span>:<span style={{background:"rgba(255,255,255,0.15)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Coming Soon</span>}
-            </div>
-            <div style={{padding:14}}>
-              <div style={{display:"flex",gap:6,marginBottom:10,flexWrap:"wrap"}}>
-                <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {r.city}, {r.prov}</span>
-                <span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {r.experience}</span>
-                {r.languages.map(l=><span key={l} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{l}</span>)}
-              </div>
-              <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
-                {r.specs.map(spec=><span key={spec} style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{spec==="firsttime"?"First-Time":spec}</span>)}
-              </div>
-              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:12}}>{r.bio}</p>
-              <button onClick={()=>{setSelectedRealtor(r);setShowForm(true);setRcity(r.city);}} style={{width:"100%",padding:"9px",background:r.verified?s.green:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>{r.verified?"Connect with Agent →":"Join Waitlist →"}</button>
-            </div>
-          </div>
-        ))}
-        {filtered.length===0&&(
-          <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:s.white,borderRadius:12,border:`1px solid ${s.border}`}}>
-            <div style={{fontSize:32,marginBottom:8}}>🔍</div>
-            <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>No agents listed yet in this area</div>
-            <div style={{fontSize:12,color:s.muted,marginBottom:14}}>We're building our network. Submit a request and we'll find you a qualified agent.</div>
-            <button onClick={()=>setShowForm(true)} style={{padding:"9px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Find Me a Realtor →</button>
-          </div>
-        )}
+      {/* Coming Soon */}
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:40,marginBottom:12}}>🤝</div>
+        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Realtors — Coming Soon</div>
+        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+          We're building our network of verified REALTORS® across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified agent in your area.
+        </div>
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request a Realtor →</button>
+          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Profile →</button>
+        </div>
       </div>
       </>}
 
@@ -5171,6 +5149,7 @@ function LawyersTab(){
   const [subTab,setSubTab]=useState<"find"|"guide">("find");
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
+  const [filterName,setFilterName]=useState("");
   const [filterType,setFilterType]=useState("all");
   const [selectedLawyer,setSelectedLawyer]=useState<any>(null);
   const [name,setName]=useState("");
@@ -5252,7 +5231,8 @@ function LawyersTab(){
     const matchProv=l.prov===filterProv;
     const matchCity=!filterCity||l.city.toLowerCase().includes(filterCity.toLowerCase());
     const matchType=filterType==="all"||l.types.includes(filterType);
-    return matchProv&&matchCity&&matchType;
+    const matchName=!filterName||l.name.toLowerCase().includes(filterName.toLowerCase())||l.firm.toLowerCase().includes(filterName.toLowerCase());
+    return matchProv&&matchCity&&matchType&&matchName;
   });
 
   const ls=LAW_SOCIETIES[filterProv];
@@ -5297,7 +5277,8 @@ function LawyersTab(){
       {/* Filters */}
       <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
         <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
-        <input type="text" placeholder="Search city..." value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,width:140}}/>
+        <select value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}><option value="">All Cities</option>{(PDATA[filterProv]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}</select>
+        <button onClick={()=>setFilterName("")} style={{padding:"7px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Search</button>
         <div style={{display:"flex",gap:4,flexWrap:"wrap"}}>
           {[["all","All Types"],["purchase","Purchase"],["firsttime","First-Time"],["refinance","Refinance"],["condo","Condo"]].map(([v,l])=>(
             <button key={v} onClick={()=>setFilterType(v)} style={{padding:"5px 10px",borderRadius:20,border:`1.5px solid ${filterType===v?s.navy:s.border}`,background:filterType===v?s.navy:s.white,color:filterType===v?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:filterType===v?700:400}}>{l}</button>
@@ -5306,38 +5287,19 @@ function LawyersTab(){
         <button onClick={()=>{setShowForm(true);setSelectedLawyer(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer</button>
       </div>
 
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:16}}>
-        {filtered.map(l=>(
-          <div key={l.id} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
-            <div style={{background:l.verified?`linear-gradient(135deg,${s.green},#15803d)`:`linear-gradient(135deg,#94a3b8,#64748b)`,padding:"12px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <div>
-                <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{l.name}</div>
-                <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{l.firm}</div>
-              </div>
-              {l.verified?<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>✓ Partner</span>:<span style={{background:"rgba(255,255,255,0.15)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Coming Soon</span>}
-            </div>
-            <div style={{padding:14}}>
-              <div style={{display:"flex",gap:8,marginBottom:10,flexWrap:"wrap"}}>
-                <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {l.city}, {l.prov}</span>
-                <span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>💰 {l.fee}</span>
-                {l.languages.map(lang=><span key={lang} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{lang}</span>)}
-              </div>
-              <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
-                {l.types.map(t=><span key={t} style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{t==="firsttime"?"First-Time":t}</span>)}
-              </div>
-              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:12}}>{l.bio}</p>
-              <button onClick={()=>{setSelectedLawyer(l);setShowForm(true);setLcity(l.city);}} style={{width:"100%",padding:"9px",background:l.verified?s.green:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>{l.verified?"Request Connection →":"Join Waitlist →"}</button>
-            </div>
-          </div>
-        ))}
-        {filtered.length===0&&(
-          <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:s.white,borderRadius:12,border:`1px solid ${s.border}`}}>
-            <div style={{fontSize:32,marginBottom:8}}>🔍</div>
-            <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>No lawyers listed yet in this area</div>
-            <div style={{fontSize:12,color:s.muted,marginBottom:14}}>We're building our network. Submit a request and we'll find you a qualified lawyer.</div>
-            <button onClick={()=>setShowForm(true)} style={{padding:"9px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Request a Lawyer →</button>
-          </div>
-        )}
+      </div>
+
+      {/* Coming Soon */}
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:40,marginBottom:12}}>⚖️</div>
+        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Real Estate Lawyers — Coming Soon</div>
+        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+          We're building our network of verified real estate lawyers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified lawyer in your area.
+        </div>
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer →</button>
+          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Practice →</button>
+        </div>
       </div>
 
       {/* Info strip */}
