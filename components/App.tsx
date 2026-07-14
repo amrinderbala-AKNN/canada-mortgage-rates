@@ -503,6 +503,7 @@ function InstallPrompt(){
   );
 }
 
+const TODAY=new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
 const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","Realtors","Lawyers","Consult","News","Resources"];
 const SEARCH_INDEX=[
   // Tabs
@@ -846,7 +847,8 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
       {!loading&&withRate.length>0&&(
         <div style={{display:"flex",alignItems:"center",gap:10,margin:"10px 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
           <span style={{fontSize:18}}>ℹ️</span>
-          <div><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest (AI-compiled estimate)</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
+          <div style={{flex:1}}><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest (AI-compiled estimate)</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
+          <div style={{fontSize:10,color:"#15803d",fontWeight:600,flexShrink:0,textAlign:"right"}}>🕐 Last updated<br/>{TODAY}</div>
         </div>
       )}
       <div style={{background:s.white,borderRadius:14,boxShadow:"0 4px 20px rgba(0,0,0,0.08)",overflow:"hidden",marginTop:6}}>
@@ -870,6 +872,10 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
             })}
           </tbody>
         </table>
+      </div>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 4px",flexWrap:"wrap",gap:6}}>
+        <div style={{fontSize:10,color:s.muted}}>⚠️ Rates are AI-compiled estimates. Always verify directly with the lender before applying.</div>
+        <div style={{fontSize:10,color:s.muted,fontWeight:600}}>🕐 Last updated: {TODAY}</div>
       </div>
 
       </>}
