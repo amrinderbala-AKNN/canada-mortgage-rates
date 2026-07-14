@@ -4090,9 +4090,25 @@ function RealtorsTab(){
   const [pSubmitting,setPSubmitting]=useState(false);
   const [faqOpen,setFaqOpen]=useState<string|null>(null);
 
-  const REALTORS=[
-    {id:1,name:"Coming Soon",brokerage:"RE/MAX Winnipeg",city:"Winnipeg",prov:"MB",specs:["firsttime","residential","condo"],experience:"10+ years",languages:["English"],rating:5,reviews:0,bio:"Winnipeg residential specialist coming soon. Submit your details and we'll connect you with a top-rated local realtor.",verified:false},
-    {id:2,name:"Coming Soon",brokerage:"Royal LePage Manitoba",city:"Winnipeg",prov:"MB",specs:["residential","investment"],experience:"8+ years",languages:["English","Punjabi"],rating:5,reviews:0,bio:"Specializing in Winnipeg family homes and investment properties. Submit a request to be connected.",verified:false},
+  // PARTNER REALTORS — Add real partners here when signed up
+  // Each partner can have active listings displayed on the site
+  const REALTORS:any[]=[
+    // Example structure — replace with real partner data:
+    // {
+    //   id:1, name:"Jane Smith", brokerage:"RE/MAX Winnipeg",
+    //   city:"Winnipeg", prov:"MB", phone:"204-555-0100",
+    //   email:"jane@remax.ca", website:"https://janesmith.ca",
+    //   photo:"", // URL to headshot
+    //   specs:["firsttime","residential","condo"],
+    //   experience:"10+ years", languages:["English","French"],
+    //   rating:4.9, reviews:47, verified:true, featured:true,
+    //   bio:"Winnipeg residential specialist with 10+ years...",
+    //   listings:[
+    //     {address:"123 Main St, Winnipeg MB", price:450000,
+    //      beds:3, baths:2, sqft:1400, type:"Detached",
+    //      url:"https://realtor.ca/...", img:"", status:"Active"}
+    //   ]
+    // }
   ];
 
   const FAQS=[
@@ -4187,18 +4203,77 @@ function RealtorsTab(){
         <button onClick={()=>{setShowForm(true);setSelectedRealtor(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🤝 Find Me a Realtor</button>
       </div>
 
-      {/* Coming Soon */}
-      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
-        <div style={{fontSize:40,marginBottom:12}}>🤝</div>
-        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Realtors — Coming Soon</div>
-        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-          We're building our network of verified REALTORS® across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified agent in your area.
+      {/* Partner Realtors or Coming Soon */}
+      {REALTORS.filter(r=>r.prov===filterProv&&(!filterCity||r.city===filterCity)).length>0?(
+        <div style={{marginBottom:16}}>
+          {/* Partner cards */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:14}}>
+            {REALTORS.filter(r=>r.prov===filterProv&&(!filterCity||r.city===filterCity)).map(r=>(
+              <div key={r.id} style={{background:s.white,borderRadius:12,border:`2px solid ${r.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                <div style={{background:r.featured?`linear-gradient(135deg,${s.gold},#d97706)`:`linear-gradient(135deg,${s.green},#15803d)`,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:10}}>
+                    {r.photo?<img src={r.photo} style={{width:40,height:40,borderRadius:"50%",objectFit:"cover",border:"2px solid rgba(255,255,255,0.3)"}} alt={r.name}/>:<div style={{width:40,height:40,borderRadius:"50%",background:"rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🤝</div>}
+                    <div>
+                      <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{r.name}</div>
+                      <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{r.brokerage}</div>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:4}}>
+                    {r.featured&&<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
+                    <span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>✓ Verified Partner</span>
+                  </div>
+                </div>
+                <div style={{padding:14}}>
+                  <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                    <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {r.city}, {r.prov}</span>
+                    <span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {r.experience}</span>
+                    {r.rating&&<span style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⭐ {r.rating} ({r.reviews} reviews)</span>}
+                  </div>
+                  <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
+                    {r.specs.map((spec:string)=><span key={spec} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{spec==="firsttime"?"First-Time":spec}</span>)}
+                  </div>
+                  <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{r.bio}</p>
+                  {r.languages?.length>1&&<div style={{fontSize:10,color:s.muted,marginBottom:10}}>🗣️ {r.languages.join(" · ")}</div>}
+
+                  {/* Active Listings */}
+                  {r.listings?.length>0&&(
+                    <div style={{marginBottom:10}}>
+                      <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:6}}>🏘️ Active Listings ({r.listings.length})</div>
+                      {r.listings.map((l:any,i:number)=>(
+                        <a key={i} href={l.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 8px",background:"#f8fafc",borderRadius:6,marginBottom:4,textDecoration:"none",border:`1px solid ${s.border}`}}>
+                          <div>
+                            <div style={{fontSize:11,fontWeight:700,color:s.navy}}>{l.address}</div>
+                            <div style={{fontSize:10,color:s.muted}}>{l.beds}bd · {l.baths}ba · {l.sqft?.toLocaleString()} sqft · {l.type}</div>
+                          </div>
+                          <div style={{fontSize:12,fontWeight:800,color:s.green,flexShrink:0,marginLeft:8}}>${(l.price/1000).toFixed(0)}K</div>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                  <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                    <button onClick={()=>{setSelectedRealtor(r);setShowForm(true);setRcity(r.city);}} style={{flex:1,padding:"9px",background:s.green,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect →</button>
+                    {r.website&&<a href={r.website} target="_blank" rel="noopener noreferrer" style={{padding:"9px 12px",background:"#f1f5f9",color:s.navy,border:`1px solid ${s.border}`,borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none"}}>Website →</a>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request a Realtor →</button>
-          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Profile →</button>
+      ):(
+        /* Coming Soon */
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+          <div style={{fontSize:40,marginBottom:12}}>🤝</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Realtors — Coming Soon</div>
+          <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+            We're building our network of verified REALTORS® across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified agent in your area.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+            <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request a Realtor →</button>
+            <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Profile →</button>
+          </div>
         </div>
-      </div>
+      )}
       </>}
 
       {subTab==="guide"&&<>
@@ -5229,9 +5304,22 @@ function LawyersTab(){
   };
 
   // Placeholder lawyer cards — replace with real ones as you sign partners
-  const LAWYERS=[
-    {id:1,name:"Coming Soon",firm:"Winnipeg Real Estate Law",city:"Winnipeg",prov:"MB",types:["purchase","refinance","firsttime"],fee:"$1,200–$1,800",languages:["English"],phone:"",email:"",website:"",rating:5,reviews:0,bio:"We are actively recruiting real estate lawyers in Winnipeg. Submit your request and we'll connect you as soon as our first partner is confirmed.",verified:false},
-    {id:2,name:"Coming Soon",firm:"Manitoba Conveyancing Group",city:"Brandon",prov:"MB",types:["purchase","refinance"],fee:"$1,100–$1,600",languages:["English"],phone:"",email:"",website:"",rating:5,reviews:0,bio:"Brandon-area real estate law services coming soon. Submit your details and we'll follow up.",verified:false},
+  // PARTNER LAWYERS — Add real partners here when signed up
+  const LAWYERS:any[]=[
+    // Example structure — replace with real partner data:
+    // {
+    //   id:1, name:"John Smith", firm:"Smith Real Estate Law",
+    //   city:"Winnipeg", prov:"MB", phone:"204-555-0200",
+    //   email:"john@smithlaw.ca", website:"https://smithlaw.ca",
+    //   photo:"", // URL to headshot
+    //   types:["purchase","refinance","firsttime","condo"],
+    //   fee:"$1,200–$1,800", languages:["English","Punjabi"],
+    //   rating:4.9, reviews:32, verified:true, featured:true,
+    //   lawSocietyUrl:"https://www.lawsociety.mb.ca/...",
+    //   bio:"Real estate lawyer with 15+ years experience...",
+    //   address:"123 Portage Ave, Winnipeg MB",
+    //   turnaround:"5–7 business days"
+    // }
   ];
 
   const FAQS=[
@@ -5319,18 +5407,62 @@ function LawyersTab(){
         <button onClick={()=>{setShowForm(true);setSelectedLawyer(null);}} style={{marginLeft:"auto",padding:"7px 16px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer</button>
       </div>
 
-      {/* Coming Soon */}
-      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
-        <div style={{fontSize:40,marginBottom:12}}>⚖️</div>
-        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Real Estate Lawyers — Coming Soon</div>
-        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-          We're building our network of verified real estate lawyers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified lawyer in your area.
+      {/* Partner Lawyers or Coming Soon */}
+      {LAWYERS.filter(l=>l.prov===filterProv&&(!filterCity||l.city===filterCity)).length>0?(
+        <div style={{marginBottom:16}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:14}}>
+            {LAWYERS.filter(l=>l.prov===filterProv&&(!filterCity||l.city===filterCity)).map(l=>(
+              <div key={l.id} style={{background:s.white,borderRadius:12,border:`2px solid ${l.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                <div style={{background:l.featured?`linear-gradient(135deg,${s.gold},#d97706)`:`linear-gradient(135deg,#92400e,#78350f)`,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:10}}>
+                    {l.photo?<img src={l.photo} style={{width:40,height:40,borderRadius:"50%",objectFit:"cover",border:"2px solid rgba(255,255,255,0.3)"}} alt={l.name}/>:<div style={{width:40,height:40,borderRadius:"50%",background:"rgba(255,255,255,0.2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>⚖️</div>}
+                    <div>
+                      <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{l.name}</div>
+                      <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{l.firm}</div>
+                    </div>
+                  </div>
+                  <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:4}}>
+                    {l.featured&&<span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
+                    <span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>✓ Verified Partner</span>
+                  </div>
+                </div>
+                <div style={{padding:14}}>
+                  <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                    <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {l.city}, {l.prov}</span>
+                    <span style={{background:"#fef3c7",color:"#92400e",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>💰 {l.fee}</span>
+                    {l.rating&&<span style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⭐ {l.rating} ({l.reviews} reviews)</span>}
+                  </div>
+                  <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
+                    {l.types.map((t:string)=><span key={t} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700,textTransform:"capitalize"}}>{t==="firsttime"?"First-Time":t}</span>)}
+                  </div>
+                  <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:8}}>{l.bio}</p>
+                  {l.address&&<div style={{fontSize:10,color:s.muted,marginBottom:4}}>📍 {l.address}</div>}
+                  {l.turnaround&&<div style={{fontSize:10,color:s.muted,marginBottom:4}}>⏱ Typical turnaround: {l.turnaround}</div>}
+                  {l.languages?.length>1&&<div style={{fontSize:10,color:s.muted,marginBottom:8}}>🗣️ {l.languages.join(" · ")}</div>}
+                  {l.lawSocietyUrl&&<a href={l.lawSocietyUrl} target="_blank" rel="noopener noreferrer" style={{display:"block",fontSize:10,color:s.blue,marginBottom:8,textDecoration:"underline"}}>✓ Verify Law Society membership →</a>}
+                  <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                    <button onClick={()=>{setSelectedLawyer(l);setShowForm(true);setLcity(l.city);}} style={{flex:1,padding:"9px",background:"#92400e",color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect →</button>
+                    {l.website&&<a href={l.website} target="_blank" rel="noopener noreferrer" style={{padding:"9px 12px",background:"#f1f5f9",color:s.navy,border:`1px solid ${s.border}`,borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none"}}>Website →</a>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer →</button>
-          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Practice →</button>
+      ):(
+        /* Coming Soon */
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+          <div style={{fontSize:40,marginBottom:12}}>⚖️</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Real Estate Lawyers — Coming Soon</div>
+          <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+            We're building our network of verified real estate lawyers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified lawyer in your area.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+            <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer →</button>
+            <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🤝 List Your Practice →</button>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Info strip */}
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12,marginBottom:16}}>
