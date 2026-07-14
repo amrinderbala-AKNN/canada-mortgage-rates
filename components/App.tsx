@@ -4299,7 +4299,8 @@ function HomeEvalForm(){
         <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"20px",textAlign:"center"}}>
           <div style={{fontSize:28,marginBottom:8}}>✅</div>
           <div style={{fontSize:14,fontWeight:800,color:"#15803d",marginBottom:4}}>Request Received!</div>
-          <div style={{fontSize:12,color:"#16a34a",lineHeight:1.6}}>We'll connect you with a local professional in your area within 1–2 business days. Check your email for confirmation.</div>
+          <div style={{fontSize:12,color:"#16a34a",lineHeight:1.6,marginBottom:12}}>We'll connect you with a local professional in your area within 1–2 business days. Check your email for confirmation.</div>
+          <button onClick={()=>setOk(false)} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Send Another Request →</button>
         </div>
       ):(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
