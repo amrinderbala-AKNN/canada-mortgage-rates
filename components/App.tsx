@@ -685,7 +685,10 @@ function NavBar({active,setActive}){
                   <div style={{position:"absolute",top:"100%",left:0,background:"#fff",borderRadius:10,boxShadow:"0 8px 30px rgba(0,0,0,0.18)",border:`1px solid ${s.border}`,minWidth:220,zIndex:9999,padding:"6px 0"}}>
                     <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{t}</div>
                     {menu.map((item,i)=>(
-                      <button key={i} onClick={()=>{setActive(t);setHoverTab(null);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
+                      <button key={i} onClick={()=>{
+                        setActive(t);setHoverTab(null);window.scrollTo({top:0,behavior:"smooth"});
+                        setTimeout(()=>window.dispatchEvent(new CustomEvent("switchSubTab",{detail:{tab:t,label:item.label}})),150);
+                      }} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
                         onMouseEnter={e=>(e.currentTarget.style.background="#f8fafc")}
                         onMouseLeave={e=>(e.currentTarget.style.background="none")}>
                         <span style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</span>
@@ -745,7 +748,11 @@ function Hero({prov,city,locLoading}){
 
 // ── RATES TAB ─────────────────────────────────────────────────────────────────
 function RatesTab({initProv,initCity,onLocationChange,bocRates}){
-  const [subTab,setSubTab]=useState<"compare"|"history"|"lenders">("compare");
+  const [subTab,setSubTab]=useState<"compare"|"offers"|"history"|"lenders">("compare");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Rates")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [prov,setProv]=useState(initProv);
   const [city,setCity]=useState(initCity);
   const [term,setTerm]=useState("1-year");
@@ -2858,6 +2865,10 @@ function InsuranceFAQ(){
 function InsuranceTab({initProv}){
   const [homeVal,setHomeVal]=useState(500000);const [homeType,setHomeType]=useState("detached");const [yearBuilt,setYearBuilt]=useState("mid");const [prov,setProv]=useState(initProv);const [city,setCity]=useState(PDATA[initProv]?.cities[0]||"");const [results,setResults]=useState(null);const resultRef=useRef(null);
   const [insTab,setInsTab]=useState<"quote"|"coverage"|"deductible"|"claims"|"guide">("quote");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Insurance")setInsTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   useEffect(()=>{setProv(initProv);setCity(PDATA[initProv]?.cities[0]||"");},[initProv]);
   useEffect(()=>{setCity(PDATA[prov]?.cities[0]||"");},[prov]);
 
@@ -3280,6 +3291,10 @@ function RateImpactTab(){
 
 function RateFinderTab(){
   const [subTab,setSubTab]=useState<"finder"|"compare"|"impact"|"preapproval">("finder");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Rate Finder")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [step,setStep]=useState(0);const [answers,setAnswers]=useState<any>({});const [result,setResult]=useState<any>(null);
   const steps=[
     {q:"What is the purpose of your mortgage?",key:"purpose",hint:"This affects which programs and lenders you qualify for.",opts:[{v:"🏠 First Home Purchase",tip:"First-time buyers get access to FHSA, HBP, and provincial grants."},{v:"🏡 Subsequent Purchase",tip:"Standard qualification rules apply. Your existing equity can help."},{v:"🔄 Renewal / Transfer",tip:"No penalty at renewal. Shop around — your lender's first offer is rarely best."},{v:"💳 Refinance",tip:"Breaking early triggers a penalty. We'll factor this into your analysis."}]},
@@ -4089,6 +4104,10 @@ function NeighbourhoodChecklist(){
 
 function RealtorsTab(){
   const [subTab,setSubTab]=useState<"find"|"guide">("find");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Realtors")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterSpec,setFilterSpec]=useState("all");
@@ -4656,6 +4675,10 @@ function HomeEvalForm(){
 
 function NewBuildsTab(){
   const [nbTab,setNbTab]=useState<"explore"|"guide"|"mortgage"|"connect">("explore");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="New Builds")setNbTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterType,setFilterType]=useState("all");
@@ -5127,6 +5150,10 @@ function NewBuildDeveloperForm(){
 function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [type,setType]=useState("any");const [beds,setBeds]=useState("any");const [maxPrice,setMaxPrice]=useState("");const [area,setArea]=useState("");
   const [subTab,setSubTab]=useState<"listings"|"tools"|"value">("listings");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Listings")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
 
   useEffect(()=>{setProv(initProv);setCity(initCity);},[initProv,initCity]);
   useEffect(()=>{const cities=PDATA[prov]?.cities||[];if(!cities.includes(city))setCity(cities[0]||"");},[prov]);
@@ -5503,6 +5530,10 @@ function RenewalFAQ(){
 
 function RenewalTab(){
   const [subTab,setSubTab]=useState<"calculator"|"guide"|"negotiate">("calculator");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Renewal")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [balance,setBalance]=useState(350000);
   const [currentRate,setCurrentRate]=useState(5.5);
   const [offerRate,setOfferRate]=useState(5.1);
@@ -5748,6 +5779,10 @@ function RenewalTab(){
 
 function LawyersTab(){
   const [subTab,setSubTab]=useState<"find"|"guide">("find");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Lawyers")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
   const [filterName,setFilterName]=useState("");
@@ -6660,7 +6695,39 @@ export default function App(){
     window.addEventListener("switchTab",handler);
     const alertHandler=()=>setShowRateAlert(true);
     window.addEventListener("openRateAlert",alertHandler);
-    return()=>{window.removeEventListener("switchTab",handler);window.removeEventListener("openRateAlert",alertHandler);};
+    const subTabHandler=(e:any)=>{
+      const {tab,label}=e.detail;
+      // Map dropdown labels to sub-tab event values
+      const MAP:{[k:string]:string}={
+        // Rates
+        "📊 Compare Rates":"compare","🎁 Current Offers":"offers","📈 Rate History":"history","🏦 Lender Guide":"lenders",
+        // Rate Finder
+        "🎯 Rate Finder":"finder","📊 Fixed vs Variable":"compare","🧮 Rate Impact":"impact","📋 Pre-Approval":"preapproval",
+        // Renewal
+        "🔄 Compare Offer":"calculator","📅 Renewal Guide":"guide","💬 Negotiate Script":"negotiate",
+        // Listings
+        "🏘️ Find Listings":"listings","📊 Market Tools":"tools","🏡 Home Value":"value",
+        // New Builds
+        "🏘️ Explore Builds":"explore","📋 Buyer's Guide":"guide","💳 Construction Mortgage":"mortgage","🤝 Connect":"connect",
+        // Realtors
+        "🤝 Find a Realtor":"find","📋 Buyer's Guide":"guide",
+        // Lawyers
+        "⚖️ Find a Lawyer":"find","📋 Closing Guide":"guide",
+        // Insurance
+        "🏠 Get Quotes":"quote","🛡️ What's Covered":"coverage","💰 Deductible Guide":"deductible","🚨 Claims Guide":"claims","📖 Insurance Guide":"guide",
+        // Property Tax — no sub-tabs, handled by scroll
+        // Home
+        "🏠 Overview":"overview","🧮 Tools":"tools","🤝 Services":"services","📋 About":"about",
+      };
+      const subVal=MAP[label];
+      if(subVal)window.dispatchEvent(new CustomEvent("setSubTab",{detail:{tab,sub:subVal}}));
+    };
+    window.addEventListener("switchSubTab",subTabHandler);
+    return()=>{
+      window.removeEventListener("switchTab",handler);
+      window.removeEventListener("openRateAlert",alertHandler);
+      window.removeEventListener("switchSubTab",subTabHandler);
+    };
   },[]);
 
   useEffect(()=>{
