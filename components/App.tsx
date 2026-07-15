@@ -677,7 +677,7 @@ function NavBar({active,setActive}){
               <div key={t} style={{position:"relative"}}
                 onMouseEnter={()=>setHoverTab(t)}
                 onMouseLeave={()=>setHoverTab(null)}>
-                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.8)",fontSize:10,padding:"5px 8px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s"}}>
+                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.85)",fontSize:11,padding:"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
                   {emoji&&<span style={{fontSize:11}}>{emoji}</span>}
                   {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>NEW</span></>:t}
                 </button>
@@ -4701,14 +4701,6 @@ function NewBuildsTab(){
     // }
   ];
 
-  const KNOWN_BUILDERS=[
-    {name:"Broadview Homes",prov:"MB",city:"Winnipeg",url:"https://www.broadviewhomeswpg.com",types:["Detached","Townhome"],priceFrom:"$350K+",note:"Award-winning builder, 30+ years. Communities in Sage Creek, Bridgwater.",logo:"🏗️"},
-    {name:"A&S Homes",prov:"MB",city:"Winnipeg",url:"https://ashomes.ca",types:["Detached","Multi-Family"],priceFrom:"$350K+",note:"50 years of building. Communities in Highland Pointe, Meadowlands, Prairie Pointe.",logo:"🏗️"},
-    {name:"Ventura Custom Homes",prov:"MB",city:"Winnipeg",url:"https://www.ventura.mb.ca",types:["Detached","Custom"],priceFrom:"$232K+",note:"Modern homes at affordable prices. Stonewall and Winnipeg locations.",logo:"🏗️"},
-    {name:"Daytona Homes",prov:"MB",city:"Winnipeg",url:"https://www.daytonahomes.ca/winnipeg",types:["Detached","Townhome"],priceFrom:"$400K+",note:"30+ years experience. Award-winning designs across Winnipeg.",logo:"🏗️"},
-    {name:"Kensington Homes",prov:"MB",city:"Winnipeg",url:"https://kensingtonhomes.com",types:["Detached","Bungalow","Townhome"],priceFrom:"$380K+",note:"50+ years building in Winnipeg. National Home Warranty enrolled.",logo:"🏗️"},
-    {name:"Randall Homes",prov:"MB",city:"Winnipeg",url:"https://www.randallhomes.net",types:["Detached"],priceFrom:"$400K+",note:"Parade of Homes regular. Custom and semi-custom builds across Winnipeg.",logo:"🏗️"},
-  ];
 
   return(
     <div>
@@ -4743,7 +4735,7 @@ function NewBuildsTab(){
             </select>
             <button onClick={()=>setSearched(true)} style={{padding:"7px 18px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Search</button>
             {searched&&<span style={{fontSize:11,color:s.muted}}>
-              {(DEVELOPERS.filter(d=>d.prov===filterProv&&(!filterCity||d.city===filterCity)).length + KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).length)} builders found
+              {DEVELOPERS.filter(d=>d.prov===filterProv&&(!filterCity||d.city===filterCity)).length} builders found
             </span>}
           </div>
           {/* Type filter */}
@@ -4788,37 +4780,15 @@ function NewBuildsTab(){
               ))}
             </div>
           ):(
-            <div>
-              {/* Known builders directory */}
-              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#92400e"}}>
-                💡 Featured developer partnerships coming soon. Browse our vetted builder directory below, or <button onClick={()=>setNbTab("connect")} style={{background:"none",border:"none",color:"#92400e",textDecoration:"underline",cursor:"pointer",fontSize:11,fontWeight:700,padding:0}}>submit your project →</button>
+            <div style={{background:`linear-gradient(135deg,#1a3a5c,#0d2240)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+              <div style={{fontSize:40,marginBottom:12}}>🏗️</div>
+              <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>New Home Builders — Coming Soon</div>
+              <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+                We're partnering with verified home builders and developers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a buyer request and we'll connect you when our network is ready.
               </div>
-              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏗️ Trusted Builders in {PDATA[filterProv]?.name}</h3>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:10,marginBottom:14}}>
-                {KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).map(b=>(
-                  <div key={b.name} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.04)"}}>
-                    <div style={{background:`linear-gradient(135deg,#1a3a5c,#0d2240)`,padding:"10px 14px",display:"flex",alignItems:"center",gap:8}}>
-                      <span style={{fontSize:20}}>{b.logo}</span>
-                      <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{b.name}</div>
-                    </div>
-                    <div style={{padding:12}}>
-                      <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
-                        {b.types.map((t:string)=><span key={t} style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{t}</span>)}
-                        <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{b.priceFrom}</span>
-                      </div>
-                      <p style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:10}}>{b.note}</p>
-                      <a href={b.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px",background:"#1a3a5c",color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none"}}>Visit Website →</a>
-                    </div>
-                  </div>
-                ))}
-                {KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).length===0&&(
-                  <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:"#f8fafc",borderRadius:12,border:`1px solid ${s.border}`}}>
-                    <div style={{fontSize:32,marginBottom:8}}>🏗️</div>
-                    <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>Builder directory coming for {PDATA[filterProv]?.name}</div>
-                    <div style={{fontSize:12,color:s.muted,marginBottom:14}}>Are you a developer in this province? Get featured on our platform.</div>
-                    <button onClick={()=>setNbTab("connect")} style={{padding:"9px 20px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Partner With Us →</button>
-                  </div>
-                )}
+              <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+                <button onClick={()=>setNbTab("connect")} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏠 I'm Looking to Buy →</button>
+                <button onClick={()=>setNbTab("connect")} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏗️ List My Development →</button>
               </div>
             </div>
           )}
