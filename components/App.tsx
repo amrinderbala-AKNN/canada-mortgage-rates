@@ -504,7 +504,7 @@ function InstallPrompt(){
 }
 
 const TODAY=new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","Realtors","Lawyers","Consult","News","Resources"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Realtors","Lawyers","Consult","News","Resources"];
 const SEARCH_INDEX=[
   // Tabs
   {title:"Home",desc:"Overview, BoC rates, rate alerts, testimonials",tab:"Home",icon:"🍁",type:"Tab"},
@@ -636,7 +636,7 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:54,gap:6}}>
@@ -661,12 +661,43 @@ function NavBar({active,setActive}){
           <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none",paddingLeft:20,paddingRight:20,width:"100%"}}>
             {TABS.map(t=>{
               const isActive=active===t;
-              const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+              const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+              const subMenus:{[k:string]:{label:string,detail:string}[]}={
+                "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 20+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs credit unions vs brokers"}],
+                "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
+                "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
+                "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
+                "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
+                "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
+                "Realtors":[{label:"🤝 Find a Realtor",detail:"Connect with local agents"},{label:"📋 Buyer's Guide",detail:"Home buying timeline & FAQ"}],
+                "Lawyers":[{label:"⚖️ Find a Lawyer",detail:"Connect with real estate lawyers"},{label:"📋 Closing Guide",detail:"Timeline, costs & FAQ"}],
+                "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
+                "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
+                "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
+              };
+              const menu=subMenus[t];
               return(
-                <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",flexShrink:0,display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
-                  {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
-                  {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t}
-                </button>
+                <div key={t} style={{position:"relative",flexShrink:0}} className="tab-wrapper"
+                  onMouseEnter={e=>{const d=e.currentTarget.querySelector('.tab-dropdown') as HTMLElement;if(d)d.style.display="block";}}
+                  onMouseLeave={e=>{const d=e.currentTarget.querySelector('.tab-dropdown') as HTMLElement;if(d)d.style.display="none";}}>
+                  <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
+                    {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
+                    {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>NEW</span></>:t}
+                  </button>
+                  {menu&&(
+                    <div className="tab-dropdown" style={{display:"none",position:"absolute",top:"100%",left:0,background:"#fff",borderRadius:10,boxShadow:"0 8px 30px rgba(0,0,0,0.15)",border:`1px solid ${s.border}`,minWidth:220,zIndex:999,padding:"6px 0"}}>
+                      <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{t}</div>
+                      {menu.map((item,i)=>(
+                        <button key={i} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
+                          onMouseEnter={e=>e.currentTarget.style.background="#f8fafc"}
+                          onMouseLeave={e=>e.currentTarget.style.background="none"}>
+                          <span style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</span>
+                          <span style={{fontSize:10,color:s.muted,marginTop:1}}>{item.detail}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
@@ -681,7 +712,7 @@ function NavBar({active,setActive}){
             <div key={g.label}>
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
               {g.tabs.map(t=>{
-                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
                 return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
               })}
             </div>
@@ -4630,6 +4661,476 @@ function HomeEvalForm(){
   );
 }
 
+function NewBuildsTab(){
+  const [nbTab,setNbTab]=useState<"explore"|"guide"|"mortgage"|"connect">("explore");
+  const [filterProv,setFilterProv]=useState("MB");
+  const [filterCity,setFilterCity]=useState("");
+  const [filterType,setFilterType]=useState("all");
+  const [searched,setSearched]=useState(false);
+
+  // PARTNER DEVELOPERS — Add real partners here when signed up
+  const DEVELOPERS:any[]=[
+    // Example structure:
+    // {
+    //   id:1, name:"Broadview Homes", city:"Winnipeg", prov:"MB",
+    //   types:["detached","townhome"], priceFrom:350000, priceTo:650000,
+    //   communities:["Sage Creek","Bridgwater"], completionDate:"2026-2027",
+    //   website:"https://broadviewhomeswpg.com", logo:"",
+    //   featured:true, badge:"Top Builder",
+    //   desc:"Award-winning Winnipeg builder with 30+ years experience.",
+    //   developments:[
+    //     {name:"Sage Creek Phase 4", type:"Detached", beds:"3-4",
+    //      priceFrom:420000, status:"Selling Now", url:"https://..."}
+    //   ]
+    // }
+  ];
+
+  const KNOWN_BUILDERS=[
+    {name:"Broadview Homes",prov:"MB",city:"Winnipeg",url:"https://www.broadviewhomeswpg.com",types:["Detached","Townhome"],priceFrom:"$350K+",note:"Award-winning builder, 30+ years. Communities in Sage Creek, Bridgwater.",logo:"🏗️"},
+    {name:"A&S Homes",prov:"MB",city:"Winnipeg",url:"https://ashomes.ca",types:["Detached","Multi-Family"],priceFrom:"$350K+",note:"50 years of building. Communities in Highland Pointe, Meadowlands, Prairie Pointe.",logo:"🏗️"},
+    {name:"Ventura Custom Homes",prov:"MB",city:"Winnipeg",url:"https://www.ventura.mb.ca",types:["Detached","Custom"],priceFrom:"$232K+",note:"Modern homes at affordable prices. Stonewall and Winnipeg locations.",logo:"🏗️"},
+    {name:"Daytona Homes",prov:"MB",city:"Winnipeg",url:"https://www.daytonahomes.ca/winnipeg",types:["Detached","Townhome"],priceFrom:"$400K+",note:"30+ years experience. Award-winning designs across Winnipeg.",logo:"🏗️"},
+    {name:"Kensington Homes",prov:"MB",city:"Winnipeg",url:"https://kensingtonhomes.com",types:["Detached","Bungalow","Townhome"],priceFrom:"$380K+",note:"50+ years building in Winnipeg. National Home Warranty enrolled.",logo:"🏗️"},
+    {name:"Randall Homes",prov:"MB",city:"Winnipeg",url:"https://www.randallhomes.net",types:["Detached"],priceFrom:"$400K+",note:"Parade of Homes regular. Custom and semi-custom builds across Winnipeg.",logo:"🏗️"},
+  ];
+
+  return(
+    <div>
+      {/* Header */}
+      <div style={{background:`linear-gradient(135deg,#1a3a5c,#0d2240)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🏗️</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>New Home Builds & Pre-Construction</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Explore new home developments, understand construction mortgages, and connect with builders across Canada.</p>
+      </div>
+
+      {/* Sub-tabs */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setNbTab("explore")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${nbTab==="explore"?s.navy:s.border}`,background:nbTab==="explore"?s.navy:s.white,color:nbTab==="explore"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏘️ Explore Builds</button>
+        <button onClick={()=>setNbTab("guide")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${nbTab==="guide"?s.navy:s.border}`,background:nbTab==="guide"?s.navy:s.white,color:nbTab==="guide"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📋 Buyer's Guide</button>
+        <button onClick={()=>setNbTab("mortgage")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${nbTab==="mortgage"?s.navy:s.border}`,background:nbTab==="mortgage"?s.navy:s.white,color:nbTab==="mortgage"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💳 Construction Mortgage</button>
+        <button onClick={()=>setNbTab("connect")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${nbTab==="connect"?s.gold:s.border}`,background:nbTab==="connect"?s.gold:s.white,color:nbTab==="connect"?s.navy:s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🤝 Connect</button>
+      </div>
+
+      {/* Explore Builds */}
+      {nbTab==="explore"&&(
+        <div>
+          {/* Province + City + Type filter */}
+          <div style={{background:s.white,borderRadius:10,padding:"10px 14px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
+            <span style={{fontSize:12,fontWeight:700,color:s.navy}}>📍 Province:</span>
+            <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");setSearched(false);}} style={{padding:"6px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>
+              {Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+            </select>
+            <span style={{fontSize:12,fontWeight:700,color:s.navy}}>🏙️ City:</span>
+            <select value={filterCity} onChange={e=>{setFilterCity(e.target.value);setSearched(false);}} style={{padding:"6px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>
+              <option value="">All Cities</option>
+              {(PDATA[filterProv]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}
+            </select>
+            <button onClick={()=>setSearched(true)} style={{padding:"7px 18px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Search</button>
+            {searched&&<span style={{fontSize:11,color:s.muted}}>
+              {(DEVELOPERS.filter(d=>d.prov===filterProv&&(!filterCity||d.city===filterCity)).length + KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).length)} builders found
+            </span>}
+          </div>
+          {/* Type filter */}
+          <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+            {["all","detached","townhome","condo","custom"].map(t=>(
+              <button key={t} onClick={()=>setFilterType(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${filterType===t?s.navy:s.border}`,background:filterType===t?s.navy:s.white,color:filterType===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:filterType===t?700:400,textTransform:"capitalize"}}>{t==="all"?"All Types":t}</button>
+            ))}
+          </div>
+
+          {/* Partner developers or known builders */}
+          {DEVELOPERS.filter(d=>d.prov===filterProv&&(!filterCity||d.city===filterCity)).length>0?(
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12,marginBottom:14}}>
+              {DEVELOPERS.filter(d=>d.prov===filterProv&&(!filterCity||d.city===filterCity)).map(d=>(
+                <div key={d.id} style={{background:s.white,borderRadius:12,border:`2px solid ${d.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 12px rgba(0,0,0,0.06)"}}>
+                  <div style={{background:`linear-gradient(135deg,#1a3a5c,#0d2240)`,padding:"14px 16px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div style={{color:"#fff",fontSize:14,fontWeight:800}}>{d.name}</div>
+                    {d.featured&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
+                  </div>
+                  <div style={{padding:14}}>
+                    <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                      <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {d.city}, {d.prov}</span>
+                      <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>💰 From ${(d.priceFrom/1000).toFixed(0)}K</span>
+                    </div>
+                    <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{d.desc}</p>
+                    {d.developments?.length>0&&(
+                      <div style={{marginBottom:10}}>
+                        <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:6}}>🏘️ Active Developments</div>
+                        {d.developments.map((dev:any,i:number)=>(
+                          <a key={i} href={dev.url} target="_blank" rel="noopener noreferrer" style={{display:"flex",justifyContent:"space-between",padding:"6px 8px",background:"#f8fafc",borderRadius:6,marginBottom:4,textDecoration:"none",border:`1px solid ${s.border}`}}>
+                            <div>
+                              <div style={{fontSize:11,fontWeight:700,color:s.navy}}>{dev.name}</div>
+                              <div style={{fontSize:10,color:s.muted}}>{dev.type} · {dev.beds} beds · {dev.status}</div>
+                            </div>
+                            <div style={{fontSize:12,fontWeight:800,color:s.green,flexShrink:0,marginLeft:8}}>From ${(dev.priceFrom/1000).toFixed(0)}K</div>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                    <a href={d.website} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"9px",background:s.navy,color:"#fff",borderRadius:8,fontSize:12,fontWeight:700,textAlign:"center",textDecoration:"none"}}>View Developments →</a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ):(
+            <div>
+              {/* Known builders directory */}
+              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#92400e"}}>
+                💡 Featured developer partnerships coming soon. Browse our vetted builder directory below, or <button onClick={()=>setNbTab("connect")} style={{background:"none",border:"none",color:"#92400e",textDecoration:"underline",cursor:"pointer",fontSize:11,fontWeight:700,padding:0}}>submit your project →</button>
+              </div>
+              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏗️ Trusted Builders in {PDATA[filterProv]?.name}</h3>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:10,marginBottom:14}}>
+                {KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).map(b=>(
+                  <div key={b.name} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.04)"}}>
+                    <div style={{background:`linear-gradient(135deg,#1a3a5c,#0d2240)`,padding:"10px 14px",display:"flex",alignItems:"center",gap:8}}>
+                      <span style={{fontSize:20}}>{b.logo}</span>
+                      <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{b.name}</div>
+                    </div>
+                    <div style={{padding:12}}>
+                      <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
+                        {b.types.map((t:string)=><span key={t} style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{t}</span>)}
+                        <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>{b.priceFrom}</span>
+                      </div>
+                      <p style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:10}}>{b.note}</p>
+                      <a href={b.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"8px",background:"#1a3a5c",color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none"}}>Visit Website →</a>
+                    </div>
+                  </div>
+                ))}
+                {KNOWN_BUILDERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)&&(filterType==="all"||b.types.map((t:string)=>t.toLowerCase()).includes(filterType))).length===0&&(
+                  <div style={{gridColumn:"1/-1",textAlign:"center",padding:"32px",background:"#f8fafc",borderRadius:12,border:`1px solid ${s.border}`}}>
+                    <div style={{fontSize:32,marginBottom:8}}>🏗️</div>
+                    <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>Builder directory coming for {PDATA[filterProv]?.name}</div>
+                    <div style={{fontSize:12,color:s.muted,marginBottom:14}}>Are you a developer in this province? Get featured on our platform.</div>
+                    <button onClick={()=>setNbTab("connect")} style={{padding:"9px 20px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Partner With Us →</button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Cross promo */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,marginTop:4}}>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Listings"}))} style={{background:`linear-gradient(135deg,#f59e0b,#d97706)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+              <div style={{fontSize:20,marginBottom:4}}>🏘️</div>
+              <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Browse Resale Listings</div>
+              <div style={{color:"rgba(255,255,255,0.9)",fontSize:11}}>Compare new builds vs existing homes →</div>
+            </button>
+            <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Calculators"}))} style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,border:"none",borderRadius:12,padding:"14px 16px",cursor:"pointer",textAlign:"left"}}>
+              <div style={{fontSize:20,marginBottom:4}}>🧮</div>
+              <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:3}}>Calculate Your Payments</div>
+              <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Use our mortgage calculators →</div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Buyer's Guide */}
+      {nbTab==="guide"&&(
+        <div>
+          {/* What users look for */}
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏠 What Canadians Look for in a New Build — 2026</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {feature:"Flexible Living Space",desc:"Home offices, multi-purpose rooms. Remote work has made this the #1 priority — rooms that can evolve with your family.",icon:"🏠"},
+                {feature:"Energy Efficiency",desc:"Better insulation, high-efficiency heating, triple-pane windows. Lower utility bills and better comfort year-round.",icon:"⚡"},
+                {feature:"Modern Kitchen",desc:"Large islands, walk-in pantries, open layouts. The kitchen is where families gather — buyers want it designed for real life.",icon:"🍳"},
+                {feature:"Finished Basement",desc:"Extra living space, home gym, rec room. A finished basement adds significant value and livable square footage.",icon:"🏋️"},
+                {feature:"Smart Home Features",desc:"Built-in EV charging, smart thermostats, fiber internet pre-wiring. Future-proofing matters to 2026 buyers.",icon:"📱"},
+                {feature:"Outdoor Living",desc:"Large backyards, deck space, garden room. Post-COVID buyers want indoor-outdoor connection.",icon:"🌿"},
+              ].map(f=>(
+                <div key={f.feature} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:20,marginBottom:6}}>{f.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{f.feature}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{f.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* New build vs resale */}
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>⚖️ New Build vs Resale — Which is Right for You?</h3>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+              <div style={{background:"#f0fdf4",borderRadius:10,padding:12,border:"1px solid #bbf7d0"}}>
+                <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:8}}>🏗️ New Build</div>
+                {[["✓","New home warranty (1-2-10 years)"],["✓","Modern energy efficiency"],["✓","Choose your finishes and layout"],["✓","GST/HST rebate available"],["✓","30-year amortization eligible"],["✗","Longer wait (6-24 months)"],["✗","Price can increase during build"],["✗","Less established neighbourhood"],["✗","Higher base price typically"]].map(([icon,t])=>(
+                  <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:icon==="✓"?"#15803d":"#dc2626"}}><span>{icon}</span>{t}</div>
+                ))}
+              </div>
+              <div style={{background:"#eff6ff",borderRadius:10,padding:12,border:"1px solid #bfdbfe"}}>
+                <div style={{fontSize:13,fontWeight:800,color:"#1e40af",marginBottom:8}}>🏠 Resale Home</div>
+                {[["✓","Move in quickly (30-90 days)"],["✓","Established neighbourhood"],["✓","Price is fixed at offer"],["✓","Mature trees, landscaping"],["✓","More negotiating room"],["✗","Older systems and appliances"],["✗","Less energy efficient"],["✗","May need renovations"],["✗","No warranty on existing items"]].map(([icon,t])=>(
+                  <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:icon==="✓"?"#1e40af":"#dc2626"}}><span>{icon}</span>{t}</div>
+                ))}
+              </div>
+            </div>
+          </Card>
+
+          {/* Savings and rebates */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.green}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💰 New Build Savings & Rebates — 2026</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+              {[
+                {title:"GST/HST New Housing Rebate",amount:"Up to $50,000",desc:"Federal rebate for first-time buyers of new construction. Bill C-4 (March 2026) expanded eligibility significantly.",color:s.red,icon:"🍁"},
+                {title:"New Home Warranty",amount:"1-2-10 Years",desc:"Mandatory on new builds. 1 year workmanship, 2 years systems, 10 years structural. Costs you nothing directly.",color:s.blue,icon:"🛡️"},
+                {title:"30-Year Amortization",amount:"Lower payments",desc:"New build buyers can access 30-year insured mortgages regardless of first-time buyer status — reduces monthly payment.",color:s.green,icon:"📅"},
+                {title:"Land Transfer Tax Rebate",amount:"Up to $8,475",desc:"Ontario and BC first-time buyers can claim LTT rebates on new construction. Toronto buyers get double rebate.",color:"#7c3aed",icon:"🏛️"},
+              ].map(r=>(
+                <div key={r.title} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${r.color}`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
+                    <span style={{fontSize:18}}>{r.icon}</span>
+                    <div>
+                      <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{r.title}</div>
+                      <div style={{fontSize:11,fontWeight:700,color:r.color}}>{r.amount}</div>
+                    </div>
+                  </div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{r.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          {/* Step by step */}
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🗺️ New Build Process — Step by Step</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:14}}>From browsing to move-in — typically 12–24 months for new construction.</p>
+            <div style={{position:"relative"}}>
+              <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.gold},${s.green})`,borderRadius:2}}/>
+              {[
+                {step:"Step 1",title:"Get Pre-Approved First",time:"Day 1",desc:"Before visiting show homes, get a construction mortgage pre-approval. Builders give priority to pre-approved buyers and you'll know exactly what you can afford.",urgent:true},
+                {step:"Step 2",title:"Research Builders",time:"Week 1–2",desc:"Check the builder's warranty registration, reviews, Better Business Bureau rating, and previous developments. Visit completed neighbourhoods to see build quality firsthand."},
+                {step:"Step 3",title:"Visit Show Homes",time:"Week 2–4",desc:"See the actual build quality, not just renderings. Ask about standard vs upgrade finishes, lot sizes, and community plans (schools, transit, retail)."},
+                {step:"Step 4",title:"Sign Purchase Agreement",time:"Month 1",desc:"Review with a real estate lawyer before signing. Understand deposit structure, price escalation clauses, completion timeline, and what's included vs extra."},
+                {step:"Step 5",title:"Choose Finishes & Upgrades",time:"Month 1–3",desc:"Budget carefully — upgrades add up fast. Focus on items you can't change later (layout, lot) vs items you can change (flooring, fixtures)."},
+                {step:"Step 6",title:"Construction & Updates",time:"Month 3–18",desc:"Builder provides progress updates. Do a pre-delivery inspection (PDI) before closing to document all deficiencies — they must fix these before closing."},
+                {step:"Step 7",title:"Closing & Move-In",time:"Completion Date",desc:"Final walk-through, sign closing documents with your lawyer, get keys. Warranty coverage begins on closing date. Report deficiencies within 30 days."},
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:16,marginBottom:12,paddingLeft:8}}>
+                  <div style={{width:22,height:22,borderRadius:"50%",background:item.urgent?s.red:s.navy,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10,color:"#fff",fontWeight:800}}>{i+1}</div>
+                  <div style={{flex:1,background:item.urgent?"#fff5f5":"#f8fafc",borderRadius:10,padding:"10px 14px",border:`1px solid ${item.urgent?"#fed7d7":s.border}`}}>
+                    <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
+                      <span style={{fontSize:10,fontWeight:700,color:item.urgent?s.red:s.muted,background:item.urgent?"#fee2e2":"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{item.time}</span>
+                      <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</span>
+                      {item.urgent&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>DO FIRST</span>}
+                    </div>
+                    <div style={{fontSize:11,color:s.muted,lineHeight:1.7}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Construction Mortgage */}
+      {nbTab==="mortgage"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>💳</div>
+            <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Construction Mortgage Guide</h2>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>New builds use different mortgage products than resale homes. Here's what you need to know.</p>
+          </div>
+
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📋 New Build vs Resale Mortgage — Key Differences</h3>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+                <thead><tr style={{background:"#f8fafc"}}>{["Feature","New Build Mortgage","Resale Mortgage"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    ["Amortization","Up to 30 years (insured)","Up to 25 years (insured)"],
+                    ["Rate hold","Up to 12 months","90–120 days"],
+                    ["Deposit structure","5–20% in stages to builder","Full down payment at closing"],
+                    ["Appraisal timing","After construction complete","Before closing"],
+                    ["Mortgage start","At closing (move-in)","At closing"],
+                    ["Progress draws","Not typical (builder-funded)","N/A"],
+                    ["GST/HST","Added to price (rebate available)","Not applicable"],
+                    ["Price risk","Fixed in purchase agreement","Fixed at offer"],
+                  ].map(([f,nb,res],i)=>(
+                    <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                      <td style={{padding:"9px 12px",fontSize:11,fontWeight:700,color:s.navy}}>{f}</td>
+                      <td style={{padding:"9px 12px",fontSize:11,color:"#15803d"}}>{nb}</td>
+                      <td style={{padding:"9px 12px",fontSize:11,color:s.muted}}>{res}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+
+          <Card style={{marginBottom:14,background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💡 Key Things to Know About New Build Mortgages</h3>
+            {[
+              ["Rate Hold","Get the longest rate hold available — up to 12 months. If rates drop before closing, some lenders let you re-lock at the lower rate."],
+              ["30-Year Amortization","New build buyers with less than 20% down can access 30-year amortization — reducing monthly payments vs 25-year max on resale."],
+              ["Builder's Lender vs Your Own","Builders often offer incentives to use their preferred lender. Always compare with your own broker — builder incentives rarely beat open-market rates."],
+              ["Deposit Interest","Your deposits to the builder (5–20%) typically don't earn interest. Factor this opportunity cost into your decision."],
+              ["Occupancy Date Changes","Builders can delay closing. Ensure your mortgage rate hold covers potential delays — or your rate may expire."],
+              ["GST/HST","New homes are subject to GST/HST. First-time buyers and owner-occupants can claim a rebate — up to $50,000 federally in 2026."],
+            ].map(([l,v])=>(
+              <div key={l} style={{display:"flex",gap:12,padding:"8px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
+                <span style={{fontSize:11,fontWeight:700,color:s.gold,flexShrink:0,minWidth:160}}>{l}</span>
+                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.6}}>{v}</span>
+              </div>
+            ))}
+          </Card>
+
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Get Free Mortgage Advice for Your New Build →</button>
+        </div>
+      )}
+
+      {/* Connect */}
+      {nbTab==="connect"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>🤝</div>
+            <h2 style={{color:s.navy,fontSize:18,fontWeight:800,marginBottom:6}}>Connect With Builders & Developers</h2>
+            <p style={{color:"rgba(0,0,0,0.6)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Submit a buyer request or list your development on our platform.</p>
+          </div>
+
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14,marginBottom:14}}>
+            {/* Buyer form */}
+            <Card style={{borderLeft:`4px solid ${s.green}`}}>
+              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏠 I'm Looking to Buy a New Build</h3>
+              <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Tell us what you're looking for and we'll connect you with builders in your area.</p>
+              <NewBuildBuyerForm/>
+            </Card>
+
+            {/* Developer/Builder form */}
+            <Card style={{borderLeft:`4px solid ${s.gold}`}}>
+              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏗️ I'm a Builder / Developer</h3>
+              <p style={{fontSize:11,color:s.muted,marginBottom:12}}>List your development on Canada Mortgage Rates and reach qualified buyers actively comparing mortgage rates.</p>
+              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"10px 12px",marginBottom:12,fontSize:11,color:"#92400e"}}>
+                💰 <b>Revenue model:</b> Featured listing $99–$299/month · Qualified buyer leads $150–$500/lead
+              </div>
+              <NewBuildDeveloperForm/>
+            </Card>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function NewBuildBuyerForm(){
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");const [type,setType]=useState("");
+  const [budget,setBudget]=useState("");const [timeline,setTimeline]=useState("");
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+
+  async function submit(){
+    if(!name||!email||!prov||!budget){alert("Please fill in all required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`New Build Buyer Lead — ${city||prov}`,
+        name,email,phone,province:prov,city,type,budget,timeline,
+        source:"Canada Mortgage Rates — New Builds Tab"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+
+  if(ok)return(
+    <div style={{textAlign:"center",padding:"16px 0"}}>
+      <div style={{fontSize:28,marginBottom:8}}>✅</div>
+      <div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Request Received!</div>
+      <div style={{fontSize:11,color:s.muted}}>We'll connect you with builders in your area within 1–2 business days.</div>
+      <button onClick={()=>setOk(false)} style={{marginTop:10,padding:"6px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>Send Another →</button>
+    </div>
+  );
+
+  return(
+    <div>
+      <Field label="Province *"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+      <Field label="City"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="e.g. Winnipeg" style={inp}/></Field>
+      <Field label="Home Type">
+        <select value={type} onChange={e=>setType(e.target.value)} style={inp}>
+          <option value="">Select type</option>
+          <option value="detached">Detached House</option>
+          <option value="townhome">Townhome</option>
+          <option value="condo">Condo</option>
+          <option value="custom">Custom Build</option>
+        </select>
+      </Field>
+      <Field label="Budget *">
+        <select value={budget} onChange={e=>setBudget(e.target.value)} style={inp}>
+          <option value="">Select budget</option>
+          <option value="under400">Under $400K</option>
+          <option value="400-600">$400K – $600K</option>
+          <option value="600-800">$600K – $800K</option>
+          <option value="800-1m">$800K – $1M</option>
+          <option value="over1m">Over $1M</option>
+        </select>
+      </Field>
+      <Field label="Timeline">
+        <select value={timeline} onChange={e=>setTimeline(e.target.value)} style={inp}>
+          <option value="">When do you want to move in?</option>
+          <option value="asap">As soon as possible</option>
+          <option value="6months">Within 6 months</option>
+          <option value="1year">Within 1 year</option>
+          <option value="2years">1–2 years</option>
+        </select>
+      </Field>
+      <Field label="Full Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="John Smith" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="john@email.com" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Connect Me with Builders →"}</button>
+    </div>
+  );
+}
+
+function NewBuildDeveloperForm(){
+  const [company,setCompany]=useState("");const [contact,setContact]=useState("");
+  const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");
+  const [project,setProject]=useState("");const [units,setUnits]=useState("");
+  const [priceFrom,setPriceFrom]=useState("");const [completion,setCompletion]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+
+  async function submit(){
+    if(!company||!email||!project){alert("Please fill in all required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`New Build Developer Partnership — ${company}`,
+        company,contact,email,phone,province:prov,city,project,units,priceFrom,completion,
+        source:"Canada Mortgage Rates — New Builds Developer Form"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+
+  if(ok)return(
+    <div style={{textAlign:"center",padding:"16px 0"}}>
+      <div style={{fontSize:28,marginBottom:8}}>✅</div>
+      <div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Application Received!</div>
+      <div style={{fontSize:11,color:s.muted}}>We'll be in touch within 1–2 business days to discuss listing your development.</div>
+      <button onClick={()=>setOk(false)} style={{marginTop:10,padding:"6px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>Submit Another →</button>
+    </div>
+  );
+
+  return(
+    <div>
+      <Field label="Company Name *"><input value={company} onChange={e=>setCompany(e.target.value)} placeholder="ABC Homes Inc." style={inp}/></Field>
+      <Field label="Contact Name"><input value={contact} onChange={e=>setContact(e.target.value)} placeholder="Jane Smith" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="jane@abchomes.ca" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Province"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select></Field>
+        <Field label="City"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Winnipeg" style={inp}/></Field>
+      </div>
+      <Field label="Development Name *"><input value={project} onChange={e=>setProject(e.target.value)} placeholder="Sage Creek Phase 5" style={inp}/></Field>
+      <Field label="Number of Units"><input value={units} onChange={e=>setUnits(e.target.value)} placeholder="e.g. 45 homes" style={inp}/></Field>
+      <Field label="Starting Price"><input value={priceFrom} onChange={e=>setPriceFrom(e.target.value)} placeholder="e.g. $450,000" style={inp}/></Field>
+      <Field label="Expected Completion"><input value={completion} onChange={e=>setCompletion(e.target.value)} placeholder="e.g. Fall 2027" style={inp}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,background:s.gold,color:s.navy,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Submit My Development →"}</button>
+    </div>
+  );
+}
+
 function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [type,setType]=useState("any");const [beds,setBeds]=useState("any");const [maxPrice,setMaxPrice]=useState("");const [area,setArea]=useState("");
   const [subTab,setSubTab]=useState<"listings"|"tools"|"value">("listings");
@@ -6001,7 +6502,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
 
           {/* What's new */}
           <Card style={{marginBottom:14,borderLeft:`4px solid ${s.gold}`}}>
-            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🆕 What's New — July 2026</h3>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🆕 Latest Features</h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:8}}>
               {[
                 {tab:"Calculators",title:"Refinancing Calculator",desc:"Should I Refi? Penalty estimator, blend & extend, cash-out, HELOC comparison, and full 11-step guide.",icon:"💳"},
@@ -6190,6 +6691,7 @@ export default function App(){
     if(active==="First-Time Buyers")return <FTHBTab initProv={prov}/>;
     if(active==="News")return <NewsTab initProv={prov}/>;
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
+    if(active==="New Builds")return <NewBuildsTab/>;
     if(active==="Learn")return <LearnTab/>;
     if(active==="Glossary")return <GlossaryTab/>;
     if(active==="Resources")return <LearnGlossaryTab/>;
