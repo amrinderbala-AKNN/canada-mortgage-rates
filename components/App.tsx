@@ -636,10 +636,11 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
 function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
+  const [hoverTab,setHoverTab]=useState<string|null>(null);
   const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
-      <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:54,gap:6}}>
+      <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
         {/* Logo */}
         <div style={{display:"flex",alignItems:"center",gap:6,flexShrink:0}}>
           <div onClick={()=>{setActive("Home");window.scrollTo({top:0,behavior:"smooth"});}} style={{width:28,height:28,background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontSize:15,cursor:"pointer"}} title="Go to Home">🍁</div>
@@ -653,57 +654,49 @@ function NavBar({active,setActive}){
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
-        {/* Tab ribbon — takes remaining space */}
-        <div style={{flex:1,display:"flex",alignItems:"center",position:"relative",overflow:"hidden"}}>
-          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:-200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to left,transparent,#0d2240 50%)",paddingRight:12,paddingLeft:4,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",left:0,top:0,zIndex:1}}>
-            <span style={{color:s.gold,fontSize:24,fontWeight:800,lineHeight:1}}>‹</span>
-          </button>
-          <div id="tab-ribbon" style={{display:"flex",gap:1,overflowX:"auto",scrollbarWidth:"none",paddingLeft:20,paddingRight:20,width:"100%"}}>
-            {TABS.map(t=>{
-              const isActive=active===t;
-              const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
-              const subMenus:{[k:string]:{label:string,detail:string}[]}={
-                "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 20+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs credit unions vs brokers"}],
-                "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
-                "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
-                "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
-                "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
-                "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
-                "Realtors":[{label:"🤝 Find a Realtor",detail:"Connect with local agents"},{label:"📋 Buyer's Guide",detail:"Home buying timeline & FAQ"}],
-                "Lawyers":[{label:"⚖️ Find a Lawyer",detail:"Connect with real estate lawyers"},{label:"📋 Closing Guide",detail:"Timeline, costs & FAQ"}],
-                "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
-                "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
-                "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
-              };
-              const menu=subMenus[t];
-              return(
-                <div key={t} style={{position:"relative",flexShrink:0}} className="tab-wrapper"
-                  onMouseEnter={e=>{const d=e.currentTarget.querySelector('.tab-dropdown') as HTMLElement;if(d)d.style.display="block";}}
-                  onMouseLeave={e=>{const d=e.currentTarget.querySelector('.tab-dropdown') as HTMLElement;if(d)d.style.display="none";}}>
-                  <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"none",border:"none",color:isActive?s.navy:"rgba(255,255,255,0.7)",fontSize:11,padding:"6px 10px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
-                    {emoji&&<span style={{fontSize:12}}>{emoji}</span>}
-                    {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 5px",fontSize:8,fontWeight:800,marginLeft:3}}>NEW</span></>:t}
-                  </button>
-                  {menu&&(
-                    <div className="tab-dropdown" style={{display:"none",position:"absolute",top:"100%",left:0,background:"#fff",borderRadius:10,boxShadow:"0 8px 30px rgba(0,0,0,0.15)",border:`1px solid ${s.border}`,minWidth:220,zIndex:999,padding:"6px 0"}}>
-                      <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{t}</div>
-                      {menu.map((item,i)=>(
-                        <button key={i} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
-                          onMouseEnter={e=>e.currentTarget.style.background="#f8fafc"}
-                          onMouseLeave={e=>e.currentTarget.style.background="none"}>
-                          <span style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</span>
-                          <span style={{fontSize:10,color:s.muted,marginTop:1}}>{item.detail}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-          <button onClick={()=>{const el=document.getElementById("tab-ribbon");if(el)el.scrollBy({left:200,behavior:"smooth"});}} style={{flexShrink:0,background:"linear-gradient(to right,transparent,#0d2240 50%)",paddingLeft:12,paddingRight:4,display:"flex",alignItems:"center",height:54,border:"none",cursor:"pointer",position:"absolute",right:0,top:0}}>
-            <span style={{color:s.gold,fontSize:24,fontWeight:800,lineHeight:1}}>›</span>
-          </button>
+        {/* Tab ribbon — two rows so all tabs visible */}
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"4px 8px",display:"flex",flexWrap:"wrap",gap:2}}>
+          {TABS.map(t=>{
+            const isActive=active===t;
+            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+            const subMenus:{[k:string]:{label:string,detail:string}[]}={
+              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 20+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
+              "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
+              "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
+              "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
+              "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
+              "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
+              "Realtors":[{label:"🤝 Find a Realtor",detail:"Connect with local agents"},{label:"📋 Buyer's Guide",detail:"Home buying timeline & FAQ"}],
+              "Lawyers":[{label:"⚖️ Find a Lawyer",detail:"Connect with real estate lawyers"},{label:"📋 Closing Guide",detail:"Timeline, costs & FAQ"}],
+              "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
+              "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
+              "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
+            };
+            const menu=subMenus[t];
+            return(
+              <div key={t} style={{position:"relative"}}
+                onMouseEnter={()=>setHoverTab(t)}
+                onMouseLeave={()=>setHoverTab(null)}>
+                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.8)",fontSize:10,padding:"5px 8px",borderRadius:6,cursor:"pointer",fontWeight:isActive?800:500,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s"}}>
+                  {emoji&&<span style={{fontSize:11}}>{emoji}</span>}
+                  {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>NEW</span></>:t}
+                </button>
+                {menu&&hoverTab===t&&(
+                  <div style={{position:"absolute",top:"100%",left:0,background:"#fff",borderRadius:10,boxShadow:"0 8px 30px rgba(0,0,0,0.18)",border:`1px solid ${s.border}`,minWidth:220,zIndex:9999,padding:"6px 0"}}>
+                    <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{t}</div>
+                    {menu.map((item,i)=>(
+                      <button key={i} onClick={()=>{setActive(t);setHoverTab(null);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
+                        onMouseEnter={e=>(e.currentTarget.style.background="#f8fafc")}
+                        onMouseLeave={e=>(e.currentTarget.style.background="none")}>
+                        <span style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</span>
+                        <span style={{fontSize:10,color:s.muted,marginTop:1}}>{item.detail}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       {menuOpen&&(
