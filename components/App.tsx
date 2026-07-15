@@ -4787,7 +4787,7 @@ function NewBuildsTab(){
                 We're partnering with verified home builders and developers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a buyer request and we'll connect you when our network is ready.
               </div>
               <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-                <button onClick={()=>setNbTab("connect")} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏠 I'm Looking to Buy →</button>
+                <button onClick={()=>setNbTab("connect")} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏠 Find My New Home →</button>
                 <button onClick={()=>setNbTab("connect")} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏗️ List My Development →</button>
               </div>
             </div>
