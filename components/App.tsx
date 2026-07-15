@@ -4985,10 +4985,7 @@ function NewBuildsTab(){
             {/* Developer/Builder form */}
             <Card style={{borderLeft:`4px solid ${s.gold}`}}>
               <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏗️ I'm a Builder / Developer</h3>
-              <p style={{fontSize:11,color:s.muted,marginBottom:12}}>List your development on Canada Mortgage Rates and reach qualified buyers actively comparing mortgage rates.</p>
-              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"10px 12px",marginBottom:12,fontSize:11,color:"#92400e"}}>
-                💰 <b>Revenue model:</b> Featured listing $99–$299/month · Qualified buyer leads $150–$500/lead
-              </div>
+              <p style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>List your development on Canada Mortgage Rates and reach qualified buyers actively comparing mortgage rates — the highest-intent homebuyers in Canada. Our referral partnership connects your project directly with buyers who are pre-approved and ready to move.</p>
               <NewBuildDeveloperForm/>
             </Card>
           </div>
