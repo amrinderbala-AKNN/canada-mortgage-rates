@@ -4812,21 +4812,50 @@ function NewBuildsTab(){
       {/* Buyer's Guide */}
       {nbTab==="guide"&&(
         <div>
+          {/* 2026 Market Reality */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.red}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📊 New Build Market Reality — 2026</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10,marginBottom:12}}>
+              {[
+                {stat:"50%",desc:"of non-homeowners want single-family homes or townhouses — but only 1/3 of new builds are that type",icon:"🏠",color:s.red},
+                {stat:"30-yr",desc:"amortization now available on new builds for ALL buyers — not just first-timers. Lowers monthly payments.",icon:"📅",color:s.green},
+                {stat:"$1.5M",desc:"new insured mortgage cap — buyers under $1.5M can now buy new builds with less than 20% down",icon:"💰",color:s.blue},
+                {stat:"2.8%",desc:"residential construction cost increase year-over-year in 2026 — builders passing costs to buyers",icon:"📈",color:"#f59e0b"},
+              ].map(s2=>(
+                <div key={s2.stat} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderTop:`3px solid ${s2.color}`}}>
+                  <div style={{fontSize:24,fontWeight:800,color:s2.color,marginBottom:4}}>{s2.stat}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{s2.desc}</div>
+                  <div style={{fontSize:18,marginTop:6}}>{s2.icon}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e"}}>
+              💡 <b>2026 insight:</b> Prairie provinces (Manitoba, Saskatchewan, Alberta) have stronger new build activity than Ontario and BC where condo pre-sales are weak. If you're buying in Winnipeg, Calgary, or Edmonton — now is a better time than Toronto or Vancouver.
+            </div>
+          </Card>
+
           {/* What users look for */}
           <Card style={{marginBottom:14}}>
-            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏠 What Canadians Look for in a New Build — 2026</h3>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏠 What Canadian Buyers Want in a New Build — 2026</h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
               {[
-                {feature:"Flexible Living Space",desc:"Home offices, multi-purpose rooms. Remote work has made this the #1 priority — rooms that can evolve with your family.",icon:"🏠"},
-                {feature:"Energy Efficiency",desc:"Better insulation, high-efficiency heating, triple-pane windows. Lower utility bills and better comfort year-round.",icon:"⚡"},
-                {feature:"Modern Kitchen",desc:"Large islands, walk-in pantries, open layouts. The kitchen is where families gather — buyers want it designed for real life.",icon:"🍳"},
-                {feature:"Finished Basement",desc:"Extra living space, home gym, rec room. A finished basement adds significant value and livable square footage.",icon:"🏋️"},
-                {feature:"Smart Home Features",desc:"Built-in EV charging, smart thermostats, fiber internet pre-wiring. Future-proofing matters to 2026 buyers.",icon:"📱"},
-                {feature:"Outdoor Living",desc:"Large backyards, deck space, garden room. Post-COVID buyers want indoor-outdoor connection.",icon:"🌿"},
+                {feature:"Flexible Living Space",priority:"#1 Priority",desc:"Home offices that become nurseries, multi-use rooms. Remote work made adaptable layouts the most requested feature.",icon:"🏠",color:s.navy},
+                {feature:"Modern Kitchen",priority:"#2 Priority",desc:"Large islands, walk-through pantries, appliance garages, dedicated coffee stations. The kitchen is the heart of the home.",icon:"🍳",color:s.red},
+                {feature:"Affordability First",priority:"#3 Priority",desc:"2026 buyers are focused on monthly payment, not square footage. Smaller, smarter, more affordable beats big and flashy.",icon:"💰",color:s.green},
+                {feature:"Energy Efficiency",priority:"#4 Priority",desc:"High-efficiency heating, triple-pane windows, solar readiness. Lower utility bills and climate action driving this trend.",icon:"⚡",color:s.gold},
+                {feature:"Outdoor Living",priority:"#5 Priority",desc:"Large backyards, covered decks, garden space. Post-COVID buyers want indoor-outdoor connection year-round.",icon:"🌿",color:"#16a34a"},
+                {feature:"Smart Home Ready",priority:"#6 Priority",desc:"EV charging rough-in, smart thermostat pre-wiring, fiber internet. Buyers want future-proofing built in, not added later.",icon:"📱",color:s.blue},
+                {feature:"Finished Basement",priority:"#7 Priority",desc:"Extra living space, home gym, rec room, secondary suite potential. Adds value and flexibility for growing families.",icon:"🏋️",color:"#7c3aed"},
+                {feature:"Community Amenities",priority:"#8 Priority",desc:"Parks, trails, schools nearby, walkability. Buyers want neighbourhoods, not just houses.",icon:"🏘️",color:"#0891b2"},
               ].map(f=>(
-                <div key={f.feature} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
-                  <div style={{fontSize:20,marginBottom:6}}>{f.icon}</div>
-                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{f.feature}</div>
+                <div key={f.feature} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,borderLeft:`3px solid ${f.color}`}}>
+                  <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:4}}>
+                    <span style={{fontSize:18}}>{f.icon}</span>
+                    <div>
+                      <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{f.feature}</div>
+                      <div style={{fontSize:9,fontWeight:700,color:f.color}}>{f.priority}</div>
+                    </div>
+                  </div>
                   <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{f.desc}</div>
                 </div>
               ))}
@@ -4835,20 +4864,44 @@ function NewBuildsTab(){
 
           {/* New build vs resale */}
           <Card style={{marginBottom:14}}>
-            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>⚖️ New Build vs Resale — Which is Right for You?</h3>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>⚖️ New Build vs Resale — 2026 Reality Check</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>The price gap between new builds and resale is shrinking in 2026. New builds may include incentives — free upgrades, closing cost discounts, price protections — that change the real cost comparison.</p>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               <div style={{background:"#f0fdf4",borderRadius:10,padding:12,border:"1px solid #bbf7d0"}}>
                 <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:8}}>🏗️ New Build</div>
-                {[["✓","New home warranty (1-2-10 years)"],["✓","Modern energy efficiency"],["✓","Choose your finishes and layout"],["✓","GST/HST rebate available"],["✓","30-year amortization eligible"],["✗","Longer wait (6-24 months)"],["✗","Price can increase during build"],["✗","Less established neighbourhood"],["✗","Higher base price typically"]].map(([icon,t])=>(
+                {[["✓","New home warranty (1-2-10 years)"],["✓","30-year amortization eligible"],["✓","Choose finishes and layout"],["✓","GST/HST rebate up to $50K"],["✓","Modern energy efficiency"],["✓","Builder incentives (upgrades, etc.)"],["✗","Wait 6–24 months to move in"],["✗","Price can escalate mid-build"],["✗","Less established neighbourhood"],].map(([icon,t])=>(
                   <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:icon==="✓"?"#15803d":"#dc2626"}}><span>{icon}</span>{t}</div>
                 ))}
               </div>
               <div style={{background:"#eff6ff",borderRadius:10,padding:12,border:"1px solid #bfdbfe"}}>
                 <div style={{fontSize:13,fontWeight:800,color:"#1e40af",marginBottom:8}}>🏠 Resale Home</div>
-                {[["✓","Move in quickly (30-90 days)"],["✓","Established neighbourhood"],["✓","Price is fixed at offer"],["✓","Mature trees, landscaping"],["✓","More negotiating room"],["✗","Older systems and appliances"],["✗","Less energy efficient"],["✗","May need renovations"],["✗","No warranty on existing items"]].map(([icon,t])=>(
+                {[["✓","Move in within 30–90 days"],["✓","Established neighbourhood & trees"],["✓","More room to negotiate price"],["✓","Mature community, walkability"],["✓","Character and unique features"],["✗","Older systems may need repairs"],["✗","Less energy efficient"],["✗","No warranty on existing items"],["✗","25-year max amortization (insured)"],].map(([icon,t])=>(
                   <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:icon==="✓"?"#1e40af":"#dc2626"}}><span>{icon}</span>{t}</div>
                 ))}
               </div>
+            </div>
+          </Card>
+
+          {/* New Build Checklist */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.gold}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>✅ New Build Due Diligence Checklist</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Ask these questions before signing any purchase agreement.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
+              {[
+                {cat:"About the Builder",items:["How many years has this builder been operating?","Are they registered with the provincial new home warranty program?","Can I visit completed homes in other developments?","What is their BBB rating and online review history?","Have they had any unresolved complaints with Tarion/HPO?"]},
+                {cat:"About the Home",items:["What's included as standard vs upgrade?","What are the lot dimensions and setbacks?","Can I make design changes after signing?","What is the energy rating or EnerGuide score?","Is the basement development included or extra?"]},
+                {cat:"About the Contract",items:["What are the deposit stages and amounts?","Is there a price escalation clause?","What's the guaranteed possession date?","What compensation do I get for delays?","What happens to my deposits if the builder goes bankrupt?"]},
+                {cat:"About the Community",items:["What other developments are planned nearby?","When will schools, parks, and transit be completed?","Are there condo/HOA fees after closing?","What is the property tax estimate for this area?","Is the community within a flood zone?"]},
+              ].map(cat=>(
+                <div key={cat.cat} style={{background:"#fffbeb",borderRadius:8,padding:10,border:"1px solid #fde68a"}}>
+                  <div style={{fontSize:12,fontWeight:800,color:"#92400e",marginBottom:8}}>📋 {cat.cat}</div>
+                  {cat.items.map(item=>(
+                    <div key={item} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:"#78350f",borderBottom:"1px solid #fef3c7"}}>
+                      <span style={{color:s.gold,flexShrink:0}}>□</span>{item}
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </Card>
 
@@ -4857,10 +4910,12 @@ function NewBuildsTab(){
             <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💰 New Build Savings & Rebates — 2026</h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10}}>
               {[
-                {title:"GST/HST New Housing Rebate",amount:"Up to $50,000",desc:"Federal rebate for first-time buyers of new construction. Bill C-4 (March 2026) expanded eligibility significantly.",color:s.red,icon:"🍁"},
-                {title:"New Home Warranty",amount:"1-2-10 Years",desc:"Mandatory on new builds. 1 year workmanship, 2 years systems, 10 years structural. Costs you nothing directly.",color:s.blue,icon:"🛡️"},
-                {title:"30-Year Amortization",amount:"Lower payments",desc:"New build buyers can access 30-year insured mortgages regardless of first-time buyer status — reduces monthly payment.",color:s.green,icon:"📅"},
-                {title:"Land Transfer Tax Rebate",amount:"Up to $8,475",desc:"Ontario and BC first-time buyers can claim LTT rebates on new construction. Toronto buyers get double rebate.",color:"#7c3aed",icon:"🏛️"},
+                {title:"GST/HST New Housing Rebate",amount:"Up to $50,000",desc:"Federal rebate for owner-occupants of new construction. Expanded eligibility in 2026. Claimed at closing by your lawyer.",color:s.red,icon:"🍁"},
+                {title:"30-Year Amortization",amount:"Lower monthly payments",desc:"All buyers of new builds (not just first-timers) can access 30-year insured mortgages — reducing monthly payments vs 25-year max on resale.",color:s.blue,icon:"📅"},
+                {title:"New Home Warranty",amount:"1-2-10 Years",desc:"Mandatory on all new builds. 1 year workmanship, 2 years systems (plumbing/electrical/heating), 10 years structural defects.",color:s.green,icon:"🛡️"},
+                {title:"Land Transfer Tax Rebate",amount:"Up to $8,475",desc:"Ontario and BC first-time buyers get LTT rebates on new construction. Toronto buyers get double rebate (provincial + municipal).",color:"#7c3aed",icon:"🏛️"},
+                {title:"Manitoba PST Rebate",amount:"Up to 42% of PST",desc:"Manitoba buyers of new homes under $550,000 qualify for a PST rebate on construction. Check eligibility at manitoba.ca",color:"#0891b2",icon:"🍁"},
+                {title:"Builder Incentives",amount:"Varies",desc:"Many builders in 2026 are offering free upgrades, closing cost discounts, and price locks to move inventory. Always negotiate.",color:s.gold,icon:"🎁"},
               ].map(r=>(
                 <div key={r.title} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`3px solid ${r.color}`}}>
                   <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}>
@@ -4883,13 +4938,14 @@ function NewBuildsTab(){
             <div style={{position:"relative"}}>
               <div style={{position:"absolute",left:18,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.gold},${s.green})`,borderRadius:2}}/>
               {[
-                {step:"Step 1",title:"Get Pre-Approved First",time:"Day 1",desc:"Before visiting show homes, get a construction mortgage pre-approval. Builders give priority to pre-approved buyers and you'll know exactly what you can afford.",urgent:true},
-                {step:"Step 2",title:"Research Builders",time:"Week 1–2",desc:"Check the builder's warranty registration, reviews, Better Business Bureau rating, and previous developments. Visit completed neighbourhoods to see build quality firsthand."},
-                {step:"Step 3",title:"Visit Show Homes",time:"Week 2–4",desc:"See the actual build quality, not just renderings. Ask about standard vs upgrade finishes, lot sizes, and community plans (schools, transit, retail)."},
-                {step:"Step 4",title:"Sign Purchase Agreement",time:"Month 1",desc:"Review with a real estate lawyer before signing. Understand deposit structure, price escalation clauses, completion timeline, and what's included vs extra."},
-                {step:"Step 5",title:"Choose Finishes & Upgrades",time:"Month 1–3",desc:"Budget carefully — upgrades add up fast. Focus on items you can't change later (layout, lot) vs items you can change (flooring, fixtures)."},
-                {step:"Step 6",title:"Construction & Updates",time:"Month 3–18",desc:"Builder provides progress updates. Do a pre-delivery inspection (PDI) before closing to document all deficiencies — they must fix these before closing."},
-                {step:"Step 7",title:"Closing & Move-In",time:"Completion Date",desc:"Final walk-through, sign closing documents with your lawyer, get keys. Warranty coverage begins on closing date. Report deficiencies within 30 days."},
+                {title:"Get Pre-Approved First",time:"Day 1",desc:"Before visiting show homes, get a construction mortgage pre-approval. Builders give priority to pre-approved buyers. Know your budget before falling in love with upgrades.",urgent:true},
+                {title:"Research Builders",time:"Week 1–2",desc:"Check warranty registration, BBB rating, reviews, and visit completed developments. Talk to residents in their existing communities."},
+                {title:"Visit Show Homes",time:"Week 2–4",desc:"See actual build quality in person. Ask about standard vs upgrade finishes, lot sizes, and community plans. Bring the checklist above."},
+                {title:"Review Purchase Agreement with Lawyer",time:"Month 1",desc:"Never sign without a real estate lawyer reviewing first. Understand deposit structure, price escalation clauses, and possession date guarantees.",urgent:true},
+                {title:"Choose Finishes & Upgrades",time:"Month 1–3",desc:"Budget carefully — upgrades add up fast. Prioritize items you can't change later (layout, lot size) vs items you can change later (flooring, fixtures)."},
+                {title:"Secure Your Mortgage",time:"Month 2–3",desc:"Lock in your mortgage rate with a long rate hold (up to 12 months). Compare your builder's preferred lender vs the open market — builder rates aren't always best."},
+                {title:"Construction & PDI",time:"Month 3–18",desc:"Get progress updates from builder. Do a Pre-Delivery Inspection (PDI) before closing to document all deficiencies in writing."},
+                {title:"Closing & Move-In",time:"Completion",desc:"Lawyer handles transfer. You pay: closing costs, LTT, legal fees, and any remaining deposits. GST/HST rebate claimed here. Warranty begins at closing."},
               ].map((item,i)=>(
                 <div key={i} style={{display:"flex",gap:16,marginBottom:12,paddingLeft:8}}>
                   <div style={{width:22,height:22,borderRadius:"50%",background:item.urgent?s.red:s.navy,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10,color:"#fff",fontWeight:800}}>{i+1}</div>
@@ -4897,7 +4953,7 @@ function NewBuildsTab(){
                     <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4,flexWrap:"wrap"}}>
                       <span style={{fontSize:10,fontWeight:700,color:item.urgent?s.red:s.muted,background:item.urgent?"#fee2e2":"#f1f5f9",borderRadius:20,padding:"2px 8px"}}>{item.time}</span>
                       <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</span>
-                      {item.urgent&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>DO FIRST</span>}
+                      {item.urgent&&<span style={{fontSize:9,fontWeight:700,color:"#fff",background:s.red,borderRadius:20,padding:"1px 7px"}}>CRITICAL</span>}
                     </div>
                     <div style={{fontSize:11,color:s.muted,lineHeight:1.7}}>{item.desc}</div>
                   </div>
@@ -4905,6 +4961,8 @@ function NewBuildsTab(){
               ))}
             </div>
           </Card>
+
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Get Free Mortgage Advice for Your New Build →</button>
         </div>
       )}
 
@@ -4977,7 +5035,7 @@ function NewBuildsTab(){
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14,marginBottom:14}}>
             {/* Buyer form */}
             <Card style={{borderLeft:`4px solid ${s.green}`}}>
-              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏠 I'm Looking to Buy a New Build</h3>
+              <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏠 Find My New Home</h3>
               <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Tell us what you're looking for and we'll connect you with builders in your area.</p>
               <NewBuildBuyerForm/>
             </Card>
