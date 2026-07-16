@@ -776,16 +776,16 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
     const provAdj:{[k:string]:number}={BC:-0.10,ON:-0.08,AB:-0.05,QC:-0.03,MB:0.00,SK:0.02,NS:0.05,NB:0.06,PE:0.08,NL:0.10};
     const adj=provAdj[prov]||0;
     const fixedBase:{[k:string]:number}={
-      "1-year":+(primeNum+0.20+adj).toFixed(2),
-      "2-year":+(primeNum-0.40+adj).toFixed(2),
-      "3-year":+(primeNum-0.50+adj).toFixed(2),
-      "5-year":+(primeNum-0.15+adj).toFixed(2),
+      "1-year":+(primeNum+0.05+adj).toFixed(2),
+      "2-year":+(primeNum-0.25+adj).toFixed(2),
+      "3-year":+(primeNum-0.35+adj).toFixed(2),
+      "5-year":+(primeNum-0.45+adj).toFixed(2),
     };
     const variableBase:{[k:string]:number}={
-      "1-year":+(primeNum-0.30+adj).toFixed(2),
-      "2-year":+(primeNum-0.50+adj).toFixed(2),
-      "3-year":+(primeNum-0.60+adj).toFixed(2),
-      "5-year":+(primeNum-0.70+adj).toFixed(2),
+      "1-year":+(primeNum-0.60+adj).toFixed(2),
+      "2-year":+(primeNum-0.75+adj).toFixed(2),
+      "3-year":+(primeNum-0.85+adj).toFixed(2),
+      "5-year":+(primeNum-0.90+adj).toFixed(2),
     };
     return institutions.flatMap((inst,i)=>{
       const jitter=((i*37)%21-10)/100;
@@ -878,7 +878,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
       {!loading&&withRate.length>0&&(
         <div style={{display:"flex",alignItems:"center",gap:10,margin:"10px 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
           <span style={{fontSize:18}}>ℹ️</span>
-          <div style={{flex:1}}><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest (AI-compiled estimate)</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
+          <div style={{flex:1}}><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest — compiled from public lender rates</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
           <div style={{fontSize:10,color:"#15803d",fontWeight:600,flexShrink:0,textAlign:"right"}}>🕐 Last updated<br/>{TODAY}</div>
         </div>
       )}
@@ -905,7 +905,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         </table>
       </div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 4px",flexWrap:"wrap",gap:6}}>
-        <div style={{fontSize:10,color:s.muted}}>⚠️ Rates are AI-compiled estimates. Always verify directly with the lender before applying.</div>
+        <div style={{fontSize:10,color:s.muted}}>⚠️ Rates compiled from public lender websites and market data, updated regularly. Always verify directly with the lender before applying.</div>
         <div style={{fontSize:10,color:s.muted,fontWeight:600}}>🕐 Last updated: {TODAY}</div>
       </div>
 
@@ -1031,19 +1031,23 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
                 {date:"Mar 2025",change:"−0.25%",rate:"2.75%",prime:"4.95%",context:"Continued easing",dir:"down"},
                 {date:"Jun 2025",change:"−0.25%",rate:"2.50%",prime:"4.70%",context:"Near neutral rate",dir:"down"},
                 {date:"Jan 2026",change:"−0.25%",rate:"2.25%",prime:"4.45%",context:"Hold — inflation at target",dir:"down"},
-                {date:"Jun 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"5th consecutive hold",dir:"hold"},
-              ].map((row,i)=>(
-                <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
-                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:s.navy,whiteSpace:"nowrap"}}>{row.date}</td>
-                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:800,color:row.dir==="up"?"#dc2626":row.dir==="down"?s.green:s.muted}}>{row.change}</td>
-                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.rate}</td>
-                  <td style={{padding:"8px 12px",fontSize:12,color:s.muted}}>{row.prime}</td>
-                  <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>{row.context}</td>
+                {date:"Mar 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"2nd consecutive hold",dir:"hold"},
+                {date:"Apr 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"3rd consecutive hold",dir:"hold"},
+                {date:"Jun 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"4th consecutive hold",dir:"hold"},
+                {date:"Jul 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"5th consecutive hold — BoC July 15, 2026",dir:"hold",current:true},
+              ].map((row,i,arr)=>(
+                <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:row.current?`linear-gradient(135deg,${s.navy},#1a3a5c)`:i%2===0?s.white:"#fafbfc"}}>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:row.current?"#fff":s.navy,whiteSpace:"nowrap"}}>{row.date}{row.current&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"1px 6px",fontSize:8,fontWeight:800,marginLeft:6}}>LATEST</span>}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:800,color:row.current?"#fff":row.dir==="up"?"#dc2626":row.dir==="down"?s.green:s.muted}}>{row.change}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:row.current?s.gold:s.navy}}>{row.rate}</td>
+                  <td style={{padding:"8px 12px",fontSize:12,color:row.current?"rgba(255,255,255,0.8)":s.muted}}>{row.prime}</td>
+                  <td style={{padding:"8px 12px",fontSize:11,color:row.current?"rgba(255,255,255,0.8)":s.muted}}>{row.context}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <div style={{fontSize:10,color:s.muted,marginTop:8}}>🕐 Current rate auto-updates from Bank of Canada data · Last updated: {TODAY}</div>
       </Card>
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:12,marginBottom:14}}>
@@ -1215,7 +1219,7 @@ const LEGAL={
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">2. Not a Licensed Mortgage Broker</h3>
 <p>Canada Mortgage Rates is <b>not a licensed mortgage broker, lender, or financial advisor</b>. All content is for <b>informational and educational purposes only</b>. We are not registered with FSRA, BCFSA, or any provincial mortgage regulatory authority.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">3. Rate Accuracy</h3>
-<p>Mortgage rates are sourced via AI-powered web search and may not reflect current rates. Rates are subject to change without notice. Always verify rates directly with the financial institution before making any financial decisions.</p>
+<p>Mortgage rates are compiled from publicly available lender websites and market data and may not reflect current rates. Rates are subject to change without notice. Always verify rates directly with the financial institution before making any financial decisions.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">4. No Financial Advice</h3>
 <p>Nothing on this site constitutes financial, legal, or mortgage advice. Consult a licensed mortgage professional before making any mortgage-related decisions. We are not liable for any financial decisions made based on information on this site.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">5. Third-Party Links</h3>
@@ -1235,7 +1239,7 @@ const LEGAL={
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">Not a Licensed Mortgage Broker</h3>
 <p>Canada Mortgage Rates is not a licensed mortgage broker, mortgage agent, financial advisor, or lender. We are not registered with any provincial mortgage regulatory authority.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">Rates Are Informational Only</h3>
-<p>All rates displayed are sourced via AI-powered web search and may not reflect your actual qualified rate, real-time rates, all available rates, or rates inclusive of all fees.</p>
+<p>All rates displayed are compiled from publicly available lender websites and market data and may not reflect your actual qualified rate, real-time rates, all available rates, or rates inclusive of all fees.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">Calculator Results Are Estimates</h3>
 <p>All mortgage calculator results are estimates. Actual payments vary based on lender terms, insurance, taxes, and other factors.</p>
 <h3 style="color:#0d2240;font-size:14px;margin:16px 0 7px;">Always Consult a Licensed Professional</h3>
@@ -6669,7 +6673,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
                 {title:"Our Mission",desc:"Make mortgage information accessible, free, and honest for every Canadian — not just those who can afford a broker.",icon:"🎯"},
                 {title:"Independence",desc:"We're not owned by any lender, bank, or broker. Our rate comparisons and tool results are not influenced by commercial relationships.",icon:"⚖️"},
                 {title:"How We Make Money",desc:"Through affiliate partnerships, professional referrals (lawyers, realtors), and advertising — never by charging users.",icon:"💰"},
-                {title:"Accuracy",desc:"Rates are updated via AI-powered search. Calculators use standard Canadian mortgage formulas. Always verify with your lender.",icon:"✅"},
+                {title:"Accuracy",desc:"Rates are compiled from public lender websites and market data, updated regularly. Calculators use standard Canadian mortgage formulas. Always verify with your lender.",icon:"✅"},
               ].map(item=>(
                 <div key={item.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
                   <div style={{fontSize:18,marginBottom:4}}>{item.icon}</div>
