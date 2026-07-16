@@ -6473,15 +6473,1551 @@ function GlossaryTab(){
   );
 }
 
+function BlogTab(){
+  const [article,setArticle]=useState<string|null>(null);
+  const ARTICLES=[
+    {
+      id:"fixed-vs-variable-2026",
+      title:"Fixed vs Variable Mortgage Rates in Canada — What Should You Choose in 2026?",
+      date:"July 15, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Rate Strategy",
+      summary:"With the Bank of Canada holding at 2.25% for the fifth consecutive time, the fixed vs variable debate is more relevant than ever. Here's what Canadian homeowners need to know.",
+      content:`
+The Bank of Canada held its overnight rate at 2.25% on July 15, 2026 — the fifth consecutive hold. For Canadian mortgage holders and homebuyers, this stability raises an important question: should you choose a fixed or variable rate mortgage in 2026?
+
+## The Current Rate Environment
+
+As of July 2026, here's where rates stand:
+- **Best 5-year fixed rate:** approximately 3.90–4.10%
+- **Best 5-year variable rate:** approximately 3.35–3.55% (prime minus ~0.90%)
+- **Spread:** roughly 0.55–0.75% in favour of variable
+
+This spread is smaller than it was during the peak cutting cycle of 2024–2025, when variable rates offered a 1.5% or greater advantage over fixed. The compression matters because a smaller spread means less reward for taking on the uncertainty of a variable rate.
+
+## What is a Fixed Rate Mortgage?
+
+A fixed rate mortgage locks your interest rate for the entire term — typically 1, 2, 3, or 5 years in Canada. Your payment stays the same every month regardless of what the Bank of Canada does with interest rates.
+
+**Advantages of fixed rates:**
+- Predictable payments — budget with certainty
+- Protection against rate increases
+- Lower stress — you don't check BoC announcements
+- Preferred by mortgage lenders for qualification
+
+**Disadvantages of fixed rates:**
+- Currently higher than variable by 0.55–0.75%
+- Breaking the mortgage early triggers an Interest Rate Differential (IRD) penalty — often very expensive at big banks
+- You don't benefit if rates fall during your term
+
+## What is a Variable Rate Mortgage?
+
+A variable rate mortgage floats with the Bank of Canada's overnight rate, reflected through your lender's prime rate. When the BoC cuts rates, your rate (and often your payment) goes down. When the BoC raises rates, it goes up.
+
+**Advantages of variable rates:**
+- Currently lower than fixed rates
+- Historically, variable rate borrowers pay less interest over long periods
+- Breaking the mortgage early only costs 3 months interest — much cheaper than fixed IRD penalties
+- You benefit immediately when the BoC cuts rates
+
+**Disadvantages of variable rates:**
+- Payments fluctuate (unless you have an adjustable-rate mortgage that adjusts payment automatically)
+- Uncertainty — requires higher stress tolerance
+- The BoC could raise rates if inflation resurges
+
+## The Historical Argument for Variable
+
+Research consistently shows that variable rate borrowers have paid less interest than fixed rate borrowers over long periods in Canada. A 2001 study by Dr. Moshe Milevsky of York University found that variable rate mortgages were the better choice roughly 90% of the time over 15-year periods. However, the 2022–2023 rate hike cycle proved that the other 10% of the time can be brutal — variable rate holders saw their rates jump from 1.45% to 5.45% in just 18 months.
+
+## What Should You Choose in 2026?
+
+**Choose fixed if:**
+- You're on a tight budget and need payment certainty
+- You're risk-averse and would lose sleep over rate increases
+- You plan to stay in the home for the full term and aren't likely to break the mortgage
+- You believe rates may rise (if inflation resurges from tariff pressures or supply shocks)
+
+**Choose variable if:**
+- You have financial flexibility and can absorb payment increases
+- You believe the Bank of Canada will cut rates further in late 2026 or 2027
+- You're likely to sell or refinance before your term ends (cheap prepayment penalty is valuable)
+- You want to take advantage of the current rate spread
+
+## The 2026 Wildcard: Tariffs and Trade Policy
+
+One factor complicating the 2026 decision is ongoing Canada-US trade uncertainty. If tariff pressures cause inflation to rise unexpectedly, the Bank of Canada could pause its neutral stance or even consider hikes. This risk — low but non-zero — adds uncertainty to the variable rate picture that didn't exist as strongly in 2023–2024.
+
+## Our Recommendation for 2026
+
+For most Canadian homebuyers in 2026, a **2 or 3-year fixed rate** strikes the best balance. It gives you payment certainty in an uncertain environment, while keeping your term short enough to benefit from rate reductions that most economists expect by 2027–2028. The 5-year fixed commits you too long given current economic uncertainty; variable gives you a modest rate advantage that may not justify the risk given the compressed spread.
+
+**Always consult a licensed mortgage professional** before making any rate decision. Every borrower's situation — income stability, risk tolerance, renewal timeline, and financial cushion — is different.
+
+Use our [Rate Finder](/rate-finder) to get a personalized recommendation based on your profile, or compare current rates from 20+ Canadian lenders in our [Rates tab](/).
+      `
+    },
+    {
+      id:"mortgage-stress-test-guide-2026",
+      title:"Canada's Mortgage Stress Test Explained — 2026 Complete Guide",
+      date:"July 10, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"First-Time Buyers",
+      summary:"The mortgage stress test has changed since its 2018 introduction. Here's everything Canadian homebuyers need to know about qualifying in 2026 — including recent rule changes.",
+      content:`
+Canada's mortgage stress test requires all homebuyers — even those with 20% or more down payment — to prove they can afford their mortgage at a rate higher than what they'll actually pay. Here's everything you need to know in 2026.
+
+## What is the Mortgage Stress Test?
+
+Introduced in 2018 and expanded in 2021, the mortgage stress test (officially called the Minimum Qualifying Rate or MQR) requires lenders to confirm that borrowers can still afford their mortgage payments if interest rates were higher than the contracted rate.
+
+The stress test rate is the **higher** of:
+- Your actual contracted mortgage rate **plus 2%**
+- **5.25%** (the regulatory floor)
+
+So if you're getting a 5-year fixed rate at 3.90%, you'll be stress-tested at **5.90%** (3.90% + 2%). If your rate is only 3.25%, you'll be tested at **5.25%** (the floor kicks in).
+
+## Why Does the Stress Test Exist?
+
+The stress test was introduced after years of ultra-low interest rates left many Canadians with mortgages they could barely afford at low rates — let alone if rates rose. The 2022–2023 rate hike cycle proved this concern valid, as many variable rate holders scrambled when payments jumped.
+
+The test protects both borrowers (from overleveraging) and lenders (from defaults).
+
+## How is the Stress Test Calculated?
+
+Your lender will use two key ratios to evaluate your application:
+
+**GDS (Gross Debt Service Ratio):** Maximum 39%
+This is the percentage of your gross monthly income that goes toward housing costs:
+- Mortgage payment (at stress test rate)
+- Property taxes
+- Heating costs
+- 50% of condo fees (if applicable)
+
+**TDS (Total Debt Service Ratio):** Maximum 44%
+This adds all other debt payments to your GDS:
+- Car loans
+- Credit card minimum payments
+- Student loans
+- Any other monthly obligations
+
+## Example Stress Test Calculation
+
+**Scenario:** $500,000 home, 10% down ($50,000), $450,000 mortgage, 25-year amortization. Contracted rate: 3.90%. Stress test rate: 5.90%.
+
+Monthly payment at 3.90%: approximately $2,334
+Monthly payment at 5.90% (stress test): approximately $2,877
+
+If your gross monthly income is $7,000:
+- Housing costs (mortgage + tax + heat): $2,877 + $300 + $150 = $3,327
+- GDS ratio: $3,327 ÷ $7,000 = **47.5% — FAILS** (limit is 39%)
+
+This buyer would need to either increase income, increase down payment, extend amortization to 30 years, or purchase a less expensive property.
+
+## 2026 Changes to the Stress Test
+
+Several important updates affect Canadian buyers in 2026:
+
+**30-year amortization expanded:** As of late 2024 and confirmed in the 2026 federal budget, all buyers of newly built homes can now access 30-year insured amortizations — not just first-time buyers. This reduces the monthly payment used in GDS/TDS calculations, making it easier to pass the stress test on new builds.
+
+**Insured mortgage cap raised to $1.5M:** Previously, insured mortgages (less than 20% down) were capped at $1M. The cap now extends to $1.5M, opening up more options in expensive markets like Toronto and Vancouver.
+
+**Uninsured mortgage exemption proposed:** There has been ongoing discussion about whether borrowers refinancing with their existing lender should face a stress test. As of mid-2026, this has not been changed federally, though some lenders have introduced portfolio programs with more flexibility.
+
+## How to Improve Your Stress Test Result
+
+**Increase your down payment:** A larger down payment means a smaller mortgage and lower monthly payments — directly improving your GDS ratio.
+
+**Pay down other debts:** Car loans, student loans, and credit card balances all count in TDS. Eliminating these before applying can dramatically improve qualification.
+
+**Choose a longer amortization:** A 30-year amortization (available on new builds or for buyers with 20%+ down) reduces the payment used in stress testing compared to 25 years.
+
+**Add a co-borrower:** A spouse, parent, or guarantor with stable income can increase your combined qualifying income.
+
+**Shop for the right lender:** Not all lenders apply the stress test identically on the edges — credit unions and some monolines may have slightly more flexibility on GDS/TDS ratios for strong applicants.
+
+## Common Stress Test Myths
+
+**Myth: "The stress test rate is what I'll actually pay."**
+No — it's only used for qualification. You pay your contracted rate.
+
+**Myth: "Credit unions don't have to use the stress test."**
+Provincially regulated credit unions are not subject to federal OSFI rules — but most still apply a stress test as a prudent lending standard.
+
+**Myth: "Passing the stress test means I can comfortably afford the home."**
+The stress test is a floor, not a ceiling. Many financial advisors recommend limiting housing costs to 30-35% of gross income, below the 39% GDS limit.
+
+Use our free [Stress Test Calculator](/) to see exactly what you qualify for based on your income, down payment, and debts.
+      `
+    },
+    {
+      id:"first-time-buyer-programs-canada-2026",
+      title:"Every First-Time Homebuyer Program in Canada — 2026 Complete Guide",
+      date:"July 8, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"8 min read",
+      category:"First-Time Buyers",
+      summary:"The federal government and every province offer programs to help first-time buyers. This guide covers every available program in 2026 — federal and provincial.",
+      content:`
+Buying your first home in Canada comes with access to a range of government programs designed to reduce the cost and improve affordability. In 2026, these programs have been significantly expanded. Here's every program available to you.
+
+## Federal Programs
+
+### 1. First Home Savings Account (FHSA)
+
+The FHSA is the most powerful first-time buyer tool introduced in recent years. Launched in April 2023 and now fully established, it combines the best features of a TFSA and an RRSP specifically for homebuying.
+
+**How it works:**
+- Contribute up to $8,000/year, lifetime maximum $40,000
+- Contributions are tax-deductible (like an RRSP)
+- Withdrawals for a home purchase are completely tax-free (like a TFSA)
+- Unused room carries forward one year
+
+**Key rule:** You must be a first-time homebuyer and use the funds to purchase a qualifying home in Canada.
+
+**The math:** A couple can each open an FHSA, contributing a combined $16,000/year. Over 5 years, that's $80,000 saved with full tax deductibility on the way in and zero tax on the way out. On a $100,000 combined income, that's roughly $22,000 in combined tax savings.
+
+### 2. Home Buyers' Plan (HBP)
+
+The Home Buyers' Plan allows first-time buyers to withdraw from their RRSP to purchase or build a home.
+
+**2026 limits:**
+- Up to $60,000 per person ($35,000 was the old limit, raised in Budget 2024)
+- Couples can withdraw up to $120,000 combined
+- Must repay over 15 years starting 2 years after withdrawal
+
+**Best strategy:** Use the FHSA first (no repayment required), then supplement with HBP if needed.
+
+### 3. First-Time Home Buyer's Tax Credit (HBTC)
+
+A federal non-refundable tax credit worth $10,000, which generates a tax reduction of $1,500 for eligible first-time buyers. Available on your tax return in the year you purchase your home.
+
+### 4. GST/HST New Housing Rebate
+
+If you're buying a newly built home, you may qualify for a rebate of the GST (or the federal portion of HST) paid on the purchase. The rebate is 36% of GST paid on homes under $350,000, with a partial rebate up to $450,000. In 2026, the cap discussions are ongoing — check the CRA website for the latest limits.
+
+### 5. 30-Year Amortization for New Builds
+
+All buyers (not just first-timers) of newly built homes can now access 30-year insured amortizations. For first-time buyers specifically, 30-year amortization is also available on resale homes — reducing your monthly payment and stress test threshold.
+
+## Provincial Programs
+
+### Ontario
+
+**Land Transfer Tax Rebate:** First-time buyers receive a rebate of up to $4,000 on Ontario's land transfer tax.
+**Toronto Land Transfer Tax Rebate:** Toronto buyers get an additional rebate of up to $4,475 on the municipal land transfer tax.
+**Ontario First Home Savings Account top-up:** Ontario matched FHSA contributions for low-to-moderate income buyers — check ontario.ca for current status.
+
+### British Columbia
+
+**First-Time Home Buyers' Program:** Exemption or reduction of Property Transfer Tax (PTT) for homes under $835,000.
+**BC Home Owner Grant:** Annual grant reducing property taxes for principal residence owners.
+**BC Home Flipping Tax:** Note — homes sold within 2 years of purchase face a new flipping tax. Plan to stay.
+
+### Alberta
+
+Alberta has no provincial land transfer tax — a significant advantage for first-time buyers compared to Ontario and BC.
+**Affordable Housing Programs:** Various municipal programs in Calgary and Edmonton — check with your city.
+
+### Manitoba
+
+**Land Transfer Tax:** Manitoba's LTT is relatively low compared to eastern provinces. First-time buyers may qualify for a rebate — check at gov.mb.ca.
+**Manitoba Home Renovation Tax Credit:** Not exclusively for first-time buyers but useful for fixer-uppers.
+
+### Quebec
+
+**Home Buyers' Tax Credit:** Quebec offers its own provincial version of the federal HBTC.
+**First-Time Buyers Refundable Tax Credit:** A refundable credit up to $750.
+
+### Saskatchewan
+
+**Saskatchewan First-Time Home Buyer Tax Credit:** Similar to federal HBTC, up to $1,050 in provincial tax savings.
+
+## How to Stack Programs for Maximum Benefit
+
+The most powerful approach for a Canadian couple buying their first home:
+
+1. **Both open FHSAs** and contribute $8,000/year for 3-5 years before buying
+2. **Withdraw RRSP via HBP** to supplement down payment
+3. **Claim HBTC** on that year's tax return ($1,500 credit)
+4. **Apply for provincial LTT rebate** at closing through your lawyer
+5. **GST/HST rebate** if buying new construction — claimed automatically at closing
+6. **Request 30-year amortization** to lower payments and improve stress test
+
+A couple who has been saving in FHSAs for 3 years could have $48,000 tax-free plus combined HBP withdrawals of up to $120,000 — potentially $168,000 toward a down payment, nearly all of it with significant tax advantages.
+
+Use our [First-Time Buyers tab](/) to explore all programs available in your province, or run our [Affordability Calculator](/) to see exactly how much you qualify for.
+      `
+    },
+    {
+      id:"mortgage-renewal-guide-2026",
+      title:"Mortgage Renewal in Canada — How to Get the Best Rate in 2026",
+      date:"July 5, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Renewal",
+      summary:"Approximately 60% of Canadian mortgages are up for renewal in 2025 and 2026 — many at rates significantly higher than today's market. Here's how to negotiate the best renewal rate.",
+      content:`
+An estimated 60% of Canadian mortgages are coming up for renewal in 2025 and 2026, many originally locked in at rates of 4.5–5.5% or higher during the 2022–2023 rate hike cycle. With current best rates around 3.90% for 5-year fixed, many homeowners could save hundreds of dollars per month by knowing how to handle their renewal properly.
+
+## When Does Mortgage Renewal Happen?
+
+Your mortgage renewal occurs at the end of your current mortgage term — most commonly every 5 years in Canada, though 1, 2, and 3-year terms are increasingly popular. At renewal, your entire outstanding balance must be refinanced under new terms.
+
+Your lender is legally required to notify you of renewal at least 21 days before your term ends. Most send a notice 120–180 days (4–6 months) before renewal.
+
+## The Most Expensive Mistake at Renewal
+
+Signing the renewal letter your lender sends you without shopping around. Lenders rely on this. Studies consistently show that 70–80% of Canadians renew with their existing lender without negotiating. Lenders know this and frequently offer their worst rates in the initial renewal offer, knowing most customers will accept.
+
+Your lender's renewal offer is a starting point for negotiation, not a final offer.
+
+## The Renewal Process — Timeline
+
+**5-6 months before renewal:**
+- Begin researching current market rates. Check Canada Mortgage Rates, Ratehub, and WOWA.
+- Get a few quotes from competing lenders or a mortgage broker.
+- Know what you're currently paying and what the market is offering.
+
+**120 days (4 months) before renewal:**
+- Most lenders allow you to lock in a new rate this far in advance.
+- This is when you should approach your lender and begin negotiations.
+- You can also switch lenders at this stage — some lenders cover the legal costs of switching.
+
+**60-30 days before renewal:**
+- If you haven't locked in, you're running out of time to switch lenders without penalty.
+- A mortgage broker can still potentially find a better deal, but options narrow.
+
+**At renewal:**
+- If you do nothing, your mortgage automatically renews, often at posted rate — the most expensive option.
+
+## How to Negotiate Your Renewal Rate
+
+**Step 1: Know the market rate**
+Before contacting your lender, know what the best available rate is from competing lenders. Use Canada Mortgage Rates to compare current rates. This is your leverage.
+
+**Step 2: Contact your lender first**
+Call your renewal department (not just your local branch) and ask directly: "What is the best rate you can offer me for renewal?" The initial offer they give is almost never their best.
+
+**Step 3: Present the competition**
+Tell your lender you've been quoted [X%] from [Lender Name] and that you're considering switching. This changes the conversation entirely. Most lenders have a retention desk with authority to beat competitor rates.
+
+**Step 4: The script**
+"I've been a loyal customer for [X years] and I have a renewal coming up. I've been quoted [X%] from [competing lender]. I'd like to stay with you, but I need you to match or beat that rate. Can you do that?"
+
+**Step 5: Know your switching costs**
+If your lender won't budge, calculate the true cost of switching. Most lenders absorb legal fees and appraisal costs for switches. The process takes about 30 days and your broker handles most of it.
+
+## Should You Switch Lenders at Renewal?
+
+Switching lenders at renewal is penalty-free — unlike breaking your mortgage mid-term. Your mortgage term ending is the ideal time to shop the market with zero cost.
+
+**Reasons to switch:**
+- Your current lender's rate is higher than the market by more than 0.25%
+- Your financial situation has improved and you qualify for better products
+- You want to access a different prepayment structure or features
+- Your current lender's service has been poor
+
+**Reasons to stay:**
+- Your lender matches the best available rate
+- You have a complex situation your lender already understands
+- You have other products tied to your mortgage (HELOC, etc.) that would be disrupted
+
+## Choosing Your New Term at Renewal
+
+With the Bank of Canada holding at 2.25% as of July 2026, and most economists expecting rates to remain stable or possibly fall slightly in 2027, the term decision matters:
+
+**1-year fixed (~4.50%):** Maximum flexibility. Makes sense if you believe rates will fall significantly within a year.
+**2-year fixed (~4.20%):** Good balance of rate certainty and flexibility heading into a potentially lower rate environment.
+**3-year fixed (~4.10%):** Our top recommendation for most 2026 renewers — captures the current rate environment without overcommitting.
+**5-year fixed (~3.90%):** Lowest current rate but locks you in through 2031 — a long commitment given economic uncertainty.
+**Variable (~3.35–3.55%):** Could save money if BoC cuts further, but rates have stabilized and the spread vs fixed has compressed.
+
+## Renewal Checklist
+
+Before signing any renewal:
+- ☐ Have you compared rates from at least 3 lenders or brokers?
+- ☐ Did you ask your current lender directly for their best rate?
+- ☐ Did you present a competitor quote?
+- ☐ Have you considered whether your needs have changed (want to pay down faster, need to access equity)?
+- ☐ Have you reviewed prepayment privileges in the new term?
+- ☐ Have you considered the IRD penalty risk if choosing a long fixed term?
+
+Use our [Renewal Calculator](/) to see exactly how much you could save by switching rates, and our [Negotiate Script](/) for the word-for-word conversation to have with your lender.
+      `
+    },
+    {
+      id:"home-buying-closing-costs-canada-2026",
+      title:"Closing Costs in Canada — Every Fee You Need to Budget For in 2026",
+      date:"July 1, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"Most homebuyers focus on their down payment and mortgage payment but underestimate closing costs. In Canada, closing costs typically add 1.5–4% to your purchase price.",
+      content:`
+Closing costs are the fees and expenses you pay on top of your down payment when you complete a home purchase. Many first-time buyers are caught off guard by these costs — budget them in from day one.
+
+## What Are Closing Costs?
+
+Closing costs are one-time expenses due on or before your closing date. Unlike your down payment and ongoing mortgage payments, they are generally not financed — you pay them from savings.
+
+**Total estimate:** 1.5–4% of purchase price for most Canadian buyers
+On a $500,000 home: approximately $7,500–$20,000 in additional costs
+
+## Land Transfer Tax (LTT)
+
+The largest closing cost in most provinces. Calculated as a percentage of your purchase price on a tiered basis.
+
+**Ontario LTT on a $500,000 home:** approximately $6,475
+**Toronto buyers:** Add another $4,475 (municipal LTT)
+**British Columbia (Property Transfer Tax):** approximately $8,000
+**Manitoba:** approximately $3,870
+**Quebec (Welcome Tax):** approximately $5,500
+**Alberta:** No provincial LTT — the biggest advantage of buying in Alberta
+
+**First-time buyer rebates:** Ontario, BC, and some other provinces offer LTT rebates for first-time buyers. Your lawyer applies these at closing.
+
+## Legal Fees
+
+A real estate lawyer is required for every home purchase in Canada. They handle the title transfer, review the purchase agreement, and ensure the property is free of liens and encumbrances.
+
+**Typical range:** $1,500–$2,500 + disbursements (title search, registration fees, etc.)
+
+Shop around — legal fees vary significantly between firms. All real estate lawyers are regulated and must carry malpractice insurance, so cheaper doesn't necessarily mean worse.
+
+## Title Insurance
+
+Title insurance protects against defects in the title that weren't discovered before closing — survey irregularities, undisclosed liens, fraud, and encroachments.
+
+**Cost:** $200–$400 for a one-time premium covering the life of your ownership.
+
+Almost always recommended — a very small cost for meaningful protection.
+
+## Home Inspection
+
+A professional home inspection examines the condition of the property before you finalize the purchase.
+
+**Cost:** $400–$700 depending on home size and province.
+
+Do not skip this to save money. A $500 inspection can identify $50,000 in hidden problems.
+
+## CMHC Mortgage Default Insurance
+
+If your down payment is less than 20%, you must pay CMHC (or Sagen/Canada Guaranty) default insurance. This protects your lender — not you — if you default.
+
+**Premium rates:**
+- 5–9.99% down: 4.00% of mortgage amount
+- 10–14.99% down: 3.10% of mortgage amount
+- 15–19.99% down: 2.80% of mortgage amount
+
+**On a $450,000 mortgage (5% down):** $450,000 × 4% = $18,000 added to your mortgage
+You don't pay this upfront — it's added to your mortgage balance and amortized over the life of the loan.
+
+## Property Tax Adjustment
+
+At closing, you reimburse the seller for any property taxes they've pre-paid beyond the closing date. This is calculated to the day.
+
+**Estimate:** $500–$2,500 depending on your province, city, and closing date.
+
+## Home Insurance
+
+Your lender requires proof of home insurance before releasing mortgage funds. You need a policy effective on your closing date.
+
+**First-year cost:** $800–$1,800 depending on province, home size, and coverage.
+
+## Moving Costs
+
+Often overlooked in closing cost planning.
+
+**Local move:** $800–$2,500
+**Long-distance move:** $3,000–$10,000+
+
+## Utility Setup and Connection Fees
+
+Budget $200–$500 for utility connections, security deposits, and any setup fees.
+
+## Immediate Repairs and Replacements
+
+Even a home that passed inspection may need immediate attention — new locks, minor repairs, or upgrades you planned before moving in.
+
+**Recommendation:** Budget at least 1% of purchase price as a new home emergency fund beyond your closing costs.
+
+## Total Closing Cost Summary — $500,000 Home in Manitoba
+
+| Item | Estimated Cost |
+|------|---------------|
+| Land Transfer Tax | $3,870 |
+| Legal Fees | $1,800 |
+| Title Insurance | $300 |
+| Home Inspection | $500 |
+| CMHC Premium (if <20% down) | Added to mortgage |
+| Property Tax Adjustment | $800 |
+| Home Insurance (first year) | $950 |
+| Moving Costs | $1,500 |
+| Immediate Repairs/Setup | $2,000 |
+| **Total Estimate** | **$11,720** |
+
+This is on top of your down payment. On a $500,000 home with 10% down ($50,000), you'd need approximately $62,000 in cash accessible at closing.
+
+Use our free [Closing Cost Calculator](/) to get a detailed estimate for your specific province, home price, and down payment — including any first-time buyer rebates you qualify for.
+      `
+    },
+    {
+      id:"down-payment-canada-2026",
+      title:"How Much Down Payment Do You Need in Canada — 2026 Complete Guide",
+      date:"June 28, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Home Buying",
+      summary:"Down payment requirements in Canada changed significantly in 2024 and 2026. Here's exactly how much you need, what sources are acceptable, and strategies to save faster.",
+      content:`
+Your down payment is the single most important number in your homebuying journey. It determines whether you need mortgage default insurance, what rate you qualify for, and how much your monthly payment will be. Here's everything you need to know about down payments in Canada in 2026.
+
+## Minimum Down Payment Requirements in Canada
+
+Canada has a tiered minimum down payment system based on purchase price:
+
+**Homes under $500,000:** Minimum 5% down
+**Homes $500,000–$1,499,999:** 5% on the first $500,000 + 10% on the remainder
+**Homes $1,500,000 and above:** Minimum 20% down (no default insurance available)
+
+**Example on a $700,000 home:**
+- First $500,000 × 5% = $25,000
+- Remaining $200,000 × 10% = $20,000
+- Total minimum down payment: $45,000 (6.4% of purchase price)
+
+**Key 2026 update:** The insured mortgage cap was raised from $1,000,000 to $1,500,000 in late 2024. This means buyers in expensive markets like Toronto and Vancouver can now purchase homes up to $1.5M with less than 20% down — a significant change that opened up thousands of previously cash-dependent purchases.
+
+## The 20% Threshold — Why It Matters
+
+Putting 20% or more down is a major financial milestone in Canada because it eliminates the requirement for CMHC mortgage default insurance.
+
+**With less than 20% down:** You must pay default insurance (CMHC, Sagen, or Canada Guaranty). Premiums range from 2.80% to 4.00% of your mortgage amount, added to your mortgage balance.
+
+**With 20% or more down:** No default insurance required. This saves thousands of dollars and also gives you access to more lender options, including many monolines and credit unions that don't offer insured products.
+
+On a $500,000 home:
+- 5% down ($25,000): CMHC premium of $18,500 added to mortgage
+- 10% down ($50,000): CMHC premium of $13,950 added to mortgage
+- 20% down ($100,000): No CMHC premium — saves $11,200+ vs 10% down scenario
+
+## Acceptable Sources for Down Payment
+
+Not all money is equal in the eyes of a mortgage lender. Your down payment must come from acceptable, documented sources:
+
+**Always acceptable:**
+- Your own savings (bank account, TFSA, GIC)
+- RRSP withdrawal under the Home Buyers' Plan
+- FHSA withdrawal (First Home Savings Account)
+- Sale proceeds from another property
+- Inheritance (with documentation)
+- Gift from an immediate family member (with gift letter — must be a true gift, not a loan)
+
+**Conditionally acceptable:**
+- Proceeds from selling investments, stocks, or cryptocurrency (with documentation of liquidation)
+- Borrowed funds — generally NOT acceptable for minimum down payment, though some lenders allow it for amounts above the minimum
+
+**Not acceptable:**
+- Personal loans or lines of credit used as down payment (without lender approval)
+- Cash without documented source ("mattress money")
+- Money from non-family third parties without explanation
+
+Your lender will require 90 days of bank statements to document the source of your down payment. Large deposits will be questioned — explain them early.
+
+## Strategies to Save Your Down Payment Faster
+
+### 1. Open a First Home Savings Account (FHSA) Today
+
+The FHSA is the fastest legal path to a down payment for first-time buyers. You can contribute up to $8,000/year ($16,000 for a couple) with full tax deductibility and completely tax-free withdrawal for a home purchase. If you're not already contributing to one, you're leaving money on the table.
+
+### 2. Use the Home Buyers' Plan
+
+You can withdraw up to $60,000 from your RRSP (raised from $35,000 in Budget 2024) to use as a down payment. You have 15 years to repay. Used together with the FHSA, a couple can access up to $200,000 in registered savings toward a down payment.
+
+### 3. Automate Your Savings
+
+Set up an automatic transfer to a dedicated down payment account on every payday. Treating your down payment savings like a fixed expense is the most consistent path to hitting your target.
+
+### 4. Consider a Secondary Suite Strategy
+
+In some provinces, the rental income from a secondary suite (basement apartment) can be used to qualify for a larger mortgage — effectively letting your down payment go further.
+
+### 5. Family Gift
+
+Parents or grandparents can gift funds for a down payment. The lender will require a signed gift letter confirming the funds are a true gift with no expectation of repayment. There are no tax implications for the recipient in Canada.
+
+## How Down Payment Affects Your Monthly Payment
+
+On a $600,000 home at 3.90% (5-year fixed), 25-year amortization:
+
+| Down Payment | Mortgage Amount | CMHC Premium | Total Mortgage | Monthly Payment |
+|---|---|---|---|---|
+| 5% ($30,000) | $570,000 | $22,800 | $592,800 | $3,080 |
+| 10% ($60,000) | $540,000 | $16,740 | $556,740 | $2,893 |
+| 20% ($120,000) | $480,000 | $0 | $480,000 | $2,494 |
+
+The jump from 5% to 20% down saves $586/month — or $7,032/year — in mortgage payments.
+
+Use our [Affordability Calculator](/) to see how different down payment amounts affect what you can afford, and our [Closing Cost Calculator](/) to factor in all the costs due at closing.
+      `
+    },
+    {
+      id:"cmhc-mortgage-insurance-canada-2026",
+      title:"CMHC Mortgage Default Insurance — What It Costs and How to Avoid It",
+      date:"June 25, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"CMHC mortgage default insurance is mandatory for Canadian homebuyers with less than 20% down. Here's exactly what it costs, how it works, and how to avoid it.",
+      content:`
+If you're buying a home in Canada with less than 20% down payment, you're required by law to purchase mortgage default insurance. Most Canadians know it as "CMHC insurance" — though CMHC is just one of three approved providers. Here's everything you need to know.
+
+## What is Mortgage Default Insurance?
+
+Mortgage default insurance (also called mortgage loan insurance) protects your lender — not you — if you stop making mortgage payments and the lender suffers a loss on the property. Despite protecting the lender, you pay the premium.
+
+It exists because high-ratio mortgages (less than 20% down) represent higher risk for lenders. The insurance allows lenders to offer mortgages to buyers who haven't saved a full 20% down payment, at competitive rates.
+
+## Who Provides Mortgage Default Insurance in Canada?
+
+Three companies are approved to provide mortgage default insurance in Canada:
+
+**CMHC (Canada Mortgage and Housing Corporation):** Federal Crown corporation, the largest provider and most well-known.
+
+**Sagen (formerly Genworth Canada):** Private insurer, now owned by Brookfield Asset Management.
+
+**Canada Guaranty:** Private insurer, offers competitive products.
+
+Your lender chooses which insurer to use — you don't get to pick. However, the premium rates are identical across all three providers.
+
+## CMHC Premium Rates — 2026
+
+| Down Payment | Premium Rate | Example on $500,000 Mortgage |
+|---|---|---|
+| 5–9.99% | 4.00% | $20,000 |
+| 10–14.99% | 3.10% | $15,500 |
+| 15–19.99% | 2.80% | $14,000 |
+| 20% or more | 0% | $0 |
+
+The premium is added to your mortgage balance — you don't pay it upfront. However, PST/HST applies to the premium in some provinces and IS paid upfront at closing (Ontario charges HST on the CMHC premium; Quebec charges QST).
+
+**On a $500,000 home with 5% down ($25,000):**
+- Mortgage amount: $475,000
+- CMHC premium: $475,000 × 4% = $19,000
+- Total mortgage: $494,000
+- Monthly payment at 3.90%: approximately $2,567
+
+## What's the True Cost?
+
+The premium adds to your mortgage balance, which means you pay interest on it for the life of your mortgage.
+
+On a $19,000 CMHC premium added to a mortgage at 3.90% over 25 years, the true total cost with interest is approximately $29,500. That's the real cost of buying with 5% down vs 20% down.
+
+## Who is Required to Pay CMHC Insurance?
+
+You MUST have default insurance if:
+- Your down payment is less than 20% of the purchase price
+- Your purchase price is under $1,500,000 (raised from $1M in 2024)
+- The property will be your primary residence (investment properties require 20%+ down regardless)
+- Your amortization is 25 years or less for insured mortgages (30 years is now available for new builds and first-time buyers)
+
+## Who is EXEMPT from CMHC Insurance?
+
+You do NOT need default insurance if:
+- You put 20% or more down on any property
+- You're purchasing a home over $1,500,000 (requires 20%+ down anyway)
+- You're purchasing a rental property (uninsured)
+- You're a federal or provincial government entity
+
+## How to Avoid CMHC Insurance
+
+### Strategy 1: Save 20% Down Payment
+The cleanest solution. Use an FHSA and RRSP HBP to accelerate savings. On a $600,000 home, you need $120,000 to avoid CMHC insurance.
+
+### Strategy 2: Buy a Less Expensive Property
+If your savings can cover 20% of a lower-priced property, consider starting with a smaller home or condo to build equity, then upgrading later.
+
+### Strategy 3: Gifted Down Payment
+If a family member can gift you funds to bring your down payment to 20%, you avoid the CMHC premium entirely. On a $500,000 home, a gift that brings you from 15% to 20% ($25,000 gift) saves approximately $14,000 in CMHC premiums — a clear financial benefit worth discussing with family.
+
+### Strategy 4: Wait and Save
+Sometimes the right move is to wait. Every additional year of saving not only potentially eliminates CMHC but also reduces your mortgage and monthly payment.
+
+## CMHC Insurance vs. Mortgage Life Insurance
+
+These are two completely different products that are frequently confused:
+
+**CMHC Default Insurance:** Mandatory if less than 20% down. Protects the lender. Premium added to mortgage.
+
+**Mortgage Life Insurance:** Optional. Pays off your mortgage balance if you die. Protects your family. Sold by your lender or an insurance company. Premiums paid monthly.
+
+Most financial advisors recommend term life insurance over mortgage life insurance for better coverage and value — but that's a separate conversation.
+
+Use our [Closing Cost Calculator](/) to see exactly how CMHC insurance affects your total purchase costs in your province, including any applicable PST/HST on the premium.
+      `
+    },
+    {
+      id:"breaking-mortgage-early-canada-2026",
+      title:"Breaking Your Mortgage Early in Canada — Penalties, Costs and When It Makes Sense",
+      date:"June 22, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"Mortgage Strategy",
+      summary:"Breaking a mortgage before the end of your term triggers a prepayment penalty. Here's how Canadian lenders calculate penalties, what they can cost, and when breaking still makes financial sense.",
+      content:`
+Breaking your mortgage before the end of your term is one of the most significant financial decisions a Canadian homeowner can make. Life events — job changes, divorce, upsizing, downsizing, death in the family — don't wait for your mortgage to mature. Here's everything you need to know about mortgage break penalties in Canada.
+
+## Why Would You Break Your Mortgage?
+
+Common reasons Canadians break their mortgage mid-term:
+- Selling your home
+- Refinancing to access equity or get a better rate
+- Relationship breakdown or divorce
+- Upsizing or downsizing unexpectedly
+- Taking advantage of significantly lower rates
+- Debt consolidation using home equity
+
+## What is a Prepayment Penalty?
+
+When you break a fixed-rate mortgage before the end of your term, your lender charges a prepayment penalty. This compensates them for the interest income they expected to earn for the remainder of your term.
+
+For fixed-rate mortgages, the penalty is the **greater** of:
+- **3 months interest**, OR
+- **Interest Rate Differential (IRD)**
+
+For variable-rate mortgages, the penalty is almost always simply **3 months interest** — one of the biggest advantages of variable rate mortgages.
+
+## Understanding the Interest Rate Differential (IRD)
+
+The IRD is the difference between your contracted mortgage rate and the rate your lender could earn by re-lending those funds for the remaining term of your mortgage.
+
+**Simple IRD formula:**
+IRD = Mortgage Balance × (Your Rate − Comparison Rate) × Remaining Term in Years
+
+The "comparison rate" is where it gets complicated — and where big banks dramatically overcharge.
+
+## The Big Bank IRD Problem
+
+Big banks (TD, RBC, BMO, Scotiabank, CIBC) calculate IRD using their posted rates rather than discounted rates. Since posted rates are typically 1.5–2% higher than the rate you actually received (which was discounted), the IRD calculation produces a much larger penalty than it should.
+
+**Example — Mortgage originally at 4.5% (TD posted was 5.5% when you got a 1% discount):**
+
+If current posted rate for remaining term is 3.5%:
+- Actual spread: 4.5% − 3.5% = 1.0%
+- Bank's IRD calculation: 5.5% (posted) − 3.5% (current posted) = 2.0% spread
+
+The bank effectively doubles the penalty by using posted rates in the calculation. This is legal in Canada and responsible for thousands of dollars in unexpected penalty charges.
+
+**This is why credit unions and monolines typically charge far lower IRD penalties** — they use your actual contract rate, not an inflated posted rate.
+
+## Example Penalty Comparison
+
+**Scenario:** $400,000 mortgage, 3 years remaining on 5-year fixed at 4.50%. Current rates for 3-year: 3.90%.
+
+**Variable rate or credit union (3 months interest):**
+$400,000 × 4.50% ÷ 12 × 3 = **$4,500**
+
+**Big bank IRD (using posted rates):**
+Posted rate when you borrowed: 5.50%
+Current posted 3-year rate: 4.90%
+Differential: 5.50% − 4.90% = 0.60% — but wait, your discount was 1%
+Bank adds it back: actual IRD = 1.00% + 0.60% = 1.60%
+$400,000 × 1.60% × 3 years = **$19,200**
+
+The difference between a variable-rate penalty and a big bank fixed-rate IRD on the same mortgage: $14,700.
+
+## When Does Breaking Your Mortgage Make Financial Sense?
+
+Despite the penalties, breaking can make sense in several scenarios:
+
+**Scenario 1: Rates have dropped significantly**
+Calculate your penalty vs. the interest savings over your remaining term. If the rate drop saves more than the penalty over the remaining term, breaking makes sense.
+
+Example: 2 years remaining, $400,000 mortgage, rate drops from 5.25% to 3.90%.
+Annual interest savings: $400,000 × 1.35% = $5,400/year × 2 years = $10,800 savings
+Penalty: $6,000 (3 months interest on variable/credit union)
+**Net benefit: $4,800 — break makes sense**
+
+**Scenario 2: You need to access equity**
+If you have significant equity and need funds for renovation, investment, or debt consolidation, the cost of breaking and refinancing may be less than alternative borrowing costs.
+
+**Scenario 3: Blend and Extend**
+Some lenders offer a "blend and extend" option — they blend your current rate with the new lower rate, extending your term. No penalty, but you may not get the full benefit of lower rates. Use our Blend & Extend calculator to compare.
+
+**Scenario 4: Variable rate mortgage — almost always cheaper**
+If you have a variable rate mortgage, the penalty is just 3 months interest regardless of how rates have moved. Much easier to justify breaking.
+
+## The Break-Even Calculation
+
+Before breaking, always calculate your break-even point:
+
+**Break-even period = Penalty ÷ Monthly savings from new rate**
+
+If the penalty is $6,000 and you save $250/month with the new rate:
+Break-even = 24 months (2 years)
+
+If you plan to stay in the home longer than 2 years after breaking, it makes financial sense.
+
+## How to Minimize Your Penalty
+
+**Choose a variable rate:** 3 months interest vs. potentially tens of thousands in IRD.
+**Choose a credit union or monoline:** Use fair IRD calculations based on actual rates.
+**Use prepayment privileges:** Before breaking, use your annual lump-sum prepayment privilege (typically 15–20% of original mortgage) to reduce the balance and therefore the penalty.
+**Negotiate with your lender:** Some lenders will reduce penalties to retain a good customer, especially if you're switching products rather than leaving entirely.
+**Check your mortgage documents:** Some mortgage contracts cap IRD penalties or use different calculation methods.
+
+Use our [Refinancing Calculator](/) to see whether breaking your mortgage and refinancing at current rates makes financial sense for your specific situation.
+      `
+    },
+    {
+      id:"heloc-canada-2026",
+      title:"Home Equity Line of Credit (HELOC) in Canada — Complete 2026 Guide",
+      date:"June 20, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Mortgage Strategy",
+      summary:"A HELOC lets Canadian homeowners access their home equity as a revolving line of credit. Here's how HELOCs work, how to qualify, what they cost, and when to use one.",
+      content:`
+A Home Equity Line of Credit (HELOC) is one of the most flexible financial tools available to Canadian homeowners. It lets you borrow against your home equity — the difference between your home's value and your outstanding mortgage — on a revolving basis, similar to a credit card but secured by your property.
+
+## What is a HELOC?
+
+A HELOC is a secured revolving line of credit attached to your home. You receive a credit limit based on your home equity, and you can borrow, repay, and re-borrow up to that limit as needed — during the draw period.
+
+Unlike a mortgage (which is disbursed as a lump sum and repaid on a fixed schedule), a HELOC works like a credit card: you only pay interest on the amount you've actually borrowed, and you can access funds at any time through a card, cheque, or online transfer.
+
+## How Much Can You Borrow?
+
+OSFI (Canada's banking regulator) limits HELOCs to **65% of your home's appraised value**. When combined with your existing mortgage, total borrowing cannot exceed 80% LTV (loan-to-value).
+
+**Formula:**
+Maximum HELOC = (Home Value × 80%) − Outstanding Mortgage Balance
+
+**Example:**
+Home value: $700,000
+Outstanding mortgage: $300,000
+Maximum HELOC: ($700,000 × 80%) − $300,000 = $560,000 − $300,000 = **$260,000**
+
+But note: HELOC alone is capped at 65% of $700,000 = $455,000. Your total (mortgage + HELOC) can't exceed 80% = $560,000. So with a $300,000 mortgage, your HELOC cap is $260,000.
+
+## HELOC Interest Rates in Canada
+
+HELOCs are priced at prime rate plus a spread — typically prime + 0.50% to prime + 1.00%.
+
+With prime rate at 4.45% (July 2026):
+- Best HELOC rate: approximately 4.95% (prime + 0.50%)
+- Standard HELOC rate: approximately 5.45% (prime + 1.00%)
+
+HELOC rates are variable — they move up and down with the Bank of Canada's overnight rate. When the BoC cuts rates, your HELOC rate drops immediately. When the BoC raises rates, it rises immediately.
+
+## How to Qualify for a HELOC
+
+To qualify for a HELOC in Canada:
+
+**Minimum 20% equity:** You need at least 20% equity in your home (since HELOC is limited to 65% of value, and total borrowing to 80%).
+
+**Credit score:** Minimum 650 at most major lenders, 700+ for best rates.
+
+**Income verification:** Your lender will verify income and calculate GDS/TDS ratios including the HELOC's minimum payment.
+
+**Property type:** Most HELOCs are available on principal residences and some investment properties.
+
+**Stress test:** Even for a HELOC, you must qualify at the stress test rate — your contracted rate + 2%.
+
+## HELOC vs. Refinancing — Which is Better?
+
+Both give you access to home equity, but they work differently:
+
+| Feature | HELOC | Refinancing |
+|---|---|---|
+| Interest rate | Variable (prime + spread) | Fixed or variable, often lower |
+| Access to funds | Revolving — borrow as needed | Lump sum upfront |
+| Repayment | Interest-only option available | Fixed principal + interest |
+| Flexibility | High | Low — locked in for term |
+| Break penalty | None | Can be significant |
+| Best for | Ongoing needs, renovations | One-time large expense |
+
+**Choose HELOC when:** You need flexible access to funds over time (renovation in stages, business expenses, emergency fund).
+
+**Choose refinancing when:** You need a large lump sum, want a fixed rate, or want to consolidate debt at a lower rate.
+
+## Common Uses for a HELOC in Canada
+
+**Home renovation:** The most common use. Draw funds as renovation stages are completed rather than borrowing all upfront.
+
+**Investment property down payment:** Some investors use HELOC equity from their primary residence to fund investment property purchases.
+
+**Debt consolidation:** HELOC rates (4.95–5.45%) are far lower than credit card rates (19.99–22.99%), making it an effective debt consolidation tool. However, you're converting unsecured debt to secured debt — defaulting now risks your home.
+
+**Emergency fund:** A HELOC with a $0 balance costs nothing to maintain but is available instantly if needed.
+
+**Education expenses:** Funding tuition or continuing education without depleting savings.
+
+**Bridge financing:** Funding a new home purchase before your existing home sells.
+
+## HELOC Risks to Understand
+
+**Variable rate risk:** Your interest costs rise when the BoC raises rates. In 2022–2023, HELOC rates rose from ~2.7% to ~7.2% in 18 months — a tripling of interest costs.
+
+**Temptation to over-borrow:** The revolving, accessible nature of HELOCs makes it easy to borrow more than intended. Treat it like debt, not income.
+
+**Collateral risk:** Your home secures the HELOC. Inability to repay can lead to foreclosure.
+
+**Regulatory changes:** OSFI has tightened HELOC rules over the years and may do so again. The current 65% cap could change.
+
+## The Smith Manoeuvre — A Canadian Tax Strategy
+
+The Smith Manoeuvre is a legal Canadian tax strategy using a HELOC to convert non-deductible mortgage interest into tax-deductible investment loan interest. In simple terms: use your HELOC to invest in eligible securities, making that portion of interest deductible from your Canadian taxes.
+
+This is a complex strategy that requires careful implementation and professional advice — but it's legal and used by thousands of Canadians to accelerate wealth building.
+
+Use our [Refinancing Calculator](/) to compare whether a HELOC or cash-out refinance makes more sense for your situation.
+      `
+    },
+    {
+      id:"best-mortgage-lenders-canada-2026",
+      title:"Best Mortgage Lenders in Canada 2026 — Banks vs Credit Unions vs Monolines",
+      date:"June 18, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"Rate Strategy",
+      summary:"Canada has three main types of mortgage lenders — big banks, credit unions, and monolines. Each has different rates, penalties, and qualification criteria. Here's how to choose.",
+      content:`
+One of the most important decisions in your mortgage process is who to get your mortgage from. In Canada, you have three main categories of mortgage lenders — big banks, credit unions, and monolines — plus mortgage brokers who access all three. Here's how they compare.
+
+## The Big Six Banks
+
+Canada's six largest banks — RBC, TD, Scotiabank, BMO, CIBC, and National Bank — are the most recognized mortgage lenders in the country. They handle the majority of Canadian mortgages and have branches, advisors, and online tools across the country.
+
+**Advantages of big banks:**
+- Convenience — branch access and relationship banking
+- Bundling benefits — discounts when combining mortgage with bank account, credit cards
+- Stability — federally regulated, well-capitalized
+- Technology — robust online banking and mortgage management tools
+
+**Disadvantages of big banks:**
+- Rarely offer lowest rates — posted rates are significantly higher than what you'll actually get after negotiation
+- IRD penalty calculation using posted rates — can result in massive break penalties
+- Less flexibility for self-employed or non-traditional income borrowers
+- High-pressure sales environment focused on upselling products
+
+**Who big banks are best for:** Borrowers who value convenience, want all financial products in one place, and plan to hold their mortgage to full term without breaking.
+
+## Credit Unions
+
+Credit unions are member-owned financial cooperatives regulated at the provincial level. Canada's largest include Desjardins (Quebec), Meridian (Ontario), Servus (Alberta), Coastal Community (BC), Steinbach Credit Union and Assiniboine Credit Union (Manitoba).
+
+**Advantages of credit unions:**
+- Competitive rates — often match or beat big banks
+- Fair IRD penalties — use actual contract rates, not inflated posted rates (can save tens of thousands)
+- Member-owned — profits returned to members through dividends and better rates
+- More flexibility for non-standard situations
+- Local decision-making — understand local markets
+
+**Disadvantages of credit unions:**
+- Geographically limited — a Manitoba credit union may not lend in BC
+- Less technology investment than big banks (though improving rapidly)
+- Provincially regulated — deposit insurance is provincial, not federal CDIC
+
+**Who credit unions are best for:** Local borrowers who want competitive rates and fair penalty structures. Especially valuable if there's any chance you'll break your mortgage early.
+
+## Monoline Lenders
+
+Monoline lenders (or mortgage finance companies) do only one thing: mortgages. They have no branches, no chequing accounts, no credit cards — just mortgages. They're accessed almost exclusively through mortgage brokers. Major Canadian monolines include First National, MCAP, Street Capital (now Scotia Mortgage Authority), RMG Mortgages, and Equitable Bank.
+
+**Advantages of monolines:**
+- Consistently lowest rates — lower overhead means better rates passed to borrowers
+- Fair IRD calculations — use actual rates, not posted rates
+- Specialist expertise — their entire business is mortgages
+- Flexible products — often more creative solutions for complex situations
+
+**Disadvantages of monolines:**
+- Broker access only — you can't walk into a branch
+- Less name recognition — some borrowers uncomfortable with unfamiliar brands
+- Servicing varies — your mortgage may be sold to another servicer
+- Limited relationship banking — no bundling benefits
+
+**Who monolines are best for:** Rate-focused borrowers who work with a broker and want the best rate with fair penalty structures.
+
+## Mortgage Brokers vs. Going Direct
+
+A mortgage broker is an independent professional who accesses multiple lenders (big banks, credit unions, monolines) to find you the best rate and product. They're paid by the lender, not you — typically 0.6–1.2% of the mortgage amount.
+
+**Broker advantages:**
+- Access to 30–50+ lenders with one application
+- Rate negotiating power through volume
+- Expertise in matching complex situations to the right lender
+- Often beat rates available directly at branches
+
+**Going direct advantages:**
+- Existing relationship may yield loyalty discounts
+- One point of contact for all banking
+- Branch access and in-person support
+
+**Our recommendation:** Use a broker to shop the market, then take that rate back to your existing bank. If your bank matches it, stay. If they won't, use the broker. You have nothing to lose.
+
+## 2026 Rate Comparison by Lender Type
+
+For a 5-year fixed mortgage on a $500,000 home (20% down):
+
+| Lender Type | Typical Rate Range | Penalty Structure |
+|---|---|---|
+| Big 6 Banks | 3.89–4.25% | Posted-rate IRD (very expensive) |
+| Credit Unions | 3.79–4.10% | Contract-rate IRD (fair) |
+| Monolines | 3.74–3.99% | Contract-rate IRD (fair) |
+| Through Broker | 3.74–3.99% | Depends on lender |
+
+The rate differences look small but compound significantly. At 3.74% vs 4.10% on a $400,000 mortgage over 5 years, the lower rate saves approximately $7,200 in interest — before accounting for the potential penalty difference.
+
+Compare current rates from all lender types on our [Rates tab](/) or use our [Rate Finder](/) to get a personalized recommendation.
+      `
+    },
+    {
+      id:"property-transfer-tax-canada-2026",
+      title:"Property Transfer Tax in Every Canadian Province — 2026 Complete Guide",
+      date:"June 15, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"Land transfer tax (called property transfer tax in BC) is the largest closing cost for most Canadian homebuyers. Here's exactly what you'll pay in every province — and every rebate available.",
+      content:`
+Land transfer tax (LTT) — called property transfer tax (PTT) in British Columbia and welcome tax (taxe de bienvenue) in Quebec — is a one-time tax paid when you purchase a property. It's calculated as a percentage of your purchase price and varies significantly by province. For most Canadian homebuyers, it's the largest single closing cost.
+
+## Land Transfer Tax by Province — 2026
+
+### Ontario
+
+Ontario's LTT uses a tiered calculation:
+- 0.5% on the first $55,000
+- 1.0% on $55,000–$250,000
+- 1.5% on $250,000–$400,000
+- 2.0% on $400,000–$2,000,000
+- 2.5% on amounts over $2,000,000
+
+**On a $600,000 home: approximately $8,475**
+
+**Toronto buyers pay double:** The City of Toronto charges its own municipal LTT on top of the provincial LTT, calculated on the same tiered structure. Total LTT on a $600,000 Toronto home: approximately $16,950.
+
+**First-time buyer rebate (Ontario):** Up to $4,000 rebate on provincial LTT. On a $600,000 home, this eliminates most of the provincial LTT. Toronto first-time buyers get an additional municipal rebate of up to $4,475.
+
+### British Columbia
+
+BC calls it Property Transfer Tax (PTT):
+- 1% on first $200,000
+- 2% on $200,000–$2,000,000
+- 3% on $2,000,000–$3,000,000
+- 5% on amounts over $3,000,000
+
+**On a $700,000 home: approximately $12,000**
+
+**First-Time Home Buyers' Program:** Full exemption on homes under $500,000. Partial exemption on homes $500,000–$835,000. No exemption above $835,000.
+
+**Newly Built Home Exemption:** Full PTT exemption on newly built homes under $1,100,000 for all buyers (not just first-timers) — one of the strongest incentives for new builds in Canada.
+
+### Alberta
+
+**Alberta has NO provincial land transfer tax** — a significant financial advantage for buyers and a major reason Calgary and Edmonton remain relatively more affordable than Toronto and Vancouver. Alberta buyers pay only a modest land title transfer fee (approximately $500–$1,000 depending on property value).
+
+### Manitoba
+
+Manitoba's land transfer tax:
+- 0% on first $30,000
+- 0.5% on $30,000–$90,000
+- 1.0% on $90,000–$150,000
+- 1.5% on $150,000–$200,000
+- 2.0% on amounts over $200,000
+
+**On a $400,000 home: approximately $5,870**
+
+First-time buyers may qualify for a rebate — check at gov.mb.ca for current thresholds and eligibility.
+
+### Quebec
+
+Quebec's mutation tax ("welcome tax"):
+- 0.5% on first $52,800
+- 1.0% on $52,800–$264,000
+- 1.5% on amounts over $264,000
+
+**On a $500,000 home: approximately $6,264**
+
+Additional tiers apply in Montreal (higher rates for luxury properties). Quebec first-time buyers may qualify for a credit through the provincial tax system.
+
+### Saskatchewan
+
+Saskatchewan charges a land title transfer fee, not a traditional LTT. The fee is approximately $500–$1,500 depending on property value — much lower than most other provinces.
+
+### Nova Scotia
+
+Nova Scotia deed transfer tax is set by each municipality:
+- Halifax: 1.5% of purchase price
+- Other municipalities: 1.0–1.5%
+
+**On a $400,000 Halifax home: approximately $6,000**
+
+No first-time buyer exemption currently in Nova Scotia.
+
+### New Brunswick
+
+New Brunswick land transfer tax: 1.0% of assessed value or purchase price (whichever is higher).
+
+**On a $300,000 home: approximately $3,000**
+
+### Prince Edward Island
+
+PEI real property transfer tax: 1.0% on first $30,000 + 2.0% above $30,000 for non-residents. For residents: no tax on first $30,000, 1.0% above.
+
+**On a $300,000 home (resident): approximately $2,700**
+
+### Newfoundland and Labrador
+
+Newfoundland registration fees (not a traditional LTT) are relatively modest — approximately $1,000–$2,000 depending on property value.
+
+## Land Transfer Tax Summary Table — $500,000 Purchase
+
+| Province | Estimated LTT | First-Time Buyer Rebate | Net LTT |
+|---|---|---|---|
+| Ontario (non-Toronto) | $6,475 | Up to $4,000 | $2,475 |
+| Ontario (Toronto) | $12,950 | Up to $8,475 | $4,475 |
+| British Columbia | $8,000 | Up to $8,000 | $0–$8,000 |
+| Alberta | ~$700 (fee only) | N/A | ~$700 |
+| Manitoba | $7,870 | Partial | TBD |
+| Quebec | $6,264 | None | $6,264 |
+| Saskatchewan | ~$1,000 (fee) | N/A | ~$1,000 |
+| Nova Scotia | $7,500 | None | $7,500 |
+| New Brunswick | $5,000 | None | $5,000 |
+
+## How to Reduce Your Land Transfer Tax
+
+**Buy in Alberta or Saskatchewan:** No meaningful LTT — saves thousands immediately.
+**Use first-time buyer rebates:** Claim them at closing through your real estate lawyer.
+**Buy a newly built home in BC:** Full PTT exemption on new builds under $1.1M.
+**Time your purchase:** Some exemptions have income or property value thresholds — plan accordingly.
+
+Use our [Closing Cost Calculator](/) to calculate your exact LTT in your province based on your purchase price, and to see all first-time buyer rebates you qualify for.
+      `
+    },
+    {
+      id:"mortgage-refinancing-canada-2026",
+      title:"Mortgage Refinancing in Canada — When It Makes Sense and When It Doesn't",
+      date:"June 12, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Mortgage Strategy",
+      summary:"Refinancing your mortgage means breaking your current mortgage and replacing it with a new one. Here's when refinancing makes financial sense in Canada — and when the math doesn't work.",
+      content:`
+Mortgage refinancing is one of the most powerful tools available to Canadian homeowners — and one of the most misunderstood. Done at the right time with the right lender, refinancing can save tens of thousands in interest, fund a renovation, consolidate debt, or provide capital for investment. Done at the wrong time or without full understanding of costs, it can be an expensive mistake.
+
+## What is Mortgage Refinancing?
+
+Refinancing means replacing your existing mortgage with a new one — either with your current lender or a different lender. Unlike a renewal (which happens when your term expires), refinancing happens mid-term, which means breaking your existing mortgage and triggering a prepayment penalty.
+
+## Common Reasons Canadians Refinance
+
+**Lower interest rate:** If rates have dropped significantly since you took out your mortgage, refinancing can reduce your interest costs substantially.
+
+**Access home equity (cash-out refinance):** You can refinance for more than your current mortgage balance, taking the difference as cash. The maximum is typically 80% of your home's appraised value.
+
+**Debt consolidation:** Combining high-interest debts (credit cards at 19.99%, car loans at 7%) into your mortgage at a lower rate (3.90%) can dramatically reduce monthly cash flow pressure.
+
+**Change amortization:** Extending your amortization reduces monthly payments; shortening it builds equity faster and reduces total interest paid.
+
+**Switching from variable to fixed (or vice versa):** If your risk tolerance or financial situation has changed.
+
+**Remove a co-borrower:** Common in divorce or separation situations.
+
+## The Refinancing Math — Should You Do It?
+
+The core calculation is simple:
+
+**Net benefit = Interest savings over remaining term − Prepayment penalty − Refinancing costs**
+
+If the net benefit is positive, refinancing makes financial sense.
+
+**Example:**
+- Current mortgage: $400,000, 5-year fixed at 5.25%, 2 years remaining
+- Current monthly payment: $2,421
+- New rate available: 3.90%
+- New monthly payment: $2,079
+- Monthly savings: $342
+- Savings over 2 years: $8,208
+
+- Prepayment penalty (variable/credit union estimate): $5,250
+- Legal fees and appraisal: $1,200
+- Total break cost: $6,450
+
+**Net benefit: $8,208 − $6,450 = $1,758 over 2 years**
+
+Marginal in this case — the savings are real but not dramatic. However, if you then lock in a new 5-year term at 3.90%, the ongoing savings continue.
+
+## The Break-Even Period
+
+Divide your total penalty and costs by your monthly savings:
+
+$6,450 ÷ $342/month = **18.9 months break-even**
+
+If you plan to stay in the home for at least 19 months after refinancing, the math works.
+
+## When Refinancing Makes Strong Sense
+
+**Rate drop of 1% or more with significant remaining term:** The savings compound significantly.
+
+**Cash-out for high-return use:** Pulling equity at 3.90% to pay off a car loan at 7% or credit cards at 19.99% has immediate and lasting impact.
+
+**Variable rate mortgage with low penalty:** With only 3 months interest as penalty, the math works even with moderate rate drops.
+
+**Long remaining amortization:** More years means more interest savings from a rate reduction.
+
+**Property has appreciated significantly:** Refinancing unlocks equity that wasn't available at original purchase.
+
+## When Refinancing Does NOT Make Sense
+
+**Large IRD penalty at a big bank:** A $20,000–$30,000 penalty can take years to recover, even with a good rate drop.
+
+**Near end of term:** If you have less than 6 months remaining, just wait for renewal — the savings won't cover the penalty.
+
+**Small rate difference (less than 0.5%):** The math rarely works with a small spread, especially with big bank penalties.
+
+**Planning to move soon:** If you'll sell within 2 years, the penalty likely won't be recovered.
+
+**Extending amortization significantly:** Refinancing to a 30-year amortization from a 20-year to reduce monthly payments sounds appealing but dramatically increases total interest paid over the life of the mortgage.
+
+## Refinancing vs. HELOC vs. Second Mortgage
+
+When your goal is accessing equity:
+
+**Refinancing:** Best for large amounts, when you want a fixed rate, or when you want to consolidate everything into one payment. Comes with break penalty.
+
+**HELOC:** Best for ongoing or uncertain access needs. Revolving, no penalty, but variable rate. Up to 65% LTV.
+
+**Second mortgage:** A separate mortgage on top of your existing one. Higher rates, used when you can't refinance (e.g., too early in term with large penalty). Not common.
+
+## The Blend and Extend Alternative
+
+If your lender offers a "blend and extend" — where they blend your current rate with the new rate and extend your term — you avoid the break penalty entirely. The blended rate won't be as low as the current market rate, but the no-penalty structure can make it the better option depending on how far into your term you are.
+
+Use our [Refinancing Calculator](/) to run the exact numbers for your situation — including penalty estimates, break-even period, and 5-year savings comparison.
+      `
+    },
+    {
+      id:"self-employed-mortgage-canada-2026",
+      title:"Self-Employed Mortgage in Canada — How to Qualify in 2026",
+      date:"June 10, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"Home Buying",
+      summary:"Self-employed Canadians face unique challenges qualifying for a mortgage. Here's how lenders evaluate self-employed income, what documents you need, and strategies to improve your qualification.",
+      content:`
+Canada has approximately 2.6 million self-employed workers — roughly 15% of the workforce. Qualifying for a mortgage as a self-employed borrower is more complex than for salaried employees, but it's absolutely achievable with the right preparation. Here's what you need to know.
+
+## Why Self-Employment Complicates Mortgage Qualification
+
+The fundamental challenge: mortgage lenders want to see stable, documented, verifiable income. Self-employed borrowers often:
+
+- Report variable income that fluctuates year-to-year
+- Write off significant business expenses, reducing reported net income
+- Draw income in ways that don't show up on standard T4 slips (dividends, retained earnings)
+- Have income that's harder to project forward
+
+The lender's concern isn't your gross revenue — it's the income that actually hits your personal tax return, which may be much lower after business deductions.
+
+## What Income Do Lenders Use for Self-Employed Borrowers?
+
+**Salaried employee:** Lender uses gross T4 income. Simple.
+
+**Self-employed:** Lender typically uses your **Line 15000 (total income) from your T1 personal tax return** — and averages the last 2 years. This is your income AFTER business deductions.
+
+This creates the core tension: the more aggressively you write off business expenses (legitimately reducing your taxes), the lower your declared income — and the smaller the mortgage you qualify for.
+
+**The self-employed income dilemma:**
+Option A: Write off everything, minimize taxes, qualify for less mortgage.
+Option B: Declare more income, pay more taxes, qualify for a larger mortgage.
+
+The right balance depends on your homebuying timeline and tax situation. Speak to both your accountant and mortgage broker before making this decision.
+
+## Documents Required for Self-Employed Mortgage
+
+**Standard income verification (2+ years self-employed):**
+- T1 General (personal tax return) for last 2 years — both years' Notice of Assessment
+- T2 Corporate tax return (if incorporated) for last 2 years
+- Business bank statements — typically 12 months
+- Business registration or articles of incorporation
+- HST/GST returns for the business
+- 90-day personal bank statements
+- Contracts or client agreements showing stable business relationships
+
+**Less than 2 years self-employed:** Most traditional lenders won't use self-employment income. You may need to use stated income programs (see below) or wait until you have 2 years of returns.
+
+## Qualifying Pathways for Self-Employed Borrowers
+
+### Pathway 1: Traditional Income Verification
+
+Best for: Self-employed borrowers with 2+ years of returns showing strong declared income.
+
+Lender averages your last 2 years of Line 15000 from your T1. Some lenders add back certain expenses (depreciation, home office, some vehicle expenses) to arrive at a higher qualifying income.
+
+### Pathway 2: Stated Income Programs (Alt-A)
+
+Best for: Borrowers with strong gross revenue but low declared income due to legitimate deductions.
+
+Some lenders and mortgage investment corporations (MICs) allow you to "state" your income — declare what you actually earn, even if your tax returns show less. You'll need to:
+- Show gross revenue supporting the stated income
+- Demonstrate industry norms for income-to-revenue ratios
+- Often require larger down payment (20%+)
+- Pay a slightly higher rate (typically 0.25–0.75% premium)
+
+### Pathway 3: Business-for-Self (BFS) CMHC Program
+
+CMHC offers a specific program for self-employed borrowers who can't fully document their income through traditional means. It allows qualifying based on stated income with CMHC insurance — meaning you can qualify with less than 20% down even as a self-employed borrower.
+
+### Pathway 4: Private/Alternative Lenders
+
+For borrowers who don't qualify through traditional channels, private lenders and B-lenders (Home Trust, Equitable Bank, First National's alt products) offer more flexibility. Rates are higher (typically 5.5–8% for B-lenders, 8–12% for private), but they can bridge the gap until your tax history improves.
+
+## Strategies to Strengthen Your Self-Employed Mortgage Application
+
+**Establish 2+ years of business history:** Most lenders require minimum 2 years of T1 returns. If you're newly self-employed, plan your homebuying timeline accordingly.
+
+**Increase declared income in the years before applying:** Work with your accountant to strategically reduce certain deductions in the 1–2 years before your mortgage application. Yes, you'll pay more tax — but qualifying for the home you want may be worth it.
+
+**Maximize your down payment:** With 20%+ down, you have access to more lenders, avoid CMHC insurance, and demonstrate financial strength.
+
+**Keep personal and business finances completely separate:** Commingling personal and business accounts is a red flag for lenders. Clear, separate financial records signal a well-run business.
+
+**Maintain strong credit:** Your personal credit score remains critical. Self-employed borrowers with strong income documentation but weak credit still struggle. Keep all personal obligations paid on time.
+
+**Work with a mortgage broker:** Brokers who specialize in self-employed mortgages know which lenders use the most favorable income calculation methods and which BFS programs are available. This expertise is invaluable.
+
+**Get your NOAs promptly:** Ensure your tax returns are filed and Notices of Assessment (NOA) received before beginning your mortgage application. Lenders require the NOA, not just the filed return.
+
+## The Incorporated Business Owner Situation
+
+Many self-employed Canadians operate through a corporation, taking a combination of salary and dividends. Lenders handle this differently:
+
+- **Salary (T4 from own corporation):** Treated like regular employment income — easier to document and qualify with.
+- **Dividends:** Some lenders include, others exclude. Dividends are taxed favorably personally but may be counted differently in mortgage qualification.
+- **Retained earnings in corporation:** Generally NOT counted as personal income for mortgage qualification, even if accessible.
+
+If you're incorporated, work with a broker who understands corporate borrower situations — they'll identify which lenders best recognize your income structure.
+
+Use our [Affordability Calculator](/) to estimate your mortgage qualification based on your declared income, and consult our [Consult tab](/) to connect with a mortgage professional who specializes in self-employed borrowers.
+      `
+    },
+    {
+      id:"condo-vs-house-canada-2026",
+      title:"Condo vs House in Canada — Which is the Better Investment in 2026?",
+      date:"June 8, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Home Buying",
+      summary:"The condo vs house debate is as relevant as ever in Canada's 2026 housing market. Here's an honest comparison of costs, appreciation, lifestyle, and investment potential.",
+      content:`
+One of the most common questions first-time Canadian homebuyers face is: condo or house? In 2026, with affordability pressures across most major markets, high condo fees, and a softening condo resale market in some cities, this decision is more nuanced than it's ever been. Here's an honest breakdown.
+
+## The Cost Reality in 2026
+
+The price gap between condos and detached houses varies enormously by market:
+
+**Toronto:**
+Average condo (1-bedroom): approximately $620,000
+Average detached house: approximately $1,450,000
+Gap: $830,000
+
+**Vancouver:**
+Average condo: approximately $720,000
+Average detached house: approximately $1,850,000
+Gap: $1,130,000
+
+**Winnipeg:**
+Average condo: approximately $230,000
+Average detached house: approximately $420,000
+Gap: $190,000
+
+**Calgary:**
+Average condo: approximately $310,000
+Average detached house: approximately $610,000
+Gap: $300,000
+
+In Toronto and Vancouver, the gap is so large that for most buyers, the choice between condo and house is really a choice between owning (condo) and not owning at all. In Winnipeg and other prairie cities, the choice is more genuinely between two accessible options.
+
+## True Cost Comparison — $500,000 Condo vs $600,000 House (Winnipeg)
+
+| Cost | Condo ($500K) | House ($600K) |
+|---|---|---|
+| Down payment (10%) | $50,000 | $60,000 |
+| Mortgage (25yr, 3.90%) | $2,324/month | $2,789/month |
+| Condo fees | $400–$700/month | $0 |
+| Property tax | $250/month | $350/month |
+| Maintenance fund | $100/month | $400–$600/month |
+| **Total monthly** | **$3,074–$3,374** | **$3,539–$3,739** |
+
+The condo looks cheaper per month, but condo fees can rise significantly over time and special assessments (unexpected major repairs charged to unit owners) can be $5,000–$50,000+ on short notice.
+
+## Appreciation — Condos vs Houses
+
+Historically, detached houses in Canada have appreciated faster than condos, particularly in land-constrained markets like Toronto and Vancouver where land value drives detached home prices.
+
+**Post-2022 reality check:** The 2022–2023 rate hike cycle hit condos harder than houses in most Canadian markets. Condo prices in Toronto fell 15–20% from peak while detached houses fell 10–15%. In 2026, the condo resale market (particularly investor-owned condos and pre-construction completions) remains under pressure in Ontario and BC as rental yields compressed with rising costs.
+
+**Prairie markets tell a different story:** In Winnipeg, Calgary, and Edmonton, both condos and houses have appreciated modestly and steadily — without the extreme volatility of eastern markets.
+
+## The Condo Fee Reality
+
+Condo fees (maintenance fees) cover shared building expenses: common area maintenance, building insurance, management fees, and reserve fund contributions. They typically range from $0.50–$1.00 per square foot per month.
+
+**On a 700 sq ft condo:** $350–$700/month — a significant, unavoidable expense that doesn't build equity.
+
+**Key due diligence before buying a condo:**
+- Review the reserve fund study — is it adequately funded?
+- Check the status certificate for any pending special assessments or litigation
+- Look at fee history — are they rising rapidly?
+- Review the rules and bylaws — short-term rentals (Airbnb) now prohibited in many buildings
+
+## Lifestyle Considerations
+
+**Condo advantages:**
+- Lower maintenance burden — no lawn, roof, or exterior to worry about
+- Amenities — gym, concierge, party rooms
+- Security and community
+- Prime urban locations often more accessible
+- Better for travelers or those with demanding careers
+
+**House advantages:**
+- Privacy — no shared walls, no noise from neighbours above
+- Space — more square footage, yard, garage
+- Flexibility — renovate as you wish, no board approval needed
+- Pets — generally easier in houses
+- Land ownership — land typically appreciates more reliably
+
+## Investment Perspective — Rental Potential
+
+**Condos:** Traditionally popular for rental investment, but the 2026 landscape is challenging. Condo fees + mortgage payments + property tax often exceed market rent in Toronto and Vancouver — negative cash flow is common. Short-term rental restrictions further reduce flexibility.
+
+**Houses:** Multi-suite houses (main floor + basement suite) in strong rental markets can achieve positive cash flow and represent a genuine investment strategy. The combination of rental income and long-term appreciation is compelling.
+
+## Our 2026 Assessment
+
+**Buy a condo if:**
+- You're in Toronto or Vancouver where a house is unaffordable
+- You value urban living, amenities, and low maintenance
+- You're single or a couple without plans for children soon
+- You plan to hold for 7+ years (condo appreciation needs longer runway)
+- The building has a healthy reserve fund and reasonable fees
+
+**Buy a house if:**
+- You're in a prairie market where both are accessible
+- You have or plan to have children
+- You value space, privacy, and outdoor living
+- You want maximum renovation flexibility
+- You're considering a basement suite for rental income
+- You believe in long-term land value appreciation
+
+**The honest answer for most first-time buyers:** In markets where both are accessible, the house is usually the stronger long-term financial decision. In Toronto and Vancouver, a condo is often the only path to ownership — which is a valid and rational choice given the alternative.
+
+Use our [Affordability Calculator](/) to see exactly how much home you qualify for, and our [Closing Cost Calculator](/) to compare the full purchase costs of condos vs houses in your province.
+      `
+    },
+  ];
+
+  if(article){
+    const a=ARTICLES.find(x=>x.id===article);
+    if(!a)return null;
+    return(
+      <div>
+        <button onClick={()=>setArticle(null)} style={{display:"flex",alignItems:"center",gap:6,padding:"7px 14px",background:s.white,border:`1px solid ${s.border}`,borderRadius:8,fontSize:12,fontWeight:600,color:s.navy,cursor:"pointer",marginBottom:14}}>← Back to Articles</button>
+        <Card>
+          <div style={{marginBottom:16}}>
+            <span style={{background:s.navy,color:"#fff",borderRadius:20,padding:"3px 10px",fontSize:10,fontWeight:700}}>{a.category}</span>
+            <h1 style={{fontSize:20,fontWeight:800,color:s.navy,marginTop:10,marginBottom:6,lineHeight:1.3}}>{a.title}</h1>
+            <div style={{display:"flex",gap:12,fontSize:11,color:s.muted,flexWrap:"wrap"}}>
+              <span>✍️ {a.author}</span>
+              <span>📅 {a.date}</span>
+              <span>⏱ {a.readTime}</span>
+            </div>
+          </div>
+          <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"10px 14px",marginBottom:16,fontSize:12,color:"#1e40af",fontStyle:"italic"}}>{a.summary}</div>
+          <div style={{fontSize:12,color:"#374151",lineHeight:1.9}}>
+            {a.content.trim().split('\n\n').map((block,i)=>{
+              if(block.startsWith('## ')){
+                return<h2 key={i} style={{fontSize:15,fontWeight:800,color:s.navy,marginTop:20,marginBottom:8,paddingBottom:6,borderBottom:`2px solid ${s.light}`}}>{block.replace('## ','')}</h2>;
+              }
+              if(block.startsWith('### ')){
+                return<h3 key={i} style={{fontSize:13,fontWeight:800,color:s.navy,marginTop:14,marginBottom:6}}>{block.replace('### ','')}</h3>;
+              }
+              if(block.startsWith('**') && block.includes(':**')){
+                const [label,...rest]=block.split(':**');
+                return<div key={i} style={{marginBottom:8}}><span style={{fontWeight:800,color:s.navy}}>{label.replace('**','')}:</span><span>{rest.join(':**')}</span></div>;
+              }
+              if(block.startsWith('- ')||block.startsWith('* ')){
+                const items=block.split('\n').filter(l=>l.trim());
+                return<ul key={i} style={{marginBottom:10,paddingLeft:20}}>{items.map((item,j)=><li key={j} style={{marginBottom:4,fontSize:12,color:"#374151"}}>{item.replace(/^[-*]\s/,'').replace(/\*\*(.*?)\*\*/g,'$1')}</li>)}</ul>;
+              }
+              if(block.includes('| ')){
+                const rows=block.split('\n').filter(r=>r.trim()&&!r.includes('---'));
+                return(
+                  <div key={i} style={{overflowX:"auto",marginBottom:12}}>
+                    <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
+                      {rows.map((row,j)=>{
+                        const cells=row.split('|').filter(c=>c.trim());
+                        return<tr key={j} style={{borderBottom:`1px solid ${s.light}`,background:j===0?"#f8fafc":j%2===0?s.white:"#fafbfc"}}>{cells.map((cell,k)=><td key={k} style={{padding:"7px 10px",fontWeight:j===0?700:400,color:j===0?s.navy:"#374151"}}>{cell.trim()}</td>)}</tr>;
+                      })}
+                    </table>
+                  </div>
+                );
+              }
+              const formatted=block.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\[(.*?)\]\((.*?)\)/g,'<span style="color:#1e40af;text-decoration:underline;cursor:pointer">$1</span>');
+              return<p key={i} style={{marginBottom:10,fontSize:12,lineHeight:1.9}} dangerouslySetInnerHTML={{__html:formatted}}/>;
+            })}
+          </div>
+          <div style={{background:"#f8fafc",borderRadius:10,padding:"12px 16px",marginTop:16,border:`1px solid ${s.border}`}}>
+            <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:6}}>⚠️ Disclaimer</div>
+            <div style={{fontSize:10,color:s.muted,lineHeight:1.6}}>This article is for informational purposes only and does not constitute financial, legal, or mortgage advice. Always consult a licensed mortgage professional before making any financial decision. Canada Mortgage Rates is not a licensed mortgage broker or financial advisor.</div>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>📝</div>
+        <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Canada Mortgage Rates Blog</h2>
+        <p style={{color:"rgba(255,255,255,0.75)",fontSize:12}}>Expert guides, rate analysis, and homebuying advice for Canadians.</p>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
+        {ARTICLES.map(a=>(
+          <div key={a.id} onClick={()=>setArticle(a.id)} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",cursor:"pointer",boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"all 0.2s"}}
+            onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
+            onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.04)";e.currentTarget.style.borderColor=s.border;}}>
+            <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 16px"}}>
+              <span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:800}}>{a.category}</span>
+            </div>
+            <div style={{padding:14}}>
+              <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:6,lineHeight:1.4}}>{a.title}</h3>
+              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{a.summary}</p>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:4}}>
+                <div style={{fontSize:10,color:s.muted}}>{a.date} · {a.readTime}</div>
+                <span style={{fontSize:11,color:s.blue,fontWeight:700}}>Read Article →</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function LearnGlossaryTab(){
-  const [subTab,setSubTab]=useState<"learn"|"glossary">("learn");
+  const [subTab,setSubTab]=useState<"blog"|"learn"|"glossary">("blog");
   return(
     <div>
       <div style={{display:"flex",gap:8,marginBottom:14}}>
+        <button onClick={()=>setSubTab("blog")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="blog"?s.red:s.border}`,background:subTab==="blog"?s.red:s.white,color:subTab==="blog"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📝 Blog</button>
         <button onClick={()=>setSubTab("learn")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="learn"?s.navy:s.border}`,background:subTab==="learn"?s.navy:s.white,color:subTab==="learn"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>🎓 Learn</button>
         <button onClick={()=>setSubTab("glossary")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="glossary"?s.navy:s.border}`,background:subTab==="glossary"?s.navy:s.white,color:subTab==="glossary"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📖 Glossary</button>
       </div>
-      {subTab==="learn"?<LearnTab/>:<GlossaryTab/>}
+      {subTab==="blog"?<BlogTab/>:subTab==="learn"?<LearnTab/>:<GlossaryTab/>}
     </div>
   );
 }
