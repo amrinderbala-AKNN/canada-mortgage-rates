@@ -722,25 +722,12 @@ function NavBar({active,setActive}){
 
 function Hero({prov,city,locLoading}){
   return(
-    <div style={{background:`linear-gradient(135deg,#0a1628 0%,#0d2240 40%,#1a3a5c 70%,#0d2240 100%)`,padding:"14px 20px 18px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
-      <div style={{position:"absolute",top:-40,right:-40,width:200,height:200,borderRadius:"50%",background:"rgba(200,16,46,0.08)",pointerEvents:"none"}}/>
-      <div style={{position:"absolute",bottom:-60,left:-60,width:280,height:280,borderRadius:"50%",background:"rgba(245,166,35,0.06)",pointerEvents:"none"}}/>
+    <div style={{background:`linear-gradient(135deg,#0a1628 0%,#0d2240 40%,#1a3a5c 70%,#0d2240 100%)`,padding:"10px 20px 12px",textAlign:"center",position:"relative",overflow:"hidden",flexShrink:0}}>
       <div style={{position:"relative",zIndex:1}}>
-        <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",marginBottom:8}}>
-          <span style={{color:s.gold,fontSize:10,fontWeight:700,letterSpacing:"0.5px"}}>🍁 CANADA'S MOST COMPLETE MORTGAGE PLATFORM</span>
-        </div>
-        <h1 style={{color:"#fff",fontSize:"clamp(16px,3vw,26px)",fontWeight:800,marginBottom:4,letterSpacing:"-0.5px",lineHeight:1.2}}>Compare <span style={{color:s.gold}}>Mortgage Rates</span> Across All of Canada</h1>
-        <p style={{color:locLoading?"rgba(255,255,255,0.4)":s.gold,fontSize:11,fontWeight:600,marginBottom:8}}>
+        <h1 style={{color:"#fff",fontSize:"clamp(14px,2.2vw,20px)",fontWeight:800,marginBottom:2,letterSpacing:"-0.5px",lineHeight:1.2}}>Compare <span style={{color:s.gold}}>Mortgage Rates</span> Across All of Canada</h1>
+        <p style={{color:locLoading?"rgba(255,255,255,0.4)":s.gold,fontSize:11,fontWeight:600,margin:0}}>
           {locLoading?"📍 Detecting your location...":"📍 "+city+", "+(PDATA[prov]?.name||prov)}
         </p>
-        <div style={{display:"flex",justifyContent:"center",gap:0,flexWrap:"wrap",background:"rgba(255,255,255,0.06)",borderRadius:12,padding:"8px 16px",maxWidth:460,margin:"0 auto",border:"1px solid rgba(255,255,255,0.1)"}}>
-          {[["20+","Lenders"],["10","Provinces"],["AI","Powered"],["Free","Always"],["Live","Rates"]].map(([v,l],i)=>(
-            <div key={l} style={{flex:1,minWidth:60,textAlign:"center",padding:"0 6px",borderRight:i<4?"1px solid rgba(255,255,255,0.1)":"none"}}>
-              <div style={{color:s.gold,fontSize:15,fontWeight:800}}>{v}</div>
-              <div style={{color:"rgba(255,255,255,0.55)",fontSize:9,marginTop:1}}>{l}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );
@@ -6546,7 +6533,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
               {n:"20+",l:"Lenders Compared",icon:"🏦",color:s.navy},
               {n:"10",l:"Provinces Covered",icon:"🍁",color:s.red},
               {n:"9",l:"Calculators",icon:"🧮",color:s.blue},
-              {n:"138",l:"Pages Indexed",icon:"📄",color:s.green},
+              {n:"15+",l:"Tools & Guides",icon:"📄",color:s.green},
               {n:"Free",l:"Always & Forever",icon:"💰",color:s.gold},
             ].map(stat=>(
               <div key={stat.l} style={{background:s.white,borderRadius:10,padding:"12px 10px",border:`1px solid ${s.border}`,textAlign:"center",borderTop:`3px solid ${stat.color}`}}>
