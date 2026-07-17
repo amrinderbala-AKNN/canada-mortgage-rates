@@ -2056,7 +2056,17 @@ function CalcTab({prov}:{prov:string}){
 
   function scrollAfter(ref:any,fn:()=>void){fn();setTimeout(()=>ref.current?.scrollIntoView({behavior:"smooth",block:"nearest"}),100);}
   const freqs=[{id:"monthly",label:"📅 Monthly"},{id:"semimonthly",label:"📅 Semi-Monthly"},{id:"biweekly",label:"📅 Bi-Weekly"},{id:"accelerated",label:"⚡ Accel. Bi-Wkly"}];
-  const tabList=[{id:"payment",label:"💰 Payment"},{id:"afford",label:"🏡 Affordability"},{id:"stress",label:"📋 Stress Test"},{id:"renewal",label:"🔄 Renewal"},{id:"refi",label:"💳 Refinancing"},{id:"amort",label:"📅 Amortization"},{id:"closing",label:"🏷️ Closing Costs"},{id:"docs",label:"📁 Doc Checklist"},{id:"rentvbuy",label:"🏠 Rent vs Buy"}];
+  const tabList=[
+    {id:"payment",label:"💰 Payment",color:"#0d2240"},
+    {id:"afford",label:"🏡 Afford",color:"#15803d"},
+    {id:"stress",label:"📋 Stress Test",color:"#7c3aed"},
+    {id:"renewal",label:"🔄 Renewal",color:"#0891b2"},
+    {id:"refi",label:"💳 Refinancing",color:"#c2410c"},
+    {id:"amort",label:"📅 Amortization",color:"#0d2240"},
+    {id:"closing",label:"🏷️ Closing",color:"#92400e"},
+    {id:"docs",label:"📁 Checklist",color:"#15803d"},
+    {id:"rentvbuy",label:"🏠 Rent vs Buy",color:"#7c3aed"},
+  ];
 
   function doPayment(){
     const down=Math.round(hp*dp/100);
@@ -2175,7 +2185,7 @@ function CalcTab({prov}:{prov:string}){
   return(
     <div>
       <div style={{display:"flex",gap:2,background:"#f1f5f9",borderRadius:10,padding:4,marginBottom:14,flexWrap:"wrap"}}>
-        {tabList.map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,padding:"7px 4px",borderRadius:8,fontSize:11,fontWeight:600,cursor:"pointer",color:tab===t.id?s.navy:s.muted,border:"none",background:tab===t.id?s.white:"none",boxShadow:tab===t.id?"0 1px 4px rgba(0,0,0,0.1)":"none",minWidth:70}}>{t.label}</button>)}
+        {tabList.map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,padding:"8px 4px",borderRadius:8,fontSize:10,fontWeight:700,cursor:"pointer",color:tab===t.id?"#fff":s.muted,border:`2px solid ${tab===t.id?t.color:s.border}`,background:tab===t.id?t.color:s.white,boxShadow:tab===t.id?"0 2px 8px rgba(0,0,0,0.15)":"none",minWidth:65,transition:"all 0.15s",whiteSpace:"nowrap"}}>{t.label}</button>)}
       </div>
 
       {tab==="payment"&&(
