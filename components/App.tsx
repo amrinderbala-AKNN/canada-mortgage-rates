@@ -235,7 +235,7 @@ function calcPmt(p,r,y){const m=r/100/12,n=y*12;return m===0?p/n:p*(m*Math.pow(1
 function detectProvince(lat,lon){if(lon<-140)return"BC";if(lon<-110&&lat>49&&lat<60)return"AB";if(lon<-95&&lon>-110&&lat>49)return"SK";if(lon>-95&&lon<-88&&lat>49)return"MB";if(lon>-88&&lon<-74&&lat>42)return"ON";if(lon>-74&&lon<-64&&lat>45)return"QC";if(lon>-64&&lon<-59&&lat>44)return"NB";if(lon>-66&&lat>43&&lat<47)return"NS";if(lon>-64&&lon<-61&&lat>45&&lat<48)return"PE";if(lat>46&&lon>-60)return"NL";return"MB";}
 function detectCity(prov:string,lat:number,lon:number):string{const cities:{[k:string]:{[c:string]:[number,number]}}={AB:{Calgary:[51.04,-114.07],Edmonton:[53.55,-113.49]},BC:{Vancouver:[49.28,-123.12],Victoria:[48.43,-123.37]},MB:{Winnipeg:[49.90,-97.14],Brandon:[49.85,-99.95]},ON:{Toronto:[43.70,-79.42],Ottawa:[45.42,-75.69],Mississauga:[43.59,-79.64]},QC:{Montreal:[45.50,-73.57],"Quebec City":[46.82,-71.22]},SK:{Saskatoon:[52.13,-106.67],Regina:[50.45,-104.62]},NS:{Halifax:[44.65,-63.57]},NB:{Moncton:[46.09,-64.80]},NL:{"St. John's":[47.56,-52.71]},PE:{Charlottetown:[46.24,-63.13]}};const pc=cities[prov];if(!pc)return PDATA[prov]?.cities[0]||"";let best="",bd=999;Object.entries(pc).forEach(([c,coords])=>{const [la,lo]=coords;const d=Math.abs(lat-la)+Math.abs(lon-lo);if(d<bd){bd=d;best=c;}});return best||PDATA[prov]?.cities[0]||"";}
 
-const shimmerStyle=`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`;
+const shimmerStyle=`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@media(max-width:767px){.tab-ribbon-desktop{display:none!important}}`;
 function Skeleton({w="100%",h=16,r=6,mb=0}:{w?:string,h?:number,r?:number,mb?:number}){return <div style={{width:w,height:h,borderRadius:r,background:"linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%)",backgroundSize:"200% 100%",animation:"shimmer 1.5s infinite",marginBottom:mb}}/>;}
 function EmptyState({icon,title,sub,link,linkText}:{icon:string,title:string,sub:string,link?:string,linkText?:string}){return(<div style={{textAlign:"center",padding:"40px 20px"}}><div style={{fontSize:48,marginBottom:12}}>{icon}</div><div style={{fontSize:15,fontWeight:700,color:s.navy,marginBottom:6}}>{title}</div><div style={{fontSize:13,color:s.muted,marginBottom:link?14:0}}>{sub}</div>{link&&<a href={link} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"8px 20px",background:s.navy,color:"#fff",borderRadius:8,fontSize:13,fontWeight:700,textDecoration:"none"}}>{linkText}</a>}</div>);}
 function Card({children,style}:{children:React.ReactNode,style?:React.CSSProperties}){return <div style={{background:s.white,borderRadius:12,padding:18,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",...style}}>{children}</div>;}
@@ -811,9 +811,9 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
-        {/* Tab ribbon */}
-        {(!isMobile||!menuOpen)&&<div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
-          <div style={{display:"flex",gap:2,flexWrap:isMobile?"nowrap":"wrap",justifyContent:isMobile?"flex-start":"center",overflowX:isMobile?"auto":"visible",scrollbarWidth:"none"} as any}>
+        {/* Tab ribbon — hidden on mobile via CSS */}
+        <div className="tab-ribbon-desktop" style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
+          <div style={{display:"flex",gap:2,flexWrap:"wrap",justifyContent:"center"}}>
           {TABS.map(t=>{
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
@@ -860,7 +860,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             );
           })}
           </div>
-        </div>}
+        </div>
       </div>
       {menuOpen&&(
         <div style={{background:"#0a1628",borderTop:"1px solid rgba(255,255,255,0.1)",padding:"8px 0",maxHeight:360,overflowY:"auto"}}>
@@ -8481,7 +8481,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
 export default function App(){
   const [active,setActive]=useState("Home");
   const [isMobile,setIsMobile]=useState(typeof window!=="undefined"&&window.innerWidth<768);
-  const navHeight=isMobile?110:0; // approximate navbar height on mobile
+  const navHeight=isMobile?54:0; // just the top bar height on mobile
   useEffect(()=>{
     const handler=()=>setIsMobile(window.innerWidth<768);
     window.addEventListener("resize",handler);
