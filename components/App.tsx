@@ -790,19 +790,13 @@ Respond ONLY with a JSON array of index numbers, most relevant first. Example: [
   );
 }
 
-function NavBar({active,setActive}){
+function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=>void,isMobile:boolean}){
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const [isMobile,setIsMobile]=useState(typeof window!=="undefined"&&window.innerWidth<768);
-  useEffect(()=>{
-    const handler=()=>setIsMobile(window.innerWidth<768);
-    window.addEventListener("resize",handler);
-    return()=>window.removeEventListener("resize",handler);
-  },[]);
   const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
-    <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
+    <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
         {/* Logo */}
         <div style={{display:"flex",alignItems:"center",gap:6,flexShrink:0}}>
@@ -842,7 +836,7 @@ function NavBar({active,setActive}){
               <div key={t} style={{position:"relative",flexShrink:0}}
                 onMouseEnter={()=>setHoverTab(t)}
                 onMouseLeave={()=>setHoverTab(null)}>
-                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.85)",fontSize:11,padding:"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
+                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.85)",fontSize:isMobile?9:11,padding:isMobile?"4px 6px":"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s"}}>
                   {emoji&&<span style={{fontSize:11}}>{emoji}</span>}
                   {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>NEW</span></>:t}
                 </button>
@@ -8486,6 +8480,13 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
 
 export default function App(){
   const [active,setActive]=useState("Home");
+  const [isMobile,setIsMobile]=useState(typeof window!=="undefined"&&window.innerWidth<768);
+  const navHeight=isMobile?110:0; // approximate navbar height on mobile
+  useEffect(()=>{
+    const handler=()=>setIsMobile(window.innerWidth<768);
+    window.addEventListener("resize",handler);
+    return()=>window.removeEventListener("resize",handler);
+  },[]);
   const [prov,setProv]=useState("MB");
   const [city,setCity]=useState("Winnipeg");
   const [locLoading,setLocLoading]=useState(true);
@@ -8573,7 +8574,8 @@ export default function App(){
       <style>{shimmerStyle}</style>
       <BocTicker onRateAlert={()=>setShowRateAlert(true)}/>
       <BocBanner/>
-      <NavBar active={active} setActive={setActive}/>
+      <NavBar active={active} setActive={setActive} isMobile={isMobile}/>
+      <div style={{height:isMobile?navHeight:0}}/>
       <Hero prov={prov} city={city} locLoading={locLoading}/>
       <div style={{maxWidth:1060,margin:"0 auto",padding:"16px 14px",width:"100%",flex:1,boxSizing:"border-box"}}>
         {renderTab()}
