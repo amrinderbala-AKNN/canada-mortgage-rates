@@ -818,7 +818,7 @@ function NavBar({active,setActive}){
           {menuOpen?"✕":"☰"}
         </button>
         {/* Tab ribbon */}
-        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
+        {(!isMobile||!menuOpen)&&<div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
           <div style={{display:"flex",gap:2,flexWrap:isMobile?"nowrap":"wrap",justifyContent:isMobile?"flex-start":"center",overflowX:isMobile?"auto":"visible",scrollbarWidth:"none"} as any}>
           {TABS.map(t=>{
             const isActive=active===t;
@@ -839,7 +839,7 @@ function NavBar({active,setActive}){
             };
             const menu=subMenus[t];
             return(
-              <div key={t} style={{position:"relative"}}
+              <div key={t} style={{position:"relative",flexShrink:0}}
                 onMouseEnter={()=>setHoverTab(t)}
                 onMouseLeave={()=>setHoverTab(null)}>
                 <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.85)",fontSize:11,padding:"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s"}}>
@@ -866,7 +866,7 @@ function NavBar({active,setActive}){
             );
           })}
           </div>
-        </div>
+        </div>}
       </div>
       {menuOpen&&(
         <div style={{background:"#0a1628",borderTop:"1px solid rgba(255,255,255,0.1)",padding:"8px 0",maxHeight:360,overflowY:"auto"}}>
