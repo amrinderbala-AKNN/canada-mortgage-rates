@@ -861,6 +861,7 @@ function NavBar({active,setActive}){
           })}
           </div>
         </div>
+      </div>
       {menuOpen&&(
         <div style={{background:"#0a1628",borderTop:"1px solid rgba(255,255,255,0.1)",padding:"8px 0",maxHeight:360,overflowY:"auto"}}>
           {groups.map(g=>(
