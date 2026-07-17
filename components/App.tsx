@@ -8009,15 +8009,23 @@ Use our [Affordability Calculator](/) to see exactly how much home you qualify f
 }
 
 function LearnGlossaryTab(){
-  const [subTab,setSubTab]=useState<"blog"|"learn"|"glossary">("blog");
+  const [subTab,setSubTab]=useState<"learn"|"glossary">("learn");
   return(
     <div>
       <div style={{display:"flex",gap:8,marginBottom:14}}>
-        <button onClick={()=>setSubTab("blog")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="blog"?s.red:s.border}`,background:subTab==="blog"?s.red:s.white,color:subTab==="blog"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📝 Blog</button>
-        <button onClick={()=>setSubTab("learn")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="learn"?s.navy:s.border}`,background:subTab==="learn"?s.navy:s.white,color:subTab==="learn"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>🎓 Learn</button>
+        <button onClick={()=>setSubTab("learn")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="learn"?s.navy:s.border}`,background:subTab==="learn"?s.navy:s.white,color:subTab==="learn"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📚 Learn & Blog</button>
         <button onClick={()=>setSubTab("glossary")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="glossary"?s.navy:s.border}`,background:subTab==="glossary"?s.navy:s.white,color:subTab==="glossary"?"#fff":s.muted,fontSize:13,fontWeight:700,cursor:"pointer"}}>📖 Glossary</button>
       </div>
-      {subTab==="blog"?<BlogTab/>:subTab==="learn"?<LearnTab/>:<GlossaryTab/>}
+      {subTab==="learn"&&(
+        <div>
+          <BlogTab/>
+          <div style={{borderTop:`2px solid ${s.border}`,marginTop:20,paddingTop:20}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:14}}>📋 Quick Guides</h3>
+            <LearnTab/>
+          </div>
+        </div>
+      )}
+      {subTab==="glossary"&&<GlossaryTab/>}
     </div>
   );
 }
