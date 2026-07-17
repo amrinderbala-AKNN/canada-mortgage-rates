@@ -811,8 +811,9 @@ function NavBar({active,setActive}){
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
-        {/* Tab ribbon — two rows so all tabs visible */}
-        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"4px 8px",display:"flex",flexWrap:"nowrap",gap:2,overflowX:"auto",scrollbarWidth:"none",WebkitOverflowScrolling:"touch"}}>
+        {/* Tab ribbon — two rows */}
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px 3px"}}>
+          <div style={{display:"flex",gap:2,flexWrap:"wrap",justifyContent:"center"}}>
           {TABS.map(t=>{
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
@@ -858,8 +859,8 @@ function NavBar({active,setActive}){
               </div>
             );
           })}
+          </div>
         </div>
-      </div>
       {menuOpen&&(
         <div style={{background:"#0a1628",borderTop:"1px solid rgba(255,255,255,0.1)",padding:"8px 0",maxHeight:360,overflowY:"auto"}}>
           {groups.map(g=>(
