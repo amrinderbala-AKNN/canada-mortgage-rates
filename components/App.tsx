@@ -671,6 +671,7 @@ function NavBar({active,setActive}){
               "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
               "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
               "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
+              "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & mortgage education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
             };
             const menu=subMenus[t];
             return(
@@ -1884,6 +1885,10 @@ function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"})
 
 function CalcTab({prov}:{prov:string}){
   const [tab,setTab]=useState("payment");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Calculators")setTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [rateType,setRateType]=useState<"fixed"|"variable">("fixed");const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
   const [inc,setInc]=useState(90000);const [inc2,setInc2]=useState(0);const [dbt,setDbt]=useState(500);const [ad,setAd]=useState(20);const [aa,setAa]=useState(25);const [ar,setAr]=useState(5.0);const [condoFeeA,setCondoFeeA]=useState(0);const [affR,setAffR]=useState(null);const affRef=useRef(null);
   const [rent,setRent]=useState(2000);const [rentInc,setRentInc]=useState(3);const [rp,setRp]=useState(500000);const [rd,setRd]=useState(20);const [rr,setRr]=useState(5.0);const [ry,setRy]=useState(10);const [rapr,setRapr]=useState(3);const [rvbR,setRvbR]=useState(null);const rvbRef=useRef(null);
@@ -8010,6 +8015,10 @@ Use our [Affordability Calculator](/) to see exactly how much home you qualify f
 
 function LearnGlossaryTab(){
   const [subTab,setSubTab]=useState<"learn"|"glossary">("learn");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Resources")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
   return(
     <div>
       <div style={{display:"flex",gap:8,marginBottom:14}}>
@@ -8261,6 +8270,8 @@ export default function App(){
       const MAP:{[k:string]:string}={
         // Rates
         "📊 Compare Rates":"compare","🎁 Current Offers":"offers","📈 Rate History":"history","🏦 Lender Guide":"lenders",
+        // Calculators
+        "💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy",
         // Rate Finder
         "🎯 Rate Finder":"finder","📊 Fixed vs Variable":"compare","🧮 Rate Impact":"impact","📋 Pre-Approval":"preapproval",
         // Renewal
@@ -8275,7 +8286,8 @@ export default function App(){
         "⚖️ Find a Lawyer":"find","📋 Closing Guide":"guide",
         // Insurance
         "🏠 Get Quotes":"quote","🛡️ What's Covered":"coverage","💰 Deductible Guide":"deductible","🚨 Claims Guide":"claims","📖 Insurance Guide":"guide",
-        // Property Tax — no sub-tabs, handled by scroll
+        // Resources
+        "📚 Learn & Blog":"learn","📖 Glossary":"glossary",
         // Home
         "🏠 Overview":"overview","🧮 Tools":"tools","🤝 Services":"services","📋 About":"about",
       };
