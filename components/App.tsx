@@ -507,50 +507,90 @@ const TODAY=new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',d
 const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Realtors","Lawyers","Consult","News","Resources"];
 const SEARCH_INDEX=[
   // Tabs
-  {title:"Home",desc:"Overview, BoC rates, rate alerts, testimonials",tab:"Home",icon:"🍁",type:"Tab"},
-  {title:"Rates",desc:"Compare mortgage rates across 20+ lenders by province",tab:"Rates",icon:"📊",type:"Tab"},
-  {title:"Calculators",desc:"Payment, affordability, stress test, amortization, closing costs",tab:"Calculators",icon:"🧮",type:"Tab"},
+  {title:"Home",desc:"Overview, latest features, tools, services, about us",tab:"Home",icon:"🍁",type:"Tab"},
+  {title:"Rates",desc:"Compare mortgage rates from 20+ lenders by province — live",tab:"Rates",icon:"📊",type:"Tab"},
+  {title:"Calculators",desc:"Payment, affordability, stress test, renewal, refinancing, amortization, closing costs",tab:"Calculators",icon:"🧮",type:"Tab"},
   {title:"Property Tax",desc:"Estimate property tax by city, appeal assessment, payment options",tab:"Property Tax",icon:"🏛️",type:"Tab"},
-  {title:"Insurance",desc:"Home insurance estimates, coverage explainer, claims guide",tab:"Insurance",icon:"🛡️",type:"Tab"},
-  {title:"Rate Finder",desc:"Personalized rate quiz, fixed vs variable, pre-approval guide",tab:"Rate Finder",icon:"🔍",type:"Tab"},
-  {title:"First-Time Buyers",desc:"FHSA, HBP, provincial programs, down payment help",tab:"First-Time Buyers",icon:"🏠",type:"Tab"},
-  {title:"Renewal",desc:"Compare renewal offer, negotiation script, renewal timeline",tab:"Renewal",icon:"🔄",type:"Tab"},
-  {title:"Listings",desc:"Search homes, average prices by province, neighbourhood checklist",tab:"Listings",icon:"🏘️",type:"Tab"},
-  {title:"Realtors",desc:"Find a realtor, buyer's guide, home buying timeline",tab:"Realtors",icon:"🤝",type:"Tab"},
-  {title:"Lawyers",desc:"Find a real estate lawyer, closing costs, closing timeline",tab:"Lawyers",icon:"⚖️",type:"Tab"},
-  {title:"Consult",desc:"Free mortgage consultation, newsletter, BoC alerts",tab:"Consult",icon:"📞",type:"Tab"},
-  {title:"News",desc:"Latest Canadian mortgage and real estate news",tab:"News",icon:"📰",type:"Tab"},
-  {title:"Resources",desc:"Mortgage glossary and learning articles",tab:"Resources",icon:"📚",type:"Tab"},
+  {title:"Insurance",desc:"Home insurance quotes, coverage guide, deductible calculator, claims guide",tab:"Insurance",icon:"🛡️",type:"Tab"},
+  {title:"Rate Finder",desc:"Personalized rate quiz, fixed vs variable 2026, rate impact calculator, pre-approval guide",tab:"Rate Finder",icon:"🔍",type:"Tab"},
+  {title:"First-Time Buyers",desc:"FHSA, HBP, provincial programs, down payment help, step-by-step guide",tab:"First-Time Buyers",icon:"🏠",type:"Tab"},
+  {title:"Renewal",desc:"Compare renewal offer, negotiation script, renewal guide and timeline",tab:"Renewal",icon:"🔄",type:"Tab"},
+  {title:"Listings",desc:"Search homes, market tools, home value estimator, free evaluation",tab:"Listings",icon:"🏘️",type:"Tab"},
+  {title:"New Builds",desc:"Explore new home developments, buyer guide, construction mortgage, connect with builders",tab:"New Builds",icon:"🏗️",type:"Tab"},
+  {title:"Realtors",desc:"Find a verified realtor, buyer's guide, home buying timeline",tab:"Realtors",icon:"🤝",type:"Tab"},
+  {title:"Lawyers",desc:"Find a real estate lawyer, closing guide, Law Society verification",tab:"Lawyers",icon:"⚖️",type:"Tab"},
+  {title:"Consult",desc:"Free mortgage consultation, newsletter, BoC rate alerts",tab:"Consult",icon:"📞",type:"Tab"},
+  {title:"News",desc:"Latest Canadian mortgage and real estate news by province",tab:"News",icon:"📰",type:"Tab"},
+  {title:"Resources",desc:"Mortgage blog, 15 articles, glossary, quick guides",tab:"Resources",icon:"📚",type:"Tab"},
   // Calculators
-  {title:"Payment Calculator",desc:"Calculate your monthly mortgage payment",tab:"Calculators",icon:"💰",type:"Calculator"},
-  {title:"Affordability Calculator",desc:"How much house can you afford?",tab:"Calculators",icon:"🏡",type:"Calculator"},
-  {title:"Stress Test Calculator",desc:"Will you pass the mortgage stress test?",tab:"Calculators",icon:"📋",type:"Calculator"},
-  {title:"Amortization Schedule",desc:"Year-by-year breakdown of your mortgage payments",tab:"Calculators",icon:"📅",type:"Calculator"},
-  {title:"Closing Cost Calculator",desc:"Land transfer tax, legal fees, title insurance by province",tab:"Calculators",icon:"🏷️",type:"Calculator"},
-  {title:"Document Checklist",desc:"Everything you need to apply for a mortgage",tab:"Calculators",icon:"📁",type:"Calculator"},
-  {title:"Renewal Calculator",desc:"Compare your renewal offer vs shopping around",tab:"Renewal",icon:"🔄",type:"Calculator"},
+  {title:"Payment Calculator",desc:"Calculate your exact monthly mortgage payment with fixed or variable rate",tab:"Calculators",icon:"💰",type:"Calculator",sub:"payment"},
+  {title:"Affordability Calculator",desc:"How much house can you afford? Based on GDS/TDS ratios lenders actually use",tab:"Calculators",icon:"🏡",type:"Calculator",sub:"afford"},
+  {title:"Stress Test Calculator",desc:"Will you pass? Calculate at your rate +2% or 5.25% — whichever is higher",tab:"Calculators",icon:"📋",type:"Calculator",sub:"stress"},
+  {title:"Renewal Calculator",desc:"Compare your lender's renewal offer vs shopping around — see how much you'd save",tab:"Calculators",icon:"🔄",type:"Calculator",sub:"renewal"},
+  {title:"Refinancing Calculator",desc:"Should I refi? Penalty estimator, blend & extend, cash-out, HELOC comparison",tab:"Calculators",icon:"💳",type:"Calculator",sub:"refi"},
+  {title:"Amortization Schedule",desc:"Year-by-year breakdown of mortgage payments, interest, and remaining balance",tab:"Calculators",icon:"📅",type:"Calculator",sub:"amort"},
+  {title:"Closing Cost Calculator",desc:"Land transfer tax, legal fees, title insurance by province — first-time buyer rebates included",tab:"Calculators",icon:"🏷️",type:"Calculator",sub:"closing"},
+  {title:"Document Checklist",desc:"Everything you need to apply for a mortgage — organized by document type",tab:"Calculators",icon:"📁",type:"Calculator",sub:"docs"},
+  {title:"Rent vs Buy Calculator",desc:"Is it better to rent or buy? Calculate the true 10-year cost comparison",tab:"Calculators",icon:"🏠",type:"Calculator",sub:"rentvbuy"},
+  // New Builds
+  {title:"Construction Mortgage Guide",desc:"How new build mortgages differ from resale — rate holds, draw schedules, GST/HST",tab:"New Builds",icon:"💳",type:"Topic"},
+  {title:"New Build Buyer's Guide",desc:"8 buyer priorities, due diligence checklist, new build vs resale, 2026 market data",tab:"New Builds",icon:"📋",type:"Topic"},
+  {title:"New Build Savings & Rebates",desc:"GST/HST rebate up to $50K, 30-year amortization, Manitoba PST rebate, builder incentives",tab:"New Builds",icon:"💰",type:"Topic"},
+  {title:"Find My New Home",desc:"Submit buyer request — connect with builders and developers in your province",tab:"New Builds",icon:"🏡",type:"Topic"},
+  // Home Value
+  {title:"Home Value Estimator",desc:"Request a free professional home evaluation from a local expert",tab:"Listings",icon:"🏡",type:"Topic"},
+  {title:"Free Home Evaluation",desc:"Connect with a local professional for a free CMA — selling, refinancing, or curious",tab:"Listings",icon:"🏠",type:"Topic"},
+  // Insurance
+  {title:"Home Insurance Quotes",desc:"Compare Square One, Intact, Aviva, SGI, Wawanesa and 10+ providers by province",tab:"Insurance",icon:"🏠",type:"Topic"},
+  {title:"Home Insurance Guide",desc:"Province cost comparison, how to save on premiums, riders, FAQ — 2026",tab:"Insurance",icon:"📖",type:"Topic"},
+  {title:"Overland Flood Insurance",desc:"Not covered by standard policies — add-on rider $100–$300/year",tab:"Insurance",icon:"🌊",type:"Topic"},
+  {title:"CMHC vs Home Insurance",desc:"What's the difference between mortgage default insurance and home insurance?",tab:"Insurance",icon:"🛡️",type:"Topic"},
+  // Blog articles
+  {title:"Fixed vs Variable 2026",desc:"Blog: Which mortgage type makes more sense with BoC holding at 2.25%?",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Mortgage Stress Test Guide",desc:"Blog: Complete 2026 guide — how it works, 2026 changes, how to pass",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"First-Time Buyer Programs",desc:"Blog: Every federal and provincial program in Canada — FHSA, HBP, LTT rebates",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Mortgage Renewal Guide",desc:"Blog: How to get the best rate at renewal — negotiation script included",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Closing Costs Canada",desc:"Blog: Every fee you need to budget for — LTT, legal fees, CMHC, moving costs",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Down Payment Guide Canada",desc:"Blog: How much you need, acceptable sources, strategies to save faster",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"CMHC Insurance Explained",desc:"Blog: What it costs, how to avoid it, true total cost with interest",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Breaking Your Mortgage Early",desc:"Blog: IRD penalties, big bank IRD problem, when it makes financial sense",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"HELOC Guide Canada",desc:"Blog: How HELOCs work, qualify, rates, uses, Smith Manoeuvre",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Best Mortgage Lenders 2026",desc:"Blog: Banks vs credit unions vs monolines — rates and penalty comparison",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Land Transfer Tax by Province",desc:"Blog: Every province with exact calculations and first-time buyer rebates",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Mortgage Refinancing Guide",desc:"Blog: When it makes sense, break-even formula, blend & extend vs refinancing",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Self-Employed Mortgage",desc:"Blog: How to qualify in 2026 — income verification, stated income, documents needed",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Condo vs House Canada 2026",desc:"Blog: True cost comparison, appreciation, 2026 market reality by city",tab:"Resources",icon:"📝",type:"Article"},
   // Topics
-  {title:"CMHC Insurance",desc:"What is mortgage default insurance? How much does it cost?",tab:"First-Time Buyers",icon:"🛡️",type:"Topic"},
-  {title:"FHSA — First Home Savings Account",desc:"Tax-free savings for first-time buyers, $8K/year max",tab:"First-Time Buyers",icon:"💰",type:"Topic"},
-  {title:"Home Buyers' Plan (HBP)",desc:"Withdraw up to $60K from RRSP tax-free for a home",tab:"First-Time Buyers",icon:"🏦",type:"Topic"},
-  {title:"Land Transfer Tax",desc:"Provincial tax when buying a home. Toronto pays double.",tab:"Lawyers",icon:"🏛️",type:"Topic"},
+  {title:"CMHC Insurance",desc:"Mortgage default insurance — rates, true cost, how to avoid paying it",tab:"First-Time Buyers",icon:"🛡️",type:"Topic"},
+  {title:"FHSA — First Home Savings Account",desc:"Tax-free savings for first-time buyers — $8K/year, $40K lifetime max",tab:"First-Time Buyers",icon:"💰",type:"Topic"},
+  {title:"Home Buyers' Plan (HBP)",desc:"Withdraw up to $60K from RRSP tax-free for a home purchase",tab:"First-Time Buyers",icon:"🏦",type:"Topic"},
+  {title:"Land Transfer Tax",desc:"Provincial tax when buying a home — Ontario, BC, Manitoba, Quebec rates",tab:"Calculators",icon:"🏛️",type:"Topic",sub:"closing"},
   {title:"Fixed vs Variable Rate",desc:"Which mortgage type is right for you in 2026?",tab:"Rate Finder",icon:"📊",type:"Topic"},
-  {title:"Mortgage Stress Test",desc:"Must qualify at your rate +2% or 5.25%",tab:"Calculators",icon:"📋",type:"Topic"},
-  {title:"Bank of Canada Rate",desc:"Current BoC overnight rate, history, and next announcement",tab:"Rates",icon:"🏦",type:"Topic"},
-  {title:"Mortgage Glossary",desc:"36 mortgage terms explained in plain English",tab:"Resources",icon:"📖",type:"Topic"},
-  {title:"Pre-Approval Guide",desc:"Documents needed, timeline, what lenders look at",tab:"Rate Finder",icon:"📋",type:"Topic"},
-  {title:"Negotiation Script",desc:"Word-for-word script to negotiate your renewal rate",tab:"Renewal",icon:"💬",type:"Topic"},
+  {title:"Mortgage Stress Test",desc:"Must qualify at your rate +2% or 5.25% — whichever is higher",tab:"Calculators",icon:"📋",type:"Topic",sub:"stress"},
+  {title:"Bank of Canada Rate",desc:"Current BoC overnight rate: 2.25% — next announcement Sep 2, 2026",tab:"Rates",icon:"🏦",type:"Topic"},
+  {title:"Rate History",desc:"BoC rate timeline 2020 to present — full history and economist forecasts",tab:"Rates",icon:"📈",type:"Topic"},
+  {title:"Lender Guide",desc:"Banks vs credit unions vs monolines vs brokers — how to choose",tab:"Rates",icon:"🏦",type:"Topic"},
+  {title:"Mortgage Glossary",desc:"50+ mortgage terms explained in plain English",tab:"Resources",icon:"📖",type:"Topic"},
+  {title:"Pre-Approval Guide",desc:"Documents needed, 6-step timeline, mistakes to avoid — printable PDF",tab:"Rate Finder",icon:"📋",type:"Topic"},
+  {title:"Renewal Negotiation Script",desc:"Word-for-word script to negotiate your renewal rate with your lender",tab:"Renewal",icon:"💬",type:"Topic"},
   {title:"Property Tax Appeal",desc:"How to appeal your assessment and potentially save $500–$3,000",tab:"Property Tax",icon:"⚖️",type:"Topic"},
-  {title:"Home Insurance Coverage",desc:"What's covered, what's not (flooding, earthquakes, sewer)",tab:"Insurance",icon:"🛡️",type:"Topic"},
-  {title:"Lender Types",desc:"Banks vs credit unions vs brokers vs monolines explained",tab:"Rates",icon:"🏦",type:"Topic"},
-  {title:"Average Home Prices",desc:"Average prices by province with down payment required",tab:"Listings",icon:"📊",type:"Topic"},
-  {title:"Neighbourhood Checklist",desc:"Due diligence before making an offer on a home",tab:"Listings",icon:"🏘️",type:"Topic"},
-  {title:"Closing Timeline",desc:"From offer accepted to keys — what happens when",tab:"Lawyers",icon:"📅",type:"Topic"},
+  {title:"Home Insurance Coverage",desc:"What's covered, what's NOT (flooding, earthquakes, sewer backup)",tab:"Insurance",icon:"🛡️",type:"Topic"},
+  {title:"Average Home Prices",desc:"Average prices by province with down payment required — 2026",tab:"Listings",icon:"📊",type:"Topic"},
+  {title:"Neighbourhood Checklist",desc:"20-point due diligence checklist before making an offer on a home",tab:"Listings",icon:"🏘️",type:"Topic"},
+  {title:"Closing Timeline",desc:"From offer accepted to keys — what happens at each stage",tab:"Lawyers",icon:"📅",type:"Topic"},
+  {title:"30-Year Amortization",desc:"Who qualifies, how it reduces payments, new 2026 rules for new builds",tab:"First-Time Buyers",icon:"📅",type:"Topic"},
+  {title:"HELOC",desc:"Home equity line of credit — how it works, rates, uses, qualification",tab:"Resources",icon:"💳",type:"Topic"},
+  {title:"Rate Impact Calculator",desc:"See the dollar difference between two rates over full amortization",tab:"Rate Finder",icon:"🧮",type:"Topic"},
+  {title:"Find a Real Estate Lawyer",desc:"Connect with verified Winnipeg real estate lawyers — closing leads",tab:"Lawyers",icon:"⚖️",type:"Topic"},
+  {title:"Find a Realtor",desc:"Connect with verified Winnipeg realtors — buyer and seller leads",tab:"Realtors",icon:"🤝",type:"Topic"},
 ];
 
 function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:string)=>void}){
   const [query,setQuery]=useState("");
+  const [aiResults,setAiResults]=useState<any[]|null>(null);
+  const [loading,setLoading]=useState(false);
   const inputRef=useRef<any>(null);
+  const debounceRef=useRef<any>(null);
 
   useEffect(()=>{
     setTimeout(()=>inputRef.current?.focus(),100);
@@ -559,12 +599,51 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
     return()=>window.removeEventListener("keydown",handler);
   },[]);
 
-  const results=query.trim().length<2?[]:SEARCH_INDEX.filter(item=>
+  // Keyword fallback
+  const keywordResults=query.trim().length<2?[]:SEARCH_INDEX.filter(item=>
     item.title.toLowerCase().includes(query.toLowerCase())||
     item.desc.toLowerCase().includes(query.toLowerCase())
-  ).slice(0,8);
+  ).slice(0,12);
 
-  const typeColor:{[k:string]:string}={Tab:s.navy,Calculator:s.green,Topic:s.blue};
+  // AI semantic search with debounce
+  useEffect(()=>{
+    if(query.trim().length<3){setAiResults(null);return;}
+    clearTimeout(debounceRef.current);
+    debounceRef.current=setTimeout(async()=>{
+      setLoading(true);
+      try{
+        const indexSummary=SEARCH_INDEX.map((item,i)=>`${i}|${item.title}|${item.tab}|${item.desc}`).join("\n");
+        const res=await fetch("https://api.anthropic.com/v1/messages",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            model:"claude-sonnet-4-6",
+            max_tokens:500,
+            messages:[{role:"user",content:`You are a search assistant for a Canadian mortgage website. A user searched: "${query}"
+
+Here are the available pages/topics (format: index|title|tab|description):
+${indexSummary}
+
+Return the top 5 most relevant results for the user's query. Consider synonyms, intent, and related concepts — not just exact keyword matches. For example "how much can I borrow" should match "Affordability Calculator", "what will I pay monthly" should match "Payment Calculator", "I want to buy a house" should match "First-Time Buyers" and "Calculators".
+
+Respond ONLY with a JSON array of index numbers, most relevant first. Example: [4,12,7,23,1]`}]
+          })
+        });
+        const data=await res.json();
+        const text=data.content?.[0]?.text||"[]";
+        const match=text.match(/\[[\d,\s]+\]/);
+        if(match){
+          const indices=JSON.parse(match[0]) as number[];
+          const mapped=indices.map(i=>SEARCH_INDEX[i]).filter(Boolean).slice(0,8);
+          setAiResults(mapped);
+        }
+      }catch(e){setAiResults(null);}
+      setLoading(false);
+    },500);
+  },[query]);
+
+  const results=aiResults||keywordResults;
+  const typeColor:{[k:string]:string}={Tab:s.navy,Calculator:s.green,Topic:s.blue,Article:"#7c3aed"};
 
   return(
     <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.7)",zIndex:99999,display:"flex",alignItems:"flex-start",justifyContent:"center",padding:"60px 16px 16px"}} onClick={onClose}>
@@ -577,10 +656,11 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
             type="text"
             value={query}
             onChange={e=>setQuery(e.target.value)}
-            placeholder="Search rates, calculators, topics..."
+            placeholder="Ask anything — e.g. how much can I borrow?"
             style={{flex:1,border:"none",outline:"none",fontSize:15,color:s.navy,background:"transparent"}}
           />
-          {query&&<button onClick={()=>setQuery("")} style={{background:"none",border:"none",color:s.muted,cursor:"pointer",fontSize:16,padding:0}}>✕</button>}
+          {loading&&<span style={{fontSize:11,color:s.muted}}>🤖 thinking...</span>}
+          {query&&!loading&&<button onClick={()=>{setQuery("");setAiResults(null);}} style={{background:"none",border:"none",color:s.muted,cursor:"pointer",fontSize:16,padding:0}}>✕</button>}
           <button onClick={onClose} style={{background:"#f1f5f9",border:"none",color:s.muted,cursor:"pointer",fontSize:11,padding:"4px 8px",borderRadius:6}}>Esc</button>
         </div>
 
@@ -590,24 +670,34 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
             <div>
               <div style={{padding:"10px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>Quick Access</div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:4,padding:"0 12px 12px"}}>
-                {["Rates","Calculators","Renewal","Rate Finder","Listings","Lawyers","Realtors","Consult"].map(tab=>(
+                {["Rates","Calculators","New Builds","Renewal","Rate Finder","Listings","Lawyers","Realtors","Insurance","Consult"].map(tab=>(
                   <button key={tab} onClick={()=>onNavigate(tab)} style={{display:"flex",alignItems:"center",gap:8,padding:"8px 10px",borderRadius:8,border:`1px solid ${s.border}`,background:"#f8fafc",cursor:"pointer",fontSize:12,color:s.navy,fontWeight:600,textAlign:"left"}}>
                     <span>{SEARCH_INDEX.find(i=>i.title===tab&&i.type==="Tab")?.icon||"📄"}</span>{tab}
                   </button>
                 ))}
               </div>
             </div>
+          ):loading&&keywordResults.length===0?(
+            <div style={{padding:"32px 16px",textAlign:"center",color:s.muted}}>
+              <div style={{fontSize:24,marginBottom:8}}>🤖</div>
+              <div style={{fontSize:14,fontWeight:600,color:s.navy,marginBottom:4}}>Finding the best match...</div>
+              <div style={{fontSize:12}}>AI is searching across all tabs and topics</div>
+            </div>
           ):results.length===0?(
             <div style={{padding:"32px 16px",textAlign:"center",color:s.muted}}>
               <div style={{fontSize:24,marginBottom:8}}>🔍</div>
               <div style={{fontSize:14,fontWeight:600,color:s.navy,marginBottom:4}}>No results for "{query}"</div>
-              <div style={{fontSize:12}}>Try searching for "calculator", "rates", "FHSA", "renewal", or "lawyer"</div>
+              <div style={{fontSize:12}}>Try "calculator", "rates", "first-time buyer", "renewal", or "lawyer"</div>
             </div>
           ):(
             <div style={{padding:"8px 0"}}>
-              <div style={{padding:"4px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>{results.length} result{results.length>1?"s":""} for "{query}"</div>
+              <div style={{padding:"4px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>
+                {aiResults?"🤖 AI Results":"🔍 Results"} · {results.length} found
+              </div>
               {results.map((item,i)=>(
-                <button key={i} onClick={()=>onNavigate(item.tab)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 16px",width:"100%",border:"none",background:"none",cursor:"pointer",textAlign:"left",borderBottom:`1px solid ${s.light}`}}>
+                <button key={i} onClick={()=>onNavigate(item.tab)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 16px",width:"100%",border:"none",background:"none",cursor:"pointer",textAlign:"left",borderBottom:`1px solid ${s.light}`}}
+                  onMouseEnter={e=>(e.currentTarget.style.background="#f8fafc")}
+                  onMouseLeave={e=>(e.currentTarget.style.background="none")}>
                   <div style={{width:36,height:36,borderRadius:10,background:"#f1f5f9",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{item.icon}</div>
                   <div style={{flex:1,minWidth:0}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:2}}>
@@ -625,7 +715,7 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
 
         {/* Footer */}
         <div style={{padding:"8px 16px",borderTop:`1px solid ${s.border}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <div style={{fontSize:10,color:s.muted}}>Press <b>Esc</b> to close · Click result to navigate</div>
+          <div style={{fontSize:10,color:s.muted}}>Press <b>Esc</b> to close · Powered by 🤖 AI</div>
           <div style={{fontSize:10,color:s.muted}}>{SEARCH_INDEX.length} items indexed</div>
         </div>
       </div>
