@@ -812,7 +812,7 @@ function NavBar({active,setActive}){
           {menuOpen?"✕":"☰"}
         </button>
         {/* Tab ribbon — two rows so all tabs visible */}
-        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"4px 8px",display:"flex",flexWrap:"wrap",gap:2}}>
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"4px 8px",display:"flex",flexWrap:"nowrap",gap:2,overflowX:"auto",scrollbarWidth:"none",WebkitOverflowScrolling:"touch"}}>
           {TABS.map(t=>{
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
