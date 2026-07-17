@@ -794,6 +794,12 @@ function NavBar({active,setActive}){
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
+  const [isMobile,setIsMobile]=useState(typeof window!=="undefined"&&window.innerWidth<768);
+  useEffect(()=>{
+    const handler=()=>setIsMobile(window.innerWidth<768);
+    window.addEventListener("resize",handler);
+    return()=>window.removeEventListener("resize",handler);
+  },[]);
   const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:"sticky",top:0,zIndex:100,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
@@ -811,9 +817,9 @@ function NavBar({active,setActive}){
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
-        {/* Tab ribbon — two rows */}
-        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px 3px"}}>
-          <div style={{display:"flex",gap:2,flexWrap:"wrap",justifyContent:"center"}}>
+        {/* Tab ribbon */}
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
+          <div style={{display:"flex",gap:2,flexWrap:isMobile?"nowrap":"wrap",justifyContent:isMobile?"flex-start":"center",overflowX:isMobile?"auto":"visible",scrollbarWidth:"none"} as any}>
           {TABS.map(t=>{
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
