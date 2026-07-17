@@ -8214,6 +8214,59 @@ function LearnGlossaryTab(){
   );
 }
 
+function FeedbackForm(){
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [type,setType]=useState("question");
+  const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
+
+  async function submit(){
+    if(!msg.trim()){alert("Please enter a message.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`User ${type} — canadamortgagerates.net`,
+        name:name||"Anonymous",email:email||"Not provided",type,message:msg,
+        source:"Canada Mortgage Rates — Contact Form"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  if(ok)return(
+    <div style={{textAlign:"center",padding:"16px 0"}}>
+      <div style={{fontSize:28,marginBottom:8}}>✅</div>
+      <div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Message Received!</div>
+      <div style={{fontSize:11,color:s.muted,marginBottom:10}}>Thank you — we'll get back to you within 1 business day.</div>
+      <button onClick={()=>{setOk(false);setMsg("");setName("");setEmail("");}} style={{padding:"6px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>Send Another →</button>
+    </div>
+  );
+
+  return(
+    <div>
+      <Field label="Type">
+        <select value={type} onChange={e=>setType(e.target.value)} style={inp}>
+          <option value="question">❓ Question</option>
+          <option value="suggestion">💡 Suggestion</option>
+          <option value="error">🐛 Error / Bug Report</option>
+          <option value="partnership">🤝 Partnership Inquiry</option>
+          <option value="other">📝 Other</option>
+        </select>
+      </Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Name (optional)"><input value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" style={inp}/></Field>
+        <Field label="Email (optional)"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="your@email.com" style={inp}/></Field>
+      </div>
+      <Field label="Message *"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Your question, suggestion, or feedback..." style={{...inp,height:90,resize:"vertical" as any}}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Sending...":"Send Message →"}</button>
+      <div style={{fontSize:10,color:s.muted,marginTop:6}}>📧 Or email us directly: info@canadamortgagerates.net</div>
+    </div>
+  );
+}
+
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
@@ -8413,6 +8466,12 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
                 <span style={{fontWeight:600,color:s.navy}}>{v}</span>
               </div>
             ))}
+          </Card>
+
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.blue}`}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:4}}>💬 Contact Us & Feedback</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Have a question, suggestion, or spotted an error? We read every message and typically respond within 1 business day.</p>
+            <FeedbackForm/>
           </Card>
 
           <Card style={{background:"#f8fafc",border:`1px solid ${s.border}`}}>
