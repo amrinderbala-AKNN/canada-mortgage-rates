@@ -599,11 +599,78 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
     return()=>window.removeEventListener("keydown",handler);
   },[]);
 
-  // Keyword fallback
-  const keywordResults=query.trim().length<2?[]:SEARCH_INDEX.filter(item=>
-    item.title.toLowerCase().includes(query.toLowerCase())||
-    item.desc.toLowerCase().includes(query.toLowerCase())
-  ).slice(0,12);
+  // Smart synonym search
+  const synonymMap:{[k:string]:string[]}={
+    "borrow":["affordability","how much","qualify"],
+    "afford":["affordability","how much","qualify","income"],
+    "how much":["affordability","payment","calculator"],
+    "monthly":["payment calculator","monthly payment"],
+    "payment":["payment calculator","monthly"],
+    "qualify":["stress test","affordability","income"],
+    "stress test":["stress test","qualify","pass"],
+    "pass":["stress test","qualify"],
+    "break":["refinancing","penalty","IRD","break mortgage"],
+    "penalty":["refinancing","IRD","break"],
+    "renew":["renewal","negotiate","renewal calculator"],
+    "negotiate":["renewal","negotiation script","negotiate"],
+    "first time":["first-time buyers","FHSA","HBP","down payment"],
+    "first home":["first-time buyers","FHSA","HBP"],
+    "fhsa":["first home savings","first-time buyers"],
+    "rrsp":["home buyers plan","HBP","first-time buyers"],
+    "down payment":["first-time buyers","down payment","affordability"],
+    "insurance":["home insurance","CMHC","insurance quotes"],
+    "cmhc":["CMHC insurance","mortgage default","first-time buyers"],
+    "lawyer":["real estate lawyer","closing","lawyers"],
+    "closing":["closing cost","lawyers","closing costs"],
+    "realtor":["realtors","find a realtor","buyer guide"],
+    "agent":["realtors","find a realtor"],
+    "new home":["new builds","construction mortgage","new build"],
+    "new build":["new builds","construction mortgage","builder"],
+    "builder":["new builds","new build","construction"],
+    "house value":["home value","evaluation","listings"],
+    "home worth":["home value","evaluation","listings"],
+    "evaluate":["home value","evaluation","listings"],
+    "variable":["fixed vs variable","variable rate","rate finder"],
+    "fixed":["fixed vs variable","fixed rate","rates"],
+    "rate":["rates","compare rates","rate finder"],
+    "heloc":["HELOC","home equity","refinancing"],
+    "equity":["HELOC","refinancing","home value"],
+    "tax":["property tax","land transfer tax","closing costs"],
+    "amortization":["amortization schedule","amortization"],
+    "schedule":["amortization schedule"],
+    "glossary":["mortgage glossary","resources","glossary"],
+    "definition":["mortgage glossary","resources"],
+    "self employed":["self-employed mortgage","resources"],
+    "condo":["condo vs house","resources","listings"],
+  };
+
+  const smartSearch=(q:string)=>{
+    const lower=q.toLowerCase();
+    // Direct keyword match first
+    const direct=SEARCH_INDEX.filter(item=>
+      item.title.toLowerCase().includes(lower)||
+      item.desc.toLowerCase().includes(lower)
+    );
+    // Synonym expansion
+    const synonymHits:any[]=[];
+    Object.entries(synonymMap).forEach(([key,synonyms])=>{
+      if(lower.includes(key)){
+        synonyms.forEach(syn=>{
+          SEARCH_INDEX.forEach(item=>{
+            if((item.title.toLowerCase().includes(syn.toLowerCase())||
+               item.desc.toLowerCase().includes(syn.toLowerCase()))&&
+               !direct.find(d=>d.title===item.title)&&
+               !synonymHits.find(d=>d.title===item.title)){
+              synonymHits.push(item);
+            }
+          });
+        });
+      }
+    });
+    return [...direct,...synonymHits].slice(0,12);
+  };
+
+  const results=query.trim().length<2?[]:smartSearch(query);
 
   // AI semantic search with debounce
   useEffect(()=>{
@@ -613,7 +680,7 @@ function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:strin
       setLoading(true);
       try{
         const indexSummary=SEARCH_INDEX.map((item,i)=>`${i}|${item.title}|${item.tab}|${item.desc}`).join("\n");
-        const res=await fetch("https://api.anthropic.com/v1/messages",{
+        const res=await fetch("/api/anthropic",{
           method:"POST",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({
@@ -642,7 +709,7 @@ Respond ONLY with a JSON array of index numbers, most relevant first. Example: [
     },500);
   },[query]);
 
-  const results=aiResults||keywordResults;
+  const displayResults=aiResults||results;
   const typeColor:{[k:string]:string}={Tab:s.navy,Calculator:s.green,Topic:s.blue,Article:"#7c3aed"};
 
   return(
@@ -677,13 +744,13 @@ Respond ONLY with a JSON array of index numbers, most relevant first. Example: [
                 ))}
               </div>
             </div>
-          ):loading&&keywordResults.length===0?(
+          ):loading&&displayResults.length===0?(
             <div style={{padding:"32px 16px",textAlign:"center",color:s.muted}}>
               <div style={{fontSize:24,marginBottom:8}}>🤖</div>
               <div style={{fontSize:14,fontWeight:600,color:s.navy,marginBottom:4}}>Finding the best match...</div>
               <div style={{fontSize:12}}>AI is searching across all tabs and topics</div>
             </div>
-          ):results.length===0?(
+          ):displayResults.length===0?(
             <div style={{padding:"32px 16px",textAlign:"center",color:s.muted}}>
               <div style={{fontSize:24,marginBottom:8}}>🔍</div>
               <div style={{fontSize:14,fontWeight:600,color:s.navy,marginBottom:4}}>No results for "{query}"</div>
@@ -692,9 +759,9 @@ Respond ONLY with a JSON array of index numbers, most relevant first. Example: [
           ):(
             <div style={{padding:"8px 0"}}>
               <div style={{padding:"4px 16px 6px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px"}}>
-                {aiResults?"🤖 AI Results":"🔍 Results"} · {results.length} found
+                {aiResults?"🤖 AI Results":"🔍 Results"} · {displayResults.length} found
               </div>
-              {results.map((item,i)=>(
+              {displayResults.map((item,i)=>(
                 <button key={i} onClick={()=>onNavigate(item.tab)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 16px",width:"100%",border:"none",background:"none",cursor:"pointer",textAlign:"left",borderBottom:`1px solid ${s.light}`}}
                   onMouseEnter={e=>(e.currentTarget.style.background="#f8fafc")}
                   onMouseLeave={e=>(e.currentTarget.style.background="none")}>
@@ -8439,7 +8506,7 @@ export default function App(){
           <div style={{width:36,height:36,background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20}}>🍁</div>
           <div style={{textAlign:"left"}}><div style={{color:"#fff",fontSize:15,fontWeight:800,lineHeight:1}}>Canada Mortgage Rates</div><div style={{color:s.gold,fontSize:10,letterSpacing:"0.5px"}}>CANADA'S MOST COMPLETE MORTGAGE PLATFORM</div></div>
         </div>
-        <div style={{color:"rgba(255,255,255,0.4)",fontSize:10,marginBottom:10}}>© 2026 Canada Mortgage Rates · Not a licensed mortgage broker · Rates for informational purposes only</div>
+        <div style={{color:"rgba(255,255,255,0.4)",fontSize:10,marginBottom:10}}>© 2026 Canada Mortgage Rates · All rights reserved · Not a licensed mortgage broker · Rates for informational purposes only</div>
         <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap",marginBottom:10}}>
           {[["Realtor.ca","https://www.realtor.ca"],["CMHC","https://www.cmhc-schl.gc.ca"],["Bank of Canada","https://www.bankofcanada.ca"],["Contact Us","mailto:info@canadamortgagerates.net"],["About","/about"],["FAQ","/faq"]].map(([l,u])=><a key={l} href={u} target={u.startsWith("http")?"_blank":"_self"} rel="noopener noreferrer" style={{color:"rgba(255,255,255,0.45)",fontSize:11,textDecoration:"none"}}>{l}</a>)}
         </div>
