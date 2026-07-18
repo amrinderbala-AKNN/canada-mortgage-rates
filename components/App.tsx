@@ -504,7 +504,7 @@ function InstallPrompt(){
 }
 
 const TODAY=new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Realtors","Lawyers","Consult","News","Resources"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Professionals","Consult","News","Resources"];
 const SEARCH_INDEX=[
   // Tabs
   {title:"Home",desc:"Overview, latest features, tools, services, about us",tab:"Home",icon:"🍁",type:"Tab"},
@@ -517,8 +517,8 @@ const SEARCH_INDEX=[
   {title:"Renewal",desc:"Compare renewal offer, negotiation script, renewal guide and timeline",tab:"Renewal",icon:"🔄",type:"Tab"},
   {title:"Listings",desc:"Search homes, market tools, home value estimator, free evaluation",tab:"Listings",icon:"🏘️",type:"Tab"},
   {title:"New Builds",desc:"Explore new home developments, buyer guide, construction mortgage, connect with builders",tab:"New Builds",icon:"🏗️",type:"Tab"},
-  {title:"Realtors",desc:"Find a verified realtor, buyer's guide, home buying timeline",tab:"Realtors",icon:"🤝",type:"Tab"},
-  {title:"Lawyers",desc:"Find a real estate lawyer, closing guide, Law Society verification",tab:"Lawyers",icon:"⚖️",type:"Tab"},
+  {title:"Realtors",desc:"Find a verified realtor, buyer's guide, home buying timeline",tab:"Professionals",icon:"🤝",type:"Tab"},
+  {title:"Lawyers",desc:"Find a real estate lawyer, closing guide, Law Society verification",tab:"Professionals",icon:"⚖️",type:"Tab"},
   {title:"Consult",desc:"Free mortgage consultation, newsletter, BoC rate alerts",tab:"Consult",icon:"📞",type:"Tab"},
   {title:"News",desc:"Latest Canadian mortgage and real estate news by province",tab:"News",icon:"📰",type:"Tab"},
   {title:"Resources",desc:"Mortgage blog, 15 articles, glossary, quick guides",tab:"Resources",icon:"📚",type:"Tab"},
@@ -577,12 +577,12 @@ const SEARCH_INDEX=[
   {title:"Home Insurance Coverage",desc:"What's covered, what's NOT (flooding, earthquakes, sewer backup)",tab:"Insurance",icon:"🛡️",type:"Topic"},
   {title:"Average Home Prices",desc:"Average prices by province with down payment required — 2026",tab:"Listings",icon:"📊",type:"Topic"},
   {title:"Neighbourhood Checklist",desc:"20-point due diligence checklist before making an offer on a home",tab:"Listings",icon:"🏘️",type:"Topic"},
-  {title:"Closing Timeline",desc:"From offer accepted to keys — what happens at each stage",tab:"Lawyers",icon:"📅",type:"Topic"},
+  {title:"Closing Timeline",desc:"From offer accepted to keys — what happens at each stage",tab:"Professionals",icon:"📅",type:"Topic"},
   {title:"30-Year Amortization",desc:"Who qualifies, how it reduces payments, new 2026 rules for new builds",tab:"First-Time Buyers",icon:"📅",type:"Topic"},
   {title:"HELOC",desc:"Home equity line of credit — how it works, rates, uses, qualification",tab:"Resources",icon:"💳",type:"Topic"},
   {title:"Rate Impact Calculator",desc:"See the dollar difference between two rates over full amortization",tab:"Rate Finder",icon:"🧮",type:"Topic"},
-  {title:"Find a Real Estate Lawyer",desc:"Connect with verified Winnipeg real estate lawyers — closing leads",tab:"Lawyers",icon:"⚖️",type:"Topic"},
-  {title:"Find a Realtor",desc:"Connect with verified Winnipeg realtors — buyer and seller leads",tab:"Realtors",icon:"🤝",type:"Topic"},
+  {title:"Find a Real Estate Lawyer",desc:"Connect with verified Winnipeg real estate lawyers — closing leads",tab:"Professionals",icon:"⚖️",type:"Topic"},
+  {title:"Find a Realtor",desc:"Connect with verified Winnipeg realtors — buyer and seller leads",tab:"Professionals",icon:"🤝",type:"Topic"},
 ];
 
 function SiteSearch({onClose,onNavigate}:{onClose:()=>void,onNavigate:(tab:string)=>void}){
@@ -794,7 +794,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Realtors","Lawyers"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Professionals"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
@@ -816,7 +816,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
           <div style={{display:"flex",gap:2,flexWrap:"wrap",justifyContent:"center"}}>
           {TABS.map(t=>{
             const isActive=active===t;
-            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Professionals:"👷",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
             const subMenus:{[k:string]:{label:string,detail:string}[]}={
               "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 20+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
               "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
@@ -824,8 +824,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
               "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
               "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
               "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
-              "Realtors":[{label:"🤝 Find a Realtor",detail:"Connect with local agents"},{label:"📋 Buyer's Guide",detail:"Home buying timeline & FAQ"}],
-              "Lawyers":[{label:"⚖️ Find a Lawyer",detail:"Connect with real estate lawyers"},{label:"📋 Closing Guide",detail:"Timeline, costs & FAQ"}],
+              "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers for closing"},{label:"🔍 Home Inspectors",detail:"Find certified home inspectors"},{label:"🏡 Home Evaluation",detail:"Free professional home evaluation"}],
               "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
               "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
               "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
@@ -868,7 +867,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             <div key={g.label}>
               <div style={{padding:"6px 16px 3px",fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.4)",textTransform:"uppercase",letterSpacing:"0.5px"}}>{g.label}</div>
               {g.tabs.map(t=>{
-                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Lawyers:"⚖️",Realtors:"🤝",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
+                const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Professionals:"👷",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
                 return <button key={t} onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{display:"block",width:"100%",textAlign:"left",padding:"9px 16px 9px 24px",background:active===t?"rgba(245,166,35,0.1)":"none",border:"none",borderLeft:active===t?`3px solid ${s.gold}`:"3px solid transparent",color:active===t?"#fff":"rgba(255,255,255,0.75)",fontSize:13,cursor:"pointer",fontWeight:active===t?700:400}}>{emoji} {t}</button>;
               })}
             </div>
@@ -2016,13 +2015,13 @@ function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"})
       {label:"📊 Compare Rates Now",desc:"See if you can do better than your lender's offer",tab:"Rates",bg:s.gold,color:s.navy},
     ],
     refi:[
-      {label:"⚖️ Find a Real Estate Lawyer",desc:"Need help closing your refinance? Find a lawyer",tab:"Lawyers",bg:s.navy,color:"#fff"},
+      {label:"⚖️ Find a Real Estate Lawyer",desc:"Need help closing your refinance? Find a lawyer",tab:"Professionals",bg:s.navy,color:"#fff"},
       {label:"📞 Free Consultation",desc:"Get personalized refinancing advice",tab:"Consult",bg:s.red,color:"#fff"},
       {label:"📊 Compare Rates",desc:"Find the best new rate before you refinance",tab:"Rates",bg:s.green,color:"#fff"},
     ],
     closing:[
-      {label:"⚖️ Find a Real Estate Lawyer",desc:"A lawyer handles your closing — find one here",tab:"Lawyers",bg:s.navy,color:"#fff"},
-      {label:"🤝 Find a Realtor",desc:"Still looking for a home?",tab:"Realtors",bg:s.green,color:"#fff"},
+      {label:"⚖️ Find a Real Estate Lawyer",desc:"A lawyer handles your closing — find one here",tab:"Professionals",bg:s.navy,color:"#fff"},
+      {label:"🤝 Find a Realtor",desc:"Still looking for a home?",tab:"Professionals",bg:s.green,color:"#fff"},
     ],
     consult:[
       {label:"📞 Book a Free Consultation",desc:"Get personalized mortgage advice",tab:"Consult",bg:s.red,color:"#fff"},
@@ -4264,6 +4263,185 @@ function NeighbourhoodChecklist(){
         </div>
       )}
     </>
+  );
+}
+
+function ProfessionalsTab(){
+  const [subTab,setSubTab]=useState<"realtors"|"lawyers"|"inspectors"|"evaluation">("realtors");
+  useEffect(()=>{
+    const h=(e:any)=>{if(e.detail.tab==="Professionals")setSubTab(e.detail.sub);};
+    window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
+  },[]);
+
+  return(
+    <div>
+      {/* Sub-tabs */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setSubTab("realtors")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="realtors"?s.green:s.border}`,background:subTab==="realtors"?s.green:s.white,color:subTab==="realtors"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🤝 Realtors</button>
+        <button onClick={()=>setSubTab("lawyers")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lawyers"?"#92400e":s.border}`,background:subTab==="lawyers"?"#92400e":s.white,color:subTab==="lawyers"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Lawyers</button>
+        <button onClick={()=>setSubTab("inspectors")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="inspectors"?s.blue:s.border}`,background:subTab==="inspectors"?s.blue:s.white,color:subTab==="inspectors"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Inspectors</button>
+        <button onClick={()=>setSubTab("evaluation")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="evaluation"?s.gold:s.border}`,background:subTab==="evaluation"?s.gold:s.white,color:subTab==="evaluation"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏡 Home Evaluation</button>
+      </div>
+
+      {subTab==="realtors"&&<RealtorsTab/>}
+      {subTab==="lawyers"&&<LawyersTab/>}
+      {subTab==="inspectors"&&<InspectorsTab/>}
+      {subTab==="evaluation"&&<div style={{padding:"0"}}><ValueTabInner/></div>}
+    </div>
+  );
+}
+
+function InspectorsTab(){
+  const [showForm,setShowForm]=useState(false);
+  const [showPartnerForm,setShowPartnerForm]=useState(false);
+  const [filterProv,setFilterProv]=useState("MB");
+  const [filterCity,setFilterCity]=useState("");
+
+  // PARTNER INSPECTORS — Add real partners here when signed up
+  const INSPECTORS:any[]=[];
+
+  return(
+    <div>
+      {/* Filter */}
+      <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+        <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
+        <select value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>
+          <option value="">All Cities</option>
+          {(PDATA[filterProv]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}
+        </select>
+        <button onClick={()=>setShowForm(true)} style={{padding:"7px 16px",background:s.blue,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>🔍 Find an Inspector →</button>
+      </div>
+
+      {/* Coming Soon */}
+      <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+        <div style={{fontSize:40,marginBottom:12}}>🔍</div>
+        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Certified Home Inspectors — Coming Soon</div>
+        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+          We're building our network of certified home inspectors across Canada. Submit a request and we'll connect you with a qualified inspector in your area — or list your inspection business on our platform.
+        </div>
+        <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
+          💡 <b>Why you need a home inspection:</b> A certified home inspector examines the property's structure, electrical, plumbing, HVAC, and roof before you finalize the purchase. Cost: $400–$700. Can save you $10,000+ in hidden repairs.
+        </div>
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:"#fff",color:s.blue,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request an Inspector →</button>
+          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏢 List Your Business →</button>
+        </div>
+      </div>
+
+      {/* What to expect */}
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📋 What a Home Inspection Covers</h3>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+          {[
+            {icon:"🏗️",title:"Structure & Foundation",desc:"Cracks, settlement, moisture, structural integrity"},
+            {icon:"🔌",title:"Electrical System",desc:"Panel, wiring, outlets, safety hazards"},
+            {icon:"🚿",title:"Plumbing",desc:"Pipes, water heater, drainage, water pressure"},
+            {icon:"❄️",title:"HVAC Systems",desc:"Furnace, AC, ventilation, efficiency"},
+            {icon:"🏠",title:"Roof & Attic",desc:"Shingles, insulation, ventilation, leaks"},
+            {icon:"🪟",title:"Windows & Doors",desc:"Sealing, drafts, operation, moisture"},
+          ].map(item=>(
+            <div key={item.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+              <div style={{fontSize:20,marginBottom:4}}>{item.icon}</div>
+              <div style={{fontSize:12,fontWeight:700,color:s.navy,marginBottom:3}}>{item.title}</div>
+              <div style={{fontSize:11,color:s.muted}}>{item.desc}</div>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      {/* Request Form Modal */}
+      {showForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.blue,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>🔍 Request a Home Inspector</div>
+              <button onClick={()=>setShowForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <InspectorRequestForm onClose={()=>setShowForm(false)}/>
+          </div>
+        </div>
+      )}
+
+      {/* Partner Form Modal */}
+      {showPartnerForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.gold,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:s.navy,fontSize:14,fontWeight:700}}>🏢 List Your Inspection Business</div>
+              <button onClick={()=>setShowPartnerForm(false)} style={{background:"rgba(0,0,0,0.1)",border:"none",color:s.navy,width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <InspectorPartnerForm onClose={()=>setShowPartnerForm(false)}/>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InspectorRequestForm({onClose}:{onClose:()=>void}){
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [city,setCity]=useState("");const [prov,setProv]=useState("MB");const [timing,setTiming]=useState("");const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+  async function submit(){
+    if(!name||!email||!city){alert("Please fill required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Home Inspector Request — ${city}, ${prov}`,name,email,phone,city,province:prov,timing,message:msg,source:"Canada Mortgage Rates — Inspectors Tab"
+      })});setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+  if(ok)return<div style={{padding:20,textAlign:"center"}}><div style={{fontSize:28,marginBottom:8}}>✅</div><div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Request Received!</div><div style={{fontSize:11,color:s.muted,marginBottom:12}}>We'll connect you with a certified inspector in your area within 1-2 business days.</div><button onClick={onClose} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Close</button></div>;
+  return(
+    <div style={{padding:18}}>
+      <Field label="Full Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="John Smith" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="john@email.com" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Province"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select></Field>
+        <Field label="City *"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Winnipeg" style={inp}/></Field>
+      </div>
+      <Field label="When do you need it?">
+        <select value={timing} onChange={e=>setTiming(e.target.value)} style={inp}>
+          <option value="">Select timeline</option>
+          <option value="asap">As soon as possible</option>
+          <option value="1week">Within 1 week</option>
+          <option value="2weeks">Within 2 weeks</option>
+          <option value="1month">Within 1 month</option>
+        </select>
+      </Field>
+      <Field label="Additional Notes"><textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Property address, type, any specific concerns..." style={{...inp,height:60,resize:"vertical" as any}}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Request Inspector →"}</button>
+    </div>
+  );
+}
+
+function InspectorPartnerForm({onClose}:{onClose:()=>void}){
+  const [name,setName]=useState("");const [company,setCompany]=useState("");const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");const [prov,setProv]=useState("MB");const [cert,setCert]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+  async function submit(){
+    if(!name||!email||!company){alert("Please fill required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Inspector Partner Application — ${company}`,name,company,email,phone,province:prov,certification:cert,source:"Canada Mortgage Rates — Inspector Partner Form"
+      })});setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+  if(ok)return<div style={{padding:20,textAlign:"center"}}><div style={{fontSize:28,marginBottom:8}}>✅</div><div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Application Received!</div><div style={{fontSize:11,color:s.muted,marginBottom:12}}>We'll be in touch within 1-2 business days to discuss listing your business.</div><button onClick={onClose} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Close</button></div>;
+  return(
+    <div style={{padding:18}}>
+      <Field label="Your Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="Jane Smith" style={inp}/></Field>
+      <Field label="Company Name *"><input value={company} onChange={e=>setCompany(e.target.value)} placeholder="ABC Home Inspections" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="jane@abcinspections.ca" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <Field label="Province"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+      <Field label="Certification/Association"><input value={cert} onChange={e=>setCert(e.target.value)} placeholder="e.g. CAHPI, OAHI, NACHI" style={inp}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,background:s.gold,color:s.navy,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Submit Application →"}</button>
+    </div>
   );
 }
 
@@ -8387,8 +8565,8 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
             {[
-              {icon:"🤝",tab:"Realtors",title:"Find a REALTOR®",desc:"Connect with verified local realtors. Coming soon — be among the first listed in your city.",color:s.green,badge:"Coming Soon"},
-              {icon:"⚖️",tab:"Lawyers",title:"Find a Real Estate Lawyer",desc:"Connect with real estate lawyers for your closing. Coming soon — list your practice.",color:s.navy,badge:"Coming Soon"},
+              {icon:"🤝",tab:"Professionals",title:"Find a REALTOR®",desc:"Connect with verified local realtors. Coming soon — be among the first listed in your city.",color:s.green,badge:"Coming Soon"},
+              {icon:"⚖️",tab:"Professionals",title:"Find a Real Estate Lawyer",desc:"Connect with real estate lawyers for your closing. Coming soon — list your practice.",color:s.navy,badge:"Coming Soon"},
               {icon:"🏘️",tab:"Listings",title:"Browse Home Listings",desc:"Search homes across Canada via Realtor.ca, Zolo, HouseSigma, and more.",color:"#7c3aed",badge:""},
               {icon:"🏡",tab:"Listings",title:"Home Value Estimator",desc:"Request a free professional home evaluation from a local expert.",color:s.gold,badge:"New"},
               {icon:"📞",tab:"Consult",title:"Free Mortgage Consultation",desc:"Connect with a licensed mortgage professional — free, no obligation, within 1 business day.",color:s.red,badge:"Free"},
@@ -8515,10 +8693,8 @@ export default function App(){
         "🏘️ Find Listings":"listings","📊 Market Tools":"tools","🏡 Home Value":"value",
         // New Builds
         "🏘️ Explore Builds":"explore","📋 Buyer's Guide":"guide","💳 Construction Mortgage":"mortgage","🤝 Connect":"connect",
-        // Realtors
-        "🤝 Find a Realtor":"find","📋 Buyer's Guide":"guide",
-        // Lawyers
-        "⚖️ Find a Lawyer":"find","📋 Closing Guide":"guide",
+        // Professionals
+        "🤝 Find a Realtor":"realtors","⚖️ Find a Lawyer":"lawyers","🔍 Home Inspectors":"inspectors","🏡 Home Evaluation":"evaluation",
         // Insurance
         "🏠 Get Quotes":"quote","🛡️ What's Covered":"coverage","💰 Deductible Guide":"deductible","🚨 Claims Guide":"claims","📖 Insurance Guide":"guide",
         // Resources
@@ -8563,8 +8739,7 @@ export default function App(){
     if(active==="Glossary")return <GlossaryTab/>;
     if(active==="Resources")return <LearnGlossaryTab/>;
     if(active==="Renewal")return <RenewalTab/>;
-    if(active==="Lawyers")return <LawyersTab/>;
-    if(active==="Realtors")return <RealtorsTab/>;
+    if(active==="Professionals")return <ProfessionalsTab/>;
     if(active==="Consult")return <ConsultTab/>;
     return null;
   }
