@@ -76,12 +76,31 @@ const BANKS=[
   {name:"Scotiabank",url:"https://www.scotiabank.com/ca/en/personal/mortgages.html",type:"national"},
   {name:"CIBC",url:"https://www.cibc.com/en/personal-banking/mortgages.html",type:"national"},
   {name:"National Bank",url:"https://www.nbc.ca/personal/mortgages.html",type:"national"},
-  // ── Tier 1 Online / Alternative Lenders ──────────────────────────────────
+  // ── Tier 2 Banks ─────────────────────────────────────────────────────────
+  {name:"HSBC Canada",url:"https://www.hsbc.ca/mortgages",type:"national"},
+  {name:"Tangerine",url:"https://www.tangerine.ca/en/products/borrowing/mortgage",type:"national"},
+  {name:"Simplii Financial",url:"https://www.simplii.com/en/home-equity/mortgages.html",type:"national"},
+  {name:"Laurentian Bank",url:"https://www.laurentianbank.ca/en/personal/mortgages",type:"national"},
+  // ── Monoline Lenders (broker channel) ────────────────────────────────────
+  {name:"First National",url:"https://www.firstnational.ca",type:"online"},
+  {name:"MCAP",url:"https://www.mcap.com/mortgages",type:"online"},
+  {name:"CMLS Financial",url:"https://www.cmls.ca",type:"online"},
+  {name:"RMG Mortgages",url:"https://www.rmgmortgages.ca",type:"online"},
+  {name:"RFA Mortgage",url:"https://www.rfa.ca",type:"online"},
+  {name:"MERIX Financial",url:"https://www.merixfinancial.com",type:"online"},
+  {name:"Marathon Mortgage",url:"https://www.marathonmortgage.ca",type:"online"},
+  {name:"NPX (Haventree)",url:"https://www.haventree.com",type:"online"},
+  // ── Online / Digital Lenders ─────────────────────────────────────────────
   {name:"Nesto",url:"https://www.nesto.ca",type:"online"},
   {name:"True North Mortgage",url:"https://www.truenorthmortgage.ca",type:"online"},
-  {name:"First National",url:"https://www.firstnational.ca",type:"online"},
+  {name:"Homewise",url:"https://www.homewise.ca",type:"online"},
+  {name:"Intellimortgage",url:"https://www.intellimortgage.com",type:"online"},
+  // ── Alternative / B-Lenders ──────────────────────────────────────────────
   {name:"Equitable Bank",url:"https://www.eqbank.ca/personal-banking/mortgages",type:"online"},
-  {name:"MCAP",url:"https://www.mcap.com/mortgages",type:"online"},
+  {name:"Home Trust",url:"https://www.hometrust.ca/mortgages",type:"online"},
+  {name:"Alterna Bank",url:"https://www.alternabank.ca/mortgages",type:"online"},
+  {name:"Bridgewater Bank",url:"https://www.bridgewaterbank.ca",type:"online"},
+  {name:"Peoples Bank",url:"https://www.peoplesbank.ca/mortgages",type:"online"},
 ];
 const TERMS=["1-year","2-year","3-year","5-year"];
 const OFFERS=[
@@ -97,6 +116,14 @@ const OFFERS=[
   {bank:"First National",type:"Switch",badge:"🔄 Switch Offer",color:"#1a3a5c",textColor:"#fff",offer:"No-Fee Mortgage Switch",detail:"Switch your mortgage to First National at renewal with no switch fees. Flexible prepayment options up to 20% annually.",expires:"Ongoing",url:"https://www.firstnational.ca",tag:"Ongoing",provinces:[]},
   {bank:"Equitable Bank",type:"Rate",badge:"📉 Rate Special",color:"#0d2240",textColor:"#fff",offer:"EQ Bank Mortgage Rates",detail:"Equitable Bank (EQ Bank) offers competitive mortgage rates through brokers. Strong alternative lender option for self-employed or non-traditional income buyers.",expires:"Ongoing",url:"https://www.eqbank.ca/personal-banking/mortgages",tag:"Ongoing",provinces:[]},
   {bank:"MCAP",type:"Switch",badge:"🔄 Switch Offer",color:"#374151",textColor:"#fff",offer:"MCAP Mortgage Switch Program",detail:"MCAP offers competitive renewal and switch rates with flexible prepayment privileges. Available through mortgage brokers across Canada.",expires:"Ongoing",url:"https://www.mcap.com/mortgages",tag:"Ongoing",provinces:[]},
+  {bank:"CMLS Financial",type:"Rate",badge:"📉 Monoline Best Rate",color:"#0d2240",textColor:"#fff",offer:"CMLS Best 3 & 5-Year Fixed Rates",detail:"CMLS Financial consistently offers some of Canada's lowest 3-year and 5-year fixed rates. Available through mortgage brokers nationwide. Now owned by nesto Inc.",expires:"Ongoing",url:"https://www.cmls.ca",tag:"Ongoing",provinces:[]},
+  {bank:"First National",type:"Switch",badge:"🔄 Switch Offer",color:"#1a3a5c",textColor:"#fff",offer:"No-Fee Mortgage Switch",detail:"Switch your mortgage to First National at renewal with no switch fees. Flexible prepayment options up to 20% annually.",expires:"Ongoing",url:"https://www.firstnational.ca",tag:"Ongoing",provinces:[]},
+  {bank:"Equitable Bank",type:"Rate",badge:"📉 Rate Special",color:"#0d2240",textColor:"#fff",offer:"EQ Bank Mortgage Rates",detail:"Equitable Bank (EQ Bank) offers competitive mortgage rates through brokers. Strong alternative lender option for self-employed or non-traditional income buyers.",expires:"Ongoing",url:"https://www.eqbank.ca/personal-banking/mortgages",tag:"Ongoing",provinces:[]},
+  {bank:"Home Trust",type:"Rate",badge:"📉 B-Lender",color:"#374151",textColor:"#fff",offer:"Home Trust Alternative Mortgages",detail:"Canada's leading B-lender for borrowers who don't qualify at traditional banks. Self-employed, new Canadians, bruised credit — Home Trust has solutions.",expires:"Ongoing",url:"https://www.hometrust.ca/mortgages",tag:"Ongoing",provinces:[]},
+  {bank:"Homewise",type:"Rate",badge:"📉 Broker Platform",color:"#7c3aed",textColor:"#fff",offer:"Homewise — 30+ Lenders in One",detail:"Homewise negotiates with 30+ banks and lenders for you. Free service, no credit check to start, and they handle the paperwork.",expires:"Ongoing",url:"https://www.homewise.ca",tag:"Ongoing",provinces:[]},
+  {bank:"Tangerine",type:"Rate",badge:"📉 Online Bank",color:"#ff6900",textColor:"#fff",offer:"Tangerine Mortgage Rates",detail:"Scotiabank's digital bank arm. Competitive online mortgage rates with no-fee banking. Fully digital process, strong for tech-savvy buyers.",expires:"Ongoing",url:"https://www.tangerine.ca/en/products/borrowing/mortgage",tag:"Ongoing",provinces:[]},
+  {bank:"RMG Mortgages",type:"Rate",badge:"📉 Monoline",color:"#0891b2",textColor:"#fff",offer:"RMG Competitive Rates",detail:"RMG Mortgages (a division of MCAP) offers competitive rates for first-time buyers, self-employed, and new Canadians. Broker channel only.",expires:"Ongoing",url:"https://www.rmgmortgages.ca",tag:"Ongoing",provinces:[]},
+  {bank:"MERIX Financial",type:"Rate",badge:"📉 Monoline",color:"#16a34a",textColor:"#fff",offer:"MERIX Mortgage Solutions",detail:"MERIX Financial has served 200,000+ Canadians since 2005. Competitive rates through brokers, strong prepayment privileges.",expires:"Ongoing",url:"https://www.merixfinancial.com",tag:"Ongoing",provinces:[]},
   // ── ONTARIO ──────────────────────────────────────────────────────────────
   {bank:"Meridian Credit Union",type:"First-Time Buyer",badge:"🏡 Ontario Exclusive",color:"#16a34a",textColor:"#fff",offer:"First Home Advantage Package",detail:"Meridian's First Home Advantage includes a dedicated advisor, 120-day rate hold, free financial planning, and preferred rates for Ontario first-time buyers.",expires:"Ongoing",url:"https://www.meridiancu.ca",tag:"Ontario Only",provinces:["ON"]},
   {bank:"DUCA Credit Union",type:"Rate",badge:"📉 Ontario Exclusive",color:"#0891b2",textColor:"#fff",offer:"Member Dividends on Your Mortgage",detail:"DUCA members earn annual dividends on their mortgage balance — effectively reducing your net mortgage cost year after year.",expires:"Ongoing",url:"https://www.duca.com",tag:"Ontario Only",provinces:["ON"]},
