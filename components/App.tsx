@@ -535,7 +535,7 @@ const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder
 const SEARCH_INDEX=[
   // Tabs
   {title:"Home",desc:"Overview, latest features, tools, services, about us",tab:"Home",icon:"🍁",type:"Tab"},
-  {title:"Rates",desc:"Compare mortgage rates from 20+ lenders by province — live",tab:"Rates",icon:"📊",type:"Tab"},
+  {title:"Rates",desc:"Compare mortgage rates from 50+ lenders by province — live",tab:"Rates",icon:"📊",type:"Tab"},
   {title:"Calculators",desc:"Payment, affordability, stress test, renewal, refinancing, amortization, closing costs",tab:"Calculators",icon:"🧮",type:"Tab"},
   {title:"Property Tax",desc:"Estimate property tax by city, appeal assessment, payment options",tab:"Property Tax",icon:"🏛️",type:"Tab"},
   {title:"Insurance",desc:"Home insurance quotes, coverage guide, deductible calculator, claims guide",tab:"Insurance",icon:"🛡️",type:"Tab"},
@@ -845,7 +845,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Professionals:"👷",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
             const subMenus:{[k:string]:{label:string,detail:string}[]}={
-              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 20+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
+              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
               "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
               "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
               "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
@@ -2034,7 +2034,7 @@ function RefiCalcTab(){
 function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"}){
   const banners:{[k:string]:any[]}={
     rates:[
-      {label:"📊 Compare Live Rates",desc:"See current rates from 20+ lenders",tab:"Rates",bg:s.navy,color:"#fff"},
+      {label:"📊 Compare Live Rates",desc:"See current rates from 50+ lenders",tab:"Rates",bg:s.navy,color:"#fff"},
       {label:"🔍 Find My Rate",desc:"Get a personalized rate estimate",tab:"Rate Finder",bg:s.blue,color:"#fff"},
     ],
     renewal:[
@@ -6933,7 +6933,7 @@ For most Canadian homebuyers in 2026, a **2 or 3-year fixed rate** strikes the b
 
 **Always consult a licensed mortgage professional** before making any rate decision. Every borrower's situation — income stability, risk tolerance, renewal timeline, and financial cushion — is different.
 
-Use our [Rate Finder](/rate-finder) to get a personalized recommendation based on your profile, or compare current rates from 20+ Canadian lenders in our [Rates tab](/).
+Use our [Rate Finder](/rate-finder) to get a personalized recommendation based on your profile, or compare current rates from 50+ Canadian lenders in our [Rates tab](/).
       `
     },
     {
@@ -8479,7 +8479,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>Canada's Most Complete Mortgage Platform</h2>
         <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:600,margin:"0 auto 16px"}}>Free, AI-powered, and built for every province. Compare rates, calculate payments, discover programs, and connect with experts — all in one place.</p>
         <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginBottom:16}}>
-          {["🏦 20+ Lenders","🌍 All 10 Provinces","🤖 AI-Powered","💰 Always Free"].map(l=>(
+          {["🏦 50+ Lenders","🌍 All 10 Provinces","🤖 AI-Powered","💰 Always Free"].map(l=>(
             <span key={l} style={{background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.2)",borderRadius:20,padding:"5px 14px",color:"#fff",fontSize:11,fontWeight:600}}>{l}</span>
           ))}
         </div>
@@ -8510,7 +8510,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
           {/* Quick stats */}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,marginBottom:14}}>
             {[
-              {n:"20+",l:"Lenders Compared",icon:"🏦",color:s.navy},
+              {n:"50+",l:"Lenders Compared",icon:"🏦",color:s.navy},
               {n:"10",l:"Provinces Covered",icon:"🍁",color:s.red},
               {n:"9",l:"Calculators",icon:"🧮",color:s.blue},
               {n:"15+",l:"Tools & Guides",icon:"📄",color:s.green},
@@ -8559,7 +8559,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
             {[
-              {icon:"📊",tab:"Rates",title:"Compare Mortgage Rates",desc:"Live rates from 20+ lenders across all provinces. Filter by term, type, and lender.",badge:"🔴 LIVE"},
+              {icon:"📊",tab:"Rates",title:"Compare Mortgage Rates",desc:"Live rates from 50+ lenders across all provinces. Filter by term, type, and lender.",badge:"🔴 LIVE"},
               {icon:"💰",tab:"Calculators",title:"Payment Calculator",desc:"Calculate your exact monthly mortgage payment based on price, rate, and amortization."},
               {icon:"🏡",tab:"Calculators",title:"Affordability Calculator",desc:"How much house can you afford? Based on GDS/TDS ratios lenders actually use."},
               {icon:"📋",tab:"Calculators",title:"Stress Test Calculator",desc:"Will you pass? Calculate at your rate +2% or 5.25% — whichever is higher."},
