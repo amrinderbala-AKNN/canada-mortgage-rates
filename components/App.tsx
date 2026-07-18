@@ -4325,6 +4325,8 @@ function InspectorsTab(){
   const [filterCity,setFilterCity]=useState("");
 
   // PARTNER INSPECTORS — Add real partners here when signed up
+  // Structure: {id, name, company, prov, city, certifications[], serviceArea, website(hidden), featured}
+  // NOTE: No phone/email shown — all contact goes through Request form to track leads
   const INSPECTORS:any[]=[];
 
   return(
@@ -4339,21 +4341,51 @@ function InspectorsTab(){
         <button onClick={()=>setShowForm(true)} style={{padding:"7px 16px",background:s.blue,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>🔍 Find an Inspector →</button>
       </div>
 
-      {/* Coming Soon */}
-      <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
-        <div style={{fontSize:40,marginBottom:12}}>🔍</div>
-        <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Certified Home Inspectors — Coming Soon</div>
-        <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-          We're building our network of certified home inspectors across Canada. Submit a request and we'll connect you with a qualified inspector in your area — or list your inspection business on our platform.
+      {/* Partner cards or Coming Soon */}
+      {INSPECTORS.filter(i=>i.prov===filterProv&&(!filterCity||i.city===filterCity)).length>0?(
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:10,marginBottom:14}}>
+          {INSPECTORS.filter(i=>i.prov===filterProv&&(!filterCity||i.city===filterCity)).map((inspector:any)=>(
+            <div key={inspector.id} style={{background:s.white,borderRadius:12,border:`2px solid ${inspector.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
+              <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div>
+                  <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{inspector.name}</div>
+                  <div style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{inspector.company}</div>
+                </div>
+                {inspector.featured&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
+              </div>
+              <div style={{padding:12}}>
+                <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                  <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {inspector.city}, {inspector.prov}</span>
+                  <span style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>🗺️ {inspector.serviceArea}</span>
+                </div>
+                <div style={{display:"flex",gap:4,marginBottom:10,flexWrap:"wrap"}}>
+                  {inspector.certifications.map((c:string)=><span key={c} style={{background:"#f0fdf4",color:"#15803d",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:700}}>✓ {c}</span>)}
+                </div>
+                <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",marginBottom:10,fontSize:10,color:"#92400e"}}>
+                  💡 Contact through our form — leads tracked and delivered within 24 hours
+                </div>
+                <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:"9px",background:s.blue,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Request This Inspector →</button>
+              </div>
+            </div>
+          ))}
         </div>
-        <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
-          💡 <b>Why you need a home inspection:</b> A certified home inspector examines the property's structure, electrical, plumbing, HVAC, and roof before you finalize the purchase. Cost: $400–$700. Can save you $10,000+ in hidden repairs.
+      ):(
+        /* Coming Soon */
+        <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+          <div style={{fontSize:40,marginBottom:12}}>🔍</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Certified Home Inspectors — Coming Soon</div>
+          <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+            We're building our network of certified home inspectors across Canada. Submit a request and we'll connect you with a qualified inspector in your area — or list your inspection business on our platform.
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
+            💡 <b>Why you need a home inspection:</b> A certified home inspector examines the property's structure, electrical, plumbing, HVAC, and roof before you finalize the purchase. Cost: $400–$700. Can save you $10,000+ in hidden repairs.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+            <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:"#fff",color:s.blue,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request an Inspector →</button>
+            <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏢 List Your Business →</button>
+          </div>
         </div>
-        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
-          <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:"#fff",color:s.blue,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🔍 Request an Inspector →</button>
-          <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>🏢 List Your Business →</button>
-        </div>
-      </div>
+      )}
 
       {/* What to expect */}
       <Card style={{marginBottom:14}}>
@@ -4666,7 +4698,6 @@ function RealtorsTab(){
 
                   <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
                     <button onClick={()=>{setSelectedRealtor(r);setShowForm(true);setRcity(r.city);}} style={{flex:1,padding:"9px",background:s.green,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect →</button>
-                    {r.website&&<a href={r.website} target="_blank" rel="noopener noreferrer" style={{padding:"9px 12px",background:"#f1f5f9",color:s.navy,border:`1px solid ${s.border}`,borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none"}}>Website →</a>}
                   </div>
                 </div>
               </div>
@@ -6366,7 +6397,6 @@ function LawyersTab(){
                   {l.lawSocietyUrl&&<a href={l.lawSocietyUrl} target="_blank" rel="noopener noreferrer" style={{display:"block",fontSize:10,color:s.blue,marginBottom:8,textDecoration:"underline"}}>✓ Verify Law Society membership →</a>}
                   <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
                     <button onClick={()=>{setSelectedLawyer(l);setShowForm(true);setLcity(l.city);}} style={{flex:1,padding:"9px",background:"#92400e",color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect →</button>
-                    {l.website&&<a href={l.website} target="_blank" rel="noopener noreferrer" style={{padding:"9px 12px",background:"#f1f5f9",color:s.navy,border:`1px solid ${s.border}`,borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none"}}>Website →</a>}
                   </div>
                 </div>
               </div>
