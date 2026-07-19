@@ -866,7 +866,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
               "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
               "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
               "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
-              "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
+              "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"🏦 Switch or Stay?",detail:"Decision framework & term guide"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
               "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
               "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
               "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers for closing"},{label:"🔍 Home Inspectors",detail:"Find certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏡 Home Value",detail:"Free evaluation + professional appraisal"}],
@@ -6426,7 +6426,7 @@ function RenewalFAQ(){
 }
 
 function RenewalTab(){
-  const [subTab,setSubTab]=useState<"calculator"|"guide"|"negotiate">("calculator");
+  const [subTab,setSubTab]=useState<"calculator"|"guide"|"negotiate"|"switch">("calculator");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Renewal")setSubTab(e.detail.sub);};
     window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
@@ -6458,9 +6458,10 @@ function RenewalTab(){
     <div>
       {/* Sub-tab buttons */}
       <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
-        <button onClick={()=>setSubTab("calculator")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="calculator"?s.navy:s.border}`,background:subTab==="calculator"?s.navy:s.white,color:subTab==="calculator"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔄 Compare Offer</button>
-        <button onClick={()=>setSubTab("guide")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="guide"?s.navy:s.border}`,background:subTab==="guide"?s.navy:s.white,color:subTab==="guide"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📅 Renewal Guide</button>
-        <button onClick={()=>setSubTab("negotiate")} style={{flex:1,minWidth:120,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="negotiate"?s.red:s.border}`,background:subTab==="negotiate"?s.red:s.white,color:subTab==="negotiate"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>💬 Negotiate Script</button>
+        <button onClick={()=>setSubTab("calculator")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="calculator"?s.navy:s.border}`,background:subTab==="calculator"?s.navy:s.white,color:subTab==="calculator"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔄 Compare Offer</button>
+        <button onClick={()=>setSubTab("guide")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="guide"?s.navy:s.border}`,background:subTab==="guide"?s.navy:s.white,color:subTab==="guide"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📅 Renewal Guide</button>
+        <button onClick={()=>setSubTab("switch")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="switch"?s.blue:s.border}`,background:subTab==="switch"?s.blue:s.white,color:subTab==="switch"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏦 Switch or Stay?</button>
+        <button onClick={()=>setSubTab("negotiate")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="negotiate"?s.red:s.border}`,background:subTab==="negotiate"?s.red:s.white,color:subTab==="negotiate"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💬 Negotiate Script</button>
       </div>
 
       {subTab==="calculator"&&<>
@@ -6626,6 +6627,103 @@ function RenewalTab(){
         <button onClick={()=>window.dispatchEvent(new CustomEvent("openRateAlert"))} style={{padding:"10px 20px",background:"#fff",color:s.red,border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer",flexShrink:0}}>🔔 Get Alerts →</button>
       </div>
       </>}
+
+      {subTab==="switch"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.blue},#1d4ed8)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>🏦</div>
+            <h2 style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Should I Switch Lenders at Renewal?</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Switching at renewal costs $0 in penalties. Here's how to decide if it's worth the effort.</p>
+          </div>
+
+          {/* What if I do nothing */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.red}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:8}}>⚠️ What Happens If You Do Nothing?</h3>
+            <p style={{fontSize:11,color:s.muted,lineHeight:1.7,marginBottom:10}}>If you don't respond to your renewal notice, your mortgage automatically renews at your lender's <b>posted rate</b> — typically 0.50–1.50% higher than what you could negotiate. On a $400,000 mortgage, that's $2,000–$6,000 extra per year.</p>
+            <div style={{background:"#fff5f5",border:"1px solid #fed7d7",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#dc2626",fontWeight:600}}>
+              🚨 Doing nothing at renewal is one of the most expensive financial mistakes Canadian homeowners make.
+            </div>
+          </Card>
+
+          {/* Switch vs Stay decision */}
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:12}}>✅ Switch or Stay — Decision Framework</h3>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12,marginBottom:14}}>
+              <div style={{background:"#f0fdf4",borderRadius:10,padding:12,border:"1px solid #bbf7d0"}}>
+                <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:8}}>🏃 Switch Lenders If...</div>
+                {[
+                  "Competing lender offers 0.25%+ lower rate",
+                  "Your lender refuses to negotiate",
+                  "You want better prepayment privileges",
+                  "You're refinancing at the same time",
+                  "You've had poor service from current lender",
+                  "Current lender uses posted-rate IRD penalties",
+                ].map(t=><div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:"#15803d"}}><span>✓</span>{t}</div>)}
+              </div>
+              <div style={{background:"#eff6ff",borderRadius:10,padding:12,border:"1px solid #bfdbfe"}}>
+                <div style={{fontSize:13,fontWeight:800,color:"#1e40af",marginBottom:8}}>🏠 Stay with Current Lender If...</div>
+                {[
+                  "They match the best available rate",
+                  "You have a HELOC tied to your mortgage",
+                  "Complex file — they already know your situation",
+                  "Rate difference is under 0.15%",
+                  "You're selling within 1 year",
+                  "Switching would disrupt other banking",
+                ].map(t=><div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:"#1e40af"}}><span>✓</span>{t}</div>)}
+              </div>
+            </div>
+          </Card>
+
+          {/* Term selection guide 2026 */}
+          <Card style={{marginBottom:14,background:s.navy}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:"#fff",marginBottom:10}}>📅 Which Term Should You Choose at Renewal — 2026?</h3>
+            <p style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:12,lineHeight:1.6}}>With BoC at 2.25% and most economists expecting rates to stay flat or drop slightly in 2027, here's how each term looks right now:</p>
+            {[
+              {term:"1-Year Fixed",rate:"~4.50%",verdict:"✅ Good if you expect rates to drop significantly within a year. Maximum flexibility.",color:"#4ade80",rec:"If rates fall 0.50%+ in 12 months, worth it"},
+              {term:"2-Year Fixed",rate:"~4.20%",verdict:"✅ Best balance in 2026. Lower than 1-year, shorter commitment than 5-year.",color:"#4ade80",rec:"Our top pick for most 2026 renewers"},
+              {term:"3-Year Fixed",rate:"~4.10%",verdict:"✅ Strong choice. Captures current rates, renews in a likely lower-rate environment.",color:"#4ade80",rec:"Good for stability without overcommitting"},
+              {term:"5-Year Fixed",rate:"~3.90%",verdict:"⚠️ Lowest rate but commits you through 2031. Use if you value certainty over flexibility.",color:"#fbbf24",rec:"Only if you plan no changes for 5 years"},
+              {term:"Variable",rate:"~3.35%",verdict:"⚠️ Lowest rate today but BoC could raise if inflation resurges. Spread vs fixed has compressed.",color:"#fbbf24",rec:"If you have financial cushion for payment swings"},
+            ].map(t=>(
+              <div key={t.term} style={{display:"flex",gap:12,padding:"10px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
+                <div style={{flexShrink:0,minWidth:100}}>
+                  <div style={{fontSize:12,fontWeight:800,color:"#fff"}}>{t.term}</div>
+                  <div style={{fontSize:13,fontWeight:800,color:t.color}}>{t.rate}</div>
+                </div>
+                <div>
+                  <div style={{fontSize:11,color:"rgba(255,255,255,0.9)",marginBottom:3}}>{t.verdict}</div>
+                  <div style={{fontSize:10,color:t.color}}>{t.rec}</div>
+                </div>
+              </div>
+            ))}
+          </Card>
+
+          {/* True cost of switching */}
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💰 True Cost of Switching Lenders</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Switching at renewal is penalty-free — but there are minor costs to factor in:</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {cost:"Legal/Discharge Fee","amount":"$0–$300","note":"Many new lenders cover this","color":s.green},
+                {cost:"Appraisal Fee","amount":"$0–$300","note":"Often waived by new lender","color":s.green},
+                {cost:"Title Insurance","amount":"$200–$300","note":"May be required by new lender","color":"#f59e0b"},
+                {cost:"Your Time","amount":"2–4 hours","note":"Shopping, paperwork, signing","color":s.muted},
+              ].map(item=>(
+                <div key={item.cost} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.cost}</div>
+                  <div style={{fontSize:14,fontWeight:800,color:item.color,margin:"4px 0"}}>{item.amount}</div>
+                  <div style={{fontSize:10,color:s.muted}}>{item.note}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"10px 14px",marginTop:12,fontSize:11,color:"#15803d"}}>
+              💡 On a $400,000 mortgage, saving 0.25% = $1,000/year. Even if switching costs $500, you're ahead in 6 months. Most switches cost $0 — new lenders compete for your business.
+            </div>
+          </Card>
+
+          <button onClick={()=>setSubTab("negotiate")} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>💬 Get the Negotiation Script →</button>
+        </div>
+      )}
 
       {subTab==="negotiate"&&<>
       <div style={{background:`linear-gradient(135deg,${s.red},#a00d22)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
@@ -9216,7 +9314,7 @@ export default function App(){
         // Rate Finder
         "🎯 Rate Finder":"finder","📊 Fixed vs Variable":"compare","🧮 Rate Impact":"impact","📋 Pre-Approval":"preapproval",
         // Renewal
-        "🔄 Compare Offer":"calculator","📅 Renewal Guide":"guide","💬 Negotiate Script":"negotiate",
+        "🔄 Compare Offer":"calculator","📅 Renewal Guide":"guide","🏦 Switch or Stay?":"switch","💬 Negotiate Script":"negotiate",
         // Listings
         "🏘️ Find Listings":"listings","📊 Market Tools":"tools","🏡 Home Value":"value",
         // New Builds
