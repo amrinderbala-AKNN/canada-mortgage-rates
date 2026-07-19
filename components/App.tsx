@@ -187,22 +187,40 @@ const PT_RATES={
   SK:{Saskatoon:{res:0.00612,edu:0.00345},Regina:{res:0.00678,edu:0.00345},"Prince Albert":{res:0.00812,edu:0.00345},"Moose Jaw":{res:0.00756,edu:0.00345},"Swift Current":{res:0.00734,edu:0.00345},Yorkton:{res:0.00789,edu:0.00345},"North Battleford":{res:0.00845,edu:0.00345},def:{res:0.0066,edu:0.00345}}
 };
 const INS_PROVIDERS=[
-  {name:"Square One Insurance",stars:"★★★★★",desc:"Canada's best online home insurance. Instant quotes, flexible coverage, condo and renters specialists.",discount:"Online quote: instant approval",mult:0.82,url:"https://www.squareoneinsurance.ca/get-a-quote",provinces:[]},
-  {name:"Intact Insurance",stars:"★★★★★",desc:"Canada's largest home insurer. Fast claims, comprehensive coverage, all provinces.",discount:"Bundle with auto: save 15%",mult:1.12,url:"https://www.intact.net/en/personal-insurance/home-insurance/get-a-quote.aspx",provinces:[]},
-  {name:"TD Insurance",stars:"★★★★☆",desc:"Great for TD banking customers. Strong digital experience and online quotes.",discount:"TD customer discount available",mult:0.88,url:"https://www.tdinsurance.com/products-services/home-insurance/quote",provinces:[]},
-  {name:"Aviva Canada",stars:"★★★★☆",desc:"Flexible coverage with strong claims support across Canada.",discount:"New home discount: 10%",mult:1.05,url:"https://www.avivacanada.com/get-a-quote",provinces:[]},
-  {name:"Desjardins Insurance",stars:"★★★★★",desc:"Top choice in Quebec and Ontario. Excellent claims service.",discount:"Claim-free discount: 20%",mult:0.79,url:"https://www.desjardinsgeneralinsurance.com/en/home-insurance",provinces:["QC","ON"]},
-  {name:"Wawanesa Insurance",stars:"★★★★☆",desc:"Competitive Canadian-owned insurer with strong reputation in western Canada.",discount:"Loyalty discount after 3 years",mult:0.93,url:"https://www.wawanesa.com/canada/insurance/home-insurance",provinces:["MB","SK","AB","BC","ON"]},
-  {name:"Co-operators",stars:"★★★★☆",desc:"Co-operative insurer with competitive rates across Canada.",discount:"Multi-policy discount: 12%",mult:0.97,url:"https://www.cooperators.ca/en/Insurance/Property/Home.aspx",provinces:[]},
-  {name:"Economical Insurance",stars:"★★★★☆",desc:"One of Canada's oldest insurers with broad coverage options.",discount:"New customer discount: 8%",mult:0.91,url:"https://www.economical.com/en/personal/home-insurance",provinces:[]},
-  {name:"SGI Canada",stars:"★★★★☆",desc:"Saskatchewan's trusted insurer. Strong coverage for prairies homeowners.",discount:"Multi-line discount: 10%",mult:0.90,url:"https://www.sgicanada.ca/insurance/home-insurance",provinces:["SK","MB","AB"]},
-  {name:"Gore Mutual",stars:"★★★★☆",desc:"Strong presence in Ontario and BC with personalized service.",discount:"Claims-free discount available",mult:0.95,url:"https://www.goremutual.ca/personal-insurance/home-insurance",provinces:["ON","BC"]},
-  {name:"Pembridge Insurance",stars:"★★★☆☆",desc:"Affordable option for budget-conscious Ontario homeowners.",discount:"Online quote discount: 5%",mult:0.84,url:"https://www.pembridge.com/home-insurance",provinces:["ON","NS","NB","PE","NL"]},
-  {name:"Belairdirect",stars:"★★★★☆",desc:"Online-first insurer with competitive pricing and fast quotes.",discount:"Online purchase discount: 10%",mult:0.86,url:"https://www.belairdirect.com/en/home-insurance/get-a-quote",provinces:["ON","QC","AB","NS","NB"]},
-  {name:"La Capitale",stars:"★★★★☆",desc:"Quebec-based insurer with strong local presence and service.",discount:"Loyalty discount: 10%",mult:0.83,url:"https://www.lacapitale.com/en/insurance/home",provinces:["QC"]},
-  {name:"BCAA Insurance",stars:"★★★★☆",desc:"BC's most trusted insurer, backed by the BC Automobile Association.",discount:"BCAA member discount: 20%",mult:0.89,url:"https://www.bcaa.com/insurance/home",provinces:["BC"]},
-  {name:"Northbridge Insurance",stars:"★★★★☆",desc:"Comprehensive coverage with flexible deductible options.",discount:"New home discount: 12%",mult:1.02,url:"https://www.northbridgeinsurance.ca/personal-insurance/home-insurance",provinces:["ON","AB","BC"]},
-  {name:"Rates.ca",stars:"★★★★★",desc:"Compare quotes from 30+ Canadian insurers in one place. Find the lowest rate instantly.",discount:"Compare all providers at once",mult:0.80,url:"https://rates.ca/home-insurance",provinces:[]},
+  // ── National / All Provinces ──────────────────────────────────────────────
+  {name:"Intact Insurance",stars:"★★★★★",desc:"Canada's largest home insurer with $20B+ in premiums. Excellent claims service, fast resolution, all provinces. Consistent top J.D. Power ratings.",discount:"Bundle auto+home: save 15%",mult:1.12,url:"https://www.intact.net/en/personal-insurance/home-insurance/get-a-quote.aspx",provinces:[]},
+  {name:"Aviva Canada",stars:"★★★★★",desc:"Covers 860,000+ Canadian homes. Strong in Ontario with flexible add-ons including identity theft protection and overland flood coverage.",discount:"New home discount: 10%",mult:1.05,url:"https://www.avivacanada.com/get-a-quote",provinces:[]},
+  {name:"Co-operators",stars:"★★★★★",desc:"Canada's leading co-operative insurer. 5,000+ employees, consistently high satisfaction ratings. Backed by over 45 co-operative organizations.",discount:"Multi-policy discount: 12%",mult:0.97,url:"https://www.cooperators.ca/en/Insurance/Property/Home.aspx",provinces:[]},
+  {name:"TD Insurance",stars:"★★★★☆",desc:"Strong digital experience. Great for TD banking customers — seamless bundling with home and auto. Fully online quoting in minutes.",discount:"TD banking customer discount",mult:0.88,url:"https://www.tdinsurance.com/products-services/home-insurance/quote",provinces:[]},
+  {name:"Economical Insurance",stars:"★★★★☆",desc:"One of Canada's oldest insurers (150+ years). Flexible policies averaging $1,320/year. Top-rated in Ontario per user surveys.",discount:"New customer discount: 8%",mult:0.91,url:"https://www.economical.com/en/personal/home-insurance",provinces:[]},
+  {name:"Sonnet Insurance",stars:"★★★★☆",desc:"100% digital insurer. Get a quote in 5 minutes. Average premium $1,300/year. Best for tech-savvy buyers who want everything online.",discount:"Online-only discount: 15%",mult:0.87,url:"https://www.sonnet.ca/home-insurance",provinces:["ON","QC","AB","NS","NB","PE","NL"]},
+  {name:"Pembridge Insurance",stars:"★★★☆☆",desc:"Affordable option for budget-conscious homeowners. Works through independent brokers. Good for standard coverage needs.",discount:"Online quote discount: 5%",mult:0.84,url:"https://www.pembridge.com/home-insurance",provinces:["ON","NS","NB","PE","NL"]},
+  {name:"Belairdirect",stars:"★★★★☆",desc:"Online-first insurer with competitive pricing and fast quotes. Strong digital claims process. Backed by Intact Financial.",discount:"Online purchase discount: 10%",mult:0.86,url:"https://www.belairdirect.com/en/home-insurance/get-a-quote",provinces:["ON","QC","AB","NS","NB"]},
+  {name:"Northbridge Insurance",stars:"★★★★☆",desc:"Comprehensive coverage with flexible deductible options. Part of Fairfax Financial Holdings. Strong in Ontario and western Canada.",discount:"New home discount: 12%",mult:1.02,url:"https://www.northbridgeinsurance.ca/personal-insurance/home-insurance",provinces:["ON","AB","BC"]},
+  {name:"Allstate Canada",stars:"★★★★☆",desc:"Part of Allstate Insurance Company. Available in 5 provinces. Landlord insurance specialist. Easy app management and discounts.",discount:"Loyalty discount: 10%",mult:1.01,url:"https://www.allstate.ca/home-insurance.aspx",provinces:["AB","NB","NS","ON","QC"]},
+  {name:"RSA Canada",stars:"★★★★☆",desc:"Subsidiary of Intact Financial. Top-ranked in Alberta. 90% of Canadian brokers rate coverage in line with or ahead of competition.",discount:"Claim-free discount: 15%",mult:0.98,url:"https://www.rsagroup.ca/en/personal/home-insurance",provinces:[]},
+  {name:"Pafco Insurance",stars:"★★★☆☆",desc:"Residential fire policy specialists. Part of Allstate. Covers rental and vacation homes. Property guarantee for homeowners.",discount:"Multi-policy available",mult:0.93,url:"https://www.pafco.ca",provinces:["ON","AB","NS","NB"]},
+  // ── Online / Digital ─────────────────────────────────────────────────────
+  {name:"Square One Insurance",stars:"★★★★★",desc:"Canada's best fully online insurer. Customizable coverage, instant approval, competitive pricing. Best for condos and rentals.",discount:"Online quote: instant approval",mult:0.82,url:"https://www.squareoneinsurance.ca/get-a-quote",provinces:["AB","BC","MB","ON","QC","SK"]},
+  {name:"Rates.ca",stars:"★★★★★",desc:"Compare quotes from 30+ Canadian insurers in one place. Find the lowest rate instantly. Free comparison, no obligation.",discount:"Compare all providers at once",mult:0.80,url:"https://rates.ca/home-insurance",provinces:[]},
+  // ── Quebec Specialists ────────────────────────────────────────────────────
+  {name:"Desjardins Insurance",stars:"★★★★★",desc:"Canada's leading financial co-operative. Best in Quebec and Ontario. Excellent claims service. Average premium $1,280/year.",discount:"Claim-free discount: 20%",mult:0.79,url:"https://www.desjardinsgeneralinsurance.com/en/home-insurance",provinces:["QC","ON","NB","NS"]},
+  {name:"La Capitale",stars:"★★★★☆",desc:"Quebec-based insurer with strong local presence. Merger with SSQ creates one of Quebec's strongest financial groups.",discount:"Loyalty discount: 10%",mult:0.83,url:"https://www.lacapitale.com/en/insurance/home",provinces:["QC"]},
+  {name:"SSQ Insurance",stars:"★★★★☆",desc:"Quebec co-operative insurer. Now merged with La Capitale. Strong member benefits and competitive rates in Quebec.",discount:"Member discount available",mult:0.85,url:"https://www.ssq.ca/en/insurance/home",provinces:["QC","ON"]},
+  // ── Western Canada Specialists ────────────────────────────────────────────
+  {name:"Wawanesa Insurance",stars:"★★★★★",desc:"Canadian-owned mutual insurer. Budget-friendly at $1,280/year average. Praised for efficient claims. Strong prairie and BC presence.",discount:"Loyalty discount after 3 years",mult:0.93,url:"https://www.wawanesa.com/canada/insurance/home-insurance",provinces:["MB","SK","AB","BC","ON"]},
+  {name:"SGI Canada",stars:"★★★★☆",desc:"Saskatchewan's most trusted insurer. Excellent prairie coverage including hail and flooding. Multi-line discounts available.",discount:"Multi-line discount: 10%",mult:0.90,url:"https://www.sgicanada.ca/insurance/home-insurance",provinces:["SK","MB","AB","ON","NB","NS"]},
+  {name:"BCAA Insurance",stars:"★★★★★",desc:"BC's most trusted insurer. Backed by the BC Automobile Association. BCAA members get significant discounts.",discount:"BCAA member discount: 20%",mult:0.89,url:"https://www.bcaa.com/insurance/home",provinces:["BC"]},
+  {name:"Gore Mutual",stars:"★★★★☆",desc:"Specialized water damage coverage including overland flood and sewer backup. Strong in Ontario and BC through brokers.",discount:"Claims-free discount available",mult:0.95,url:"https://www.goremutual.ca/personal-insurance/home-insurance",provinces:["ON","BC","AB","NS","NB"]},
+  // ── Ontario Specialists ───────────────────────────────────────────────────
+  {name:"CAA Insurance",stars:"★★★★☆",desc:"CAA members get exclusive discounts. Strong Ontario focus with good roadside and home bundle packages.",discount:"CAA member discount: 20%",mult:0.91,url:"https://www.caasco.com/insurance/home-insurance",provinces:["ON","MB","SK","AB"]},
+  {name:"Intact Insurance Broker",stars:"★★★★☆",desc:"Independent brokers offering Intact products. Access to multiple coverage options and competitive pricing.",discount:"Broker comparison discount",mult:1.08,url:"https://www.intact.net/en/find-a-broker.aspx",provinces:["ON","AB","BC","QC"]},
+  // ── Atlantic Canada Specialists ───────────────────────────────────────────
+  {name:"Co-operators Atlantic",stars:"★★★★☆",desc:"Strong Atlantic Canada coverage. Local agents in every province. Well-regarded for claims handling in NB, NS, NL, PE.",discount:"Atlantic multi-policy discount",mult:0.96,url:"https://www.cooperators.ca/en/Insurance/Property/Home.aspx",provinces:["NB","NS","NL","PE"]},
+  {name:"Assumption Life",stars:"★★★★☆",desc:"New Brunswick-based insurer with strong Atlantic roots. Bilingual service, competitive premiums, strong local claims team.",discount:"Loyalty discount: 8%",mult:0.88,url:"https://www.assumption.ca/en/insurance/home-insurance",provinces:["NB","NS","PE","NL"]},
+  // ── Manitoba Specialists ──────────────────────────────────────────────────
+  {name:"Portage Mutual",stars:"★★★★☆",desc:"Manitoba-based mutual insurer. Serving Canadian homeowners since 1884. Strong rural and farm property coverage.",discount:"Long-term member discount",mult:0.92,url:"https://www.portagemutual.com",provinces:["MB","SK","AB","ON"]},
+  {name:"Westland Insurance",stars:"★★★★☆",desc:"One of Canada's fastest-growing brokerages. Access to multiple insurers, competitive pricing, and strong digital tools.",discount:"Broker access to 20+ insurers",mult:0.94,url:"https://www.westlandinsurance.ca/home-insurance",provinces:["BC","AB","SK","MB","ON"]},
 ];
 const INS_BASE={AB:0.42,BC:0.52,MB:0.38,NB:0.35,NL:0.36,NS:0.37,ON:0.48,PE:0.32,QC:0.28,SK:0.36};
 const TYPE_MULT={detached:1.0,semi:0.82,condo:0.38,townhouse:0.72};
@@ -568,7 +586,7 @@ const SEARCH_INDEX=[
   {title:"Home Value Estimator",desc:"Request a free professional home evaluation from a local expert",tab:"Listings",icon:"🏡",type:"Topic"},
   {title:"Free Home Evaluation",desc:"Connect with a local professional for a free CMA — selling, refinancing, or curious",tab:"Listings",icon:"🏠",type:"Topic"},
   // Insurance
-  {title:"Home Insurance Quotes",desc:"Compare Square One, Intact, Aviva, SGI, Wawanesa and 10+ providers by province",tab:"Insurance",icon:"🏠",type:"Topic"},
+  {title:"Home Insurance Quotes",desc:"Compare Square One, Intact, Aviva, Wawanesa, Desjardins, BCAA, SGI, Gore Mutual and 25+ providers by province",tab:"Insurance",icon:"🏠",type:"Topic"},
   {title:"Home Insurance Guide",desc:"Province cost comparison, how to save on premiums, riders, FAQ — 2026",tab:"Insurance",icon:"📖",type:"Topic"},
   {title:"Overland Flood Insurance",desc:"Not covered by standard policies — add-on rider $100–$300/year",tab:"Insurance",icon:"🌊",type:"Topic"},
   {title:"CMHC vs Home Insurance",desc:"What's the difference between mortgage default insurance and home insurance?",tab:"Insurance",icon:"🛡️",type:"Topic"},
@@ -3065,16 +3083,16 @@ function InsuranceTab({initProv}){
 
   // Province-specific provider lists
   const PROV_PROVIDERS:{[k:string]:string[]}={
-    QC:["Desjardins Insurance","Intact Insurance","Aviva Canada","Belairdirect","Co-operators","TD Insurance","Economical Insurance","La Capitale"],
-    SK:["SGI Canada","Co-operators","Intact Insurance","Wawanesa Insurance","Aviva Canada","TD Insurance","Economical Insurance","Gore Mutual"],
-    MB:["Co-operators","Wawanesa Insurance","Intact Insurance","Aviva Canada","TD Insurance","Economical Insurance","Belairdirect","SGI Canada"],
-    BC:["Intact Insurance","Aviva Canada","BCAA Insurance","Co-operators","Wawanesa Insurance","TD Insurance","Belairdirect","Gore Mutual"],
-    ON:["Intact Insurance","Aviva Canada","TD Insurance","Desjardins Insurance","Co-operators","Economical Insurance","Gore Mutual","Pembridge Insurance","Belairdirect","Northbridge Insurance"],
-    AB:["Intact Insurance","Aviva Canada","Co-operators","Wawanesa Insurance","TD Insurance","Belairdirect","Economical Insurance","SGI Canada"],
-    NS:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Pembridge Insurance","Wawanesa Insurance"],
-    NB:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Pembridge Insurance"],
-    PE:["Intact Insurance","Co-operators","Aviva Canada","TD Insurance","Economical Insurance"],
-    NL:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Northbridge Insurance"],
+    QC:["Desjardins Insurance","La Capitale","SSQ Insurance","Intact Insurance","Aviva Canada","Belairdirect","Co-operators","TD Insurance","Economical Insurance","Sonnet Insurance","RSA Canada"],
+    SK:["SGI Canada","Co-operators","Wawanesa Insurance","Intact Insurance","Aviva Canada","TD Insurance","Economical Insurance","Gore Mutual","Portage Mutual","Westland Insurance","CAA Insurance"],
+    MB:["Co-operators","Wawanesa Insurance","Intact Insurance","Aviva Canada","SGI Canada","TD Insurance","Economical Insurance","Portage Mutual","Westland Insurance","CAA Insurance","Belairdirect"],
+    BC:["BCAA Insurance","Intact Insurance","Aviva Canada","Co-operators","Wawanesa Insurance","TD Insurance","Gore Mutual","Belairdirect","Westland Insurance","Economical Insurance","Sonnet Insurance","Square One Insurance"],
+    ON:["Intact Insurance","Aviva Canada","TD Insurance","Desjardins Insurance","Co-operators","Economical Insurance","Gore Mutual","Pembridge Insurance","Belairdirect","Northbridge Insurance","CAA Insurance","Allstate Canada","RSA Canada","Sonnet Insurance","Square One Insurance"],
+    AB:["Intact Insurance","Aviva Canada","Co-operators","Wawanesa Insurance","TD Insurance","Belairdirect","Economical Insurance","SGI Canada","Gore Mutual","Allstate Canada","RSA Canada","Northbridge Insurance","Westland Insurance","CAA Insurance","Sonnet Insurance"],
+    NS:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Pembridge Insurance","Wawanesa Insurance","Gore Mutual","Belairdirect","Sonnet Insurance","Assumption Life","SGI Canada"],
+    NB:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Pembridge Insurance","Belairdirect","Gore Mutual","Allstate Canada","Assumption Life","Sonnet Insurance","SGI Canada"],
+    PE:["Intact Insurance","Co-operators","Aviva Canada","TD Insurance","Economical Insurance","Pembridge Insurance","Assumption Life","Sonnet Insurance"],
+    NL:["Intact Insurance","Aviva Canada","Co-operators","TD Insurance","Economical Insurance","Northbridge Insurance","Pembridge Insurance","Gore Mutual","Assumption Life"],
   };
 
   // City risk multipliers for major cities
