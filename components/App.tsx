@@ -851,7 +851,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
               "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
               "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
               "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
-              "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers for closing"},{label:"🔍 Home Inspectors",detail:"Find certified home inspectors"},{label:"🏡 Home Evaluation",detail:"Free professional home evaluation"}],
+              "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers for closing"},{label:"🔍 Home Inspectors",detail:"Find certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏡 Home Value",detail:"Free evaluation + professional appraisal"}],
               "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
               "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
               "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
@@ -4294,7 +4294,8 @@ function NeighbourhoodChecklist(){
 }
 
 function ProfessionalsTab(){
-  const [subTab,setSubTab]=useState<"realtors"|"lawyers"|"inspectors"|"evaluation">("realtors");
+  const [subTab,setSubTab]=useState<"realtors"|"lawyers"|"inspectors"|"brokers"|"evaluation">("realtors");
+  const [homeValTab,setHomeValTab]=useState<"eval"|"appraisal">("eval");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Professionals")setSubTab(e.detail.sub);};
     window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
@@ -4304,16 +4305,316 @@ function ProfessionalsTab(){
     <div>
       {/* Sub-tabs */}
       <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
-        <button onClick={()=>setSubTab("realtors")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="realtors"?s.green:s.border}`,background:subTab==="realtors"?s.green:s.white,color:subTab==="realtors"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🤝 Realtors</button>
-        <button onClick={()=>setSubTab("lawyers")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lawyers"?"#92400e":s.border}`,background:subTab==="lawyers"?"#92400e":s.white,color:subTab==="lawyers"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>⚖️ Lawyers</button>
-        <button onClick={()=>setSubTab("inspectors")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="inspectors"?s.blue:s.border}`,background:subTab==="inspectors"?s.blue:s.white,color:subTab==="inspectors"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔍 Inspectors</button>
-        <button onClick={()=>setSubTab("evaluation")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="evaluation"?s.gold:s.border}`,background:subTab==="evaluation"?s.gold:s.white,color:subTab==="evaluation"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏡 Home Evaluation</button>
+        <button onClick={()=>setSubTab("realtors")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="realtors"?s.green:s.border}`,background:subTab==="realtors"?s.green:s.white,color:subTab==="realtors"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🤝 Realtors</button>
+        <button onClick={()=>setSubTab("lawyers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lawyers"?"#92400e":s.border}`,background:subTab==="lawyers"?"#92400e":s.white,color:subTab==="lawyers"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>⚖️ Real Estate Lawyers</button>
+        <button onClick={()=>setSubTab("inspectors")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="inspectors"?s.blue:s.border}`,background:subTab==="inspectors"?s.blue:s.white,color:subTab==="inspectors"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔍 Home Inspectors</button>
+        <button onClick={()=>setSubTab("brokers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="brokers"?s.navy:s.border}`,background:subTab==="brokers"?s.navy:s.white,color:subTab==="brokers"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💼 Mortgage Brokers</button>
+        <button onClick={()=>setSubTab("evaluation")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="evaluation"?s.gold:s.border}`,background:subTab==="evaluation"?s.gold:s.white,color:subTab==="evaluation"?s.navy:s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏡 Home Value</button>
       </div>
 
       {subTab==="realtors"&&<RealtorsTab/>}
       {subTab==="lawyers"&&<LawyersTab/>}
       {subTab==="inspectors"&&<InspectorsTab/>}
-      {subTab==="evaluation"&&<div style={{padding:"0"}}><ValueTabInner/></div>}
+      {subTab==="brokers"&&<MortgageBrokersTab/>}
+      {subTab==="evaluation"&&(
+        <div>
+          <div style={{display:"flex",gap:8,marginBottom:14}}>
+            <button onClick={()=>setHomeValTab("eval")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${homeValTab==="eval"?s.gold:s.border}`,background:homeValTab==="eval"?s.gold:s.white,color:homeValTab==="eval"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏡 Free Evaluation</button>
+            <button onClick={()=>setHomeValTab("appraisal")} style={{flex:1,padding:"10px",borderRadius:8,border:`2px solid ${homeValTab==="appraisal"?s.blue:s.border}`,background:homeValTab==="appraisal"?s.blue:s.white,color:homeValTab==="appraisal"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📋 Professional Appraisal</button>
+          </div>
+
+          {homeValTab==="eval"&&(
+            <div>
+              <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:10,padding:"10px 14px",marginBottom:14,fontSize:11,color:"#15803d"}}>
+                ✅ <b>Free</b> — A realtor performs a Comparative Market Analysis (CMA) based on recent sales. No cost, no obligation. Best for: thinking about selling or curious about your home's worth.
+              </div>
+              <ValueTabInner/>
+            </div>
+          )}
+
+          {homeValTab==="appraisal"&&(
+            <div>
+              <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:10,padding:"10px 14px",marginBottom:14,fontSize:11,color:"#1e40af"}}>
+                💰 <b>$300–$500</b> — A licensed AACI-certified appraiser provides an official report required by lenders for mortgage approval, refinancing, estate settlements, and legal matters.
+              </div>
+              <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"28px 24px",marginBottom:14,textAlign:"center"}}>
+                <div style={{fontSize:36,marginBottom:10}}>📋</div>
+                <div style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Certified Appraisers — Coming Soon</div>
+                <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.7,maxWidth:440,margin:"0 auto 16px"}}>
+                  We're building our network of AACI-certified appraisers across Canada. Submit a request and we'll connect you when our network is ready.
+                </div>
+                <AppraiserRequestForm/>
+              </div>
+              <Card>
+                <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>❓ When Do You Need a Professional Appraisal?</h3>
+                <div style={{overflowX:"auto"}}>
+                  <table style={{width:"100%",borderCollapse:"collapse",minWidth:380}}>
+                    <thead><tr style={{background:"#f8fafc"}}>{["Situation","Free Evaluation","Paid Appraisal"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
+                    <tbody>
+                      {[
+                        ["Thinking about selling","✅ Yes","❌ Not needed"],
+                        ["Curious about home value","✅ Yes","❌ Not needed"],
+                        ["Getting a new mortgage","❌ Not accepted","✅ Required"],
+                        ["Refinancing","❌ Not accepted","✅ Required"],
+                        ["Estate / legal settlement","❌ Not accepted","✅ Required"],
+                        ["Divorce / separation","❌ Not accepted","✅ Required"],
+                        ["Setting a listing price","✅ Yes","Optional"],
+                      ].map(([sit,ev,ap],i)=>(
+                        <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                          <td style={{padding:"8px 12px",fontSize:11,color:s.navy,fontWeight:600}}>{sit}</td>
+                          <td style={{padding:"8px 12px",fontSize:11,color:ev.includes("✅")?"#15803d":"#dc2626"}}>{ev}</td>
+                          <td style={{padding:"8px 12px",fontSize:11,color:ap.includes("✅")?"#1e40af":ap==="Optional"?"#f59e0b":"#dc2626"}}>{ap}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Card>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AppraiserRequestForm(){
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");const [purpose,setPurpose]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+  async function submit(){
+    if(!name||!email){alert("Please fill required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Appraiser Request — ${city||prov}`,name,email,phone,province:prov,city,purpose,source:"Canada Mortgage Rates — Appraiser Request"
+      })});setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+  if(ok)return<div style={{textAlign:"center",padding:"8px 0"}}><div style={{fontSize:24,marginBottom:6}}>✅</div><div style={{fontSize:12,fontWeight:800,color:"#fff",marginBottom:4}}>Request Received!</div><div style={{fontSize:11,color:"rgba(255,255,255,0.75)"}}>We'll connect you with a certified appraiser soon.</div></div>;
+  return(
+    <div>
+      <Field label=""><input value={name} onChange={e=>setName(e.target.value)} placeholder="Full Name *" style={{...inp,marginBottom:6}}/></Field>
+      <Field label=""><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email *" style={{...inp,marginBottom:6}}/></Field>
+      <Field label=""><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Phone" style={{...inp,marginBottom:6}}/></Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6,marginBottom:6}}>
+        <select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select>
+        <input value={city} onChange={e=>setCity(e.target.value)} placeholder="City" style={inp}/>
+      </div>
+      <select value={purpose} onChange={e=>setPurpose(e.target.value)} style={{...inp,marginBottom:10}}>
+        <option value="">Purpose</option>
+        <option value="mortgage">New Mortgage</option>
+        <option value="refinance">Refinancing</option>
+        <option value="estate">Estate / Legal</option>
+        <option value="divorce">Divorce / Separation</option>
+        <option value="other">Other</option>
+      </select>
+      <button onClick={submit} disabled={submitting} style={{width:"100%",padding:"9px",background:"#fff",color:s.blue,border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Request an Appraiser →"}</button>
+    </div>
+  );
+}
+
+function MortgageBrokersTab(){
+  const [showForm,setShowForm]=useState(false);
+  const [showPartnerForm,setShowPartnerForm]=useState(false);
+  const [filterProv,setFilterProv]=useState("MB");
+  const [filterCity,setFilterCity]=useState("");
+
+  // PARTNER BROKERS — Add real partners here when signed up
+  // Structure: {id, name, company, prov, city, specializations[], experience, languages[], rating, reviews, featured}
+  // NOTE: No phone/email/website shown — all contact through form for lead tracking ($100/lead)
+  const BROKERS:any[]=[];
+
+  return(
+    <div>
+      {/* Filter */}
+      <div style={{background:s.white,borderRadius:12,padding:"12px 16px",marginBottom:14,border:`1px solid ${s.border}`,display:"flex",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+        <select value={filterProv} onChange={e=>{setFilterProv(e.target.value);setFilterCity("");}} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select>
+        <select value={filterCity} onChange={e=>setFilterCity(e.target.value)} style={{padding:"7px 10px",borderRadius:8,border:`1.5px solid ${s.border}`,fontSize:12,fontWeight:600}}>
+          <option value="">All Cities</option>
+          {(PDATA[filterProv]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}
+        </select>
+        <button onClick={()=>setShowForm(true)} style={{padding:"7px 16px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer",marginLeft:"auto"}}>💼 Find a Broker →</button>
+      </div>
+
+      {/* Partner cards or Coming Soon */}
+      {BROKERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)).length>0?(
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:10,marginBottom:14}}>
+          {BROKERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)).map((broker:any)=>(
+            <div key={broker.id} style={{background:s.white,borderRadius:12,border:`2px solid ${broker.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
+              <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <div>
+                  <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{broker.name}</div>
+                  <div style={{color:"rgba(255,255,255,0.75)",fontSize:11}}>{broker.company}</div>
+                </div>
+                {broker.featured&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
+              </div>
+              <div style={{padding:12}}>
+                <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                  <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {broker.city}, {broker.prov}</span>
+                  <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {broker.experience} yrs exp</span>
+                </div>
+                {broker.specializations?.length>0&&(
+                  <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
+                    {broker.specializations.map((sp:string)=><span key={sp} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:600}}>{sp}</span>)}
+                  </div>
+                )}
+                {broker.languages?.length>1&&(
+                  <div style={{fontSize:10,color:s.muted,marginBottom:8}}>🗣 {broker.languages.join(", ")}</div>
+                )}
+                {broker.rating&&<div style={{fontSize:11,color:"#f59e0b",marginBottom:8}}>{"⭐".repeat(Math.floor(broker.rating))} {broker.rating} ({broker.reviews} reviews)</div>}
+                <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",marginBottom:10,fontSize:10,color:"#92400e"}}>
+                  💡 Contact through our form — leads delivered within 24 hours
+                </div>
+                <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:"9px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect with {broker.name.split(" ")[0]} →</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ):(
+        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
+          <div style={{fontSize:40,marginBottom:12}}>💼</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Mortgage Brokers — Coming Soon</div>
+          <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
+            We're building our network of independent licensed mortgage brokers across Canada. A broker shops 30+ lenders for you — at no cost to you. Submit a request and we'll connect you with a qualified broker in your area.
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
+            💡 <b>Why use a mortgage broker?</b> Brokers have access to 30+ lenders including monolines and credit unions that don't advertise directly. They negotiate on your behalf and their service is free — paid by the lender.
+          </div>
+          <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginTop:16}}>
+            <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>💼 Find Me a Broker →</button>
+            <button onClick={()=>setShowPartnerForm(true)} style={{padding:"10px 24px",background:"rgba(255,255,255,0.15)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 List Your Practice →</button>
+          </div>
+        </div>
+      )}
+
+      {/* Why use a broker */}
+      <Card style={{marginBottom:14}}>
+        <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>💼 Broker vs Bank — Key Differences</h3>
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+          <div style={{background:"#f0fdf4",borderRadius:10,padding:12,border:"1px solid #bbf7d0"}}>
+            <div style={{fontSize:13,fontWeight:800,color:"#15803d",marginBottom:8}}>💼 Mortgage Broker</div>
+            {[["✓","Access to 30+ lenders"],["✓","Free service — lender pays"],["✓","Negotiates on your behalf"],["✓","Finds best rate for your profile"],["✓","Expert in complex situations"],["✓","Self-employed, bruised credit, new Canadians"],["✓","Fair IRD penalty lenders"],].map(([icon,t])=>(
+              <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:"#15803d"}}><span>{icon}</span>{t}</div>
+            ))}
+          </div>
+          <div style={{background:"#eff6ff",borderRadius:10,padding:12,border:"1px solid #bfdbfe"}}>
+            <div style={{fontSize:13,fontWeight:800,color:"#1e40af",marginBottom:8}}>🏦 Going Direct to Bank</div>
+            {[["✓","Existing relationship"],["✓","Branch access"],["✓","Bundle with chequing/savings"],["✗","One lender's rates only"],["✗","Rarely offer best rate"],["✗","Posted-rate IRD penalties"],["✗","Less flexible for complex files"],].map(([icon,t])=>(
+              <div key={t} style={{display:"flex",gap:6,padding:"3px 0",fontSize:11,color:icon==="✓"?"#1e40af":"#dc2626"}}><span>{icon}</span>{t}</div>
+            ))}
+          </div>
+        </div>
+      </Card>
+
+      {/* Request Form Modal */}
+      {showForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>💼 Find a Mortgage Broker</div>
+              <button onClick={()=>setShowForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <BrokerRequestForm onClose={()=>setShowForm(false)}/>
+          </div>
+        </div>
+      )}
+
+      {/* Partner Form Modal */}
+      {showPartnerForm&&(
+        <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowPartnerForm(false)}>
+          <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
+            <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>📋 List Your Mortgage Practice</div>
+              <button onClick={()=>setShowPartnerForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+            </div>
+            <BrokerPartnerForm onClose={()=>setShowPartnerForm(false)}/>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function BrokerRequestForm({onClose}:{onClose:()=>void}){
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");const [purpose,setPurpose]=useState("");
+  const [price,setPrice]=useState("");const [down,setDown]=useState("");const [employed,setEmployed]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+  async function submit(){
+    if(!name||!email||!prov){alert("Please fill required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Mortgage Broker Lead — ${city||prov}`,name,email,phone,province:prov,city,purpose,purchasePrice:price,downPayment:down,employmentType:employed,source:"Canada Mortgage Rates — Brokers Tab"
+      })});setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+  if(ok)return<div style={{padding:20,textAlign:"center"}}><div style={{fontSize:28,marginBottom:8}}>✅</div><div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Request Received!</div><div style={{fontSize:11,color:s.muted,marginBottom:12}}>We'll connect you with a licensed mortgage broker in your area within 1 business day.</div><button onClick={onClose} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Close</button></div>;
+  return(
+    <div style={{padding:18}}>
+      <Field label="Full Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="John Smith" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="john@email.com" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Province *"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select></Field>
+        <Field label="City"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Winnipeg" style={inp}/></Field>
+      </div>
+      <Field label="Purpose">
+        <select value={purpose} onChange={e=>setPurpose(e.target.value)} style={inp}>
+          <option value="">Select purpose</option>
+          <option value="purchase">Purchase — new home</option>
+          <option value="renewal">Renewal — existing mortgage</option>
+          <option value="refinance">Refinancing</option>
+          <option value="investment">Investment property</option>
+          <option value="preapproval">Pre-approval only</option>
+        </select>
+      </Field>
+      <Field label="Purchase Price"><input value={price} onChange={e=>setPrice(e.target.value)} placeholder="e.g. $500,000" style={inp}/></Field>
+      <Field label="Down Payment"><input value={down} onChange={e=>setDown(e.target.value)} placeholder="e.g. $50,000 or 10%" style={inp}/></Field>
+      <Field label="Employment Type">
+        <select value={employed} onChange={e=>setEmployed(e.target.value)} style={inp}>
+          <option value="">Select type</option>
+          <option value="employed">Salaried / Employed</option>
+          <option value="selfemployed">Self-Employed</option>
+          <option value="retired">Retired</option>
+          <option value="other">Other</option>
+        </select>
+      </Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Find Me a Broker →"}</button>
+    </div>
+  );
+}
+
+function BrokerPartnerForm({onClose}:{onClose:()=>void}){
+  const [name,setName]=useState("");const [company,setCompany]=useState("");const [email,setEmail]=useState("");
+  const [phone,setPhone]=useState("");const [prov,setProv]=useState("MB");const [license,setLicense]=useState("");
+  const [lenders,setLenders]=useState("");const [specs,setSpecs]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+  async function submit(){
+    if(!name||!email||!company){alert("Please fill required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Mortgage Broker Partner Application — ${company}`,name,company,email,phone,province:prov,licenseNumber:license,lenderAccess:lenders,specializations:specs,source:"Canada Mortgage Rates — Broker Partner Form"
+      })});setOk(true);
+    }catch{alert("Something went wrong.");}
+    setSubmitting(false);
+  }
+  if(ok)return<div style={{padding:20,textAlign:"center"}}><div style={{fontSize:28,marginBottom:8}}>✅</div><div style={{fontSize:13,fontWeight:800,color:s.green,marginBottom:4}}>Application Received!</div><div style={{fontSize:11,color:s.muted,marginBottom:12}}>We'll be in touch within 1-2 business days to discuss your listing.</div><button onClick={onClose} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Close</button></div>;
+  return(
+    <div style={{padding:18}}>
+      <Field label="Your Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="Jane Smith" style={inp}/></Field>
+      <Field label="Brokerage / Company *"><input value={company} onChange={e=>setCompany(e.target.value)} placeholder="ABC Mortgage Group" style={inp}/></Field>
+      <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="jane@abcmortgage.ca" style={inp}/></Field>
+      <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+      <Field label="Province"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}</select></Field>
+      <Field label="License Number"><input value={license} onChange={e=>setLicense(e.target.value)} placeholder="e.g. MB-12345" style={inp}/></Field>
+      <Field label="Number of Lenders Access"><input value={lenders} onChange={e=>setLenders(e.target.value)} placeholder="e.g. 30+ lenders" style={inp}/></Field>
+      <Field label="Specializations"><input value={specs} onChange={e=>setSpecs(e.target.value)} placeholder="e.g. First-time buyers, self-employed, renewal" style={inp}/></Field>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Submit Application →"}</button>
     </div>
   );
 }
@@ -4887,48 +5188,13 @@ function RealtorsTab(){
 }
 
 function ValueTabInner(){
-  const [vTab,setVTab]=useState<"tools"|"guide"|"eval">("eval");
+  const [vTab,setVTab]=useState<"guide"|"eval">("eval");
   return(
     <div>
       <div style={{display:"flex",gap:8,marginBottom:14}}>
         <button onClick={()=>setVTab("eval")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="eval"?s.gold:s.border}`,background:vTab==="eval"?s.gold:s.white,color:vTab==="eval"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏡 Get Free Evaluation</button>
         <button onClick={()=>setVTab("guide")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="guide"?s.navy:s.border}`,background:vTab==="guide"?s.navy:s.white,color:vTab==="guide"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📋 How It Works</button>
-        <button onClick={()=>setVTab("tools")} style={{flex:1,padding:"9px",borderRadius:8,border:`2px solid ${vTab==="tools"?s.navy:s.border}`,background:vTab==="tools"?s.navy:s.white,color:vTab==="tools"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🔧 Online Tools</button>
       </div>
-
-      {vTab==="tools"&&(
-        <div>
-          <div style={{background:"#fee2e2",border:"1px solid #fca5a5",borderRadius:10,padding:"10px 16px",marginBottom:14,fontSize:11,color:"#dc2626"}}>
-            ⚠️ <b>These are automated estimates only</b> — they can vary 5–15% from actual market value and don't account for your home's condition, renovations, or recent local sales. For a real number, <button onClick={()=>setVTab("eval")} style={{background:"none",border:"none",color:"#dc2626",cursor:"pointer",fontSize:11,textDecoration:"underline",fontWeight:700,padding:0}}>request a free professional evaluation →</button>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
-            {[
-              {name:"Zolo",desc:"Best all-around Canadian estimator. Nationwide coverage, uses real MLS sold data.",badge:"🏆 Best Overall",url:"https://www.zolo.ca/home-estimate",color:"#6366f1",pros:["Nationwide","Real sold data","Free & instant"]},
-              {name:"HouseSigma",desc:"Best for Ontario. Shows actual sold prices, DOM trends, and price history.",badge:"📊 Best Ontario",url:"https://housesigma.com",color:"#0891b2",pros:["Real sold prices","Price history","Agent-level detail"]},
-              {name:"Bungol",desc:"Strong Ontario tool with sold data and heat maps. Good cross-reference for Zolo.",badge:"🔍 Cross-Check",url:"https://bungol.ca",color:"#7c3aed",pros:["Sold price data","Heat maps","Good for condos"]},
-              {name:"Realtor.ca",desc:"Official MLS platform. Most complete listing data. Use for comparable active listings.",badge:"🍁 Official MLS",url:"https://www.realtor.ca",color:s.red,pros:["Most complete","All provinces","CREA verified"]},
-              {name:"WOWA.ca",desc:"Uses assessed value + market data. Good for provinces where Zolo data is thinner.",badge:"📋 Assessed Value",url:"https://wowa.ca/home-value-estimator",color:s.green,pros:["All provinces","Simple inputs","Free estimate"]},
-              {name:"Royal LePage",desc:"Free professional evaluation from a licensed agent. Most accurate for unique properties.",badge:"🤝 Professional",url:"https://www.royallepage.ca/en/realestate/tools-and-resources/home-value-estimator/",color:"#92400e",pros:["Agent-verified","Comparable sales","Free CMA"]},
-            ].map(tool=>(
-              <div key={tool.name} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
-                <div style={{background:tool.color,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                  <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{tool.name}</div>
-                  <span style={{background:"rgba(255,255,255,0.2)",color:"#fff",borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>{tool.badge}</span>
-                </div>
-                <div style={{padding:12}}>
-                  <p style={{fontSize:11,color:s.muted,lineHeight:1.5,marginBottom:8}}>{tool.desc}</p>
-                  {tool.pros.map(p=><div key={p} style={{fontSize:11,color:"#374151",padding:"2px 0",display:"flex",gap:6}}><span style={{color:s.green,flexShrink:0}}>✓</span>{p}</div>)}
-                  <a href={tool.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"7px 12px",background:tool.color,color:"#fff",borderRadius:8,fontSize:11,fontWeight:700,textAlign:"center",textDecoration:"none",marginTop:10}}>Get Free Estimate →</a>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 14px",fontSize:10,color:"#92400e",marginBottom:12}}>
-            ⚠️ Automated estimates can vary 5–15% from actual market value. For mortgage or legal decisions, always get a professional appraisal or CMA.
-          </div>
-          <button onClick={()=>setVTab("eval")} style={{width:"100%",padding:"12px",background:s.gold,color:s.navy,border:"none",borderRadius:10,fontSize:13,fontWeight:800,cursor:"pointer"}}>🏡 Get a Free Professional Evaluation Instead →</button>
-        </div>
-      )}
 
       {vTab==="guide"&&(
         <div>
@@ -8751,7 +9017,7 @@ export default function App(){
         // New Builds
         "🏘️ Explore Builds":"explore","📋 Buyer's Guide":"guide","💳 Construction Mortgage":"mortgage","🤝 Connect":"connect",
         // Professionals
-        "🤝 Find a Realtor":"realtors","⚖️ Find a Lawyer":"lawyers","🔍 Home Inspectors":"inspectors","🏡 Home Evaluation":"evaluation",
+        "🤝 Find a Realtor":"realtors","⚖️ Find a Lawyer":"lawyers","🔍 Home Inspectors":"inspectors","💼 Mortgage Brokers":"brokers","🏡 Home Value":"evaluation",
         // Insurance
         "🏠 Get Quotes":"quote","🛡️ What's Covered":"coverage","💰 Deductible Guide":"deductible","🚨 Claims Guide":"claims","📖 Insurance Guide":"guide",
         // Resources
