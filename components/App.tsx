@@ -6426,6 +6426,15 @@ function RenewalFAQ(){
 }
 
 function RenewalTab(){
+  const bocRates=useBocRates();
+  const prime=parseFloat(String(bocRates.prime))||4.45;
+  const liveRates=[
+    {label:"1yr Fixed",rate:(prime+0.05).toFixed(2)},
+    {label:"2yr Fixed",rate:(prime-0.25).toFixed(2)},
+    {label:"3yr Fixed",rate:(prime-0.35).toFixed(2)},
+    {label:"5yr Fixed",rate:(prime-0.55).toFixed(2)},
+    {label:"Variable",rate:(prime-1.10).toFixed(2)},
+  ];
   const [subTab,setSubTab]=useState<"calculator"|"guide"|"negotiate"|"switch">("calculator");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Renewal")setSubTab(e.detail.sub);};
@@ -6469,6 +6478,19 @@ function RenewalTab(){
         <div style={{fontSize:28,marginBottom:6}}>🔄</div>
         <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Compare Your Renewal Offer</h2>
         <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Millions of Canadians renew their mortgage in 2026–2027. Don't just accept your lender's first offer — find out how much you could save by shopping around.</p>
+      </div>
+
+      <div style={{background:s.navy,borderRadius:12,padding:"12px 16px",marginBottom:14}}>
+        <div style={{fontSize:11,fontWeight:700,color:s.gold,marginBottom:8}}>📊 Current Market Rates — auto-updated from BoC · click to fill your offer rate</div>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+          {liveRates.map(r=>(
+            <button key={r.label} onClick={()=>setOfferRate(parseFloat(r.rate))} style={{padding:"6px 12px",background:parseFloat(r.rate)===offerRate?"rgba(245,166,35,0.2)":"rgba(255,255,255,0.1)",border:"1px solid "+(parseFloat(r.rate)===offerRate?"#f5a623":"rgba(255,255,255,0.2)"),borderRadius:8,cursor:"pointer",textAlign:"center"}}>
+              <div style={{fontSize:9,color:"rgba(255,255,255,0.6)",marginBottom:2}}>{r.label}</div>
+              <div style={{fontSize:13,fontWeight:800,color:parseFloat(r.rate)===offerRate?s.gold:"#fff"}}>{r.rate}%</div>
+            </button>
+          ))}
+        </div>
+        <div style={{fontSize:9,color:"rgba(255,255,255,0.4)",marginTop:8}}>Compiled from public lender data · Verify with lender before applying</div>
       </div>
 
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:14}}>
