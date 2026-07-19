@@ -2904,6 +2904,7 @@ function DocChecklistTab(){
 
 function PropertyTaxTab({initProv,initCity}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [homeVal,setHomeVal]=useState(500000);const [valType,setValType]=useState("market");const [result,setResult]=useState(null);const resultRef=useRef(null);
+  const [ptTab,setPtTab]=useState<"calculator"|"relief"|"compare"|"appeal">("calculator");
   useEffect(()=>{setProv(initProv);setCity(initCity);},[initProv,initCity]);
   useEffect(()=>{const cities=PDATA[prov]?.cities||[];if(!cities.includes(city))setCity(cities[0]||"");setResult(null);},[prov]);
   const ASSESS_RATIO:{[k:string]:number}={AB:1.0,BC:1.0,MB:1.0,ON:1.0,QC:1.0,SK:1.0,NS:1.0,NB:1.0,PE:1.0,NL:1.0};
@@ -2918,7 +2919,17 @@ function PropertyTaxTab({initProv,initCity}){
   }
   const assessLink=ASSESS_LINKS[prov];
   return(
-    <Card>
+    <div>
+      {/* Sub-tabs */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setPtTab("calculator")} style={{flex:1,minWidth:100,padding:"9px",borderRadius:8,border:`2px solid ${ptTab==="calculator"?s.navy:s.border}`,background:ptTab==="calculator"?s.navy:s.white,color:ptTab==="calculator"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏛️ Calculator</button>
+        <button onClick={()=>setPtTab("relief")} style={{flex:1,minWidth:100,padding:"9px",borderRadius:8,border:`2px solid ${ptTab==="relief"?s.green:s.border}`,background:ptTab==="relief"?s.green:s.white,color:ptTab==="relief"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💰 Tax Relief</button>
+        <button onClick={()=>setPtTab("compare")} style={{flex:1,minWidth:100,padding:"9px",borderRadius:8,border:`2px solid ${ptTab==="compare"?s.blue:s.border}`,background:ptTab==="compare"?s.blue:s.white,color:ptTab==="compare"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📊 Province Compare</button>
+        <button onClick={()=>setPtTab("appeal")} style={{flex:1,minWidth:100,padding:"9px",borderRadius:8,border:`2px solid ${ptTab==="appeal"?s.gold:s.border}`,background:ptTab==="appeal"?s.gold:s.white,color:ptTab==="appeal"?s.navy:s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>⚖️ Appeal Guide</button>
+      </div>
+
+      {/* Calculator Tab */}
+      {ptTab==="calculator"&&<Card>
       <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:5}}>🏛️ Property Tax Estimator</h2>
       <p style={{fontSize:12,color:s.muted,marginBottom:12}}>Estimate your annual property tax based on your city's published mill rates.</p>
       <div style={{background:"#eff6ff",border:"1px solid #bfdbfe",borderRadius:8,padding:"10px 14px",marginBottom:12}}>
@@ -3038,10 +3049,185 @@ function PropertyTaxTab({initProv,initCity}){
             </div>
           </Card>
         </div>
-      )}</div>
-    </Card>
+      )}</div></Card>}
+
+      {/* Tax Relief Tab */}
+      {ptTab==="relief"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.green},#15803d)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>💰</div>
+            <h2 style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Property Tax Relief Programs</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12}}>Many Canadians qualify for property tax reductions they don't know about.</p>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:12,marginBottom:14}}>
+            {[
+              {icon:"👴",title:"Senior Homeowner Deferral",provinces:"BC, AB, ON, MB, SK",desc:"Homeowners 55+ can defer all or part of their property taxes until the home is sold. Interest may apply but payments are postponed.",color:s.blue},
+              {icon:"♿",title:"Disability Tax Exemption",provinces:"All provinces",desc:"Homeowners with a disability or who care for a family member with a disability may qualify for full or partial property tax exemptions.",color:s.navy},
+              {icon:"💸",title:"Low-Income Homeowner Relief",provinces:"ON, BC, AB, QC",desc:"Income-tested programs provide rebates or credits to low-income homeowners. Ontario's OSHPTG provides up to $500/year.",color:s.green},
+              {icon:"🌾",title:"Farm Property Tax Class",provinces:"All provinces",desc:"Agricultural land is assessed at a lower tax class in all Canadian provinces — significantly reducing tax burden for farm owners.",color:"#92400e"},
+              {icon:"🏗️",title:"Newly Built Home Exemption",provinces:"BC, ON",desc:"Some provinces offer temporary property tax reductions for newly built homes in their first year. Check with your municipality.",color:"#7c3aed"},
+              {icon:"🎖️",title:"Veteran & Military Exemption",provinces:"Various",desc:"Some municipalities offer property tax reductions for veterans and active military members. Contact your local municipality.",color:s.red},
+              {icon:"🌱",title:"Heritage & Green Building",provinces:"BC, ON, QC",desc:"Heritage-designated properties and homes with green building certification may qualify for property tax incentives in select municipalities.",color:s.green},
+              {icon:"🏠",title:"Home Renovation Tax Credit",provinces:"SK, MB, ON",desc:"Some provinces allow property tax adjustments for energy-efficient home renovations. Check with provincial revenue agencies.",color:s.gold},
+            ].map(p=>(
+              <Card key={p.title} style={{borderLeft:`4px solid ${p.color}`}}>
+                <div style={{display:"flex",gap:10,marginBottom:8,alignItems:"flex-start"}}>
+                  <span style={{fontSize:24}}>{p.icon}</span>
+                  <div>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{p.title}</div>
+                    <div style={{fontSize:10,color:p.color,fontWeight:700}}>{p.provinces}</div>
+                  </div>
+                </div>
+                <p style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{p.desc}</p>
+              </Card>
+            ))}
+          </div>
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>📋 How to Apply for Property Tax Relief</h3>
+            {[
+              ["Contact Your Municipality","Property tax relief programs are administered locally. Call your city or town hall and ask specifically about programs you may qualify for."],
+              ["Check Provincial Revenue Agency","Visit your province's Ministry of Finance or Revenue Agency website to see all available homeowner tax credits and rebates."],
+              ["Apply Before the Deadline","Most programs have annual application deadlines — typically January to March. Missing the deadline means waiting another year."],
+              ["Keep Documentation","You'll need proof of age, income, disability status, or other qualifying factors. Gather these before applying."],
+            ].map(([t,d])=>(
+              <div key={t} style={{display:"flex",gap:12,padding:"8px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
+                <span style={{fontSize:11,fontWeight:700,color:s.gold,flexShrink:0,minWidth:160}}>{t}</span>
+                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.6}}>{d}</span>
+              </div>
+            ))}
+          </Card>
+        </div>
+      )}
+
+      {/* Province Compare Tab */}
+      {ptTab==="compare"&&(
+        <div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Property Tax Rates Across Canada — 2026</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Annual property tax on a $500,000 home by city. Mill rates vary significantly — same home, very different tax bills.</p>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+                <thead><tr style={{background:"#f8fafc"}}>{["City","Province","Annual Tax*","Monthly","Mill Rate","Ranking"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`,whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    {city:"Vancouver",prov:"BC",tax:2175,mill:"0.24%",rank:"🟢 Lowest"},
+                    {city:"Victoria",prov:"BC",tax:2450,mill:"0.52%",rank:"🟢 Low"},
+                    {city:"Calgary",prov:"AB",tax:3350,mill:"0.67%",rank:"🟢 Low"},
+                    {city:"Edmonton",prov:"AB",tax:3850,mill:"0.95%",rank:"🟡 Moderate"},
+                    {city:"Toronto",prov:"ON",tax:3050,mill:"0.61%",rank:"🟢 Low"},
+                    {city:"Ottawa",prov:"ON",tax:3750,mill:"1.09%",rank:"🟡 Moderate"},
+                    {city:"Hamilton",prov:"ON",tax:5100,mill:"1.23%",rank:"🔴 High"},
+                    {city:"Mississauga",prov:"ON",tax:3700,mill:"0.81%",rank:"🟡 Moderate"},
+                    {city:"Winnipeg",prov:"MB",tax:4400,mill:"1.29%",rank:"🔴 High"},
+                    {city:"Saskatoon",prov:"SK",tax:3850,mill:"0.94%",rank:"🟡 Moderate"},
+                    {city:"Regina",prov:"SK",tax:4100,mill:"1.16%",rank:"🔴 High"},
+                    {city:"Montreal",prov:"QC",tax:3200,mill:"0.76%",rank:"🟡 Moderate"},
+                    {city:"Quebec City",prov:"QC",tax:3450,mill:"0.85%",rank:"🟡 Moderate"},
+                    {city:"Halifax",prov:"NS",tax:3850,mill:"1.15%",rank:"🔴 High"},
+                    {city:"Moncton",prov:"NB",tax:3200,mill:"1.42%",rank:"🔴 High"},
+                    {city:"Charlottetown",prov:"PE",tax:2800,mill:"0.67%",rank:"🟢 Low"},
+                    {city:"St. John's",prov:"NL",tax:3600,mill:"0.88%",rank:"🟡 Moderate"},
+                  ].sort((a,b)=>a.tax-b.tax).map((row,i)=>(
+                    <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                      <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:s.navy}}>{row.city}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>{row.prov}</td>
+                      <td style={{padding:"8px 12px",fontSize:12,fontWeight:800,color:s.navy}}>${row.tax.toLocaleString()}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>${Math.round(row.tax/12).toLocaleString()}/mo</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>{row.mill}</td>
+                      <td style={{padding:"8px 12px",fontSize:11}}>{row.rank}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{fontSize:10,color:s.muted,marginTop:8}}>* Based on published 2026 mill rates. Actual tax depends on your official assessed value which may differ from market value.</p>
+          </Card>
+          <Card style={{background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💡 Why Are Property Taxes So Different Across Canada?</h3>
+            {[
+              ["Home Values vs Services","Cities with very high home values (Vancouver, Toronto) can fund the same services with a lower mill rate — the tax base is higher. Cities with lower values need higher rates."],
+              ["Provincial Funding","Some provinces provide more funding to municipalities, reducing reliance on property taxes. Quebec and BC municipalities receive more provincial transfers than Ontario or Manitoba."],
+              ["Local Services","Cities that provide more services directly (transit, utilities, arenas) typically have higher property taxes than cities that download these costs to users."],
+              ["Assessment Methodology","How a province assesses property value affects the effective rate. BC uses market value; others may use a different base, creating non-comparable headline rates."],
+            ].map(([t,d])=>(
+              <div key={t} style={{display:"flex",gap:12,padding:"8px 0",borderBottom:`1px solid rgba(255,255,255,0.08)`}}>
+                <span style={{fontSize:11,fontWeight:700,color:s.gold,flexShrink:0,minWidth:160}}>{t}</span>
+                <span style={{fontSize:11,color:"rgba(255,255,255,0.7)",lineHeight:1.6}}>{d}</span>
+              </div>
+            ))}
+          </Card>
+        </div>
+      )}
+
+      {/* Appeal Guide Tab */}
+      {ptTab==="appeal"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.gold},#d97706)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>⚖️</div>
+            <h2 style={{color:s.navy,fontSize:16,fontWeight:800,marginBottom:6}}>How to Appeal Your Property Assessment</h2>
+            <p style={{color:"rgba(0,0,0,0.6)",fontSize:12}}>Successful appeals save Canadian homeowners $500–$3,000+ per year. Here's how.</p>
+          </div>
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.gold}`}}>
+            <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"10px 14px",marginBottom:14,fontSize:11,color:"#15803d"}}>
+              💡 <b>40–60% of residential property tax appeals in Canada result in a reduced assessment.</b> The most important factor is comparable sales data.
+            </div>
+            <div style={{position:"relative"}}>
+              <div style={{position:"absolute",left:14,top:0,bottom:0,width:2,background:`linear-gradient(180deg,${s.gold},${s.green})`,borderRadius:2}}/>
+              {[
+                {title:"Review Your Assessment Notice",desc:"Check assessed value, property classification, and land vs building split. Compare to recent sales of similar homes in your area. Look for obvious errors — wrong square footage, wrong number of bedrooms, non-existent features.",time:"When notice arrives",urgent:true},
+                {title:"Research Comparable Sales",desc:"Find 3–5 similar homes (same size, age, location) that sold near your assessment date. If they sold for less than your assessed value, you have grounds to appeal. Use HouseSigma or your local land registry.",time:"Within 30 days"},
+                {title:"Contact the Assessment Office Informally",desc:"Call your municipality's assessment office first — describe your concern. Many errors are corrected informally without a formal appeal. Get the assessor's methodology and reasoning in writing.",time:"Before formal deadline"},
+                {title:"File a Formal Appeal",desc:"If informal resolution fails, file an appeal with your provincial assessment review board. Most provinces allow online filing. Deadlines vary: typically 60–90 days from your notice date.",time:"Before deadline",urgent:true},
+                {title:"Prepare Your Evidence Package",desc:"Gather: 3-5 comparable sales with addresses and sale prices, photos showing your home's condition vs assessed quality, any defects (water damage, foundation issues), and a clear statement of your proposed assessed value.",time:"Before hearing"},
+                {title:"Attend the Hearing",desc:"Present your comparable sales evidence. You don't need a lawyer — most homeowners represent themselves successfully. Bring printed copies of all evidence. Board decisions typically come within 30–60 days.",time:"At hearing"},
+              ].map((item,i)=>(
+                <div key={i} style={{display:"flex",gap:14,marginBottom:12,paddingLeft:6}}>
+                  <div style={{width:22,height:22,borderRadius:"50%",background:item.urgent?s.red:s.gold,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,zIndex:1,fontSize:10,fontWeight:800,color:"#fff"}}>{i+1}</div>
+                  <div style={{flex:1,background:item.urgent?"#fff5f5":"#fffbeb",borderRadius:8,padding:"10px 14px",border:`1px solid ${item.urgent?"#fed7d7":"#fde68a"}`}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:4}}>
+                      <span style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</span>
+                      <span style={{fontSize:9,color:item.urgent?"#dc2626":"#92400e",background:item.urgent?"#fee2e2":"#fef3c7",borderRadius:20,padding:"1px 7px",fontWeight:700}}>{item.time}</span>
+                    </div>
+                    <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>📋 Appeal Deadlines by Province</h3>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+                <thead><tr style={{background:"#f8fafc"}}>{["Province","Review Board","Deadline","Filing Fee"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:10,fontWeight:700,color:s.muted,textTransform:"uppercase",textAlign:"left",borderBottom:`1px solid ${s.border}`}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    ["Ontario","Assessment Review Board (ARB)","March 31","$25–$125"],
+                    ["BC","Property Assessment Review Panel","Jan 31","Free"],
+                    ["Alberta","Assessment Review Board","Within 60 days of notice","$50"],
+                    ["Manitoba","Municipal Assessment Review","June 30","Free"],
+                    ["Saskatchewan","Board of Revision","Within 30 days of notice","Free"],
+                    ["Quebec","Administrative Tribunal of Quebec","Within 60 days of notice","Varies"],
+                    ["Nova Scotia","Assessment Appeal Board","Within 20 days of notice","Free"],
+                    ["New Brunswick","Assessment and Planning Appeal Board","Within 30 days of notice","Free"],
+                    ["PEI","Provincial Tax Commissioner","Within 60 days of notice","Free"],
+                    ["Newfoundland","Municipal Assessment Agency","Within 60 days of notice","Free"],
+                  ].map(([prov,board,deadline,fee],i)=>(
+                    <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:i%2===0?s.white:"#fafbfc"}}>
+                      <td style={{padding:"8px 12px",fontSize:11,fontWeight:700,color:s.navy}}>{prov}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:s.muted}}>{board}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:s.red,fontWeight:600}}>{deadline}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:fee==="Free"?s.green:s.muted,fontWeight:fee==="Free"?700:400}}>{fee}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
+      )}
+    </div>
   );
-}
 
 const INSURANCE_FAQS=[
   {q:"Is home insurance mandatory in Canada?",a:"Not legally — but practically yes. Every mortgage lender requires proof of home insurance before closing. Without it, your mortgage will not be approved and your closing will be delayed or cancelled. Even if you own your home outright, insurance is strongly recommended to protect your most valuable asset."},
