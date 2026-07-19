@@ -3228,6 +3228,7 @@ function PropertyTaxTab({initProv,initCity}){
       )}
     </div>
   );
+}
 
 const INSURANCE_FAQS=[
   {q:"Is home insurance mandatory in Canada?",a:"Not legally — but practically yes. Every mortgage lender requires proof of home insurance before closing. Without it, your mortgage will not be approved and your closing will be delayed or cancelled. Even if you own your home outright, insurance is strongly recommended to protect your most valuable asset."},
