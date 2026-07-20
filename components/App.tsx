@@ -280,7 +280,7 @@ function calcPmt(p,r,y){const m=r/100/12,n=y*12;return m===0?p/n:p*(m*Math.pow(1
 function detectProvince(lat,lon){if(lon<-140)return"BC";if(lon<-110&&lat>49&&lat<60)return"AB";if(lon<-95&&lon>-110&&lat>49)return"SK";if(lon>-95&&lon<-88&&lat>49)return"MB";if(lon>-88&&lon<-74&&lat>42)return"ON";if(lon>-74&&lon<-64&&lat>45)return"QC";if(lon>-64&&lon<-59&&lat>44)return"NB";if(lon>-66&&lat>43&&lat<47)return"NS";if(lon>-64&&lon<-61&&lat>45&&lat<48)return"PE";if(lat>46&&lon>-60)return"NL";return"MB";}
 function detectCity(prov:string,lat:number,lon:number):string{const cities:{[k:string]:{[c:string]:[number,number]}}={AB:{Calgary:[51.04,-114.07],Edmonton:[53.55,-113.49]},BC:{Vancouver:[49.28,-123.12],Victoria:[48.43,-123.37]},MB:{Winnipeg:[49.90,-97.14],Brandon:[49.85,-99.95]},ON:{Toronto:[43.70,-79.42],Ottawa:[45.42,-75.69],Mississauga:[43.59,-79.64]},QC:{Montreal:[45.50,-73.57],"Quebec City":[46.82,-71.22]},SK:{Saskatoon:[52.13,-106.67],Regina:[50.45,-104.62]},NS:{Halifax:[44.65,-63.57]},NB:{Moncton:[46.09,-64.80]},NL:{"St. John's":[47.56,-52.71]},PE:{Charlottetown:[46.24,-63.13]}};const pc=cities[prov];if(!pc)return PDATA[prov]?.cities[0]||"";let best="",bd=999;Object.entries(pc).forEach(([c,coords])=>{const [la,lo]=coords;const d=Math.abs(lat-la)+Math.abs(lon-lo);if(d<bd){bd=d;best=c;}});return best||PDATA[prov]?.cities[0]||"";}
 
-const shimmerStyle=`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.7;transform:scale(1.1)}}@keyframes glow{0%,100%{box-shadow:0 0 4px rgba(239,68,68,0.4)}50%{box-shadow:0 0 12px rgba(239,68,68,0.9),0 0 20px rgba(239,68,68,0.4)}}@media(max-width:767px){.tab-ribbon-desktop{display:none!important}}`;
+const shimmerStyle=`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.7;transform:scale(1.1)}}@keyframes glow{0%,100%{box-shadow:0 0 4px rgba(239,68,68,0.4)}50%{box-shadow:0 0 12px rgba(239,68,68,0.9),0 0 20px rgba(239,68,68,0.4)}}@media(max-width:767px){.tab-ribbon-desktop{display:none!important}}@media print{body{background:#fff!important}header,nav,.tab-ribbon-desktop,footer,[class*="ticker"],[class*="chatbot"],[class*="cookie"],[class*="install"],[class*="backToTop"]{display:none!important}button:not(.print-keep){display:none!important}.print-summary{display:block!important}*{box-shadow:none!important;animation:none!important}}`;
 function Skeleton({w="100%",h=16,r=6,mb=0}:{w?:string,h?:number,r?:number,mb?:number}){return <div style={{width:w,height:h,borderRadius:r,background:"linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%)",backgroundSize:"200% 100%",animation:"shimmer 1.5s infinite",marginBottom:mb}}/>;}
 function EmptyState({icon,title,sub,link,linkText}:{icon:string,title:string,sub:string,link?:string,linkText?:string}){return(<div style={{textAlign:"center",padding:"40px 20px"}}><div style={{fontSize:48,marginBottom:12}}>{icon}</div><div style={{fontSize:15,fontWeight:700,color:s.navy,marginBottom:6}}>{title}</div><div style={{fontSize:13,color:s.muted,marginBottom:link?14:0}}>{sub}</div>{link&&<a href={link} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",padding:"8px 20px",background:s.navy,color:"#fff",borderRadius:8,fontSize:13,fontWeight:700,textDecoration:"none"}}>{linkText}</a>}</div>);}
 function Card({children,style}:{children:React.ReactNode,style?:React.CSSProperties}){return <div style={{background:s.white,borderRadius:12,padding:18,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",...style}}>{children}</div>;}
@@ -10216,10 +10216,420 @@ function FeedbackForm(){
   );
 }
 
+function HomeBuyingJourney({setActive}:{setActive:(t:string)=>void}){
+  const bocRates=useBocRates();
+  const prime=parseFloat(String(bocRates.prime))||4.45;
+
+  // Wizard state
+  const [step,setStep]=useState(0);
+  const [data,setData]=useState({
+    prov:"MB",city:"Winnipeg",homePrice:450000,downPct:10,income:90000,
+    amort:25,term:"5-year",rateType:"fixed",
+    needsRealtor:false,needsLawyer:false,needsInspector:false,needsBroker:false,
+  });
+
+  // Calculations
+  const downAmt=Math.round(data.homePrice*(data.downPct/100));
+  const mortgage=data.homePrice-downAmt;
+  const needsCMHC=data.downPct<20;
+  const cmhcRate=data.downPct<10?0.04:data.downPct<15?0.031:data.downPct<20?0.028:0;
+  const cmhcPremium=needsCMHC?Math.round(mortgage*cmhcRate):0;
+  const totalMortgage=mortgage+cmhcPremium;
+  const rateType=data.rateType;
+  const rate=rateType==="fixed"?(prime-0.55)/100:(prime-0.90)/100;
+  const n=data.amort*12;
+  const r=(rateType==="fixed"?(prime-0.55):(prime-0.90))/100/12;
+  const monthlyPayment=Math.round(totalMortgage*(r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1));
+  const stressRate=(rateType==="fixed"?(prime-0.55+2):(prime-0.90+2))/100/12;
+  const stressPayment=Math.round(totalMortgage*(stressRate*Math.pow(1+stressRate,n))/(Math.pow(1+stressRate,n)-1));
+  const maxHousing=Math.round((data.income/12)*0.39);
+  const passesStress=stressPayment<=maxHousing;
+
+  // Province tax rates
+  const TAX_RATES:{[k:string]:number}={MB:1.29,ON:0.61,BC:0.24,AB:0.20,SK:0.94,QC:0.76,NS:1.15,NB:1.42,PE:0.67,NL:0.88};
+  const annualTax=Math.round(data.homePrice*(TAX_RATES[data.prov]||1.0)/100);
+
+  // Closing costs estimate
+  const LTT_RATES:{[k:string]:number}={MB:0.014,ON:0.02,BC:0.02,AB:0.001,SK:0.003,QC:0.015,NS:0.015,NB:0.01,PE:0.02,NL:0.008};
+  const ltt=Math.round(data.homePrice*(LTT_RATES[data.prov]||0.015));
+  const legalFees=1800;
+  const titleInsurance=300;
+  const totalClosing=ltt+legalFees+titleInsurance+(needsCMHC?0:0);
+
+  // Insurance estimate
+  const INS_RATES:{[k:string]:number}={MB:1080,ON:1450,BC:1380,AB:1740,SK:1020,QC:960,NS:1150,NB:1100,PE:1050,NL:1100};
+  const annualInsurance=INS_RATES[data.prov]||1200;
+
+  const steps=[
+    {icon:"💰",title:"Your Budget",desc:"Home price, income & down payment"},
+    {icon:"📊",title:"Your Rate",desc:"Find current mortgage rates"},
+    {icon:"📋",title:"Stress Test",desc:"Will you qualify?"},
+    {icon:"🏷️",title:"Closing Costs",desc:"LTT, legal fees & more"},
+    {icon:"🏛️",title:"Property Tax",desc:"Annual tax estimate"},
+    {icon:"🛡️",title:"Home Insurance",desc:"Annual insurance estimate"},
+    {icon:"👷",title:"Find Professionals",desc:"Realtor, lawyer, inspector"},
+    {icon:"📄",title:"Your Summary",desc:"Complete cost breakdown"},
+  ];
+
+  function update(key:string,val:any){setData(d=>({...d,[key]:val}));}
+
+  return(
+    <div>
+      {/* Header */}
+      <div style={{background:`linear-gradient(135deg,${s.red},#b91c1c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+        <div style={{fontSize:28,marginBottom:6}}>🗺️</div>
+        <h2 style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:4}}>Your Home Buying Journey</h2>
+        <p style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>Complete all 8 steps to get your full cost breakdown — from first look to closing day.</p>
+      </div>
+
+      {/* Progress bar */}
+      <div style={{marginBottom:14}}>
+        <div style={{display:"flex",justifyContent:"space-between",marginBottom:6}}>
+          <span style={{fontSize:11,fontWeight:700,color:s.navy}}>Step {step+1} of {steps.length}</span>
+          <span style={{fontSize:11,color:s.muted}}>{steps[step].title}</span>
+        </div>
+        <div style={{background:"#f1f5f9",borderRadius:20,height:8,overflow:"hidden"}}>
+          <div style={{background:`linear-gradient(90deg,${s.red},${s.gold})`,borderRadius:20,height:"100%",width:`${((step+1)/steps.length)*100}%`,transition:"width 0.4s"}}/>
+        </div>
+        {/* Step dots */}
+        <div style={{display:"flex",justifyContent:"space-between",marginTop:8}}>
+          {steps.map((st,i)=>(
+            <button key={i} onClick={()=>setStep(i)} style={{width:28,height:28,borderRadius:"50%",border:`2px solid ${i<=step?s.red:s.border}`,background:i<step?"#ef4444":i===step?s.red:s.white,color:i<=step?"#fff":s.muted,fontSize:10,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,transition:"all 0.2s"}} title={st.title}>
+              {i<step?"✓":st.icon}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Step 0 — Budget */}
+      {step===0&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>💰 Step 1: Your Budget</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Enter your basics — we'll carry these through every step automatically.</p>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+            <Field label="Province">
+              <select value={data.prov} onChange={e=>update("prov",e.target.value)} style={inp}>
+                {Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{v.name}</option>)}
+              </select>
+            </Field>
+            <Field label="City">
+              <select value={data.city} onChange={e=>update("city",e.target.value)} style={inp}>
+                {(PDATA[data.prov]?.cities||[]).map(c=><option key={c} value={c}>{c}</option>)}
+              </select>
+            </Field>
+          </div>
+          <Field label="Home Price">
+            <input type="number" value={data.homePrice} onChange={e=>update("homePrice",parseFloat(e.target.value)||0)} style={inp}/>
+          </Field>
+          <Field label={`Down Payment: ${data.downPct}% = $${downAmt.toLocaleString()}`}>
+            <input type="range" min={5} max={35} value={data.downPct} onChange={e=>update("downPct",parseInt(e.target.value))} style={{width:"100%",accentColor:s.red}}/>
+            <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:s.muted,marginTop:2}}>
+              <span>5% (min)</span><span style={{color:data.downPct>=20?s.green:s.red,fontWeight:700}}>{data.downPct>=20?"✅ No CMHC":"⚠️ CMHC required"}</span><span>35%</span>
+            </div>
+          </Field>
+          <Field label="Annual Gross Income">
+            <input type="number" value={data.income} onChange={e=>update("income",parseFloat(e.target.value)||0)} style={inp}/>
+          </Field>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+            <Field label="Amortization">
+              <select value={data.amort} onChange={e=>update("amort",parseInt(e.target.value))} style={inp}>
+                <option value={25}>25 years</option>
+                <option value={30}>30 years (new build)</option>
+                <option value={20}>20 years</option>
+              </select>
+            </Field>
+            <Field label="Rate Type">
+              <select value={data.rateType} onChange={e=>update("rateType",e.target.value)} style={inp}>
+                <option value="fixed">Fixed</option>
+                <option value="variable">Variable</option>
+              </select>
+            </Field>
+          </div>
+          {/* Quick summary */}
+          <div style={{background:"#f8fafc",borderRadius:10,padding:"12px 14px",marginTop:10,border:`1px solid ${s.border}`}}>
+            <div style={{fontSize:11,fontWeight:700,color:s.navy,marginBottom:8}}>📋 Quick Summary</div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+              {[
+                ["Mortgage Amount",`$${mortgage.toLocaleString()}`],
+                ["CMHC Premium",needsCMHC?`$${cmhcPremium.toLocaleString()}`:"None ✅"],
+                ["Total Mortgage",`$${totalMortgage.toLocaleString()}`],
+                ["Est. Monthly",`$${monthlyPayment.toLocaleString()}`],
+              ].map(([l,v])=>(
+                <div key={l} style={{background:s.white,borderRadius:6,padding:"6px 10px",border:`1px solid ${s.light}`}}>
+                  <div style={{fontSize:9,color:s.muted}}>{l}</div>
+                  <div style={{fontSize:13,fontWeight:800,color:s.navy}}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* Step 1 — Rates */}
+      {step===1&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📊 Step 2: Your Mortgage Rate</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Current market rates for {data.prov} — auto-updated from Bank of Canada prime rate ({bocRates.prime}%).</p>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:8,marginBottom:14}}>
+            {[
+              {label:"1yr Fixed",rate:(prime+0.05).toFixed(2),color:"#0891b2"},
+              {label:"2yr Fixed",rate:(prime-0.25).toFixed(2),color:"#0891b2"},
+              {label:"3yr Fixed",rate:(prime-0.35).toFixed(2),color:s.navy},
+              {label:"5yr Fixed",rate:(prime-0.55).toFixed(2),color:s.navy},
+              {label:"Variable",rate:(prime-0.90).toFixed(2),color:"#7c3aed"},
+            ].map(r=>(
+              <button key={r.label} onClick={()=>update("rateType",r.label.includes("Variable")?"variable":"fixed")} style={{padding:"12px 8px",background:s.white,border:`2px solid ${r.color}`,borderRadius:10,cursor:"pointer",textAlign:"center"}}>
+                <div style={{fontSize:10,color:s.muted,marginBottom:4}}>{r.label}</div>
+                <div style={{fontSize:20,fontWeight:800,color:r.color}}>{r.rate}%</div>
+                <div style={{fontSize:9,color:s.muted,marginTop:2}}>per year</div>
+              </button>
+            ))}
+          </div>
+          <div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"10px 14px",fontSize:11,color:"#15803d",marginBottom:14}}>
+            💡 Based on your {data.rateType} rate of <b>{rateType==="fixed"?(prime-0.55).toFixed(2):(prime-0.90).toFixed(2)}%</b>, your estimated monthly payment is <b>${monthlyPayment.toLocaleString()}</b>.
+          </div>
+          <button onClick={()=>setActive("Rates")} style={{width:"100%",padding:"10px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>📊 Compare Full Rate Table →</button>
+        </Card>
+      )}
+
+      {/* Step 2 — Stress Test */}
+      {step===2&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📋 Step 3: Mortgage Stress Test</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>You must qualify at your rate + 2% or 5.25% — whichever is higher.</p>
+          <div style={{background:passesStress?"#f0fdf4":"#fff5f5",border:`2px solid ${passesStress?"#4ade80":"#f87171"}`,borderRadius:12,padding:"16px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:40,marginBottom:8}}>{passesStress?"✅":"⚠️"}</div>
+            <div style={{fontSize:16,fontWeight:800,color:passesStress?"#15803d":"#dc2626",marginBottom:6}}>
+              {passesStress?"You Pass the Stress Test":"Stress Test Challenge"}
+            </div>
+            <div style={{fontSize:11,color:s.muted,lineHeight:1.6}}>
+              {passesStress
+                ?"Your income supports this mortgage at the stress test rate."
+                :"Your housing costs exceed 39% of gross income at the stress test rate. Consider a larger down payment, lower purchase price, or longer amortization."}
+            </div>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+            {[
+              ["Stress Test Rate",`${(rateType==="fixed"?(prime-0.55+2):(prime-0.90+2)).toFixed(2)}%`],
+              ["Payment at Stress Rate",`$${stressPayment.toLocaleString()}/mo`],
+              ["Max Allowed (39% GDS)",`$${maxHousing.toLocaleString()}/mo`],
+              ["Status",passesStress?"✅ Passes":"⚠️ Review needed"],
+            ].map(([l,v])=>(
+              <div key={l} style={{background:"#f8fafc",borderRadius:8,padding:"10px 12px",border:`1px solid ${s.border}`}}>
+                <div style={{fontSize:9,color:s.muted,marginBottom:3}}>{l}</div>
+                <div style={{fontSize:13,fontWeight:800,color:s.navy}}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={()=>setActive("Calculators")} style={{width:"100%",padding:"10px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>📋 Full Stress Test Calculator →</button>
+        </Card>
+      )}
+
+      {/* Step 3 — Closing Costs */}
+      {step===3&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏷️ Step 4: Closing Costs</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>One-time costs due at closing on top of your down payment.</p>
+          <div style={{marginBottom:14}}>
+            {[
+              {label:"Land Transfer Tax",amount:ltt,color:"#7c3aed",note:`${data.prov} rate`},
+              {label:"Legal Fees",amount:legalFees,color:s.navy,note:"Est. real estate lawyer"},
+              {label:"Title Insurance",amount:titleInsurance,color:s.blue,note:"One-time premium"},
+              {label:"Moving Costs",amount:1500,color:"#92400e",note:"Estimated"},
+              {label:"Immediate Repairs",amount:2000,color:s.muted,note:"Budget 1% of price"},
+            ].map(item=>(
+              <div key={item.label} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:`1px solid ${s.light}`}}>
+                <div>
+                  <div style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</div>
+                  <div style={{fontSize:10,color:s.muted}}>{item.note}</div>
+                </div>
+                <div style={{fontSize:14,fontWeight:800,color:item.color}}>${item.amount.toLocaleString()}</div>
+              </div>
+            ))}
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"10px 0",background:"#f8fafc",borderRadius:8,marginTop:6,paddingLeft:8,paddingRight:8}}>
+              <div style={{fontSize:13,fontWeight:800,color:s.navy}}>Total Closing Costs</div>
+              <div style={{fontSize:16,fontWeight:800,color:s.red}}>${(ltt+legalFees+titleInsurance+1500+2000).toLocaleString()}</div>
+            </div>
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e",marginBottom:14}}>
+            💡 Total cash needed at closing: <b>${(downAmt+ltt+legalFees+titleInsurance+1500+2000).toLocaleString()}</b> (down payment + closing costs)
+          </div>
+          <button onClick={()=>setActive("Calculators")} style={{width:"100%",padding:"10px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏷️ Detailed Closing Cost Calculator →</button>
+        </Card>
+      )}
+
+      {/* Step 4 — Property Tax */}
+      {step===4&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🏛️ Step 5: Property Tax</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Annual property tax estimate for {data.city}, {data.prov}.</p>
+          <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"20px",textAlign:"center",marginBottom:14}}>
+            <div style={{color:"rgba(255,255,255,0.7)",fontSize:11,marginBottom:4}}>Estimated Annual Property Tax</div>
+            <div style={{color:s.gold,fontSize:36,fontWeight:800,marginBottom:4}}>${annualTax.toLocaleString()}</div>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:11}}>${Math.round(annualTax/12).toLocaleString()}/month · Mill rate: {TAX_RATES[data.prov]||1.0}%</div>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+            {[
+              ["Monthly Payment",`$${monthlyPayment.toLocaleString()}`],
+              ["Monthly Tax",`$${Math.round(annualTax/12).toLocaleString()}`],
+              ["Monthly Insurance",`$${Math.round(annualInsurance/12).toLocaleString()}`],
+              ["Total Monthly","$"+(monthlyPayment+Math.round(annualTax/12)+Math.round(annualInsurance/12)).toLocaleString()],
+            ].map(([l,v],i)=>(
+              <div key={l} style={{background:i===3?"#f0fdf4":s.white,borderRadius:8,padding:"10px 12px",border:`1px solid ${i===3?"#bbf7d0":s.border}`}}>
+                <div style={{fontSize:9,color:s.muted,marginBottom:3}}>{l}</div>
+                <div style={{fontSize:13,fontWeight:800,color:i===3?s.green:s.navy}}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={()=>setActive("Property Tax")} style={{width:"100%",padding:"10px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏛️ Property Tax Calculator →</button>
+        </Card>
+      )}
+
+      {/* Step 5 — Insurance */}
+      {step===5&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🛡️ Step 6: Home Insurance</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Estimated annual home insurance for {data.prov}.</p>
+          <div style={{background:`linear-gradient(135deg,#15803d,#166534)`,borderRadius:12,padding:"20px",textAlign:"center",marginBottom:14}}>
+            <div style={{color:"rgba(255,255,255,0.7)",fontSize:11,marginBottom:4}}>Estimated Annual Premium</div>
+            <div style={{color:"#4ade80",fontSize:36,fontWeight:800,marginBottom:4}}>${annualInsurance.toLocaleString()}</div>
+            <div style={{color:"rgba(255,255,255,0.6)",fontSize:11}}>${Math.round(annualInsurance/12).toLocaleString()}/month · {data.prov} average</div>
+          </div>
+          <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#92400e",marginBottom:14}}>
+            ⚠️ Don't forget critical add-ons: <b>Overland Flood coverage</b> ($100–$500/yr) and <b>Sewer Backup</b> ($100–$300/yr) — not included in standard policies.
+          </div>
+          <button onClick={()=>setActive("Insurance")} style={{width:"100%",padding:"10px",background:"#15803d",color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🛡️ Compare 25+ Insurance Providers →</button>
+        </Card>
+      )}
+
+      {/* Step 6 — Professionals */}
+      {step===6&&(
+        <Card style={{marginBottom:14}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>👷 Step 7: Find Your Team</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:14}}>Select the professionals you need — we'll connect you with verified experts in {data.city}.</p>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:14}}>
+            {[
+              {key:"needsRealtor",icon:"🤝",title:"Realtor",desc:"Find & negotiate your home",fee:"$100/lead"},
+              {key:"needsLawyer",icon:"⚖️",title:"Real Estate Lawyer",desc:"Handle closing & title transfer",fee:"$50/lead"},
+              {key:"needsInspector",icon:"🔍",title:"Home Inspector",desc:"Inspect before you finalize",fee:"$30/lead"},
+              {key:"needsBroker",icon:"💼",title:"Mortgage Broker",desc:"Shop 30+ lenders for best rate",fee:"Free to you"},
+            ].map(p=>(
+              <button key={p.key} onClick={()=>update(p.key,!data[p.key as keyof typeof data])} style={{padding:"12px",borderRadius:10,border:`2px solid ${data[p.key as keyof typeof data]?s.green:s.border}`,background:data[p.key as keyof typeof data]?"#f0fdf4":s.white,cursor:"pointer",textAlign:"left",transition:"all 0.15s"}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
+                  <span style={{fontSize:20}}>{p.icon}</span>
+                  <span style={{fontSize:16}}>{data[p.key as keyof typeof data]?"✅":"⬜"}</span>
+                </div>
+                <div style={{fontSize:12,fontWeight:800,color:s.navy}}>{p.title}</div>
+                <div style={{fontSize:10,color:s.muted,marginTop:2}}>{p.desc}</div>
+              </button>
+            ))}
+          </div>
+          {(data.needsRealtor||data.needsLawyer||data.needsInspector||data.needsBroker)&&(
+            <button onClick={()=>setActive("Professionals")} style={{width:"100%",padding:"10px",background:s.green,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>👷 Connect with Professionals →</button>
+          )}
+        </Card>
+      )}
+
+      {/* Step 7 — Summary */}
+      {step===7&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,${s.green},#15803d)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:32,marginBottom:6}}>🎉</div>
+            <h2 style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:4}}>Your Complete Home Buying Summary</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:11}}>{data.city}, {data.prov} · ${data.homePrice.toLocaleString()} home · {data.downPct}% down</p>
+          </div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12}}>💰 One-Time Costs</h3>
+            {[
+              ["Down Payment",`$${downAmt.toLocaleString()}`,s.navy],
+              ["CMHC Premium",needsCMHC?`$${cmhcPremium.toLocaleString()} (added to mortgage)`:"None ✅",needsCMHC?s.red:s.green],
+              ["Land Transfer Tax",`$${ltt.toLocaleString()}`,s.muted],
+              ["Legal Fees",`$${legalFees.toLocaleString()}`,s.muted],
+              ["Title Insurance","$300",s.muted],
+              ["Moving + Setup","$3,500 (est.)",s.muted],
+            ].map(([l,v,c])=>(
+              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:`1px solid ${s.light}`}}>
+                <span style={{fontSize:11,color:s.muted}}>{l}</span>
+                <span style={{fontSize:11,fontWeight:700,color:c as string}}>{v}</span>
+              </div>
+            ))}
+            <div style={{display:"flex",justifyContent:"space-between",padding:"10px 0",marginTop:4,borderTop:`2px solid ${s.border}`}}>
+              <span style={{fontSize:13,fontWeight:800,color:s.navy}}>Total Cash Needed at Closing</span>
+              <span style={{fontSize:14,fontWeight:800,color:s.red}}>${(downAmt+ltt+legalFees+300+3500).toLocaleString()}</span>
+            </div>
+          </Card>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:12}}>📅 Monthly Ongoing Costs</h3>
+            {[
+              ["Mortgage Payment",`$${monthlyPayment.toLocaleString()}`,s.navy],
+              ["Property Tax",`$${Math.round(annualTax/12).toLocaleString()}`,s.muted],
+              ["Home Insurance",`$${Math.round(annualInsurance/12).toLocaleString()}`,s.muted],
+              ["Maintenance Reserve","$375 (est.)",s.muted],
+            ].map(([l,v,c])=>(
+              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"7px 0",borderBottom:`1px solid ${s.light}`}}>
+                <span style={{fontSize:11,color:s.muted}}>{l}</span>
+                <span style={{fontSize:11,fontWeight:700,color:c as string}}>{v}</span>
+              </div>
+            ))}
+            <div style={{display:"flex",justifyContent:"space-between",padding:"10px 0",marginTop:4,borderTop:`2px solid ${s.border}`}}>
+              <span style={{fontSize:13,fontWeight:800,color:s.navy}}>Total Monthly Cost</span>
+              <span style={{fontSize:14,fontWeight:800,color:s.green}}>${(monthlyPayment+Math.round(annualTax/12)+Math.round(annualInsurance/12)+375).toLocaleString()}/mo</span>
+            </div>
+          </Card>
+          <Card style={{background:passesStress?"#f0fdf4":"#fff5f5",border:`1px solid ${passesStress?"#bbf7d0":"#fca5a5"}`,marginBottom:14}}>
+            <div style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:6}}>📋 Stress Test: {passesStress?"✅ You Qualify":"⚠️ May Need Adjustment"}</div>
+            <div style={{fontSize:11,color:s.muted}}>{passesStress?"Your income supports this mortgage at the qualifying rate.":"Consider a larger down payment or lower home price."}</div>
+          </Card>
+
+          {/* Professionals Section */}
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.green}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>👷 Your Professional Team</h3>
+            <p style={{fontSize:11,color:s.muted,marginBottom:12}}>Connect with verified professionals in {data.city} — all contact goes through our platform.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {icon:"🤝",title:"Find a Realtor",desc:"Connect with a local realtor to find and negotiate your home.",color:s.green,sub:"realtors",fee:"$100/lead"},
+                {icon:"⚖️",title:"Real Estate Lawyer",desc:"Licensed lawyer to handle your closing, title transfer, and legal docs.",color:"#92400e",sub:"lawyers",fee:"$50/lead"},
+                {icon:"🔍",title:"Home Inspector",desc:"Certified inspector to check the property before you finalize.",color:s.blue,sub:"inspectors",fee:"$30/lead"},
+                {icon:"💼",title:"Mortgage Broker",desc:"Independent broker to shop 30+ lenders and find your best rate.",color:s.navy,sub:"brokers",fee:"Free to you"},
+              ].map(p=>(
+                <div key={p.title} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`}}>
+                  <div style={{fontSize:22,marginBottom:6}}>{p.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{p.title}</div>
+                  <div style={{fontSize:10,color:s.muted,lineHeight:1.5,marginBottom:8}}>{p.desc}</div>
+                  <button onClick={()=>setActive("Professionals")} style={{width:"100%",padding:"8px",background:p.color,color:"#fff",border:"none",borderRadius:7,fontSize:11,fontWeight:700,cursor:"pointer"}}>Connect →</button>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:14}}>
+            <button onClick={()=>setActive("Rates")} style={{padding:"10px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>📊 Compare Rates</button>
+            <button onClick={()=>setActive("Insurance")} style={{padding:"10px",background:"#15803d",color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>🛡️ Get Insurance</button>
+            <button onClick={()=>setStep(0)} style={{padding:"10px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔄 Start Over</button>
+            <button onClick={()=>window.print()} style={{padding:"10px",background:"#374151",color:"#fff",border:"none",borderRadius:8,fontSize:11,fontWeight:700,cursor:"pointer"}}>🖨️ Save as PDF</button>
+          </div>
+          <button onClick={()=>window.print()} style={{width:"100%",padding:"13px",background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:800,cursor:"pointer",marginBottom:14,display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+            🖨️ Print / Save as PDF — Full Summary
+          </button>
+          <div style={{fontSize:10,color:s.muted,textAlign:"center",marginBottom:14}}>
+            In the print dialog, select "Save as PDF" to save a copy of your summary
+          </div>
+        </div>
+      )}
+
+      {/* Navigation */}
+      <div style={{display:"flex",gap:8,marginTop:4}}>
+        {step>0&&<button onClick={()=>setStep(step-1)} style={{flex:1,padding:"11px",background:s.white,color:s.navy,border:`2px solid ${s.border}`,borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>← Back</button>}
+        {step<steps.length-1&&<button onClick={()=>setStep(step+1)} style={{flex:2,padding:"11px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Continue → {steps[step+1].title}</button>}
+      </div>
+    </div>
+  );
+}
+
 function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
-  const [homeTab,setHomeTab]=useState<"overview"|"tools"|"services"|"about">("overview");
+  const [homeTab,setHomeTab]=useState<"overview"|"tools"|"services"|"journey"|"about">("overview");
 
   return(
     <div>
@@ -10236,7 +10646,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
           <button onClick={()=>setActive("Rates")} style={{padding:"10px 20px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer"}}>📊 Compare Rates →</button>
           <button onClick={()=>setActive("Calculators")} style={{padding:"10px 20px",background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🧮 Calculators →</button>
-          <button onClick={()=>setActive("Rate Finder")} style={{padding:"10px 20px",background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🎯 Find My Rate →</button>
+          <button onClick={()=>{setHomeTab("journey");}} style={{padding:"10px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer",animation:"glow 2s infinite"}}>🗺️ Start My Journey →</button>
         </div>
       </div>
 
@@ -10252,6 +10662,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <button onClick={()=>setHomeTab("overview")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="overview"?s.navy:s.border}`,background:homeTab==="overview"?s.navy:s.white,color:homeTab==="overview"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏠 Overview</button>
         <button onClick={()=>setHomeTab("tools")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="tools"?s.navy:s.border}`,background:homeTab==="tools"?s.navy:s.white,color:homeTab==="tools"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🧮 Tools</button>
         <button onClick={()=>setHomeTab("services")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="services"?s.navy:s.border}`,background:homeTab==="services"?s.navy:s.white,color:homeTab==="services"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🤝 Services</button>
+        <button onClick={()=>setHomeTab("journey")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="journey"?s.red:s.border}`,background:homeTab==="journey"?s.red:s.white,color:homeTab==="journey"?"#fff":s.red,fontSize:11,fontWeight:800,cursor:"pointer"}}>🗺️ My Journey</button>
         <button onClick={()=>setHomeTab("about")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="about"?s.navy:s.border}`,background:homeTab==="about"?s.navy:s.white,color:homeTab==="about"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📋 About</button>
       </div>
 
@@ -10378,6 +10789,8 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
           </div>
         </div>
       )}
+
+      {homeTab==="journey"&&<HomeBuyingJourney setActive={setActive}/>}
 
       {homeTab==="about"&&(
         <div>
