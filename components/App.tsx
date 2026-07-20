@@ -612,7 +612,9 @@ const SEARCH_INDEX=[
   {title:"Land Transfer Tax",desc:"Provincial tax when buying a home — Ontario, BC, Manitoba, Quebec rates",tab:"Calculators",icon:"🏛️",type:"Topic",sub:"closing"},
   {title:"Fixed vs Variable Rate",desc:"Which mortgage type is right for you in 2026?",tab:"Rate Finder",icon:"📊",type:"Topic"},
   {title:"Mortgage Stress Test",desc:"Must qualify at your rate +2% or 5.25% — whichever is higher",tab:"Calculators",icon:"📋",type:"Topic",sub:"stress"},
-  {title:"Bank of Canada Rate",desc:"Current BoC overnight rate: 2.25% — next announcement Sep 2, 2026",tab:"Rates",icon:"🏦",type:"Topic"},
+  {title:"Private Lenders Canada",desc:"Bad credit, self-employed, bridge financing — MICs, B-lenders, private mortgage options",tab:"Rates",icon:"🔓",type:"Topic"},
+  {title:"Bad Credit Mortgage",desc:"Options for borrowers with bruised credit, bankruptcy, or non-traditional income",tab:"Rates",icon:"🔓",type:"Topic"},
+  {title:"Bridge Financing",desc:"Short-term private mortgage to buy before selling your existing home",tab:"Rates",icon:"🔓",type:"Topic"},
   {title:"Rate History",desc:"BoC rate timeline 2020 to present — full history and economist forecasts",tab:"Rates",icon:"📈",type:"Topic"},
   {title:"Lender Guide",desc:"Banks vs credit unions vs monolines vs brokers — how to choose",tab:"Rates",icon:"🏦",type:"Topic"},
   {title:"Mortgage Glossary",desc:"50+ mortgage terms explained in plain English",tab:"Resources",icon:"📖",type:"Topic"},
@@ -863,7 +865,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             const isActive=active===t;
             const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Professionals:"👷",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
             const subMenus:{[k:string]:{label:string,detail:string}[]}={
-              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"}],
+              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"},{label:"🔓 Private Lenders",detail:"Bad credit, bridge, self-employed options"}],
               "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
               "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
               "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"🏦 Switch or Stay?",detail:"Decision framework & term guide"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
@@ -938,8 +940,236 @@ function Hero({prov,city,locLoading}){
 }
 
 // ── RATES TAB ─────────────────────────────────────────────────────────────────
+function PrivateTab(){
+  const [pTab,setPTab]=useState<"qualify"|"types"|"warnings"|"apply">("qualify");
+  return(
+    <div>
+      {/* Sub-tabs */}
+      <div style={{display:"flex",gap:6,marginBottom:14,flexWrap:"wrap"}}>
+        <button onClick={()=>setPTab("qualify")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${pTab==="qualify"?"#7c3aed":s.border}`,background:pTab==="qualify"?"#7c3aed":s.white,color:pTab==="qualify"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔓 Who Qualifies</button>
+        <button onClick={()=>setPTab("types")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${pTab==="types"?s.navy:s.border}`,background:pTab==="types"?s.navy:s.white,color:pTab==="types"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏦 Lender Types</button>
+        <button onClick={()=>setPTab("warnings")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${pTab==="warnings"?s.red:s.border}`,background:pTab==="warnings"?s.red:s.white,color:pTab==="warnings"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>⚠️ What to Know</button>
+        <button onClick={()=>setPTab("apply")} style={{flex:1,minWidth:90,padding:"9px",borderRadius:8,border:`2px solid ${pTab==="apply"?"#7c3aed":s.border}`,background:pTab==="apply"?"#7c3aed":s.white,color:pTab==="apply"?"#fff":"#7c3aed",fontSize:11,fontWeight:800,cursor:"pointer",animation:pTab!=="apply"?"glow 2s infinite":undefined}}>📋 Apply Now</button>
+      </div>
+
+      {/* Who Qualifies */}
+      {pTab==="qualify"&&(
+        <div>
+          <Card style={{marginBottom:14,borderLeft:`4px solid #7c3aed`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>❓ Who Needs a Private Lender?</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+              {[
+                {icon:"📉",title:"Bruised Credit",desc:"Credit score under 600, missed payments, collections, or judgments. Banks say no — private lenders focus on the property, not just the score."},
+                {icon:"💼",title:"Self-Employed",desc:"Declared income too low to qualify at banks. Private lenders can use gross revenue or bank statements instead of NOA income."},
+                {icon:"🏦",title:"Recent Bankruptcy",desc:"Banks require 2+ years after discharge. Some private lenders work with you 1 day after bankruptcy — at a higher rate."},
+                {icon:"🌍",title:"New to Canada",desc:"No Canadian credit history. Private lenders can use international credit history or larger down payments to qualify."},
+                {icon:"🏗️",title:"Bridge Financing",desc:"Buying a new home before selling the old one. Short-term private mortgage bridges the gap — typically 3-12 months."},
+                {icon:"🏢",title:"Investment Property",desc:"Multiple properties, rental income not qualifying, or unconventional property types banks won't touch."},
+              ].map(item=>(
+                <div key={item.title} style={{background:"#faf5ff",borderRadius:8,padding:10,border:"1px solid #e9d5ff"}}>
+                  <div style={{fontSize:20,marginBottom:4}}>{item.icon}</div>
+                  <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{item.title}</div>
+                  <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <button onClick={()=>setPTab("apply")} style={{width:"100%",padding:"12px",background:"#7c3aed",color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Apply Now — Get Matched with a Specialist →</button>
+        </div>
+      )}
+
+      {/* Lender Types */}
+      {pTab==="types"&&(
+        <div>
+          <Card style={{marginBottom:14}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🏦 Types of Private Lenders in Canada</h3>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12,marginBottom:14}}>
+              {[
+                {type:"Mortgage Investment Corporations (MICs)",rate:"8–12%",ltv:"Up to 75% LTV",term:"1 year typical",desc:"Pool investor money to fund mortgages. Most regulated form of private lending. Examples: Alpine Credits, Antrim Investments, Fisgard Capital.",color:"#7c3aed",icon:"🏢"},
+                {type:"B-Lenders",rate:"5.5–8%",ltv:"Up to 80% LTV",term:"1-3 years",desc:"Federally or provincially regulated alternative lenders. Stricter than private but more flexible than banks. Examples: Home Trust, Equitable Bank, Bridgewater, Haventree.",color:s.blue,icon:"🏦"},
+                {type:"Individual Private Lenders",rate:"10–18%",ltv:"Up to 65% LTV",term:"6-12 months",desc:"High net worth individuals lending their own capital. Most flexible terms but highest rates. Accessed through licensed mortgage brokers.",color:"#92400e",icon:"👤"},
+                {type:"Syndicated Mortgages",rate:"8–15%",ltv:"Up to 70% LTV",term:"1-2 years",desc:"Multiple private investors pool funds for one mortgage. Common for construction and commercial. Regulated by provincial securities commissions.",color:s.green,icon:"👥"},
+              ].map(l=>(
+                <div key={l.type} style={{background:"#f8fafc",borderRadius:10,padding:12,border:`1px solid ${s.border}`,borderLeft:`4px solid ${l.color}`}}>
+                  <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:8}}>
+                    <span style={{fontSize:20}}>{l.icon}</span>
+                    <div style={{fontSize:12,fontWeight:800,color:s.navy,lineHeight:1.3}}>{l.type}</div>
+                  </div>
+                  <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
+                    <span style={{background:"#fee2e2",color:"#dc2626",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>Rate: {l.rate}</span>
+                    <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{l.ltv}</span>
+                    <span style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:700}}>{l.term}</span>
+                  </div>
+                  <p style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{l.desc}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
+          <Card style={{marginBottom:14,background:s.navy}}>
+            <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>💰 Rate Comparison — All Lender Types</h3>
+            <div style={{overflowX:"auto"}}>
+              <table style={{width:"100%",borderCollapse:"collapse",minWidth:400}}>
+                <thead><tr>{["Lender Type","Rate Range","Min Credit","Max LTV","Best For"].map(h=><th key={h} style={{padding:"8px 12px",fontSize:9,fontWeight:700,color:"rgba(255,255,255,0.5)",textTransform:"uppercase",textAlign:"left",borderBottom:"1px solid rgba(255,255,255,0.1)",whiteSpace:"nowrap"}}>{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    {type:"Big 6 Banks",rate:"3.89–4.50%",credit:"680+",ltv:"80%",best:"Strong credit, T4 income",color:"#4ade80"},
+                    {type:"Credit Unions",rate:"3.79–4.40%",credit:"650+",ltv:"80%",best:"Members, local community",color:"#4ade80"},
+                    {type:"Monolines",rate:"3.74–4.30%",credit:"640+",ltv:"80%",best:"Best rates, broker channel",color:"#4ade80"},
+                    {type:"B-Lenders",rate:"5.50–8.00%",credit:"550+",ltv:"80%",best:"Bruised credit, self-employed",color:"#fbbf24"},
+                    {type:"MICs",rate:"8.00–12.00%",credit:"Any",ltv:"75%",best:"Bridge, construction, rural",color:"#f87171"},
+                    {type:"Private",rate:"10.00–18.00%",credit:"Any",ltv:"65%",best:"Last resort, short-term only",color:"#f87171"},
+                  ].map((row,i)=>(
+                    <tr key={i} style={{borderBottom:"1px solid rgba(255,255,255,0.06)",background:i%2===0?"rgba(255,255,255,0.03)":"transparent"}}>
+                      <td style={{padding:"8px 12px",fontSize:11,fontWeight:700,color:"#fff"}}>{row.type}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,fontWeight:800,color:row.color}}>{row.rate}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:"rgba(255,255,255,0.7)"}}>{row.credit}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:"rgba(255,255,255,0.7)"}}>{row.ltv}</td>
+                      <td style={{padding:"8px 12px",fontSize:11,color:"rgba(255,255,255,0.6)"}}>{row.best}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+          <button onClick={()=>setPTab("apply")} style={{width:"100%",padding:"12px",background:"#7c3aed",color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Apply Now →</button>
+        </div>
+      )}
+
+      {/* What to Know */}
+      {pTab==="warnings"&&(
+        <div>
+          <Card style={{marginBottom:14,borderLeft:`4px solid ${s.red}`}}>
+            <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>⚠️ Important Warnings About Private Mortgages</h3>
+            {[
+              ["Rates are much higher","Private mortgage rates of 10–18% vs 4% at banks means a $400,000 private mortgage costs $40,000–$72,000 in interest per year vs $16,000 at a bank. Only use private as a short-term bridge.","#dc2626"],
+              ["Exit strategy is critical","Before taking a private mortgage, know exactly how you'll exit it — typically by improving your credit, increasing income, or selling the property within 12 months.","#dc2626"],
+              ["Fees add up","Private lenders charge 1–4% lender fees plus broker fees. On a $300,000 mortgage, fees of 3% = $9,000 upfront — on top of the high rate.","#dc2626"],
+              ["Use a licensed broker","Never approach a private lender directly. A licensed mortgage broker knows the reputable MICs and private lenders, protects your interests, and doesn't cost you more.","#1e40af"],
+              ["Avoid predatory lenders","If a private lender promises guaranteed approval with no credit check and no income verification — be cautious. Verify their credentials through your provincial mortgage regulator.","#dc2626"],
+              ["Plan your exit before you enter","The goal of a private mortgage is to rebuild your credit or income situation so you can refinance to a conventional lender within 12–24 months. Have this plan before signing.","#92400e"],
+            ].map(([t,d,c])=>(
+              <div key={t} style={{display:"flex",gap:12,padding:"10px 0",borderBottom:`1px solid ${s.light}`}}>
+                <span style={{fontSize:11,fontWeight:700,color:c||s.navy,flexShrink:0,minWidth:160}}>{t}</span>
+                <span style={{fontSize:11,color:s.muted,lineHeight:1.6}}>{d}</span>
+              </div>
+            ))}
+          </Card>
+          <button onClick={()=>setPTab("apply")} style={{width:"100%",padding:"12px",background:"#7c3aed",color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer"}}>📋 Apply Now — Get Matched with a Specialist →</button>
+        </div>
+      )}
+
+      {/* Apply Now */}
+      {pTab==="apply"&&(
+        <Card style={{borderLeft:`4px solid #7c3aed`}}>
+          <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🔓 Get Connected with a Private Mortgage Specialist</h3>
+          <p style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>Tell us your situation and we'll match you with a licensed mortgage broker who specializes in alternative and private lending. Free — brokers are paid by the lender, not you.</p>
+          <PrivateLenderForm/>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+function PrivateLenderForm(){
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");
+  const [situation,setSituation]=useState("");const [amount,setAmount]=useState("");
+  const [credit,setCredit]=useState("");const [employed,setEmployed]=useState("");const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);
+
+  async function submit(){
+    if(!name||!email||!situation){alert("Please fill in required fields.");return;}
+    setSubmitting(true);
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Private Mortgage Lead — ${situation} — ${city||prov}`,
+        name,email,phone,province:prov,city,situation,mortgageAmount:amount,
+        creditScore:credit,employmentType:employed,additionalDetails:msg,
+        source:"Canada Mortgage Rates — Private Lenders Tab"
+      })});
+      setOk(true);
+    }catch{alert("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  if(ok)return(
+    <div style={{textAlign:"center",padding:"20px 0"}}>
+      <div style={{fontSize:32,marginBottom:8}}>✅</div>
+      <div style={{fontSize:14,fontWeight:800,color:s.green,marginBottom:4}}>Request Received!</div>
+      <div style={{fontSize:11,color:s.muted,marginBottom:12,lineHeight:1.6}}>A licensed mortgage broker specializing in alternative lending will be in touch within 1 business day to discuss your options.</div>
+      <button onClick={()=>setOk(false)} style={{padding:"8px 20px",background:"#7c3aed",color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Submit Another →</button>
+    </div>
+  );
+
+  return(
+    <div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Full Name *"><input value={name} onChange={e=>setName(e.target.value)} placeholder="John Smith" style={inp}/></Field>
+        <Field label="Email *"><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="john@email.com" style={inp}/></Field>
+      </div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Phone"><input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="204-555-0100" style={inp}/></Field>
+        <Field label="Province"><select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select></Field>
+      </div>
+      <Field label="City"><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Winnipeg" style={inp}/></Field>
+      <Field label="My Situation *">
+        <select value={situation} onChange={e=>setSituation(e.target.value)} style={inp}>
+          <option value="">Select your situation</option>
+          <option value="bruised-credit">Bruised or bad credit</option>
+          <option value="self-employed">Self-employed — low declared income</option>
+          <option value="bankruptcy">Recent bankruptcy or consumer proposal</option>
+          <option value="new-canadian">New to Canada — no credit history</option>
+          <option value="bridge">Bridge financing — buying before selling</option>
+          <option value="investment">Investment or rental property</option>
+          <option value="construction">Construction or land mortgage</option>
+          <option value="other">Other — bank turned me down</option>
+        </select>
+      </Field>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
+        <Field label="Mortgage Amount Needed">
+          <select value={amount} onChange={e=>setAmount(e.target.value)} style={inp}>
+            <option value="">Select range</option>
+            <option value="under200k">Under $200,000</option>
+            <option value="200-400k">$200K – $400K</option>
+            <option value="400-600k">$400K – $600K</option>
+            <option value="600-800k">$600K – $800K</option>
+            <option value="over800k">Over $800,000</option>
+          </select>
+        </Field>
+        <Field label="Approximate Credit Score">
+          <select value={credit} onChange={e=>setCredit(e.target.value)} style={inp}>
+            <option value="">Select range</option>
+            <option value="under500">Under 500</option>
+            <option value="500-599">500 – 599</option>
+            <option value="600-649">600 – 649</option>
+            <option value="650-699">650 – 699</option>
+            <option value="unknown">I don't know</option>
+          </select>
+        </Field>
+      </div>
+      <Field label="Employment Type">
+        <select value={employed} onChange={e=>setEmployed(e.target.value)} style={inp}>
+          <option value="">Select type</option>
+          <option value="employed">Salaried / Employed</option>
+          <option value="self-employed">Self-Employed</option>
+          <option value="retired">Retired</option>
+          <option value="unemployed">Currently not employed</option>
+          <option value="other">Other</option>
+        </select>
+      </Field>
+      <Field label="Additional Details">
+        <textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="Tell us more about your situation — the more detail, the better we can match you to the right specialist..." style={{...inp,height:80,resize:"vertical" as any}}/>
+      </Field>
+      <div style={{background:"#f5f3ff",border:"1px solid #ddd6fe",borderRadius:8,padding:"8px 12px",marginBottom:10,fontSize:10,color:"#6d28d9"}}>
+        🔒 Your information is kept confidential and only shared with licensed mortgage professionals. Brokers are paid by the lender — this service is free to you.
+      </div>
+      <button onClick={submit} disabled={submitting} style={{...calcBtn,background:"#7c3aed",opacity:submitting?0.7:1}}>{submitting?"Submitting...":"Connect Me with a Specialist →"}</button>
+    </div>
+  );
+}
+
 function RatesTab({initProv,initCity,onLocationChange,bocRates}){
-  const [subTab,setSubTab]=useState<"compare"|"offers"|"history"|"lenders">("compare");
+  const [subTab,setSubTab]=useState<"compare"|"offers"|"history"|"lenders"|"private">("compare");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Rates")setSubTab(e.detail.sub);};
     window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
@@ -1016,10 +1246,11 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
     <div>
       {/* Sub-tab buttons */}
       <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
-        <button onClick={()=>setSubTab("compare")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="compare"?s.navy:s.border}`,background:subTab==="compare"?s.navy:s.white,color:subTab==="compare"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📊 Compare Rates</button>
-        <button onClick={()=>setSubTab("offers")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="offers"?s.gold:s.border}`,background:subTab==="offers"?s.gold:s.white,color:subTab==="offers"?s.navy:s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🎁 Current Offers</button>
-        <button onClick={()=>setSubTab("history")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="history"?s.navy:s.border}`,background:subTab==="history"?s.navy:s.white,color:subTab==="history"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>📈 Rate History</button>
-        <button onClick={()=>setSubTab("lenders")} style={{flex:1,minWidth:100,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lenders"?s.navy:s.border}`,background:subTab==="lenders"?s.navy:s.white,color:subTab==="lenders"?"#fff":s.muted,fontSize:12,fontWeight:700,cursor:"pointer"}}>🏦 Lender Guide</button>
+        <button onClick={()=>setSubTab("compare")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="compare"?s.navy:"#bfdbfe"}`,background:subTab==="compare"?s.navy:"#eff6ff",color:subTab==="compare"?"#fff":"#1e40af",fontSize:11,fontWeight:700,cursor:"pointer"}}>📊 Compare Rates</button>
+        <button onClick={()=>setSubTab("offers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="offers"?s.gold:"#fde68a"}`,background:subTab==="offers"?s.gold:"#fffbeb",color:subTab==="offers"?s.navy:"#92400e",fontSize:11,fontWeight:700,cursor:"pointer"}}>🎁 Current Offers</button>
+        <button onClick={()=>setSubTab("history")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="history"?"#16a34a":"#bbf7d0"}`,background:subTab==="history"?"#16a34a":"#f0fdf4",color:subTab==="history"?"#fff":"#15803d",fontSize:11,fontWeight:700,cursor:"pointer"}}>📈 Rate History</button>
+        <button onClick={()=>setSubTab("lenders")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lenders"?"#0891b2":"#bae6fd"}`,background:subTab==="lenders"?"#0891b2":"#f0f9ff",color:subTab==="lenders"?"#fff":"#0369a1",fontSize:11,fontWeight:700,cursor:"pointer"}}>🏦 Lender Guide</button>
+        <button onClick={()=>setSubTab("private")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="private"?"#7c3aed":"#ddd6fe"}`,background:subTab==="private"?"#7c3aed":"#f5f3ff",color:subTab==="private"?"#fff":"#6d28d9",fontSize:11,fontWeight:700,cursor:"pointer"}}>🔓 Private Lenders</button>
       </div>
 
       {subTab==="compare"&&<>
@@ -1336,6 +1567,19 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
 
       <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{width:"100%",padding:"12px",background:s.red,color:"#fff",border:"none",borderRadius:10,fontSize:13,fontWeight:700,cursor:"pointer",marginBottom:14}}>📞 Get a Free Mortgage Consultation — We'll Match You to the Right Lender →</button>
       </>}
+
+      {subTab==="private"&&(
+        <div>
+          <div style={{background:`linear-gradient(135deg,#4c1d95,#7c3aed)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
+            <div style={{fontSize:28,marginBottom:6}}>🔓</div>
+            <h2 style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Private & Alternative Mortgage Lenders</h2>
+            <p style={{color:"rgba(255,255,255,0.8)",fontSize:12,maxWidth:500,margin:"0 auto"}}>Banks said no? You still have options. Private lenders and MICs serve borrowers who don't fit conventional lending criteria.</p>
+          </div>
+
+          {/* Private sub-tabs */}
+          <PrivateTab/>
+        </div>
+      )}
     </div>
   );
 }
@@ -7475,6 +7719,8 @@ function GlossaryTab(){
 
 function BlogTab(){
   const [article,setArticle]=useState<string|null>(null);
+  const [search,setSearch]=useState("");
+  const [filterCat,setFilterCat]=useState("All");
   const ARTICLES=[
     {
       id:"fixed-vs-variable-2026",
@@ -8917,6 +9163,823 @@ Condo fees (maintenance fees) cover shared building expenses: common area mainte
 Use our [Affordability Calculator](/) to see exactly how much home you qualify for, and our [Closing Cost Calculator](/) to compare the full purchase costs of condos vs houses in your province.
       `
     },
+    {
+      id:"private-mortgage-canada-2026",
+      title:"Private Mortgages in Canada — When Banks Say No, Here Are Your Options",
+      date:"July 18, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"Mortgage Strategy",
+      summary:"When traditional banks decline your mortgage application, private lenders and MICs offer alternative paths to homeownership. Here's everything you need to know about private mortgages in Canada.",
+      content:`
+Getting declined for a mortgage is more common than most Canadians realize. Roughly 20% of mortgage applicants don't qualify at traditional banks. Private mortgages fill this gap — but come with significant tradeoffs.
+
+## What is a Private Mortgage?
+
+A private mortgage is a loan secured against real estate from a non-traditional lender. Private lenders include MICs, individual private lenders, syndicated mortgages, and B-lenders.
+
+## Who Needs a Private Mortgage?
+
+**Bruised credit:** Score under 600 typically results in bank rejection. Private lenders focus on LTV, not just credit.
+
+**Self-employed:** Declared income too low to qualify at banks. Private lenders may use gross revenue or bank statements.
+
+**Recent bankruptcy:** Banks require 2–7 years. Some private lenders work with you immediately after discharge.
+
+**New Canadians:** No Canadian credit history. Private lenders can use a larger down payment instead.
+
+**Bridge financing:** Buying before selling your existing home. Short-term private bridge mortgage covers the gap.
+
+**Investment properties:** Unconventional property types banks won't finance.
+
+## Private Mortgage Rates — 2026
+
+| Lender Type | Rate Range | Min Credit | Max LTV |
+|---|---|---|---|
+| Big 6 Banks | 3.89–4.50% | 680+ | 80% |
+| B-Lenders | 5.50–8.00% | 550+ | 80% |
+| MICs | 8.00–12.00% | Any | 75% |
+| Private | 10.00–18.00% | Any | 65% |
+
+## Critical Warning: Exit Strategy Required
+
+A private mortgage rate of 12% on $400,000 = $48,000/year in interest vs $16,000 at a bank. Always have a clear exit strategy — improving your credit, increasing income, or selling the property within 12 months.
+
+## How to Access Private Mortgages
+
+Never approach private lenders directly. Always use a licensed mortgage broker who specializes in alternative lending. Their service is free — paid by the lender.
+
+Connect with a private mortgage specialist through our [Private Lenders tab](/rates).
+      `
+    },
+    {
+      id:"property-tax-appeal-canada-2026",
+      title:"How to Appeal Your Property Assessment — Save $500 to $3,000 Per Year",
+      date:"July 17, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Property Tax",
+      summary:"40-60% of Canadian property tax appeals succeed. If your home's assessed value is too high, here's exactly how to challenge it.",
+      content:`
+Every year, Canadian homeowners pay property taxes based on assessed value. But assessments aren't always accurate — and you have the legal right to challenge them.
+
+## Why Appeal?
+
+Assessment errors happen regularly: wrong square footage, basement development not reflected, poor condition unaccounted for. Every $10,000 reduction in assessed value saves $100–$200 in annual taxes.
+
+**Success rate:** 40–60% of residential property tax appeals in Canada result in a reduced assessment.
+
+## Step-by-Step Appeal Process
+
+**Step 1: Review your assessment.** Check assessed value, property classification, square footage, bedrooms. Compare to actual property details.
+
+**Step 2: Find comparable sales.** Research 3–5 similar properties that sold near your province's assessment date. If they sold for less than your assessed value, you have grounds.
+
+**Step 3: Try informal resolution.** Contact the assessment office first. Many errors are corrected informally without formal appeal.
+
+**Step 4: File a formal appeal.** File with your provincial review board before the deadline.
+
+**Step 5: Prepare evidence.** Comparable sales with addresses and prices, photos showing condition, a clear statement of your proposed value.
+
+**Step 6: Attend the hearing.** No lawyer needed — most homeowners represent themselves successfully.
+
+## Appeal Deadlines by Province
+
+| Province | Deadline | Filing Fee |
+|---|---|---|
+| Ontario | March 31 | $25–$125 |
+| BC | January 31 | Free |
+| Alberta | Within 60 days | $50 |
+| Manitoba | June 30 | Free |
+| Saskatchewan | Within 30 days | Free |
+
+Use our [Property Tax Calculator](/property-tax) to estimate your current tax and see how a reduced assessment would affect your annual bill.
+      `
+    },
+    {
+      id:"mortgage-renewal-negotiation-2026",
+      title:"How to Negotiate Your Mortgage Renewal Rate — Word-for-Word Script",
+      date:"July 16, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Renewal",
+      summary:"$400 billion in Canadian mortgages renewing in 2026. Most homeowners accept the first offer — costing them thousands. Here's the exact negotiation script that works.",
+      content:`
+When your renewal notice arrives, your lender sends you a rate that is almost never their best. 70–80% of Canadians renew without negotiating. This is one of the most expensive financial mistakes Canadian homeowners make.
+
+## Before You Call: Get Competing Quotes
+
+Use Canada Mortgage Rates, contact 1–2 mortgage brokers. Know what the market offers before calling your lender.
+
+## The Negotiation Script
+
+**Opening:** "I have a renewal notice showing [X%] for a [term]-year fixed. I'd like to see what you can do before I decide."
+
+**After their rate:** "I've been quoted [competitor rate]% from [lender]. I've been a customer for [X] years and want to stay, but I need you to match that."
+
+**If they resist:** "What's the absolute best you can do? I need to decide this week."
+
+**If still no improvement:** "Can you escalate to your retention team? I'm seriously considering switching."
+
+**Final:** "What does the discharge process look like?" — Often triggers a better offer.
+
+## Choosing the Right Term — 2026
+
+- **2-year fixed (~4.19%):** Best balance in 2026
+- **3-year fixed (~4.09%):** Strong stability choice
+- **5-year fixed (~3.89%):** Lowest rate, longest commitment
+- **Variable (~3.35%):** Lowest today, some uncertainty
+
+Use our [Renewal Calculator](/renewal) to calculate how much you'd save by negotiating.
+      `
+    },
+    {
+      id:"home-inspection-canada-guide-2026",
+      title:"Home Inspection in Canada — What's Covered, What It Costs, and How to Choose",
+      date:"July 15, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Home Buying",
+      summary:"A home inspection is one of the most important purchases in the home buying process. Here's what Canadian buyers need to know in 2026.",
+      content:`
+A home inspection is a professional examination of a property's condition before you finalize a purchase. Skipping it is one of the most expensive mistakes a homebuyer can make.
+
+## What Does a Home Inspector Check?
+
+**Structure and Foundation:** Cracks, water infiltration, settlement, structural framing.
+
+**Roofing:** Shingle condition, flashing, gutters, signs of leaking.
+
+**Plumbing:** Visible pipes, water heater, water pressure, signs of leaks.
+
+**Electrical:** Panel condition, wiring type, GFCI protection. Aluminum wiring (1965–1978 homes) is a common concern.
+
+**HVAC:** Furnace age and condition, AC, ductwork, fireplaces.
+
+**Insulation:** Attic insulation level, signs of moisture or mold.
+
+## What Home Inspections Do NOT Cover
+
+- Environmental hazards (mold behind walls, asbestos, radon) — require specialist testing
+- Sewer lines — require a separate camera inspection
+- Swimming pools — may require add-on inspections
+- Property value — inspectors assess condition, not value
+
+## How Much Does It Cost?
+
+| Property Type | Typical Cost |
+|---|---|
+| Condo (under 1,000 sq ft) | $300–$450 |
+| Detached home (under 2,000 sq ft) | $400–$550 |
+| Detached home (2,000–3,500 sq ft) | $500–$650 |
+
+## How to Choose an Inspector
+
+Look for CAHPI, InterNACHI, or OAHI certification. Always attend the inspection — you learn far more walking through with the inspector. Avoid inspector referrals from your realtor (conflict of interest).
+
+Connect with a certified home inspector through our [Professionals tab](/professionals).
+      `
+    },
+    {
+      id:"mortgage-broker-vs-bank-2026",
+      title:"Mortgage Broker vs Bank — Which Is Better in Canada 2026?",
+      date:"July 14, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Rate Strategy",
+      summary:"Should you use a broker or go directly to your bank? The answer affects your rate, penalties, and flexibility for the next 5 years.",
+      content:`
+One of the most consequential mortgage decisions is where to get your mortgage. The answer significantly affects your rate, prepayment flexibility, and what you'd pay to break your mortgage.
+
+## What is a Mortgage Broker?
+
+A licensed professional who accesses multiple lenders on your behalf. They're paid by the lender — their service costs you nothing directly. Typical commission: 0.6–1.2% of the mortgage amount.
+
+## Broker vs Bank — Key Differences
+
+**Rate:** Brokers typically access 0.15–0.50% lower rates than walking into a bank branch.
+
+**Prepayment Penalties:** This is the biggest difference. Big banks use inflated posted-rate IRD calculations. On a $400,000 mortgage broken 2 years early, the penalty difference can be $10,000–$25,000.
+
+**Lender Access:** Bank = one lender. Broker = 30–50+ lenders including monolines with fair penalties.
+
+**Complex situations:** Self-employed, bruised credit, new to Canada? Brokers know which lenders accommodate your situation.
+
+## Best Approach: Use Both
+
+Get a broker quote first. Then take it to your bank. If your bank matches the rate, stay. If they won't, switch. You have nothing to lose — the broker quote is free.
+
+Find a licensed mortgage broker through our [Professionals tab](/professionals).
+      `
+    },
+    {
+      id:"new-build-mortgage-canada-2026",
+      title:"New Build Mortgage in Canada — How It Differs from Resale",
+      date:"July 13, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"New Builds",
+      summary:"Buying a newly built home involves a different mortgage process than buying resale. Here's what Canadian buyers need to know about construction mortgages, rate holds, and GST/HST in 2026.",
+      content:`
+Buying a new build is exciting — but the mortgage process is significantly different from buying resale. Many buyers are surprised by these differences, some of which can cost thousands.
+
+## Rate Holds — Most Important Feature
+
+New builds take 12–24 months to complete. You need the longest rate hold available — up to 12 months. If your home is delayed and your rate hold expires, you re-apply at current rates.
+
+**Best practice:** Get a 12-month rate hold with a rate drop guarantee — many lenders re-lock at a lower rate if rates fall before closing.
+
+## 30-Year Amortization Advantage
+
+All buyers of newly built homes can access 30-year insured amortizations — not just first-time buyers. This reduces monthly payments by approximately 10% vs 25-year amortization and improves stress test results.
+
+## GST/HST — The Hidden Cost
+
+New homes are subject to GST (5%) or HST (13–15%). On a $500,000 new home: $25,000–$75,000 in tax.
+
+**The GST/HST New Housing Rebate** offsets much of this for owner-occupants. Your builder typically factors the rebate into the price — verify this in your purchase agreement.
+
+## Builder's Preferred Lender Trap
+
+Builder-preferred lender offers are often 0.10–0.50% higher than what you'd find through an independent broker. On a $450,000 mortgage over 5 years, that's $2,250–$11,250 in extra interest. Always get an independent quote first.
+
+Use our [New Builds tab](/new-builds) for the full buyer's guide and construction mortgage comparison.
+      `
+    },
+    {
+      id:"home-evaluation-vs-appraisal-canada-2026",
+      title:"Home Evaluation vs Professional Appraisal in Canada — Which Do You Need?",
+      date:"July 11, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"Many Canadians confuse a free home evaluation with a professional appraisal. They serve very different purposes.",
+      content:`
+Two of the most commonly confused concepts in Canadian real estate are home evaluations and professional appraisals. Both answer "what is my home worth?" — but very differently and for entirely different purposes.
+
+## Home Evaluation (CMA)
+
+Prepared by a licensed realtor. Typically free — realtor is compensated if you list with them.
+
+**How:** Researches recent comparable sales in your area. Output is a price range for listing your home.
+
+**Legal standing:** None. A CMA is an opinion, not an official document.
+
+**Best for:** Deciding to sell, setting a listing price, general curiosity.
+
+## Professional Appraisal
+
+Prepared by a licensed AACI or CRA designated appraiser. Costs $300–$500.
+
+**How:** Physical inspection of your property plus MLS comparable sales research. Produces a formal written report (20–40 pages).
+
+**Legal standing:** Official document accepted by courts, lenders, and tax authorities.
+
+**Best for:** Mortgage applications (required), refinancing (required), estate settlements, divorce proceedings.
+
+## Side-by-Side
+
+| Feature | Home Evaluation | Professional Appraisal |
+|---|---|---|
+| Cost | Free | $300–$500 |
+| Legal standing | None | Official document |
+| Mortgage use | Not accepted | Required |
+| Purpose | Listing guidance | Official valuation |
+
+Request a free evaluation or appraisal connection through our [Professionals → Home Value tab](/professionals).
+      `
+    },
+    {
+      id:"switching-mortgage-lenders-canada-2026",
+      title:"Switching Mortgage Lenders at Renewal — When It Makes Sense and How to Do It",
+      date:"July 10, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Mortgage Strategy",
+      summary:"Switching mortgage lenders at renewal is penalty-free. Here's when it makes financial sense and what the process involves.",
+      content:`
+One of the most underutilized rights Canadian homeowners have is switching lenders at renewal — completely penalty-free. Yet 70–80% renew without shopping around.
+
+## Why Switch?
+
+- **Better rate:** 0.50% savings on $400,000 over 5 years = $10,000
+- **Better penalty structure:** Big bank IRD penalties can be $10,000–$25,000 more than fair lenders
+- **Better prepayment privileges:** Some allow 20% annual lump-sum vs others at 10%
+- **Service quality:** If your lender has been difficult, renewal is the time to leave
+
+## When is It Penalty-Free?
+
+**Only at renewal** — when your current term expires. Mid-term switches trigger prepayment penalties.
+
+## The Switch Process
+
+1. **Shop around (4–6 months before renewal):** Contact a broker and 2–3 direct lenders
+2. **Choose your new lender:** Compare rate, penalty structure, and prepayment privileges
+3. **Provide documentation:** Mortgage statement, property tax bill, proof of insurance, income docs
+4. **Appraisal:** May be required — often covered by the new lender
+5. **Legal work:** Lawyer registers new mortgage — often covered by new lender
+6. **Sign and fund:** On renewal date, new lender pays out old mortgage
+
+## True Cost of Switching
+
+Most switches are genuinely free — new lenders cover legal and appraisal fees to compete for your business.
+
+## When NOT to Switch
+
+- Your existing lender matches the best rate
+- You have a HELOC attached to your mortgage
+- You're selling within 12 months
+- Rate difference is under 0.15%
+
+Use our [Renewal Calculator](/renewal) to calculate your exact savings from switching.
+      `
+    },
+    {
+      id:"insurance-home-guide-canada-2026",
+      title:"Home Insurance in Canada — What's Covered and What Isn't in 2026",
+      date:"July 6, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Insurance",
+      summary:"Standard home insurance policies have significant gaps most homeowners don't know about until they file a claim. Here's what's covered, what's excluded, and what riders you need.",
+      content:`
+Home insurance is one of those things Canadians hope never to use — meaning many have no idea what their policy actually covers until disaster strikes.
+
+## What Standard Home Insurance Covers
+
+- **Dwelling:** Physical structure — walls, roof, foundation
+- **Other structures:** Detached garage, shed, fence (typically 10% of dwelling coverage)
+- **Personal contents:** Furniture, electronics, clothing
+- **Additional living expenses (ALE):** Hotel and meals while home is being repaired
+- **Personal liability:** If someone is injured on your property
+- **Common perils:** Fire, windstorm, theft, burst pipe water damage
+
+## What Standard Policies Do NOT Cover
+
+**Overland flooding:** Water from rivers, rainfall, or storm surges is NOT covered. Requires a separate rider.
+
+**Sewer backup:** NOT covered by standard policies. A backed-up sewer can cause $20,000+ in damage. Add the rider ($100–$300/year).
+
+**Earthquake:** Excluded. Important rider for BC.
+
+**Gradual water damage:** Slow leaks or seeping foundations are excluded — insurance covers sudden damage, not gradual deterioration.
+
+**High-value items:** Jewelry capped at $3,000–$5,000. Art, collectibles need scheduled riders.
+
+## Critical Riders to Add
+
+- **Overland flood:** $100–$500/year. Increasingly essential.
+- **Sewer backup:** $100–$300/year. Non-negotiable for homes with basements.
+- **Service line:** $50–$100/year. Covers underground pipes from meter to home.
+
+## Average Annual Premiums — 2026
+
+| Province | Average Premium |
+|---|---|
+| Quebec | $960 |
+| Manitoba | $1,080 |
+| Ontario | $1,450 |
+| BC | $1,380 |
+| Alberta | $1,740 |
+
+Compare 25+ Canadian home insurance providers through our [Insurance tab](/insurance).
+      `
+    },
+    {
+      id:"rent-vs-buy-canada-2026",
+      title:"Rent vs Buy in Canada — The Honest 2026 Analysis by City",
+      date:"July 3, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"Home Buying",
+      summary:"The rent vs buy debate has never been more complex. With high prices and normalized rates, here's an honest 2026 analysis for different Canadian cities.",
+      content:`
+"Buying builds equity, renting throws money away." Neither of these simplifications is accurate. The truth depends on your city, timeline, and financial situation.
+
+## The True Cost of Homeownership
+
+Monthly costs include: mortgage interest, property tax, home insurance, maintenance (budget 1% of home value/year), condo fees, and opportunity cost of your down payment.
+
+## The Math by City
+
+**Winnipeg ($420,000 average):**
+Monthly ownership costs: ~$2,791
+Average 3-bedroom rental: $1,800–$2,200
+Net difference after equity building: $200–$600/month more to own
+**Verdict: Relatively balanced — buying makes sense over 7+ years**
+
+**Toronto ($1,450,000 average):**
+Monthly ownership costs: ~$8,065
+Average 3-bedroom rental: $3,200–$4,500
+Difference: $3,500–$4,800 more to own
+**Verdict: Renting and investing the difference likely wins short-term; long-term appreciation favors buying**
+
+**Calgary/Edmonton:**
+No provincial LTT, reasonable prices relative to income. Monthly costs competitive with renting.
+**Verdict: Buying makes clear financial sense**
+
+## When Buying Makes Clear Sense
+
+- You plan to stay 7+ years
+- You want stable housing costs
+- You're in a prairie city where prices are accessible
+- You have savings beyond the down payment
+
+## When Renting Might Be Better
+
+- You may relocate within 3–5 years
+- You're in Vancouver or Toronto where rent is dramatically cheaper than ownership
+- You're disciplined enough to invest the difference
+
+Use our [Rent vs Buy Calculator](/calculators) to run the actual numbers for your situation.
+      `
+    },
+    {
+      id:"boa-rate-decisions-explained-2026",
+      title:"Bank of Canada Rate Decisions Explained — How BoC Changes Affect Your Mortgage",
+      date:"July 2, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Rate Strategy",
+      summary:"The Bank of Canada held at 2.25% for the 5th consecutive time on July 15, 2026. Here's how BoC decisions actually affect your mortgage rate.",
+      content:`
+On July 15, 2026, the Bank of Canada held its overnight rate at 2.25% — the fifth consecutive hold. Understanding how BoC decisions affect mortgage rates is essential for every Canadian homeowner.
+
+## The Overnight Rate and Your Mortgage
+
+**Variable rate mortgages:** Priced at prime rate minus a discount (e.g., prime − 0.90%). When BoC raises/cuts by 0.25%, prime moves immediately, and so does your payment.
+
+**Fixed rate mortgages:** NOT directly tied to the overnight rate. Priced off Government of Canada 5-year bond yields, which respond to inflation expectations and global market conditions.
+
+This is why fixed rates can move independently of BoC decisions.
+
+## The Rate Cycle: 2022–2026
+
+**2022–2023 Hiking cycle:** 0.25% → 5.00% in 18 months. Fastest in modern Canadian history. Variable rates went from ~1.45% to ~7.20%.
+
+**2024–2026 Cutting cycle:** 5.00% → 2.25% through 7 cuts. Variable rates fell from ~7.20% to ~3.35%.
+
+**2026 Hold:** Five consecutive holds. BoC considers 2.25% the neutral rate. Trade uncertainty with the US is keeping the BoC cautious.
+
+## 2026 BoC Schedule
+
+| Date | Decision |
+|---|---|
+| July 15, 2026 | Hold at 2.25% (latest) |
+| September 2, 2026 | Next announcement |
+| October 29, 2026 | TBD |
+| December 10, 2026 | TBD |
+
+## What This Means for Your Decision
+
+**Variable rate holders:** Unlikely to move much in next 6–12 months. BoC is on hold.
+
+**Renewing:** 2 or 3-year fixed is reasonable given uncertainty.
+
+**Buying:** Get pre-approved now. Current rates are well below 2022–2023 peaks.
+
+Track the BoC rate live on our [Rate History tab](/rates).
+      `
+    },
+    {
+      id:"land-transfer-tax-first-time-buyers-2026",
+      title:"Land Transfer Tax Rebates for First-Time Buyers — Canada 2026",
+      date:"July 1, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"4 min read",
+      category:"First-Time Buyers",
+      summary:"First-time buyers in Ontario, BC, and other provinces can claim significant land transfer tax rebates at closing. Here's how much you can save.",
+      content:`
+Land transfer tax is one of the largest closing costs Canadian homebuyers face. First-time buyers in several provinces qualify for rebates that can eliminate or significantly reduce this cost.
+
+## LTT Rebates by Province
+
+**Ontario — Up to $4,000**
+Rebate refunds full LTT on first $368,000 of purchase, up to $4,000.
+On $500,000 home: Full LTT $6,475, rebate $4,000, net LTT $2,475.
+
+**Toronto — Additional Up to $4,475**
+First-time buyers in Toronto also get a municipal LTT rebate up to $4,475.
+On $500,000 Toronto home: Total LTT $12,950, total rebates $8,475, net $4,475.
+
+**British Columbia — Up to Full Exemption**
+Full PTT exemption on homes under $500,000. Partial exemption to $835,000. Above $835,000: no rebate.
+**BC New Build Bonus:** ALL buyers (not just first-timers) get full PTT exemption on new builds under $1,100,000.
+
+**Alberta and Saskatchewan:** No provincial LTT. First-time buyers pay only modest land title fees (~$500–$1,000).
+
+**Manitoba:** Partial rebate for first-time buyers — check gov.mb.ca for current limits.
+
+## How to Claim
+
+Your real estate lawyer handles the rebate at closing automatically. Provide confirmation you're a first-time buyer and the property will be your principal residence.
+
+## Important Eligibility Notes
+
+**Ontario worldwide test:** You must never have owned a principal residence anywhere in the world — not just in Canada.
+
+**New Canadians:** Permanent residents qualify. Non-permanent residents generally do not.
+
+Use our [Closing Cost Calculator](/calculators) to calculate your exact LTT including any first-time buyer rebate.
+      `
+    },
+    {
+      id:"real-estate-lawyer-closing-guide-2026",
+      title:"What a Real Estate Lawyer Does at Closing — Canada 2026",
+      date:"July 4, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"Your real estate lawyer is the last step before you get your keys. Here's exactly what they do, what you'll sign, and what closing costs they handle.",
+      content:`
+On closing day, your real estate lawyer ensures the legal transfer of your home goes smoothly. Here's what they actually do.
+
+## Before Closing
+
+**Title search:** Confirms the seller owns the property, no outstanding mortgages or liens, no easements affecting your use.
+
+**Mortgage review:** Receives your mortgage instructions from the lender and ensures all conditions are satisfied.
+
+**Title insurance:** Obtains title insurance ($200–$400) to protect against title defects discovered after closing.
+
+## On Closing Day
+
+**Document signing:** You'll sign mortgage documents, title transfer documents, statement of adjustments, and various declarations.
+
+**Statement of adjustments:** Calculates who owes what at closing — adjusting for prepaid property taxes, utilities, condo fees, and arrears.
+
+**Funds management:** Receives your down payment and mortgage funds, pays out the seller's existing mortgage, remits land transfer tax, wires balance to seller's lawyer.
+
+**Registration:** Once all funds confirmed and documents signed, registers the deed and mortgage with the provincial land registry.
+
+## What to Bring
+
+- Two pieces of government ID
+- Certified cheque or bank draft for closing costs balance
+- Void cheque for mortgage payment setup
+
+## How Much Does It Cost?
+
+**Professional fees:** $1,000–$2,000
+**Disbursements:** Title search, title insurance, registration fees — typically $500–$800
+
+Connect with licensed real estate lawyers through our [Professionals tab](/professionals).
+      `
+    },
+    {
+      id:"moving-to-canada-mortgage-2026",
+      title:"Getting a Mortgage as a New Canadian — 2026 Complete Guide",
+      date:"July 8, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"6 min read",
+      category:"Home Buying",
+      summary:"New Canadians face unique challenges qualifying for a mortgage. Here's how lenders evaluate newcomers, what programs are available, and how to build credit fast.",
+      content:`
+Canada welcomes over 400,000 new permanent residents annually, many of whom want to buy a home. Without Canadian credit history, newcomers face significant challenges.
+
+## The Core Challenge
+
+Canadian lenders rely on Equifax Canada and TransUnion Canada scores. Your home-country credit history is not automatically recognized. A newcomer with perfect credit elsewhere arrives as "credit invisible" in Canada.
+
+## Newcomer Mortgage Programs
+
+**CMHC Newcomer Program:** Minimum 5% down (10% for non-permanent residents), employment in Canada, home-country credit history may be accepted.
+
+**RBC Newcomer Advantage:** Qualification based on international credit history, income documentation from home country, reference letter from a recognized institution.
+
+**Credit unions:** Provincial credit unions serving specific ethnic communities often have more flexible qualification criteria.
+
+## Building Canadian Credit Fast
+
+1. **Open a Canadian bank account immediately** — length of credit history matters
+2. **Get a secured credit card** — available to anyone, reports to both bureaus
+3. **Apply for a standard card after 3–6 months** of account history
+4. **Pay everything on time** — payment history is 35% of your score
+5. **Keep balances under 30%** of each card's limit
+6. **Space applications 3–6 months apart**
+
+With consistent responsible use, newcomers can build a 650+ score within 18–24 months.
+
+## Alternative Documentation
+
+If you have less than 2 years Canadian credit history:
+- International credit report from home country
+- 12 months of bank statements
+- Reference letter from a recognized foreign financial institution
+- Rental payment history documented through bank records
+- Larger down payment (20%+ significantly improves chances)
+
+## FHSA for Newcomers
+
+As a permanent resident, you immediately qualify for the First Home Savings Account — $8,000/year, tax-deductible, tax-free withdrawal for a home purchase. Start contributing the year you arrive.
+
+Connect with local professionals who understand your community through our [Professionals tab](/professionals).
+      `
+    },
+    {
+      id:"realtor-selection-guide-canada-2026",
+      title:"How to Choose a Realtor in Canada — 10 Questions to Ask Before You Sign",
+      date:"July 7, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Home Buying",
+      summary:"Choosing the right realtor can save or cost you tens of thousands of dollars. Here's what to look for and what to ask before signing a representation agreement.",
+      content:`
+The difference between a skilled realtor and a mediocre one can literally cost you tens of thousands — in a negotiated price, a missed inspection issue, or an improperly structured offer.
+
+## 10 Questions to Ask Before Signing
+
+**1. How many transactions in the past 12 months?**
+Active agents close 20–50+. An agent doing 5 transactions/year is essentially part-time.
+
+**2. What's your experience in my target neighbourhoods?**
+Hyperlocal knowledge — 20 sales in your specific area — beats a generalist.
+
+**3. Can you provide references from recent buyer clients?**
+Any credible realtor should have 3–5 references. Call them.
+
+**4. How quickly do you respond?**
+In competitive markets, offers must be submitted within hours. A realtor who doesn't return calls for a day is a liability.
+
+**5. What is your approach to offer strategy?**
+Look for specific, thoughtful answers about pricing, conditions, and escalation clauses.
+
+**6. What does your buyer representation agreement say?**
+Understand the duration and geographic scope before signing.
+
+**7. Do you work with a team?**
+Many top realtors hand clients to junior agents. Know who will actually show you homes.
+
+**8. Experience with my property type?**
+Condos, rural, new builds each have specific requirements.
+
+**9. How do you handle situations where the seller won't negotiate?**
+Look for creative strategies — not just "pay more."
+
+**10. What do I need to know about the current market?**
+Reveals whether they give honest advice or just tell you what you want to hear.
+
+## Red Flags
+
+- Pressure to sign long agreements before you've seen a home together
+- No verifiable sales history or reviews
+- Pushing their own listings (dual agency)
+
+Connect with verified local realtors through our [Professionals tab](/professionals).
+      `
+    },
+    {
+      id:"property-tax-canada-cities-2026",
+      title:"Property Tax Rates by City in Canada — 2026 Comparison",
+      date:"July 9, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"Property Tax",
+      summary:"Property tax on the same $500,000 home can vary by $3,000+ depending on which Canadian city you live in. Here's the 2026 breakdown by city.",
+      content:`
+Property taxes are one of the most variable costs of homeownership in Canada. The same $500,000 home costs $2,175/year in Vancouver or $5,100/year in Hamilton — a $300/month difference.
+
+## How Property Tax is Calculated
+
+Property tax = Assessed value × Mill rate
+
+The mill rate is set annually by your municipality. One mill = $1 per $1,000 of assessed value.
+
+## 2026 Property Tax by City — $500,000 Home
+
+| City | Annual Tax | Monthly | Mill Rate |
+|---|---|---|---|
+| Vancouver, BC | $2,175 | $181 | 0.24% |
+| Victoria, BC | $2,450 | $204 | 0.52% |
+| Toronto, ON | $3,050 | $254 | 0.61% |
+| Calgary, AB | $3,350 | $279 | 0.67% |
+| Ottawa, ON | $3,750 | $313 | 1.09% |
+| Saskatoon, SK | $3,850 | $321 | 0.94% |
+| Halifax, NS | $3,850 | $321 | 1.15% |
+| Regina, SK | $4,100 | $342 | 1.16% |
+| Winnipeg, MB | $4,400 | $367 | 1.29% |
+| Hamilton, ON | $5,100 | $425 | 1.23% |
+
+## Why Such Variation?
+
+**High home values = lower mill rates:** Vancouver funds the same services with 0.24% because the tax base is enormous. Winnipeg needs 1.29% on lower values.
+
+**Provincial funding:** BC municipalities receive more provincial transfers, reducing reliance on property taxes.
+
+**Services provided:** Cities delivering more services directly have higher tax requirements.
+
+## How to Reduce Your Property Tax
+
+**Appeal your assessment** if comparable sales show your home is overassessed. 40–60% of appeals succeed.
+
+**Check exemptions:** Senior deferral, disability exemption, low-income relief programs.
+
+Use our [Property Tax Calculator](/property-tax) to estimate your tax for any Canadian city.
+      `
+    },
+    {
+      id:"mortgage-stress-test-changes-2026",
+      title:"Canada's Mortgage Stress Test in 2026 — What Changed and What It Means for Buyers",
+      date:"July 5, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"5 min read",
+      category:"First-Time Buyers",
+      summary:"The mortgage stress test evolved significantly in 2024-2026. Here's what changed and how current rules affect Canadian homebuyers.",
+      content:`
+Canada's mortgage stress test has seen significant changes in 2024–2026 that meaningfully expanded access to homeownership for specific buyer groups.
+
+## The Stress Test: Quick Refresher
+
+Qualify at the higher of: contracted rate + 2%, or 5.25% floor.
+
+With current rates (5-year fixed ~3.90%), the stress test rate is 5.90%.
+
+## What Changed in 2024–2026
+
+**30-Year Amortization Expanded (August 2024 + Late 2024):**
+- First-time buyers: 30-year amortization for any purchase
+- All buyers: 30-year amortization for newly built homes
+
+**Impact:** 30-year amortization produces a lower monthly payment, improving GDS ratios. On a $450,000 mortgage at stress test rate: 25-year = $2,934/month vs 30-year = $2,665/month. A 3–4 percentage point GDS improvement for borderline buyers.
+
+**Insured Mortgage Cap Raised to $1.5M (December 2024):**
+Previously capped at $1,000,000. Buyers in Toronto and Vancouver can now purchase homes up to $1.5M with 5% minimum down payment.
+
+**Stress Test Rate Floor:** Despite significant rate cuts, OSFI maintained the 5.25% floor. With current rates at 3.90%, the binding constraint is your rate + 2% = 5.90%, which exceeds the floor.
+
+## Your Qualifying Power — 2026
+
+On $100,000 gross income at 5.90% stress test rate:
+- 25-year amortization: qualifies for ~$450,000 mortgage
+- 30-year amortization (first-time or new build): qualifies for ~$490,000 mortgage
+
+The 30-year amortization adds approximately $40,000 in qualifying power.
+
+## Strategies to Improve Qualification
+
+- Add a co-borrower to increase qualifying income
+- Pay down car loans and credit card debt before applying
+- Use 30-year amortization if eligible
+- Consider a new build purchase (30-year available to all buyers)
+
+Use our free [Stress Test Calculator](/calculators) to see exactly what you qualify for.
+      `
+    },
+    {
+      id:"first-time-buyer-winnipeg-2026",
+      title:"First-Time Home Buyer Guide for Winnipeg, Manitoba — 2026",
+      date:"July 12, 2026",
+      author:"Canada Mortgage Rates",
+      readTime:"7 min read",
+      category:"First-Time Buyers",
+      summary:"Winnipeg is one of Canada's most affordable major cities for first-time buyers. Here's a complete local guide for 2026.",
+      content:`
+Winnipeg is consistently ranked among Canada's most affordable major cities. With average detached home prices around $420,000 — vs $1.4M+ in Toronto — first-time buyers in Winnipeg can still access homeownership with realistic savings.
+
+## Winnipeg Housing Market — 2026
+
+**Average prices:**
+- Detached home: ~$420,000
+- Townhome: ~$300,000
+- Condo: ~$230,000
+- New build: ~$480,000–$600,000
+
+**Market conditions:** Balanced in 2026 — neither a frenzy nor a buyer's market. Homes taking slightly longer to sell. More accessible than Ontario and BC.
+
+## Down Payment Required
+
+| Home Price | Minimum (5%) | 10% Down | 20% Down |
+|---|---|---|---|
+| $300,000 | $15,000 | $30,000 | $60,000 |
+| $420,000 | $23,500 | $42,000 | $84,000 |
+| $550,000 | $32,500 | $55,000 | $110,000 |
+
+## Federal Programs for Winnipeg Buyers
+
+**FHSA:** $8,000/year each, up to $40,000 lifetime. Tax deductible in, tax free out. A couple saving 3 years = $48,000 completely tax-advantaged.
+
+**HBP:** Withdraw up to $60,000 from RRSP ($120,000/couple). Repay over 15 years.
+
+**First-Time Home Buyer Tax Credit:** $1,500 tax credit in year of purchase.
+
+**30-Year Amortization:** Available to all first-time buyers, reducing monthly payments.
+
+## Winnipeg Neighbourhoods
+
+**Inner-city (River Heights, St. Boniface, Osborne Village):** $400,000–$650,000+. Walkable, established.
+
+**New suburbs (Sage Creek, Bridgwater, Prairie Pointe):** $400,000–$650,000. Modern builds, longer commute.
+
+**Affordable areas (Transcona, Elmwood, North End):** $250,000–$380,000. Older stock, some gentrification.
+
+## Local Credit Unions
+
+Winnipeg credit unions — Assiniboine (ACU), Steinbach (SCU), Cambrian, Access — often offer competitive rates with fairer penalty structures than big banks.
+
+Compare Winnipeg rates on our [Rates tab](/) or connect with local professionals through our [Professionals tab](/professionals).
+      `
+    },
+
   ];
 
   if(article){
@@ -8978,6 +10041,14 @@ Use our [Affordability Calculator](/) to see exactly how much home you qualify f
     );
   }
 
+  const categories=["All",...Array.from(new Set(ARTICLES.map(a=>a.category)))];
+  const filtered=ARTICLES.filter(a=>{
+    const q=search.toLowerCase();
+    const matchesSearch=!q||a.title.toLowerCase().includes(q)||a.summary.toLowerCase().includes(q)||a.category.toLowerCase().includes(q);
+    const matchesCat=filterCat==="All"||a.category===filterCat;
+    return matchesSearch&&matchesCat;
+  });
+
   return(
     <div>
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
@@ -8985,25 +10056,65 @@ Use our [Affordability Calculator](/) to see exactly how much home you qualify f
         <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Canada Mortgage Rates Blog</h2>
         <p style={{color:"rgba(255,255,255,0.75)",fontSize:12}}>Expert guides, rate analysis, and homebuying advice for Canadians.</p>
       </div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
-        {ARTICLES.map(a=>(
-          <div key={a.id} onClick={()=>setArticle(a.id)} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",cursor:"pointer",boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"all 0.2s"}}
-            onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
-            onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.04)";e.currentTarget.style.borderColor=s.border;}}>
-            <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 16px"}}>
-              <span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:800}}>{a.category}</span>
-            </div>
-            <div style={{padding:14}}>
-              <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:6,lineHeight:1.4}}>{a.title}</h3>
-              <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{a.summary}</p>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:4}}>
-                <div style={{fontSize:10,color:s.muted}}>{a.date} · {a.readTime}</div>
-                <span style={{fontSize:11,color:s.blue,fontWeight:700}}>Read Article →</span>
+
+      {/* Search and filter */}
+      <div style={{background:s.white,borderRadius:12,padding:"12px 14px",marginBottom:14,border:`1px solid ${s.border}`}}>
+        <div style={{display:"flex",gap:8,marginBottom:10}}>
+          <div style={{flex:1,display:"flex",alignItems:"center",gap:8,background:"#f8fafc",borderRadius:8,padding:"8px 12px",border:`1px solid ${s.border}`}}>
+            <span style={{fontSize:14}}>🔍</span>
+            <input
+              value={search}
+              onChange={e=>setSearch(e.target.value)}
+              placeholder="Search articles — e.g. stress test, renewal, private lender..."
+              style={{flex:1,border:"none",outline:"none",fontSize:12,background:"transparent",color:s.navy}}
+            />
+            {search&&<button onClick={()=>setSearch("")} style={{background:"none",border:"none",color:s.muted,cursor:"pointer",fontSize:14,padding:0}}>✕</button>}
+          </div>
+        </div>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+          {categories.map(cat=>(
+            <button key={cat} onClick={()=>setFilterCat(cat)} style={{padding:"4px 12px",borderRadius:20,border:`1.5px solid ${filterCat===cat?s.navy:s.border}`,background:filterCat===cat?s.navy:s.white,color:filterCat===cat?"#fff":s.muted,fontSize:10,fontWeight:filterCat===cat?700:400,cursor:"pointer"}}>{cat}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Results count */}
+      {(search||filterCat!=="All")&&(
+        <div style={{fontSize:11,color:s.muted,marginBottom:10,paddingLeft:2}}>
+          {filtered.length} article{filtered.length!==1?"s":""} found{search?` for "${search}"`:""}
+          {filterCat!=="All"?` in ${filterCat}`:""}
+          <button onClick={()=>{setSearch("");setFilterCat("All");}} style={{background:"none",border:"none",color:s.blue,cursor:"pointer",fontSize:11,marginLeft:8,textDecoration:"underline"}}>Clear</button>
+        </div>
+      )}
+
+      {filtered.length===0?(
+        <div style={{textAlign:"center",padding:"40px 20px",background:"#f8fafc",borderRadius:12,border:`1px solid ${s.border}`}}>
+          <div style={{fontSize:32,marginBottom:8}}>🔍</div>
+          <div style={{fontSize:14,fontWeight:700,color:s.navy,marginBottom:6}}>No articles found for "{search}"</div>
+          <div style={{fontSize:11,color:s.muted,marginBottom:14}}>Try different keywords or browse all categories</div>
+          <button onClick={()=>{setSearch("");setFilterCat("All");}} style={{padding:"8px 20px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Show All Articles</button>
+        </div>
+      ):(
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:12}}>
+          {filtered.map(a=>(
+            <div key={a.id} onClick={()=>setArticle(a.id)} style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,overflow:"hidden",cursor:"pointer",boxShadow:"0 2px 8px rgba(0,0,0,0.04)",transition:"all 0.2s"}}
+              onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 4px 20px rgba(0,0,0,0.1)";e.currentTarget.style.borderColor=s.navy;}}
+              onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.04)";e.currentTarget.style.borderColor=s.border;}}>
+              <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 16px"}}>
+                <span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:800}}>{a.category}</span>
+              </div>
+              <div style={{padding:14}}>
+                <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:6,lineHeight:1.4}}>{a.title}</h3>
+                <p style={{fontSize:11,color:s.muted,lineHeight:1.6,marginBottom:10}}>{a.summary}</p>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:4}}>
+                  <div style={{fontSize:10,color:s.muted}}>{a.date} · {a.readTime}</div>
+                  <span style={{fontSize:11,color:s.blue,fontWeight:700}}>Read Article →</span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -9330,7 +10441,7 @@ export default function App(){
       // Map dropdown labels to sub-tab event values
       const MAP:{[k:string]:string}={
         // Rates
-        "📊 Compare Rates":"compare","🎁 Current Offers":"offers","📈 Rate History":"history","🏦 Lender Guide":"lenders",
+        "📊 Compare Rates":"compare","🎁 Current Offers":"offers","📈 Rate History":"history","🏦 Lender Guide":"lenders","🔓 Private Lenders":"private",
         // Calculators
         "💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy",
         // Rate Finder
