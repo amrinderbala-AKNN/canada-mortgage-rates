@@ -4824,9 +4824,9 @@ function ProfessionalsTab(){
               </div>
               <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"28px 24px",marginBottom:14,textAlign:"center"}}>
                 <div style={{fontSize:36,marginBottom:10}}>📋</div>
-                <div style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Certified Appraisers — Coming Soon</div>
+                <div style={{color:"#fff",fontSize:16,fontWeight:800,marginBottom:6}}>Find a Certified Appraiser</div>
                 <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.7,maxWidth:440,margin:"0 auto 16px"}}>
-                  We're building our network of AACI-certified appraisers across Canada. Submit a request and we'll connect you when our network is ready.
+                  Submit a request and we'll connect you with an AACI-certified appraiser in your area within 1-2 business days.
                 </div>
                 <AppraiserRequestForm/>
               </div>
@@ -4960,9 +4960,9 @@ function MortgageBrokersTab(){
       ):(
         <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
           <div style={{fontSize:40,marginBottom:12}}>💼</div>
-          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Mortgage Brokers — Coming Soon</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Find a Mortgage Broker</div>
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-            We're building our network of independent licensed mortgage brokers across Canada. A broker shops 30+ lenders for you — at no cost to you. Submit a request and we'll connect you with a qualified broker in your area.
+            Submit a request and we'll connect you with a licensed independent mortgage broker in your area within 1 business day. Brokers shop 30+ lenders — at no cost to you.
           </div>
           <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
             💡 <b>Why use a mortgage broker?</b> Brokers have access to 30+ lenders including monolines and credit unions that don't advertise directly. They negotiate on your behalf and their service is free — paid by the lender.
@@ -5159,9 +5159,9 @@ function InspectorsTab(){
         /* Coming Soon */
         <div style={{background:`linear-gradient(135deg,${s.blue},#0369a1)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
           <div style={{fontSize:40,marginBottom:12}}>🔍</div>
-          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Certified Home Inspectors — Coming Soon</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Find a Certified Home Inspector</div>
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-            We're building our network of certified home inspectors across Canada. Submit a request and we'll connect you with a qualified inspector in your area — or list your inspection business on our platform.
+            Submit a request and we'll connect you with a certified home inspector in your area within 1 business day — or list your inspection business on our platform.
           </div>
           <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"10px 16px",marginBottom:16,fontSize:11,color:"#92400e",maxWidth:480,margin:"0 auto 16px",textAlign:"left"}}>
             💡 <b>Why you need a home inspection:</b> A certified home inspector examines the property's structure, electrical, plumbing, HVAC, and roof before you finalize the purchase. Cost: $400–$700. Can save you $10,000+ in hidden repairs.
@@ -5494,7 +5494,7 @@ function RealtorsTab(){
         /* Coming Soon */
         <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
           <div style={{fontSize:40,marginBottom:12}}>🤝</div>
-          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Realtors — Coming Soon</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Find a Verified Realtor</div>
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
             We're building our network of verified REALTORS® across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified agent in your area.
           </div>
@@ -7278,9 +7278,9 @@ function LawyersTab(){
         /* Coming Soon */
         <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"32px 24px",marginBottom:16,textAlign:"center"}}>
           <div style={{fontSize:40,marginBottom:12}}>⚖️</div>
-          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Verified Real Estate Lawyers — Coming Soon</div>
+          <div style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:8}}>Find a Real Estate Lawyer</div>
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:480,margin:"0 auto 20px"}}>
-            We're building our network of verified real estate lawyers across Canada. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified lawyer in your area.
+            Submit a request and we'll connect you with a verified real estate lawyer within 1 business day. Be among the first listed in {PDATA[filterProv]?.name} — or submit a request and we'll connect you with a qualified lawyer in your area.
           </div>
           <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
             <button onClick={()=>setShowForm(true)} style={{padding:"10px 24px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer"}}>⚖️ Request a Lawyer →</button>
@@ -10706,7 +10706,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
               {n:"50+",l:"Lenders Compared",icon:"🏦",color:s.navy},
               {n:"10",l:"Provinces Covered",icon:"🍁",color:s.red},
               {n:"9",l:"Calculators",icon:"🧮",color:s.blue},
-              {n:"15+",l:"Tools & Guides",icon:"📄",color:s.green},
+              {n:"32",l:"Expert Articles",icon:"📝",color:s.green},
               {n:"Free",l:"Always & Forever",icon:"💰",color:s.gold},
             ].map(stat=>(
               <div key={stat.l} style={{background:s.white,borderRadius:10,padding:"12px 10px",border:`1px solid ${s.border}`,textAlign:"center",borderTop:`3px solid ${stat.color}`}}>
@@ -10722,16 +10722,17 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
             <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🆕 Latest Features</h3>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:8}}>
               {[
-                {tab:"Calculators",title:"Refinancing Calculator",desc:"Should I Refi? Penalty estimator, blend & extend, cash-out, HELOC comparison, and full 11-step guide.",icon:"💳"},
-                {tab:"Listings",title:"Home Value Estimator",desc:"Request a free professional home evaluation. Connect with local appraisers and realtors.",icon:"🏡"},
-                {tab:"Renewal",title:"Renewal Negotiation Script",desc:"Word-for-word script to negotiate your renewal rate. Top lenders, timeline, and FAQ.",icon:"💬"},
-                {tab:"Insurance",title:"Insurance Guide",desc:"Province cost comparison, how to save on premiums, mortgage vs home insurance explainer, riders guide.",icon:"🛡️"},
-                {tab:"Rates",title:"Rate History & Lender Guide",desc:"Full BoC rate timeline 2020–2026, economist forecasts, and 6 lender types compared.",icon:"📈"},
-                {tab:"Rate Finder",title:"Pre-Approval Guide",desc:"Documents needed, 6-step timeline, what lenders look at, mistakes to avoid — printable PDF.",icon:"📋"},
+                {tab:"Home",title:"Full Home Cost Breakdown",desc:"8-step guided wizard covering rates, stress test, closing costs, property tax, insurance and professionals — all in one place.",icon:"📊",badge:"NEW"},
+                {tab:"Professionals",title:"Professionals Hub",desc:"Find realtors, lawyers, home inspectors, mortgage brokers and home appraisers — all in one tab. Submit a request, connected within 1 day.",icon:"👷",badge:"NEW"},
+                {tab:"Rates",title:"Private Lenders",desc:"Banks said no? Connect with MICs, B-lenders and private mortgage specialists. Bad credit, self-employed, bridge financing.",icon:"🔓",badge:"NEW"},
+                {tab:"Renewal",title:"Switch or Stay Guide",desc:"Decision framework, 2026 term guide, true cost of switching, and word-for-word negotiation script.",icon:"🔄",badge:"NEW"},
+                {tab:"Property Tax",title:"Property Tax Suite",desc:"Calculator, tax relief programs, 17-city comparison table, and step-by-step appeal guide.",icon:"🏛️",badge:"NEW"},
+                {tab:"Resources",title:"32 Expert Articles",desc:"Private mortgages, home inspection, broker vs bank, renewal negotiation, property tax appeal and more.",icon:"📝",badge:"NEW"},
               ].map(f=>(
-                <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,cursor:"pointer"}}
+                <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,cursor:"pointer",position:"relative"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=s.navy;e.currentTarget.style.background="#f0f4ff";}}
                   onMouseLeave={e=>{e.currentTarget.style.borderColor=s.border;e.currentTarget.style.background="#f8fafc";}}>
+                  {f.badge&&<span style={{position:"absolute",top:8,right:8,background:s.red,color:"#fff",borderRadius:20,padding:"1px 6px",fontSize:8,fontWeight:800}}>{f.badge}</span>}
                   <div style={{fontSize:18,marginBottom:4}}>{f.icon}</div>
                   <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:3}}>{f.title}</div>
                   <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{f.desc}</div>
@@ -10829,18 +10830,35 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
           <Card style={{marginBottom:14}}>
             <h3 style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:10}}>🍁 About Canada Mortgage Rates</h3>
             <p style={{fontSize:12,color:s.muted,lineHeight:1.8,marginBottom:10}}>Canada Mortgage Rates (canadamortgagerates.net) is a free, independent mortgage comparison and education platform built for Canadian homebuyers and homeowners. We're not a bank, broker, or lender — we're a neutral resource designed to help you make better mortgage decisions.</p>
-            <p style={{fontSize:12,color:s.muted,lineHeight:1.8,marginBottom:10}}>Launched in June 2026, the platform covers all 10 Canadian provinces with live rate comparisons, 9 mortgage calculators, first-time buyer program guides, property tax estimators, home insurance comparisons, and a growing network of professional referrals.</p>
+            <p style={{fontSize:12,color:s.muted,lineHeight:1.8,marginBottom:10}}>Launched in June 2026 and growing fast — the platform covers all 10 Canadian provinces with live rate comparisons from 50+ lenders, 9 mortgage calculators, 32 expert articles, a full home buying cost wizard, property tax tools, home insurance comparisons, private lender guide, and a professional referral network covering realtors, lawyers, home inspectors, mortgage brokers, and appraisers.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10,marginTop:12}}>
               {[
                 {title:"Our Mission",desc:"Make mortgage information accessible, free, and honest for every Canadian — not just those who can afford a broker.",icon:"🎯"},
-                {title:"Independence",desc:"We're not owned by any lender, bank, or broker. Our rate comparisons and tool results are not influenced by commercial relationships.",icon:"⚖️"},
-                {title:"How We Make Money",desc:"Through affiliate partnerships, professional referrals (lawyers, realtors), and advertising — never by charging users.",icon:"💰"},
-                {title:"Accuracy",desc:"Rates are compiled from public lender websites and market data, updated regularly. Calculators use standard Canadian mortgage formulas. Always verify with your lender.",icon:"✅"},
+                {title:"Independence",desc:"Not owned by any lender, bank, or broker. Rate comparisons and tool results are not influenced by commercial relationships.",icon:"⚖️"},
+                {title:"How We Make Money",desc:"Through affiliate partnerships, professional referrals (realtors, lawyers, inspectors, brokers), and advertising — never by charging users.",icon:"💰"},
+                {title:"Accuracy",desc:"Rates compiled from public lender websites. Calculators use standard Canadian mortgage formulas. Always verify with your lender.",icon:"✅"},
               ].map(item=>(
                 <div key={item.title} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`}}>
                   <div style={{fontSize:18,marginBottom:4}}>{item.icon}</div>
                   <div style={{fontSize:12,fontWeight:800,color:s.navy,marginBottom:4}}>{item.title}</div>
                   <div style={{fontSize:11,color:s.muted,lineHeight:1.5}}>{item.desc}</div>
+                </div>
+              ))}
+            </div>
+            {/* Platform stats */}
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:8,marginTop:14}}>
+              {[
+                {n:"50+",l:"Lenders",icon:"🏦"},
+                {n:"10",l:"Provinces",icon:"🍁"},
+                {n:"9",l:"Calculators",icon:"🧮"},
+                {n:"32",l:"Articles",icon:"📝"},
+                {n:"27",l:"Insurers",icon:"🛡️"},
+                {n:"5",l:"Professional Types",icon:"👷"},
+              ].map(st=>(
+                <div key={st.l} style={{background:"#eff6ff",borderRadius:8,padding:"8px",textAlign:"center",border:"1px solid #bfdbfe"}}>
+                  <div style={{fontSize:16}}>{st.icon}</div>
+                  <div style={{fontSize:16,fontWeight:800,color:s.navy}}>{st.n}</div>
+                  <div style={{fontSize:9,color:s.muted}}>{st.l}</div>
                 </div>
               ))}
             </div>
@@ -10852,6 +10870,8 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
               ["Website","canadamortgagerates.net"],
               ["Email","info@canadamortgagerates.net"],
               ["X (Twitter)","@Cdnmortgagerate"],
+              ["LinkedIn","Canada Mortgage Rates"],
+              ["Facebook","Canada Mortgage Rates"],
               ["Coverage","All 10 Canadian provinces"],
               ["Launched","June 2026"],
             ].map(([l,v])=>(
