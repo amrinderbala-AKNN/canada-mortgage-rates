@@ -412,7 +412,7 @@ function FloatingJourneyButton({setActive}:{setActive:(t:string)=>void}){
       onClick={()=>{setActive("Home");setTimeout(()=>window.dispatchEvent(new CustomEvent("setHomeTab",{detail:"journey"})),100);}}
       style={{position:"fixed",bottom:140,right:16,zIndex:9989,background:`linear-gradient(135deg,${s.red},#b91c1c)`,color:"#fff",border:"none",borderRadius:30,padding:"10px 16px",fontSize:11,fontWeight:800,cursor:"pointer",boxShadow:"0 4px 16px rgba(239,68,68,0.5)",animation:"glow 2s infinite",display:"flex",alignItems:"center",gap:6}}
     >
-      🎯 Get My Numbers
+      📊 Cost Breakdown
     </button>
   );
 }
@@ -10678,7 +10678,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
           <button onClick={()=>setActive("Rates")} style={{padding:"10px 20px",background:s.gold,color:s.navy,border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer"}}>📊 Compare Rates →</button>
           <button onClick={()=>setActive("Calculators")} style={{padding:"10px 20px",background:"rgba(255,255,255,0.1)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>🧮 Calculators →</button>
-          <button onClick={()=>{setHomeTab("journey");}} style={{padding:"10px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer",animation:"glow 2s infinite"}}>⚡ Show Me Everything →</button>
+          <button onClick={()=>{setHomeTab("journey");}} style={{padding:"10px 20px",background:s.red,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:800,cursor:"pointer",animation:"glow 2s infinite"}}>📊 Full Home Cost Breakdown →</button>
         </div>
       </div>
 
@@ -10694,7 +10694,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
         <button onClick={()=>setHomeTab("overview")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="overview"?s.navy:s.border}`,background:homeTab==="overview"?s.navy:s.white,color:homeTab==="overview"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏠 Overview</button>
         <button onClick={()=>setHomeTab("tools")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="tools"?s.navy:s.border}`,background:homeTab==="tools"?s.navy:s.white,color:homeTab==="tools"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🧮 Tools</button>
         <button onClick={()=>setHomeTab("services")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="services"?s.navy:s.border}`,background:homeTab==="services"?s.navy:s.white,color:homeTab==="services"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🤝 Services</button>
-        <button onClick={()=>setHomeTab("journey")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="journey"?s.red:s.border}`,background:homeTab==="journey"?s.red:s.white,color:homeTab==="journey"?"#fff":s.red,fontSize:11,fontWeight:800,cursor:"pointer"}}>🏠 Can I Afford It?</button>
+        <button onClick={()=>setHomeTab("journey")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="journey"?s.red:s.border}`,background:homeTab==="journey"?s.red:s.white,color:homeTab==="journey"?"#fff":s.red,fontSize:11,fontWeight:800,cursor:"pointer"}}>📊 Full Home Cost Breakdown</button>
         <button onClick={()=>setHomeTab("about")} style={{flex:1,minWidth:80,padding:"9px",borderRadius:8,border:`2px solid ${homeTab==="about"?s.navy:s.border}`,background:homeTab==="about"?s.navy:s.white,color:homeTab==="about"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>📋 About</button>
       </div>
 
