@@ -1,21 +1,29 @@
 {
   "name": "Canada Mortgage Rates",
   "short_name": "CMR",
-  "description": "Canada's most complete mortgage platform",
+  "description": "Compare mortgage rates from 50+ lenders across Canada. Free, unbiased, AI-powered.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0d2240",
   "theme_color": "#0d2240",
+  "orientation": "portrait",
   "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    },
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
