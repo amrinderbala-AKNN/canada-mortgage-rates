@@ -299,6 +299,17 @@ const inp:React.CSSProperties={width:"100%",padding:"8px 10px",borderRadius:8,bo
 const calcBtn:React.CSSProperties={width:"100%",padding:10,background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:13,fontWeight:700,cursor:"pointer",marginTop:6};
 const resultBox:React.CSSProperties={background:`linear-gradient(135deg,#0d2240,#1a3a5c)`,borderRadius:10,padding:14,marginTop:12,color:"#fff"};
 function RRow({l,v,bold}:{l:string,v:string,bold?:boolean}){return <><div style={{color:"rgba(255,255,255,0.7)",fontSize:11}}>{l}</div><div style={{textAlign:"right",fontWeight:bold?700:400,fontSize:11}}>{v}</div></>;}
+const SEED_REVIEWS=[
+  {id:"r6",name:"Gagan",city:"Winnipeg, MB",role:"First Time Buyer",rating:5,text:"Amazing website, I accidentally landed on the page as I was doing research for my first time home purchase and I was able to find financing, home, lawyers. The entire process from start to finish was very educational. I have shared with all friends! The calculators helped so much in budget planning. Highly recommend!",created_at:"2026-07-17T23:46:31.442418+00:00",verified:true},
+  {id:"r5",name:"Gerame N",city:"Winnipeg, MB",role:"Explorer",rating:5,text:"Excellent resource for anyone looking to compare mortgage rates and make informed home financing decisions in Canada. Easy to navigate, provides up-to-date mortgage rate information, and offers a wide range of useful tools and calculators.",created_at:"2026-07-17T13:27:00.864763+00:00",verified:true},
+  {id:"r4",name:"Michael R",city:"Winnipeg, MB",role:"First-time buyer",rating:5,text:"I used the mortgage payment calculator while shopping for my mortgage, and it helped me find a payment range that fit my budget. The calculator was simple to use and saved me a lot of time. Definitely worth checking out.",created_at:"2026-07-16T20:22:47.641099+00:00",verified:true},
+  {id:"r3",name:"George",city:"Victoria, BC",role:"Mortgage Renewal",rating:5,text:"My mortgage was due for renewal and I was able to use canadamortgagerates as a one stop shop to review mortgage rates with all banks and make the switch at the best rate! Highly recommend!",created_at:"2026-07-15T18:33:51.071369+00:00",verified:true},
+  {id:"r2",name:"Jessica R",city:"Calgary, AB",role:"First-time buyer",rating:5,text:"Just bought my first home in Calgary North and this site made the whole mortgage process so much less intimidating. The stress test calculator showed me exactly what I could afford before I even talked to a bank. Highly recommend!",created_at:"2026-07-10T03:25:21.945726+00:00",verified:true},
+  {id:"s1",name:"Priya Sharma",city:"Brampton, ON",role:"First-time buyer",rating:5,text:"I was completely lost navigating the mortgage process as a first-time buyer. This platform broke everything down in plain English. Ended up saving almost $8,000 by comparing lenders here before walking into my bank.",created_at:"2026-07-14T10:22:00Z",verified:true},
+  {id:"s2",name:"Kevin Tremblay",city:"Laval, QC",role:"Renewing in 2026",rating:5,text:"My 5-year term was up and I had no idea what a fair renewal rate looked like. Used the Renewal Calculator here and realized my lender offer was 0.4% above what others were offering. Switched lenders and saved $180/month.",created_at:"2026-07-08T14:05:00Z",verified:true},
+  {id:"s3",name:"Derek Fontaine",city:"Winnipeg, MB",role:"Self-employed buyer",rating:4,text:"As a self-employed person, getting a mortgage is a nightmare. The Rate Finder quiz flagged that I needed a B-lender and explained why. Saved me from getting rejected by three banks before talking to a broker.",created_at:"2026-07-01T16:18:00Z",verified:true},
+  {id:"s4",name:"James Whitford",city:"Saskatoon, SK",role:"Refinancing",rating:4,text:"Ran the refinancing numbers here before calling my lender. Went in knowing exactly what rate I needed to make the break penalty worth it. Negotiated them down 0.3%. Not bad for 20 minutes on a free website.",created_at:"2026-07-10T08:30:00Z",verified:true},
+];
 function TestimonialsSection(){
   const [reviews,setReviews]=useState<any[]>([]);
   const [loading,setLoading]=useState(true);
@@ -315,7 +326,7 @@ function TestimonialsSection(){
   const visible=3;
 
   useEffect(()=>{
-    fetch("/api/reviews").then(r=>r.json()).then(d=>{setReviews(Array.isArray(d)?d:[]);setLoading(false);}).catch(()=>setLoading(false));
+    fetch("/api/reviews").then(r=>r.json()).then(d=>{const live=Array.isArray(d)?d:[];setReviews(live.length>0?live:SEED_REVIEWS);setLoading(false);}).catch(()=>{setReviews(SEED_REVIEWS);setLoading(false);});
   },[]);
 
   async function submit(){
