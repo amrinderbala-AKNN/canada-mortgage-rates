@@ -21,8 +21,6 @@ export default function Document() {
           gtag('js', new Date());
           gtag('config', 'G-D00RKKCRZW', { page_path: window.location.pathname });
         `}}/>
-        {/* Google AdSense */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3536047734099239" crossOrigin="anonymous"/>
       </Head>
       <body>
         <Main />
