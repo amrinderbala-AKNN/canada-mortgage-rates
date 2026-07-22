@@ -326,7 +326,7 @@ function TestimonialsSection(){
   const visible=3;
 
   useEffect(()=>{
-    fetch("/api/reviews").then(r=>r.json()).then(d=>{const live=Array.isArray(d)?d:[];setReviews(live.length>0?live:SEED_REVIEWS);setLoading(false);}).catch(()=>{setReviews(SEED_REVIEWS);setLoading(false);});
+    fetch("/api/reviews").then(r=>r.json()).then(d=>{const live=Array.isArray(d)?d:[];const seedIds=new Set(live.map((r:any)=>r.id));const merged=[...live,...SEED_REVIEWS.filter(r=>!seedIds.has(r.id))];setReviews(merged);setLoading(false);}).catch(()=>{setReviews(SEED_REVIEWS);setLoading(false);});
   },[]);
 
   async function submit(){
