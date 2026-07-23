@@ -1450,7 +1450,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         </table>
       </div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 4px",flexWrap:"wrap",gap:6}}>
-        <div style={{fontSize:10,color:s.muted}}>⚠️ Rates compiled from public lender websites and market data, updated regularly. Always verify directly with the lender before applying.</div>
+        <div style={{fontSize:10,color:s.muted}}>{prov==="MB"?<>⚠️ Rates are estimates except <span style={{color:"#1e40af",fontWeight:600}}>Assiniboine Credit Union</span> whose rates are sourced directly from acu.ca and verified. Always confirm the exact rate with your lender before making any financial decision. Canada Mortgage Rates is not a licensed mortgage broker.</>:<>⚠️ Rates shown are estimates based on the live Bank of Canada prime rate and typical lender spreads. Always verify the exact rate directly with the lender before making any financial decision. Canada Mortgage Rates is not a licensed mortgage broker.</> }</div>
         <div style={{fontSize:10,color:s.muted,fontWeight:600}}>🕐 Last updated: {TODAY}</div>
       </div>
 
