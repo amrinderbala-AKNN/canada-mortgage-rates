@@ -10,6 +10,11 @@ export default function Document() {
         <meta property="og:title" content="Canada Mortgage Rates" />
         <meta property="og:description" content="Canada's most complete mortgage platform. Compare rates, calculate payments, find first-time buyer programs." />
         <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://www.canadamortgagerates.net/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content="https://www.canadamortgagerates.net/og-image.png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
