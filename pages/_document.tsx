@@ -5,11 +5,12 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="description" content="Compare mortgage rates across all of Canada. Banks, credit unions, AI-powered tools, property tax, insurance and more." />
+        <meta name="description" content="Compare mortgage rates from 50+ lenders across Canada. Free tools, calculators and first-time buyer programs." />
         <meta name="theme-color" content="#0d2240" />
         <meta property="og:title" content="Canada Mortgage Rates" />
         <meta property="og:description" content="Canada's most complete mortgage platform. Compare rates, calculate payments, find first-time buyer programs." />
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Canada Mortgage Rates" />
         <meta property="og:image" content="https://www.canadamortgagerates.net/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
