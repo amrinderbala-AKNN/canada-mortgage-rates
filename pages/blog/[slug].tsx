@@ -31,7 +31,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 </ul>
 <h2>Fixed vs Variable: What Makes Sense Now?</h2>
 <p>With variable rates roughly 1.5% below 5-year fixed, variable is attractively priced. However, if rates rise 1.5% or more, variable becomes more expensive. Most economists expect the BoC to hold through summer with possible cuts in Q4 2026.</p>
-<p><strong>Our take:</strong> Variable makes sense for buyers with financial flexibility. Fixed makes sense for buyers who need payment certainty or are at the top of their budget.</p>`
+<p><strong>Our take:</strong> Variable makes sense for buyers with financial flexibility. Fixed makes sense for buyers who need payment certainty or are at the top of their budget.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a><a href="/blog/mortgage-broker-vs-bank-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Broker vs Bank: Which is Better in Canada?</a><a href="/blog/how-to-pass-mortgage-stress-test-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How to Pass Canada's Mortgage Stress Test in 2026</a></div>`
   },
   "how-to-pass-mortgage-stress-test-canada":{
     title:"How to Pass Canada's Mortgage Stress Test in 2026",
@@ -55,7 +55,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Use a mortgage broker</strong> — Brokers access B-lenders with different qualifying criteria</li>
 </ol>
 <h2>Who Does the Stress Test Apply To?</h2>
-<p>All federally regulated lenders (major banks, federal credit unions). Some provincial credit unions may use different rules. Private lenders don't use the stress test at all, but charge higher rates.</p>`
+<p>All federally regulated lenders (major banks, federal credit unions). Some provincial credit unions may use different rules. Private lenders don't use the stress test at all, but charge higher rates.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a><a href="/blog/mortgage-pre-approval-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Pre-Approval in Canada: Everything You Need to Know</a></div>`
   },
   "fhsa-rrsp-home-buyers-plan-guide":{
     title:"FHSA + RRSP Home Buyers' Plan: The Complete Guide",
@@ -84,7 +84,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <tr style="background:#f0fdf4;"><td style="padding:10px;font-weight:700;color:#15803d;">Total Combined</td><td style="padding:10px;text-align:right;font-weight:700;color:#15803d;">$100,000</td><td style="padding:10px;text-align:right;font-weight:800;color:#15803d;">$200,000</td></tr>
 </table>
 <h2>Start Now — Even Years Before Buying</h2>
-<p>Open your FHSA immediately. Even if you're 5 years away from buying, you start accumulating $8K/year of contribution room now. You get the tax deduction every year you contribute, regardless of when you buy.</p>`
+<p>Open your FHSA immediately. Even if you're 5 years away from buying, you start accumulating $8K/year of contribution room now. You get the tax deduction every year you contribute, regardless of when you buy.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Every First-Time Home Buyer Program in Canada (2026)</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a><a href="/blog/cmhc-insurance-explained" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">CMHC Mortgage Insurance Explained — Is It Really That Bad?</a></div>`
   },
   "fixed-vs-variable-mortgage-2026":{
     title:"Fixed vs Variable Mortgage in 2026 — Which Should You Choose?",
@@ -112,7 +112,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li>You plan to stay in the home for the full term</li>
 </ul>
 <h2>The Break-Even Point</h2>
-<p>At current rates, variable saves approximately $410/month vs 5-year fixed. If rates rise by 1.5%, you'd break even. If they rise more, fixed wins. If they stay flat or drop, variable wins significantly.</p>`
+<p>At current rates, variable saves approximately $410/month vs 5-year fixed. If rates rise by 1.5%, you'd break even. If they rise more, fixed wins. If they stay flat or drop, variable wins significantly.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/mortgage-renewal-guide-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Renewal Guide: How to Get the Best Rate</a><a href="/blog/closed-vs-open-mortgage-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Closed vs Open Mortgage in Canada — Which Should You Choose?</a></div>`
   },
   "mortgage-renewal-guide-canada":{
     title:"Mortgage Renewal Guide: How to Get the Best Rate",
@@ -133,7 +133,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <h2>Refinancing at Renewal: The Best Time</h2>
 <p>Renewal is the perfect time to refinance — you can increase your mortgage, change your amortization, or access equity with no break penalty. Lenders can lend up to 80% of your home's current value.</p>
 <h2>Fixed vs Variable at Renewal</h2>
-<p>With BoC holding at 2.25% and possible rate cuts in late 2026, variable rates are attractively priced. However, if your budget is tight, locking in a fixed rate gives payment certainty for your next term.</p>`
+<p>With BoC holding at 2.25% and possible rate cuts in late 2026, variable rates are attractively priced. However, if your budget is tight, locking in a fixed rate gives payment certainty for your next term.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a><a href="/blog/mortgage-penalties-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Break Penalties in Canada — How Much Will It Cost You?</a><a href="/blog/mortgage-broker-vs-bank-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Broker vs Bank: Which is Better in Canada?</a></div>`
   },
   "cmhc-insurance-explained":{
     title:"CMHC Mortgage Insurance Explained — Is It Really That Bad?",
@@ -157,7 +157,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Enables homeownership sooner:</strong> Without CMHC, many Canadians would need to save for years longer</li>
 </ul>
 <h2>Alternatives to CMHC</h2>
-<p>Canada Guaranty and Sagen (formerly Genworth) also provide mortgage default insurance at identical rates. Your lender chooses which insurer to use — you don't.</p>`
+<p>Canada Guaranty and Sagen (formerly Genworth) also provide mortgage default insurance at identical rates. Your lender chooses which insurer to use — you don't.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a><a href="/blog/fhsa-rrsp-home-buyers-plan-guide" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">FHSA + RRSP Home Buyers' Plan: The Complete Guide</a><a href="/blog/how-to-pass-mortgage-stress-test-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How to Pass Canada's Mortgage Stress Test in 2026</a></div>`
   },
   "first-time-home-buyer-programs-canada":{
     title:"Every First-Time Home Buyer Program in Canada (2026)",
@@ -182,7 +182,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Manitoba:</strong> LTT rebate up to $4,500 + rural homeownership program</li>
 <li><strong>Quebec:</strong> Provincial tax credit ~$750 on top of federal credit</li>
 <li><strong>Nova Scotia:</strong> 2% minimum down payment pilot program (2026)</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/fhsa-rrsp-home-buyers-plan-guide" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">FHSA + RRSP Home Buyers' Plan: The Complete Guide</a><a href="/blog/cmhc-insurance-explained" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">CMHC Mortgage Insurance Explained — Is It Really That Bad?</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a></div>`
   },
   "canada-housing-market-outlook-2026":{
     title:"Canada Housing Market Outlook 2026 — City by City",
@@ -206,7 +206,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Immigration:</strong> Federal targets of 395,000 new permanent residents supporting demand</li>
 <li><strong>Supply constraints:</strong> Tariffs on building materials raised construction costs ~8%</li>
 <li><strong>Rate stability:</strong> BoC holding at 2.25% is providing market certainty</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/rent-vs-buy-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Rent vs Buy in Canada 2026 — The Real Math</a><a href="/blog/bank-of-canada-rate-history-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Bank of Canada Rate History — How Rates Have Changed (2019–2026)</a></div>`
   },
   "mortgage-broker-vs-bank-canada":{
     title:"Mortgage Broker vs Bank: Which is Better in Canada?",
@@ -231,7 +231,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 </ul>
 <h2>Our Recommendation</h2>
 <p>Always get at least one mortgage broker quote alongside your bank's offer. It takes 30 minutes and could save you thousands. If your bank wants to keep your business, they'll often match a competing offer.</p>
-<p>For self-employed borrowers, those with less than perfect credit, or anyone with a complex financial situation — a mortgage broker is almost always the better choice.</p>`
+<p>For self-employed borrowers, those with less than perfect credit, or anyone with a complex financial situation — a mortgage broker is almost always the better choice.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/mortgage-pre-approval-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Pre-Approval in Canada: Everything You Need to Know</a><a href="/blog/self-employed-mortgage-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Self-Employed Mortgage in Canada 2026 — How to Qualify</a></div>`
   },
   "rent-vs-buy-canada-2026":{
     title:"Rent vs Buy in Canada 2026 — The Real Math",
@@ -263,7 +263,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li>Long-term wealth building through appreciation</li>
 <li>Freedom to renovate and personalize</li>
 </ul>
-<p><strong>Bottom line:</strong> In Prairie cities and smaller Ontario/Atlantic markets, buying still makes strong financial sense for those planning to stay 5+ years. In Toronto and Vancouver, the math is much tighter and depends heavily on your timeline and down payment size.</p>`
+<p><strong>Bottom line:</strong> In Prairie cities and smaller Ontario/Atlantic markets, buying still makes strong financial sense for those planning to stay 5+ years. In Toronto and Vancouver, the math is much tighter and depends heavily on your timeline and down payment size.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)</a><a href="/blog/canada-housing-market-outlook-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Canada Housing Market Outlook 2026 — City by City</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a></div>`
   },
   "mortgage-rates-ontario-2026":{
     title:"Mortgage Rates Ontario 2026 — Best Fixed & Variable Rates",
@@ -289,7 +289,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <h2>Best Lenders in Ontario</h2>
 <p>Meridian Credit Union, DUCA, and Alterna Savings consistently offer rates below the Big 6 banks in Ontario. Online lenders like nesto and First National are also strong options. A mortgage broker comparing all options is recommended for most Ontario buyers.</p>
 <h2>Ontario Stress Test</h2>
-<p>At Ontario's current average home price of $850,000+, the stress test significantly limits buying power. A household earning $150,000/year qualifies for approximately $680,000 at stress test rates — meaning most GTA buyers need significant down payments or dual incomes.</p>`
+<p>At Ontario's current average home price of $850,000+, the stress test significantly limits buying power. A household earning $150,000/year qualifies for approximately $680,000 at stress test rates — meaning most GTA buyers need significant down payments or dual incomes.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-toronto-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Toronto 2026 — Best Fixed & Variable Rates</a><a href="/blog/land-transfer-tax-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Land Transfer Tax in Canada 2026 — Every Province Explained</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Every First-Time Home Buyer Program in Canada (2026)</a></div>`
   },
   "mortgage-rates-alberta-2026":{
     title:"Mortgage Rates Alberta 2026 — Calgary & Edmonton Best Rates",
@@ -313,7 +313,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Calgary:</strong> Average $620K, tech and energy sector growth, strongest price appreciation</li>
 <li><strong>Edmonton:</strong> Average $445K, more affordable, government and healthcare employment base</li>
 <li><strong>Airdrie/Leduc/St. Albert:</strong> Suburban markets offering detached homes $100–150K below Calgary/Edmonton prices</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-calgary-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Calgary 2026 — Best Fixed & Variable Rates</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/rent-vs-buy-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Rent vs Buy in Canada 2026 — The Real Math</a></div>`
   },
   "mortgage-rates-bc-2026":{
     title:"Mortgage Rates British Columbia 2026 — Vancouver, Victoria & Beyond",
@@ -337,7 +337,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <h2>Best Credit Unions in BC</h2>
 <p>Vancity Credit Union and Coast Capital Savings are BC's largest credit unions and frequently offer rates 0.25–0.40% below the major banks. Both have excellent digital tools and are insured by the Credit Union Deposit Insurance Corporation of BC.</p>
 <h2>Kelowna and Interior BC: The Opportunity</h2>
-<p>While Vancouver remains extremely expensive, Kelowna ($750K), Kamloops ($560K), and Nanaimo ($620K) offer significantly better affordability with strong lifestyle appeal. These markets are seeing 3–4% annual growth as remote workers relocate from Vancouver.</p>`
+<p>While Vancouver remains extremely expensive, Kelowna ($750K), Kamloops ($560K), and Nanaimo ($620K) offer significantly better affordability with strong lifestyle appeal. These markets are seeing 3–4% annual growth as remote workers relocate from Vancouver.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-vancouver-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Vancouver 2026 — Can You Still Afford to Buy?</a><a href="/blog/land-transfer-tax-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Land Transfer Tax in Canada 2026 — Every Province Explained</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a></div>`
   },
   "mortgage-rates-quebec-2026":{
     title:"Taux Hypothécaires Québec 2026 — Montreal, Quebec City & Beyond",
@@ -363,7 +363,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>CELIAPP (FHSA):</strong> $8,000/year tax-deductible, tax-free withdrawal for first home</li>
 <li><strong>RAP (HBP):</strong> Up to $60,000 from REER tax-free</li>
 <li><strong>Quebec Tax Credit:</strong> ~$750 provincial credit on top of $1,500 federal credit</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/land-transfer-tax-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Land Transfer Tax in Canada 2026 — Every Province Explained</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a></div>`
   },
   "how-much-mortgage-can-i-afford-canada":{
     title:"How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)",
@@ -396,7 +396,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li>Increase your down payment to reduce mortgage size</li>
 <li>Extend amortization to 30 years (first-time buyers of new builds)</li>
 <li>Use a mortgage broker to access B-lenders with different qualifying rules</li>
-</ol>`
+</ol><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/how-to-pass-mortgage-stress-test-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How to Pass Canada's Mortgage Stress Test in 2026</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a><a href="/blog/mortgage-pre-approval-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Pre-Approval in Canada: Everything You Need to Know</a></div>`
   },
   "minimum-down-payment-canada-2026":{
     title:"Minimum Down Payment in Canada 2026 — Complete Guide",
@@ -426,7 +426,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <h3>TFSA</h3>
 <p>Contributions aren't tax-deductible but withdrawals are tax-free. Good for short-term down payment savings (1–3 years away from buying).</p>
 <h2>Is 5% Down a Good Idea?</h2>
-<p>The CMHC premium on a $500K home with 5% down is $19,000 added to your mortgage. At 4.89%, you'll pay approximately $28,500 in interest on that premium over 25 years. Saving to 10% or 20% saves significant money long-term — but getting into the market sooner can offset this through appreciation.</p>`
+<p>The CMHC premium on a $500K home with 5% down is $19,000 added to your mortgage. At 4.89%, you'll pay approximately $28,500 in interest on that premium over 25 years. Saving to 10% or 20% saves significant money long-term — but getting into the market sooner can offset this through appreciation.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/cmhc-insurance-explained" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">CMHC Mortgage Insurance Explained — Is It Really That Bad?</a><a href="/blog/fhsa-rrsp-home-buyers-plan-guide" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">FHSA + RRSP Home Buyers' Plan: The Complete Guide</a><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)</a></div>`
   },
   "mortgage-pre-approval-canada":{
     title:"Mortgage Pre-Approval in Canada: Everything You Need to Know",
@@ -463,7 +463,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li>Submit final documents to your lender for full approval</li>
 <li>Lender issues commitment letter</li>
 <li>Close with your lawyer/notary</li>
-</ol>`
+</ol><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/how-to-pass-mortgage-stress-test-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How to Pass Canada's Mortgage Stress Test in 2026</a><a href="/blog/mortgage-broker-vs-bank-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Broker vs Bank: Which is Better in Canada?</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a></div>`
   },
   "home-equity-line-of-credit-canada":{
     title:"HELOC in Canada 2026 — Home Equity Line of Credit Complete Guide",
@@ -493,7 +493,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>Investment property down payment</strong> — use equity in primary home to buy rental property</li>
 </ul>
 <h2>HELOC Risks to Know</h2>
-<p>A HELOC is secured against your home. If you can't make payments, you risk losing your home. Only use a HELOC for investments or improvements — not for vacations or lifestyle spending.</p>`
+<p>A HELOC is secured against your home. If you can't make payments, you risk losing your home. Only use a HELOC for investments or improvements — not for vacations or lifestyle spending.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/second-mortgage-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Second Mortgage in Canada 2026 — How It Works & When to Use One</a><a href="/blog/mortgage-renewal-guide-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Renewal Guide: How to Get the Best Rate</a><a href="/blog/mortgage-penalties-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Break Penalties in Canada — How Much Will It Cost You?</a></div>`
   },
   "self-employed-mortgage-canada":{
     title:"Self-Employed Mortgage in Canada 2026 — How to Qualify",
@@ -531,7 +531,7 @@ const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,re
 <li><strong>20% down payment</strong> — avoids CMHC and opens more lender options</li>
 <li><strong>Strong credit score</strong> — aim for 680+ to qualify at A-lenders</li>
 <li><strong>Low debt</strong> — pay off credit cards and car loans before applying</li>
-</ol>`
+</ol><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-broker-vs-bank-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Broker vs Bank: Which is Better in Canada?</a><a href="/blog/how-to-pass-mortgage-stress-test-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How to Pass Canada's Mortgage Stress Test in 2026</a><a href="/blog/mortgage-pre-approval-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Pre-Approval in Canada: Everything You Need to Know</a></div>`
   },
   "mortgage-penalties-canada":{
     title:"Mortgage Break Penalties in Canada — How Much Will It Cost You?",
@@ -560,7 +560,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>Avoid big bank fixed mortgages</strong> — use credit unions or monoline lenders with fairer IRD calculations</li>
 <li><strong>Port your mortgage</strong> — moving to a new home? Many mortgages can be transferred with no penalty</li>
 <li><strong>Wait for renewal</strong> — no penalty at all at maturity</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-renewal-guide-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Renewal Guide: How to Get the Best Rate</a><a href="/blog/closed-vs-open-mortgage-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Closed vs Open Mortgage in Canada — Which Should You Choose?</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a></div>`
   },
   "mortgage-rates-winnipeg-2026":{
     title:"Mortgage Rates Winnipeg 2026 — Best Fixed & Variable Rates",
@@ -594,7 +594,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>St. Vital/St. Boniface:</strong> $350K–$550K — popular family areas</li>
 <li><strong>North End/West End:</strong> $200K–$350K — most affordable, gentrifying</li>
 <li><strong>Transcona/East Kildonan:</strong> $300K–$450K — suburban, good value</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Ontario 2026 — Best Fixed & Variable Rates</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Every First-Time Home Buyer Program in Canada (2026)</a></div>`
   },
   "mortgage-rates-toronto-2026":{
     title:"Mortgage Rates Toronto 2026 — Best Fixed & Variable Rates",
@@ -619,7 +619,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>Dual income is almost essential:</strong> Most Toronto buyers need two salaries</li>
 <li><strong>Use a broker:</strong> Rate differences of 0.25% on a $900K mortgage save ~$15,000 over 5 years</li>
 <li><strong>Consider the 905:</strong> Mississauga, Brampton, Hamilton offer better value with similar commute times</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Ontario 2026 — Best Fixed & Variable Rates</a><a href="/blog/land-transfer-tax-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Land Transfer Tax in Canada 2026 — Every Province Explained</a><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)</a></div>`
   },
   "mortgage-rates-calgary-2026":{
     title:"Mortgage Rates Calgary 2026 — Best Fixed & Variable Rates",
@@ -648,7 +648,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>SW Calgary (Marda Loop, Lakeview):</strong> $650K–$1.2M detached</li>
 <li><strong>NE/SE Calgary:</strong> $450K–$650K — best value, diverse communities</li>
 <li><strong>Airdrie/Cochrane (commuter):</strong> $450K–$600K for larger homes</li>
-</ul>`
+</ul><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-alberta-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Alberta 2026 — Calgary & Edmonton Best Rates</a><a href="/blog/rent-vs-buy-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Rent vs Buy in Canada 2026 — The Real Math</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a></div>`
   },
   "bank-of-canada-rate-history-canada":{
     title:"Bank of Canada Rate History — How Rates Have Changed (2019–2026)",
@@ -675,7 +675,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>New buyers (2026):</strong> Benefit from rates well below the 2023 peak</li>
 </ul>
 <h2>What's Next for the BoC?</h2>
-<p>With inflation at 2.8% (slightly above the 2% target) and GDP growth slowing to 1.2%, most economists expect the BoC to hold through summer 2026 with potential for 1–2 more cuts in Q4 2026 or early 2027 if inflation continues to moderate.</p>`
+<p>With inflation at 2.8% (slightly above the 2% target) and GDP growth slowing to 1.2%, most economists expect the BoC to hold through summer 2026 with potential for 1–2 more cuts in Q4 2026 or early 2027 if inflation continues to moderate.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates in Canada — June 2026</a><a href="/blog/canada-housing-market-outlook-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Canada Housing Market Outlook 2026 — City by City</a></div>`
   },
   "land-transfer-tax-canada":{
     title:"Land Transfer Tax in Canada 2026 — Every Province Explained",
@@ -700,7 +700,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <h2>BC Property Transfer Tax</h2>
 <p>BC's PTT: 1% on first $200K, 2% on $200K–$2M, 3% on $2M+. First-time buyers get a FULL exemption on homes under $500K and partial exemption up to $525K.</p>
 <h2>Alberta Advantage</h2>
-<p>Alberta and Saskatchewan are the only provinces without meaningful land transfer taxes. On a $620K Calgary home, an Ontario buyer would save $9,475 vs buying the equivalent in Toronto. This is a genuine financial advantage for Alberta buyers.</p>`
+<p>Alberta and Saskatchewan are the only provinces without meaningful land transfer taxes. On a $620K Calgary home, an Ontario buyer would save $9,475 vs buying the equivalent in Toronto. This is a genuine financial advantage for Alberta buyers.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Minimum Down Payment in Canada 2026 — Complete Guide</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Every First-Time Home Buyer Program in Canada (2026)</a><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates Ontario 2026 — Best Fixed & Variable Rates</a></div>`
   },
   "closed-vs-open-mortgage-canada":{
     title:"Closed vs Open Mortgage in Canada — Which Should You Choose?",
@@ -732,7 +732,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 </table>
 <h2>The Verdict</h2>
 <p>For 95% of Canadian homebuyers, a closed mortgage is the right choice. The rate savings over an open mortgage are significant. Unless you have a very specific short-term need — selling within months, expecting an inheritance — choose closed.</p>
-<p>If you want flexibility, choose a variable rate closed mortgage. The break penalty is only 3 months interest (much less than a fixed IRD), and you still benefit from the lower rate.</p>`
+<p>If you want flexibility, choose a variable rate closed mortgage. The break penalty is only 3 months interest (much less than a fixed IRD), and you still benefit from the lower rate.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage in 2026 — Which Should You Choose?</a><a href="/blog/mortgage-penalties-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Break Penalties in Canada — How Much Will It Cost You?</a><a href="/blog/mortgage-renewal-guide-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Renewal Guide: How to Get the Best Rate</a></div>`
   },
   "mortgage-rates-vancouver-2026":{
     title:"Mortgage Rates Vancouver 2026 — Can You Still Afford to Buy?",
@@ -758,7 +758,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li><strong>Kelowna:</strong> $750K — 4hr drive, tech hub, lifestyle appeal</li>
 </ul>
 <h2>Vancouver Property Transfer Tax</h2>
-<p>BC PTT on a $1.25M Vancouver property: 1% on $200K + 2% on $1.05M = $23,000. First-time buyers get no PTT exemption at this price point (exemption only applies under $500K).</p>`
+<p>BC PTT on a $1.25M Vancouver property: 1% on $200K + 2% on $1.05M = $23,000. First-time buyers get no PTT exemption at this price point (exemption only applies under $500K).</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/mortgage-rates-bc-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Rates British Columbia 2026 — Vancouver, Victoria & Beyond</a><a href="/blog/land-transfer-tax-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Land Transfer Tax in Canada 2026 — Every Province Explained</a><a href="/blog/rent-vs-buy-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Rent vs Buy in Canada 2026 — The Real Math</a></div>`
   },
   "amortization-period-canada":{
     title:"Mortgage Amortization in Canada — 25 vs 30 Years Explained",
@@ -787,7 +787,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li>You're a first-time buyer who expects income to grow significantly</li>
 </ul>
 <h2>The Prepayment Strategy</h2>
-<p>Choose 30 years for lower mandatory payments, but make extra payments when you can. This gives you flexibility — you're not locked into the higher 25-year payment, but you can still pay off faster when cash allows.</p>`
+<p>Choose 30 years for lower mandatory payments, but make extra payments when you can. This gives you flexibility — you're not locked into the higher 25-year payment, but you can still pay off faster when cash allows.</p><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">How Much Mortgage Can I Afford in Canada? (2026 Calculator Guide)</a><a href="/blog/cmhc-insurance-explained" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">CMHC Mortgage Insurance Explained — Is It Really That Bad?</a><a href="/blog/mortgage-pre-approval-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Pre-Approval in Canada: Everything You Need to Know</a></div>`
   },
   "second-mortgage-canada":{
     title:"Second Mortgage in Canada 2026 — How It Works & When to Use One",
@@ -823,7 +823,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 <li>HELOC — much lower rate if you qualify</li>
 <li>Personal line of credit — for smaller amounts</li>
 <li>Credit union — more flexible qualification than banks</li>
-</ol>`
+</ol><div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">📚 Related Articles</h3><a href="/blog/home-equity-line-of-credit-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">HELOC in Canada 2026 — Home Equity Line of Credit Complete Guide</a><a href="/blog/mortgage-penalties-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Mortgage Break Penalties in Canada — How Much Will It Cost You?</a><a href="/blog/self-employed-mortgage-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Self-Employed Mortgage in Canada 2026 — How to Qualify</a></div>`
   },
 };;
 
