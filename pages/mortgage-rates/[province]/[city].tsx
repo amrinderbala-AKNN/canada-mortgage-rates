@@ -46,8 +46,8 @@ export default function CityPage({ code, prov, city }: { code: string; prov: any
   return (
     <>
       <Head>
-        <title>Mortgage Rates {city.name} {new Date().getFullYear()} — Best Fixed & Variable Rates | Canada Mortgage Rates</title>
-        <meta name="description" content={`Compare the best mortgage rates in ${city.name}, ${prov.name} for ${new Date().getFullYear()}. Average home: $${city.avgPrice.toLocaleString()}. 5-yr fixed from ${prov.fixedRate}. Variable from ${prov.variableRate}. Monthly payment calculator and first-time buyer programs.`} />
+        <title>{city.name} Mortgage Rates {new Date().getFullYear()} — {prov.name} | Canada Mortgage Rates</title>
+        <meta name="description" content={`Mortgage rates in ${city.name}, ${prov.name} — 5-yr fixed from ${prov.fixedRate}, variable from ${prov.variableRate}. Avg home $${city.avgPrice.toLocaleString()}. Free calculator & first-time buyer programs.`} />
         <link rel="canonical" href={`https://www.canadamortgagerates.net/mortgage-rates/${prov.slug}/${city.slug}`} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({
           "@context":"https://schema.org","@type":"FAQPage",
