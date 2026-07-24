@@ -588,7 +588,7 @@ function InstallPrompt(){
 }
 
 const TODAY=new Date().toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
-const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Professionals","Consult","News","Resources"];
+const TABS=["Home","Rates","Calculators","Property Tax","Insurance","Rate Finder","First-Time Buyers","Renewal","Listings","New Builds","Professionals","Consult","News","Resources","Free Help"];
 const SEARCH_INDEX=[
   // Tabs
   {title:"Home",desc:"Overview, latest features, tools, services, about us",tab:"Home",icon:"🍁",type:"Tab"},
@@ -898,7 +898,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers"]},{label:"Listings",tabs:["Listings"]},{label:"New Builds",tabs:["New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers"]},{label:"Listings",tabs:["Listings"]},{label:"New Builds",tabs:["New Builds"]},{label:"Professionals",tabs:["Professionals"]},{label:"Free Help",tabs:["Consult"]},{label:"Learn",tabs:["Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
@@ -925,7 +925,8 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             {group:"Buyers",tabs:["First-Time Buyers"],icon:"🏡",single:true},
             {group:"Listings",tabs:["Listings"],icon:"🏘️",single:true},
             {group:"New Builds",tabs:["New Builds"],icon:"🏗️",single:true},
-            {group:"Professionals",tabs:["Professionals","Consult"],icon:"👔",badge:"HOT",badgeColor:"#ef4444",badgeText:"#fff"},
+            {group:"Professionals",tabs:["Professionals"],icon:"👔",badge:"HOT",badgeColor:"#ef4444",badgeText:"#fff"},
+            {group:"Free Help",tabs:["Consult"],icon:"🆓",single:true},
             {group:"Learn",tabs:["Resources"],icon:"📚",single:true},
           ].map(({group,tabs:gTabs,icon,badge,badgeColor,badgeText,single})=>{
             const isGroupActive=gTabs.includes(active);
@@ -941,8 +942,8 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"🏦 Switch or Stay?",detail:"Decision framework"}],
                 "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"}],
                 "New Builds":[{label:"🏗️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"}],
-                "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers"},{label:"🔍 Home Inspectors",detail:"Certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"}],
-                "Consult":[{label:"📞 Free Consultation",detail:"Talk to a mortgage expert"},{label:"📧 Rate Alerts",detail:"Get notified when rates drop"}],
+                "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers"},{label:"🔍 Home Inspectors",detail:"Certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏡 Home Appraisers",detail:"Certified property appraisers"}],
+                "Consult":[{label:"🆓 Free Help",detail:"Free consultation, rate alerts & BoC updates"}],
                 "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
               };
               return (subMenus[t]||[]).map(item=>({...item,tab:(t==="Property Tax"||t==="Insurance"||t==="Rate Finder"||t==="Renewal")?"Calculators":t}));
@@ -11102,7 +11103,8 @@ export default function App(){
     if(active==="Resources")return <LearnGlossaryTab/>;
     if(active==="Renewal")return <RenewalTab/>;
     if(active==="Professionals")return <ProfessionalsTab/>;
-    if(active==="Consult")return <ConsultTab/>;
+    if(active==="Consult")return <ConsultTab/>
+    if(active==="Free Help")return <ConsultTab/>;
     return null;
   }
 
