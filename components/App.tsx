@@ -2731,8 +2731,6 @@ function CalcTab({prov}:{prov:string}){
       {tab==="insurance"&&<InsuranceTab initProv={prov} embedded={true}/>}
       {tab==="ratefinder"&&<RateFinderTab/>}
       {tab==="renewal"&&<RenewalTab/>}
-      {tab==="propertytax"&&<PropertyTaxTab initProv={prov} initCity={""} embedded={true}/>}
-      {tab==="insurance"&&<InsuranceTab initProv={prov} embedded={true}/>}
 
       {tab==="afford"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
@@ -3723,7 +3721,7 @@ function InsuranceTab({initProv,embedded}:{initProv:string,embedded?:boolean}){
 
       {insTab==="quote"&&(
       <Card>
-      <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:5}}>🏠 Home Insurance Estimator</h2>
+      <h2 style={{fontSize:16,fontWeight:800,color:s.navy,marginBottom:5}}>🏠 Compare Home Insurance Providers</h2>
       <p style={{fontSize:12,color:s.muted,marginBottom:14}}>Required by all mortgage lenders — compare top Canadian home insurance providers.</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(160px,1fr))",gap:10,marginBottom:12}}>
         <Field label="Home Value ($)"><input type="number" value={homeVal} onChange={e=>setHomeVal(parseFloat(e.target.value)||0)} style={inp}/></Field>
