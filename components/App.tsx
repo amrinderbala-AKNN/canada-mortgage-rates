@@ -1253,6 +1253,8 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
   const [term,setTerm]=useState("1-year");
   const [type,setType]=useState("fixed");
   const [lenderGroup,setLenderGroup]=useState<"all"|"national"|"online"|"local">("all");
+  const [isDesktop,setIsDesktop]=useState(typeof window!=="undefined"&&window.innerWidth>=768);
+  useEffect(()=>{const h=()=>setIsDesktop(window.innerWidth>=768);window.addEventListener("resize",h);return()=>window.removeEventListener("resize",h);},[]);
   const [rates,setRates]=useState([]);
   const [loading,setLoading]=useState(false);
   const [usingSample,setUsingSample]=useState(false);
@@ -1420,8 +1422,8 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
       })()}
       {!loading&&withRate.length>0&&(
         <div style={{display:"flex",gap:10,alignItems:"flex-start",margin:"10px 0"}}>
-          {/* Vertical Best Rates sidebar */}
-          <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"12px 14px",flexShrink:0,width:160,display:"flex",flexDirection:"column",gap:8}}>
+          {/* Vertical Best Rates sidebar — desktop only */}
+          {isDesktop&&<div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"12px 14px",flexShrink:0,width:160,display:"flex",flexDirection:"column",gap:8}}>
             <div>
               <div style={{color:s.gold,fontSize:10,fontWeight:800,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:2}}>🏆 Best Rates</div>
               <div style={{color:"rgba(255,255,255,0.5)",fontSize:9}}>{term} {type}</div>
@@ -1436,7 +1438,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
                 <a href={inst.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"4px 0",background:i===0?s.gold:s.red,color:i===0?s.navy:"#fff",borderRadius:6,fontSize:9,fontWeight:700,textDecoration:"none",textAlign:"center"}}>Apply →</a>
               </div>
             ))}
-          </div>
+          </div>}
           {/* Rate table takes remaining space */}
           <div style={{flex:1,minWidth:0}}>
           <div style={{display:"flex",alignItems:"center",gap:10,margin:"0 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
