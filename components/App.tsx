@@ -1419,33 +1419,32 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         );
       })()}
       {!loading&&withRate.length>0&&(
-        <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"12px 16px",margin:"10px 0",display:"flex",alignItems:"center",gap:12,flexWrap:"wrap"}}>
-          <div style={{flexShrink:0}}>
-            <div style={{color:s.gold,fontSize:11,fontWeight:800,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:2}}>🏆 Best Rates This Week</div>
-            <div style={{color:"rgba(255,255,255,0.5)",fontSize:10}}>{term} {type} · {city}</div>
-          </div>
-          <div style={{display:"flex",gap:8,flex:1,flexWrap:"wrap"}}>
+        <div style={{display:"flex",gap:10,alignItems:"flex-start",margin:"10px 0"}}>
+          {/* Vertical Best Rates sidebar */}
+          <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:12,padding:"12px 14px",flexShrink:0,width:160,display:"flex",flexDirection:"column",gap:8}}>
+            <div>
+              <div style={{color:s.gold,fontSize:10,fontWeight:800,textTransform:"uppercase",letterSpacing:"0.5px",marginBottom:2}}>🏆 Best Rates</div>
+              <div style={{color:"rgba(255,255,255,0.5)",fontSize:9}}>{term} {type}</div>
+            </div>
             {withRate.slice(0,3).map(({inst,rate},i)=>(
-              <div key={inst.name} style={{background:"rgba(255,255,255,0.08)",borderRadius:10,padding:"8px 14px",display:"flex",alignItems:"center",gap:10,flex:1,minWidth:160,border:`1px solid rgba(255,255,255,0.1)`}}>
-                <div style={{fontSize:18,lineHeight:1}}>{"🥇🥈🥉"[i]}</div>
-                <div style={{flex:1}}>
-                  <div style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:1}}>{inst.name}</div>
-                  <div style={{fontSize:20,fontWeight:800,color:i===0?s.gold:"#fff"}}>{rate.toFixed(2)}%</div>
+              <div key={inst.name} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:"8px 10px",border:`1px solid rgba(255,255,255,0.1)`}}>
+                <div style={{display:"flex",alignItems:"center",gap:5,marginBottom:3}}>
+                  <span style={{fontSize:14}}>{["🥇","🥈","🥉"][i]}</span>
+                  <div style={{fontSize:9,color:"rgba(255,255,255,0.7)",lineHeight:1.3,flex:1}}>{inst.name}</div>
                 </div>
-                <a href={inst.url} target="_blank" rel="noopener noreferrer" style={{padding:"5px 10px",background:i===0?s.gold:s.red,color:i===0?s.navy:"#fff",borderRadius:7,fontSize:10,fontWeight:700,textDecoration:"none",flexShrink:0}}>Apply</a>
+                <div style={{fontSize:18,fontWeight:800,color:i===0?s.gold:"#fff",marginBottom:4}}>{rate.toFixed(2)}%</div>
+                <a href={inst.url} target="_blank" rel="noopener noreferrer" style={{display:"block",padding:"4px 0",background:i===0?s.gold:s.red,color:i===0?s.navy:"#fff",borderRadius:6,fontSize:9,fontWeight:700,textDecoration:"none",textAlign:"center"}}>Apply →</a>
               </div>
             ))}
           </div>
-        </div>
-      )}
-      {!loading&&withRate.length>0&&(
-        <div style={{display:"flex",alignItems:"center",gap:10,margin:"10px 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
-          <span style={{fontSize:18}}>ℹ️</span>
-          <div style={{flex:1}}><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest — compiled from public lender rates</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
-          <div style={{fontSize:10,color:"#15803d",fontWeight:600,flexShrink:0,textAlign:"right"}}>🕐 Last updated<br/>{TODAY}</div>
-        </div>
-      )}
-      <div style={{background:s.white,borderRadius:14,boxShadow:"0 4px 20px rgba(0,0,0,0.08)",overflow:"hidden",marginTop:6}}>
+          {/* Rate table takes remaining space */}
+          <div style={{flex:1,minWidth:0}}>
+          <div style={{display:"flex",alignItems:"center",gap:10,margin:"0 0 6px",padding:"9px 14px",background:"linear-gradient(135deg,#f0fdf4,#dcfce7)",border:`1px solid #bbf7d0`,borderRadius:10}}>
+            <span style={{fontSize:18}}>ℹ️</span>
+            <div style={{flex:1}}><div style={{fontSize:12,color:"#15803d",fontWeight:700}}>Sorted lowest to highest — compiled from public lender rates</div><div style={{fontSize:11,color:"#16a34a"}}>{term} {type} · Best: <b>{minR?.toFixed(2)}%</b>{city?` in ${city}`:""} · Confirm the exact rate with the lender before applying</div></div>
+            <div style={{fontSize:10,color:"#15803d",fontWeight:600,flexShrink:0,textAlign:"right"}}>🕐 Last updated<br/>{TODAY}</div>
+          </div>
+          <div style={{background:s.white,borderRadius:14,boxShadow:"0 4px 20px rgba(0,0,0,0.08)",overflow:"hidden",marginTop:6}}>
         <table style={{width:"100%",borderCollapse:"collapse"}}>
           <thead><tr style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`}}>{["#","Institution","Rate","Rate Bar","Badge","Apply"].map(h=><th key={h} style={{color:"rgba(255,255,255,0.9)",padding:"12px 12px",fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:"0.6px",textAlign:h==="Institution"?"left":"center"}}>{h}</th>)}</tr></thead>
           <tbody>
@@ -1477,6 +1476,9 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
           </tbody>
         </table>
       </div>
+          </div>{/* end rate table wrapper */}
+        </div>{/* end best rates flex row */}
+      )}
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 4px",flexWrap:"wrap",gap:6}}>
         <div style={{fontSize:10,color:s.muted}}>{prov==="MB"?<>⚠️ Rates are estimates except <span style={{color:"#1e40af",fontWeight:600}}>Assiniboine Credit Union</span> whose rates are sourced directly from acu.ca and verified. Always confirm the exact rate with your lender before making any financial decision. Canada Mortgage Rates is not a licensed mortgage broker.</>:<>⚠️ Rates shown are estimates based on the live Bank of Canada prime rate and typical lender spreads. Always verify the exact rate directly with the lender before making any financial decision. Canada Mortgage Rates is not a licensed mortgage broker.</> }</div>
         <div style={{fontSize:10,color:s.muted,fontWeight:600}}>🕐 Last updated: {TODAY}</div>
