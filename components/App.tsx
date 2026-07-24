@@ -1252,6 +1252,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
   const [city,setCity]=useState(initCity);
   const [term,setTerm]=useState("1-year");
   const [type,setType]=useState("fixed");
+  const [lenderGroup,setLenderGroup]=useState<"all"|"national"|"online"|"local">("all");
   const [rates,setRates]=useState([]);
   const [loading,setLoading]=useState(false);
   const [usingSample,setUsingSample]=useState(false);
@@ -1322,7 +1323,9 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
   const spread=maxR&&minR?maxR-minR:1;
   const withRate=institutions.map(inst=>{const row=filtered.find(r=>r.institution===inst.name);const rate=row?(type==="fixed"?row.fixed:row.variable):null;return{inst,rate};}).filter(r=>r.rate!=null).sort((a,b)=>a.rate-b.rate);
   const noRate=institutions.map(inst=>{const row=filtered.find(r=>r.institution===inst.name);const rate=row?(type==="fixed"?row.fixed:row.variable):null;return{inst,rate};}).filter(r=>r.rate==null);
-  const sortedRows=[...withRate,...noRate];
+  const filterByGroup=(rows:{inst:any,rate:number|null}[])=>
+    lenderGroup==="all"?rows:rows.filter(({inst})=>inst.type===lenderGroup);
+  const sortedRows=[...filterByGroup(withRate),...filterByGroup(noRate)];
   const rankEmoji=["🥇","🥈","🥉"];
   const rankColors=["#f59e0b","#9ca3af","#cd7f32"];
 
@@ -1358,6 +1361,13 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
           {["fixed","variable"].map(t=><button key={t} onClick={()=>setType(t)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${type===t?s.red:s.border}`,background:type===t?s.red:s.white,color:type===t?"#fff":s.muted,fontSize:11,cursor:"pointer",fontWeight:type===t?700:400,textTransform:"capitalize"}}>{t}</button>)}
           <button onClick={()=>window.dispatchEvent(new CustomEvent("switchTab",{detail:"Consult"}))} style={{padding:"5px 14px",borderRadius:20,border:"none",background:s.green,color:"#fff",fontSize:11,fontWeight:700,cursor:"pointer",zIndex:200,position:"relative"}}>📞 Get My Rate →</button>
           <span style={{fontSize:10,color:s.muted,alignSelf:"center"}}>{lastUpd}</span>
+        </div>
+        {/* Lender group filter */}
+        <div style={{display:"flex",gap:6,flexWrap:"wrap",paddingTop:6,borderTop:`1px solid ${s.border}`}}>
+          {([["all","🏦 All","All Lenders"],["national","🏛️","Banks"],["local","🏘️","Credit Unions"],["online","💻","Online Lenders"]] as const).map(([g,icon,label])=>{
+            const count=g==="all"?[...withRate,...noRate].length:[...withRate,...noRate].filter(({inst})=>inst.type===g).length;
+            return <button key={g} onClick={()=>setLenderGroup(g)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${lenderGroup===g?s.navy:s.border}`,background:lenderGroup===g?s.navy:s.white,color:lenderGroup===g?"#fff":s.muted,fontSize:11,fontWeight:lenderGroup===g?700:400,cursor:"pointer",whiteSpace:"nowrap"}}>{icon} {label} <span style={{opacity:0.7,fontSize:10}}>({count})</span></button>;
+          })}
         </div>
       </div>
       {usingSample&&<div style={{background:"#fff7ed",border:`1px solid #fed7aa`,borderRadius:8,padding:"8px 14px",fontSize:11,color:"#c2410c",margin:"10px 0"}}>⚠️ These are estimated rates, not pulled from a live source right now — verify with the institution directly before applying.</div>}
