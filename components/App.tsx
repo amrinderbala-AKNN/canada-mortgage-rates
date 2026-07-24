@@ -898,7 +898,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Compare",tabs:["Rates"]},{label:"Tools",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers","Listings","New Builds","Professionals"]},{label:"Help",tabs:["Consult"]},{label:"Resources",tabs:["News","Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Renewal","Listings","New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
@@ -915,42 +915,56 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
         <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:"rgba(255,255,255,0.08)",border:`1px solid rgba(255,255,255,0.15)`,color:"#fff",borderRadius:6,padding:"4px 7px",cursor:"pointer",fontSize:12,flexShrink:0}}>
           {menuOpen?"✕":"☰"}
         </button>
-        {/* Tab ribbon — hidden on mobile via CSS */}
+        {/* Tab ribbon — grouped nav — hidden on mobile via CSS */}
         <div className="tab-ribbon-desktop" style={{borderTop:"1px solid rgba(255,255,255,0.1)",padding:"3px 6px"}}>
           <div style={{display:"flex",gap:2,flexWrap:"wrap",justifyContent:"center"}}>
-          {TABS.map(t=>{
-            const isActive=active===t;
-            const emoji={Rates:"📊",Calculators:"🧮","Property Tax":"🏛️",Insurance:"🛡️","Rate Finder":"🔍","First-Time Buyers":"🏠",Renewal:"🔄",Professionals:"👷",Listings:"🏘️","New Builds":"🏗️",Consult:"📞",News:"📰","Resources":"📖",Home:"🍁"}[t]||"";
-            const subMenus:{[k:string]:{label:string,detail:string}[]}={
-              "Rates":[{label:"📊 Compare Rates",detail:"Live rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"},{label:"🔓 Private Lenders",detail:"Bad credit, bridge, self-employed options"}],
-              "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"},{label:"📁 Doc Checklist",detail:"What you need to apply"}],
-              "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"},{label:"🧮 Rate Impact",detail:"Dollar difference calculator"},{label:"📋 Pre-Approval",detail:"Guide + printable PDF"}],
-              "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"📅 Renewal Guide",detail:"Timeline & top lenders"},{label:"🏦 Switch or Stay?",detail:"Decision framework & term guide"},{label:"💬 Negotiate Script",detail:"Word-for-word script"}],
-              "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"},{label:"📊 Market Tools",detail:"Prices & neighbourhood checklist"},{label:"🏡 Home Value",detail:"Free evaluation + tools"}],
-              "New Builds":[{label:"🏘️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"},{label:"💳 Construction Mortgage",detail:"How it differs from resale"},{label:"🤝 Connect",detail:"Buyer & developer forms"}],
-              "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers for closing"},{label:"🔍 Home Inspectors",detail:"Find certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏡 Home Value",detail:"Free evaluation + professional appraisal"}],
-              "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"},{label:"💰 Deductible Guide",detail:"Find your sweet spot"},{label:"🚨 Claims Guide",detail:"What to do after a claim"},{label:"📖 Insurance Guide",detail:"Costs, savings & FAQ"}],
-              "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"},{label:"💳 Payment Options",detail:"Monthly vs annual"}],
-              "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
-              "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & mortgage education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
-            };
-            const menu=subMenus[t];
+          {[
+            {group:"Home",tabs:["Home"],icon:"🍁",single:true},
+            {group:"Rates",tabs:["Rates","News"],icon:"📊",badge:"LIVE",badgeColor:"#4ade80",badgeText:"#14532d"},
+            {group:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"],icon:"🧮"},
+            {group:"Buyers",tabs:["First-Time Buyers","Renewal","Listings","New Builds"],icon:"🏡"},
+            {group:"Professionals",tabs:["Professionals","Consult"],icon:"👔",badge:"HOT",badgeColor:"#ef4444",badgeText:"#fff"},
+            {group:"Learn",tabs:["Resources"],icon:"📚",single:true},
+          ].map(({group,tabs:gTabs,icon,badge,badgeColor,badgeText,single})=>{
+            const isGroupActive=gTabs.includes(active);
+            const subMenuItems=gTabs.flatMap(t=>{
+              const subMenus:{[k:string]:{label:string,detail:string}[]}={
+                "Rates":[{label:"📊 Compare Rates",detail:"Estimated rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"},{label:"🔓 Private Lenders",detail:"Bad credit, bridge, self-employed options"}],
+                "News":[{label:"📰 Latest News",detail:"Canadian mortgage & real estate news"}],
+                "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"}],
+                "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"}],
+                "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"}],
+                "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"}],
+                "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
+                "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"🏦 Switch or Stay?",detail:"Decision framework"}],
+                "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"}],
+                "New Builds":[{label:"🏗️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"}],
+                "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers"},{label:"🔍 Home Inspectors",detail:"Certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"}],
+                "Consult":[{label:"📞 Free Consultation",detail:"Talk to a mortgage expert"},{label:"📧 Rate Alerts",detail:"Get notified when rates drop"}],
+                "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
+              };
+              return (subMenus[t]||[]).map(item=>({...item,tab:t}));
+            });
             return(
-              <div key={t} style={{position:"relative",flexShrink:0}}
-                onMouseEnter={()=>setHoverTab(t)}
+              <div key={group} style={{position:"relative",flexShrink:0}}
+                onMouseEnter={()=>!single&&setHoverTab(group)}
                 onMouseLeave={()=>setHoverTab(null)}>
-                <button onClick={()=>{setActive(t);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}} style={{background:isActive?s.gold:t==="Professionals"?"rgba(239,68,68,0.15)":"rgba(255,255,255,0.05)",border:`1px solid ${isActive?"transparent":t==="Professionals"?"rgba(239,68,68,0.5)":"rgba(255,255,255,0.1)"}`,color:isActive?s.navy:"rgba(255,255,255,0.85)",fontSize:isMobile?9:11,padding:isMobile?"4px 6px":"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s",animation:!isActive&&t==="Professionals"?"glow 2s infinite":undefined}}>
-                  {emoji&&<span style={{fontSize:11}}>{emoji}</span>}
-                  {t==="Rates"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#4ade80",color:isActive?s.navy:"#14532d",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>LIVE</span></>:t==="New Builds"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#f59e0b",color:isActive?s.navy:"#78350f",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>NEW</span></>:t==="Professionals"?<>{t}<span style={{background:isActive?"rgba(0,0,0,0.15)":"#ef4444",color:"#fff",borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2,animation:"pulse 1.5s infinite"}}>HOT</span></>:t}
+                <button
+                  onClick={()=>{setActive(gTabs[0]);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}}
+                  style={{background:isGroupActive?s.gold:group==="Professionals"?"rgba(239,68,68,0.15)":"rgba(255,255,255,0.05)",border:`1px solid ${isGroupActive?"transparent":group==="Professionals"?"rgba(239,68,68,0.5)":"rgba(255,255,255,0.1)"}`,color:isGroupActive?s.navy:"rgba(255,255,255,0.85)",fontSize:11,padding:"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isGroupActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s",animation:!isGroupActive&&group==="Professionals"?"glow 2s infinite":undefined}}>
+                  <span style={{fontSize:11}}>{icon}</span>
+                  {group}
+                  {badge&&<span style={{background:isGroupActive?"rgba(0,0,0,0.15)":badgeColor,color:isGroupActive?s.navy:badgeText,borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>{badge}</span>}
+                  {!single&&<span style={{fontSize:8,opacity:0.6,marginLeft:1}}>▾</span>}
                 </button>
-                {menu&&hoverTab===t&&(
+                {!single&&hoverTab===group&&subMenuItems.length>0&&(
                   <div style={{position:"absolute",top:"100%",left:0,background:"#fff",borderRadius:10,boxShadow:"0 8px 30px rgba(0,0,0,0.18)",border:`1px solid ${s.border}`,minWidth:220,zIndex:9999,padding:"6px 0"}}>
-                    <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{t}</div>
-                    {menu.map((item,i)=>(
+                    <div style={{padding:"6px 12px 4px",fontSize:9,fontWeight:800,color:s.muted,textTransform:"uppercase",letterSpacing:"0.5px",borderBottom:`1px solid ${s.light}`}}>{group}</div>
+                    {subMenuItems.map((item,i)=>(
                       <button key={i} onClick={()=>{
-                        setActive(t);setHoverTab(null);window.scrollTo({top:0,behavior:"smooth"});
-                        setTimeout(()=>window.dispatchEvent(new CustomEvent("switchSubTab",{detail:{tab:t,label:item.label}})),150);
-                      }} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<menu.length-1?`1px solid ${s.light}`:"none"}}
+                        setActive(item.tab);setHoverTab(null);window.scrollTo({top:0,behavior:"smooth"});
+                        setTimeout(()=>window.dispatchEvent(new CustomEvent("switchSubTab",{detail:{tab:item.tab,label:item.label}})),150);
+                      }} style={{display:"flex",flexDirection:"column",width:"100%",textAlign:"left",padding:"7px 12px",background:"none",border:"none",cursor:"pointer",borderBottom:i<subMenuItems.length-1?`1px solid ${s.light}`:"none"}}
                         onMouseEnter={e=>(e.currentTarget.style.background="#f8fafc")}
                         onMouseLeave={e=>(e.currentTarget.style.background="none")}>
                         <span style={{fontSize:12,fontWeight:700,color:s.navy}}>{item.label}</span>
