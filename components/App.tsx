@@ -898,7 +898,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Renewal"]},{label:"Listings",tabs:["Listings"]},{label:"New Builds",tabs:["New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder","Renewal"]},{label:"Buyers",tabs:["First-Time Buyers"]},{label:"Listings",tabs:["Listings"]},{label:"New Builds",tabs:["New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
@@ -922,7 +922,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             {group:"Home",tabs:["Home"],icon:"🍁",single:true},
             {group:"Rates",tabs:["Rates","News"],icon:"📊",badge:"LIVE",badgeColor:"#4ade80",badgeText:"#14532d"},
             {group:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"],icon:"🧮"},
-            {group:"Buyers",tabs:["First-Time Buyers","Renewal"],icon:"🏡"},
+            {group:"Buyers",tabs:["First-Time Buyers"],icon:"🏡",single:true},
             {group:"Listings",tabs:["Listings"],icon:"🏘️",single:true},
             {group:"New Builds",tabs:["New Builds"],icon:"🏗️",single:true},
             {group:"Professionals",tabs:["Professionals","Consult"],icon:"👔",badge:"HOT",badgeColor:"#ef4444",badgeText:"#fff"},
@@ -945,7 +945,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 "Consult":[{label:"📞 Free Consultation",detail:"Talk to a mortgage expert"},{label:"📧 Rate Alerts",detail:"Get notified when rates drop"}],
                 "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
               };
-              return (subMenus[t]||[]).map(item=>({...item,tab:(t==="Property Tax"||t==="Insurance")?"Calculators":t}));
+              return (subMenus[t]||[]).map(item=>({...item,tab:(t==="Property Tax"||t==="Insurance"||t==="Rate Finder"||t==="Renewal")?"Calculators":t}));
             });
             return(
               <div key={group} style={{position:"relative",flexShrink:0}}
@@ -2474,7 +2474,7 @@ function CalcTab({prov}:{prov:string}){
   useEffect(()=>{
     const h=(e:any)=>{
       if(e.detail.tab==="Calculators"){
-        const labelMap:any={"💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy","🏛️ Tax Calculator":"propertytax","⚖️ Appeal Guide":"propertytax","🛡️ Home Insurance":"insurance","🏠 Get Quotes":"insurance","🏛️ Property Tax":"propertytax"};
+        const labelMap:any={"💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy","🏛️ Tax Calculator":"propertytax","⚖️ Appeal Guide":"propertytax","🛡️ Home Insurance":"insurance","🏠 Get Quotes":"insurance","🏛️ Property Tax":"propertytax","🎯 Rate Finder":"ratefinder","📊 Fixed vs Variable":"ratefinder","🧮 Rate Impact":"ratefinder","📋 Pre-Approval":"ratefinder","🔄 Compare Offer":"renewal","🏦 Switch or Stay?":"renewal","💬 Negotiate Script":"renewal","📅 Renewal Guide":"renewal"};
         setTab(labelMap[e.detail.label]||e.detail.sub||"payment");
       }
     };
@@ -2502,6 +2502,8 @@ function CalcTab({prov}:{prov:string}){
     {id:"rentvbuy",label:"🏠 Rent vs Buy",color:"#7c3aed"},
     {id:"amort",label:"📅 Amortization",color:"#0d2240"},
     {id:"docs",label:"📁 Checklist",color:"#15803d"},
+    {id:"ratefinder",label:"🎯 Rate Finder",color:"#7c3aed"},
+    {id:"renewal",label:"🔄 Renewal",color:"#0891b2"},
   ];
 
   function doPayment(){
@@ -2728,6 +2730,8 @@ function CalcTab({prov}:{prov:string}){
       {tab==="payment"&&<CalcBanners type="rates"/>}
       {tab==="propertytax"&&<PropertyTaxTab initProv={prov} initCity={""} embedded={true}/>}
       {tab==="insurance"&&<InsuranceTab initProv={prov} embedded={true}/>}
+      {tab==="ratefinder"&&<RateFinderTab/>}
+      {tab==="renewal"&&<RenewalTab initProv={prov} initCity={""}/>}
 
       {tab==="afford"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
@@ -4082,7 +4086,7 @@ function RateImpactTab(){
   );
 }
 
-function RateFinderTab(){
+function RateFinderTab({embedded}:{embedded?:boolean}={}){
   const [subTab,setSubTab]=useState<"finder"|"compare"|"impact"|"preapproval">("finder");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Rate Finder")setSubTab(e.detail.sub);};
