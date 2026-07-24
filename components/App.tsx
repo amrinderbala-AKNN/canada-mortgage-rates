@@ -2638,7 +2638,7 @@ function CalcTab({prov}:{prov:string}){
   return(
     <div>
       <div style={{display:"flex",gap:2,background:"#f1f5f9",borderRadius:10,padding:4,marginBottom:14,flexWrap:"wrap"}}>
-        {tabList.map(t=><button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,padding:"8px 4px",borderRadius:8,fontSize:10,fontWeight:700,cursor:"pointer",color:tab===t.id?"#fff":s.muted,border:`2px solid ${tab===t.id?t.color:s.border}`,background:tab===t.id?t.color:s.white,boxShadow:tab===t.id?"0 2px 8px rgba(0,0,0,0.15)":"none",minWidth:65,transition:"all 0.15s",whiteSpace:"nowrap"}}>{t.label}</button>)}
+        {tabList.map(t=>(<button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,padding:"10px 6px",borderRadius:10,fontSize:11,fontWeight:700,cursor:"pointer",color:tab===t.id?"#fff":s.navy,border:`2px solid ${tab===t.id?t.color:s.border}`,background:tab===t.id?t.color:"#f8fafc",boxShadow:tab===t.id?`0 4px 12px ${t.color}40`:"none",minWidth:75,transition:"all 0.15s",whiteSpace:"nowrap",display:"flex",flexDirection:"column",alignItems:"center",gap:2,lineHeight:1.3}}>{t.label.split(" ")[0]}<span style={{fontSize:9,fontWeight:600,opacity:0.85}}>{t.label.split(" ").slice(1).join(" ")}</span></button>))}
       </div>
 
       {tab==="payment"&&(
