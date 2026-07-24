@@ -898,7 +898,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
   const [menuOpen,setMenuOpen]=useState(false);
   const [searchOpen,setSearchOpen]=useState(false);
   const [hoverTab,setHoverTab]=useState<string|null>(null);
-  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Renewal","Listings","New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
+  const groups=[{label:"Overview",tabs:["Home"]},{label:"Rates",tabs:["Rates","News"]},{label:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"]},{label:"Buyers",tabs:["First-Time Buyers","Renewal"]},{label:"Listings",tabs:["Listings"]},{label:"New Builds",tabs:["New Builds"]},{label:"Professionals",tabs:["Professionals","Consult"]},{label:"Learn",tabs:["Resources"]}];
   return(
     <div style={{background:s.navy,flexShrink:0,position:isMobile?"fixed":"sticky",top:0,left:0,right:0,zIndex:1000,boxShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
       <div style={{padding:"0 10px",display:"flex",alignItems:"center",height:46,gap:6}}>
@@ -922,7 +922,9 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
             {group:"Home",tabs:["Home"],icon:"🍁",single:true},
             {group:"Rates",tabs:["Rates","News"],icon:"📊",badge:"LIVE",badgeColor:"#4ade80",badgeText:"#14532d"},
             {group:"Calculators",tabs:["Calculators","Property Tax","Insurance","Rate Finder"],icon:"🧮"},
-            {group:"Buyers",tabs:["First-Time Buyers","Renewal","Listings","New Builds"],icon:"🏡"},
+            {group:"Buyers",tabs:["First-Time Buyers","Renewal"],icon:"🏡"},
+            {group:"Listings",tabs:["Listings"],icon:"🏘️",single:true},
+            {group:"New Builds",tabs:["New Builds"],icon:"🏗️",single:true},
             {group:"Professionals",tabs:["Professionals","Consult"],icon:"👔",badge:"HOT",badgeColor:"#ef4444",badgeText:"#fff"},
             {group:"Learn",tabs:["Resources"],icon:"📚",single:true},
           ].map(({group,tabs:gTabs,icon,badge,badgeColor,badgeText,single})=>{
@@ -932,8 +934,8 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 "Rates":[{label:"📊 Compare Rates",detail:"Estimated rates from 50+ lenders"},{label:"🎁 Current Offers",detail:"Cash back & promotions"},{label:"📈 Rate History",detail:"BoC timeline 2020–2026"},{label:"🏦 Lender Guide",detail:"Banks vs brokers vs monolines"},{label:"🔓 Private Lenders",detail:"Bad credit, bridge, self-employed options"}],
                 "News":[{label:"📰 Latest News",detail:"Canadian mortgage & real estate news"}],
                 "Calculators":[{label:"💰 Payment",detail:"Monthly payment calculator"},{label:"🏡 Affordability",detail:"How much can you afford?"},{label:"📋 Stress Test",detail:"Will you qualify?"},{label:"🔄 Renewal",detail:"Compare your offer"},{label:"💳 Refinancing",detail:"Should you break early?"},{label:"📅 Amortization",detail:"Year-by-year schedule"},{label:"🏷️ Closing Costs",detail:"Land transfer tax & fees"}],
-                "Property Tax":[{label:"🏛️ Tax Calculator",detail:"Estimate by city"},{label:"⚖️ Appeal Guide",detail:"Save $500–$3,000"}],
-                "Insurance":[{label:"🏠 Get Quotes",detail:"Compare 10+ providers"},{label:"🛡️ What's Covered",detail:"Coverage explainer"}],
+                "Property Tax":[{label:"🏛️ Property Tax",detail:"Estimate by city + appeal guide"}],
+                "Insurance":[{label:"🛡️ Home Insurance",detail:"Compare 10+ providers & coverage"}],
                 "Rate Finder":[{label:"🎯 Rate Finder",detail:"5-question personalized quiz"},{label:"📊 Fixed vs Variable",detail:"2026 comparison"}],
                 "First-Time Buyers":[{label:"🏠 Programs",detail:"FHSA, HBP, grants"},{label:"📋 Step-by-Step",detail:"First-time buyer guide"}],
                 "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"🏦 Switch or Stay?",detail:"Decision framework"}],
@@ -2472,7 +2474,7 @@ function CalcTab({prov}:{prov:string}){
   useEffect(()=>{
     const h=(e:any)=>{
       if(e.detail.tab==="Calculators"){
-        const labelMap:any={"💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy","🏛️ Tax Calculator":"propertytax","⚖️ Appeal Guide":"propertytax","🛡️ Home Insurance":"insurance","🏠 Get Quotes":"insurance"};
+        const labelMap:any={"💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy","🏛️ Tax Calculator":"propertytax","⚖️ Appeal Guide":"propertytax","🛡️ Home Insurance":"insurance","🏠 Get Quotes":"insurance","🏛️ Property Tax":"propertytax"};
         setTab(labelMap[e.detail.label]||e.detail.sub||"payment");
       }
     };
