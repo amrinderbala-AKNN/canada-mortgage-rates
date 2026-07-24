@@ -10820,7 +10820,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
             {[
               {n:"50+",l:"Lenders Compared",icon:"🏦",color:s.navy},
               {n:"10",l:"Provinces Covered",icon:"🍁",color:s.red},
-              {n:"9",l:"Calculators",icon:"🧮",color:s.blue},
+              {n:"11",l:"Calculators",icon:"🧮",color:s.blue},
               {n:"32",l:"Expert Articles",icon:"📝",color:s.green},
               {n:"Free",l:"Always & Forever",icon:"💰",color:s.gold},
             ].map(stat=>(
@@ -10841,8 +10841,8 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
                 {tab:"Professionals",title:"Professionals Hub",desc:"Find realtors, lawyers, home inspectors, mortgage brokers and home appraisers — all in one tab. Submit a request, connected within 1 day.",icon:"👷",badge:"NEW"},
                 {tab:"Rates",title:"Private Lenders",desc:"Banks said no? Connect with MICs, B-lenders and private mortgage specialists. Bad credit, self-employed, bridge financing.",icon:"🔓",badge:"NEW"},
                 {tab:"Renewal",title:"Switch or Stay Guide",desc:"Decision framework, 2026 term guide, true cost of switching, and word-for-word negotiation script.",icon:"🔄",badge:"NEW"},
-                {tab:"Property Tax",title:"Property Tax Suite",desc:"Calculator, tax relief programs, 17-city comparison table, and step-by-step appeal guide.",icon:"🏛️",badge:"NEW"},
-                {tab:"Resources",title:"32 Expert Articles",desc:"Private mortgages, home inspection, broker vs bank, renewal negotiation, property tax appeal and more.",icon:"📝",badge:"NEW"},
+                {tab:"Calculators",title:"Property Tax Suite",desc:"Calculator, tax relief programs, 17-city comparison table, and step-by-step appeal guide.",icon:"🏛️",badge:"NEW"},
+                {tab:"Rates",title:"✓ Verified Partner Rates",desc:"Assiniboine Credit Union rates now displayed with a Verified Partner badge — real posted rates, not estimates.",icon:"✓",badge:"NEW"},{tab:"Resources",title:"32 Expert Articles",desc:"Private mortgages, home inspection, broker vs bank, renewal negotiation, property tax appeal and more.",icon:"📝",badge:"NEW"},
               ].map(f=>(
                 <div key={f.title} onClick={()=>setActive(f.tab)} style={{background:"#f8fafc",borderRadius:8,padding:10,border:`1px solid ${s.border}`,cursor:"pointer",position:"relative"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor=s.navy;e.currentTarget.style.background="#f0f4ff";}}
@@ -10868,7 +10868,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:12}}>
             {[
-              {icon:"📊",tab:"Rates",title:"Compare Mortgage Rates",desc:"Live rates from 50+ lenders across all provinces. Filter by term, type, and lender.",badge:"🔴 LIVE"},
+              {icon:"📊",tab:"Rates",title:"Compare Mortgage Rates",desc:"Estimated rates from 50+ lenders across all provinces. ACU rates verified. Filter by term, type, and lender.",badge:"📊 EST"},
               {icon:"💰",tab:"Calculators",title:"Payment Calculator",desc:"Calculate your exact monthly mortgage payment based on price, rate, and amortization."},
               {icon:"🏡",tab:"Calculators",title:"Affordability Calculator",desc:"How much house can you afford? Based on GDS/TDS ratios lenders actually use."},
               {icon:"📋",tab:"Calculators",title:"Stress Test Calculator",desc:"Will you pass? Calculate at your rate +2% or 5.25% — whichever is higher."},
@@ -10876,8 +10876,8 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
               {icon:"🔄",tab:"Calculators",title:"Renewal Calculator",desc:"Compare your lender's renewal offer vs shopping around. See how much you'd save."},
               {icon:"📅",tab:"Calculators",title:"Amortization Schedule",desc:"Year-by-year breakdown of payments, interest, and remaining balance."},
               {icon:"🏷️",tab:"Calculators",title:"Closing Cost Calculator",desc:"Land transfer tax, legal fees, title insurance by province. First-time buyer rebates included."},
-              {icon:"🏛️",tab:"Property Tax",title:"Property Tax Estimator",desc:"Estimate annual property tax by city using real mill rates. Appeal guide included."},
-              {icon:"🛡️",tab:"Insurance",title:"Home Insurance Estimator",desc:"Compare quotes from Square One, Intact, Aviva, SGI, and 10+ providers by province."},
+              {icon:"🏛️",tab:"Calculators",title:"Property Tax Estimator",desc:"Estimate annual property tax by city using real mill rates. Appeal guide included."},
+              {icon:"🛡️",tab:"Calculators",title:"Home Insurance Estimator",desc:"Compare quotes from Square One, Intact, Aviva, SGI, and 10+ providers by province."},
               {icon:"🎯",tab:"Rate Finder",title:"Personalized Rate Finder",desc:"5-question quiz → estimated rate range, lender recommendation, and action plan."},
               {icon:"🧮",tab:"Rate Finder",title:"Rate Impact Calculator",desc:"See the dollar difference between two rates — monthly and over full amortization."},
             ].map(f=>(
