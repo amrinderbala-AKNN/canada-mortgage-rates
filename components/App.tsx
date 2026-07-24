@@ -954,8 +954,8 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 onMouseLeave={()=>setHoverTab(null)}>
                 <button
                   onClick={()=>{setActive(gTabs[0]);setMenuOpen(false);window.scrollTo({top:0,behavior:"smooth"});}}
-                  style={{background:isGroupActive?s.gold:group==="Professionals"?"rgba(239,68,68,0.15)":"rgba(255,255,255,0.05)",border:`1px solid ${isGroupActive?"transparent":group==="Professionals"?"rgba(239,68,68,0.5)":"rgba(255,255,255,0.1)"}`,color:isGroupActive?s.navy:"rgba(255,255,255,0.85)",fontSize:11,padding:"6px 10px",borderRadius:7,cursor:"pointer",fontWeight:isGroupActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:3,transition:"all 0.15s",animation:!isGroupActive&&group==="Professionals"?"glow 2s infinite":undefined}}>
-                  <span style={{fontSize:11}}>{icon}</span>
+                  style={{background:isGroupActive?s.gold:group==="Professionals"?"rgba(239,68,68,0.2)":group==="Free Help"?"rgba(22,163,74,0.15)":"rgba(255,255,255,0.07)",border:`1.5px solid ${isGroupActive?"transparent":group==="Professionals"?"rgba(239,68,68,0.6)":group==="Free Help"?"rgba(22,163,74,0.5)":"rgba(255,255,255,0.15)"}`,color:isGroupActive?s.navy:"rgba(255,255,255,0.92)",fontSize:12,padding:"8px 14px",borderRadius:9,cursor:"pointer",fontWeight:isGroupActive?800:600,whiteSpace:"nowrap",display:"flex",alignItems:"center",gap:4,transition:"all 0.15s",boxShadow:isGroupActive?"0 3px 10px rgba(245,166,35,0.4)":group==="Professionals"?"0 0 8px rgba(239,68,68,0.2)":"none",letterSpacing:"0.2px",animation:!isGroupActive&&group==="Professionals"?"glow 2s infinite":undefined}}>
+                  <span style={{fontSize:14}}>{icon}</span>
                   {group}
                   {badge&&<span style={{background:isGroupActive?"rgba(0,0,0,0.15)":badgeColor,color:isGroupActive?s.navy:badgeText,borderRadius:20,padding:"1px 4px",fontSize:7,fontWeight:800,marginLeft:2}}>{badge}</span>}
                   {!single&&<span style={{fontSize:8,opacity:0.6,marginLeft:1}}>▾</span>}
