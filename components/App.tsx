@@ -943,7 +943,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 "Consult":[{label:"📞 Free Consultation",detail:"Talk to a mortgage expert"},{label:"📧 Rate Alerts",detail:"Get notified when rates drop"}],
                 "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
               };
-              return (subMenus[t]||[]).map(item=>({...item,tab:t}));
+              return (subMenus[t]||[]).map(item=>({...item,tab:(t==="Property Tax"||t==="Insurance")?"Calculators":t}));
             });
             return(
               <div key={group} style={{position:"relative",flexShrink:0}}
@@ -2470,7 +2470,12 @@ function CalcBanners({type}:{type:"rates"|"renewal"|"refi"|"closing"|"consult"})
 function CalcTab({prov}:{prov:string}){
   const [tab,setTab]=useState("payment");
   useEffect(()=>{
-    const h=(e:any)=>{if(e.detail.tab==="Calculators")setTab(e.detail.sub);};
+    const h=(e:any)=>{
+      if(e.detail.tab==="Calculators"){
+        const labelMap:any={"💰 Payment":"payment","🏡 Affordability":"afford","📋 Stress Test":"stress","🔄 Renewal":"renewal","💳 Refinancing":"refi","📅 Amortization":"amort","🏷️ Closing Costs":"closing","📁 Doc Checklist":"docs","🏠 Rent vs Buy":"rentvbuy","🏛️ Tax Calculator":"propertytax","⚖️ Appeal Guide":"propertytax","🛡️ Home Insurance":"insurance","🏠 Get Quotes":"insurance"};
+        setTab(labelMap[e.detail.label]||e.detail.sub||"payment");
+      }
+    };
     window.addEventListener("setSubTab",h);return()=>window.removeEventListener("setSubTab",h);
   },[]);
   const [hp,setHp]=useState(500000);const [dp,setDp]=useState(20);const [am,setAm]=useState(25);const [pr,setPr]=useState(5.0);const [rateType,setRateType]=useState<"fixed"|"variable">("fixed");const [fr,setFr]=useState("monthly");const [condoFeeP,setCondoFeeP]=useState(0);const [payR,setPayR]=useState(null);const payRef=useRef(null);
@@ -2493,6 +2498,8 @@ function CalcTab({prov}:{prov:string}){
     {id:"closing",label:"🏷️ Closing",color:"#92400e"},
     {id:"docs",label:"📁 Checklist",color:"#15803d"},
     {id:"rentvbuy",label:"🏠 Rent vs Buy",color:"#7c3aed"},
+    {id:"propertytax",label:"🏛️ Property Tax",color:"#0891b2"},
+    {id:"insurance",label:"🛡️ Home Insurance",color:"#15803d"},
   ];
 
   function doPayment(){
@@ -2717,6 +2724,8 @@ function CalcTab({prov}:{prov:string}){
         </div>
       )}
       {tab==="payment"&&<CalcBanners type="rates"/>}
+      {tab==="propertytax"&&<PropertyTaxTab initProv={prov} initCity={""} embedded={true}/>}
+      {tab==="insurance"&&<InsuranceTab initProv={prov} embedded={true}/>}
 
       {tab==="afford"&&(
         <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:14}}>
@@ -3288,7 +3297,7 @@ function DocChecklistTab(){
   );
 }
 
-function PropertyTaxTab({initProv,initCity}){
+function PropertyTaxTab({initProv,initCity,embedded}:{initProv:string,initCity:string,embedded?:boolean}){
   const [prov,setProv]=useState(initProv);const [city,setCity]=useState(initCity);const [homeVal,setHomeVal]=useState(500000);const [valType,setValType]=useState("market");const [result,setResult]=useState(null);const resultRef=useRef(null);
   const [ptTab,setPtTab]=useState<"calculator"|"relief"|"compare"|"appeal">("calculator");
   useEffect(()=>{setProv(initProv);setCity(initCity);},[initProv,initCity]);
@@ -3644,7 +3653,7 @@ function InsuranceFAQ(){
   );
 }
 
-function InsuranceTab({initProv}){
+function InsuranceTab({initProv,embedded}:{initProv:string,embedded?:boolean}){
   const [homeVal,setHomeVal]=useState(500000);const [homeType,setHomeType]=useState("detached");const [yearBuilt,setYearBuilt]=useState("mid");const [prov,setProv]=useState(initProv);const [city,setCity]=useState(PDATA[initProv]?.cities[0]||"");const [results,setResults]=useState(null);const resultRef=useRef(null);
   const [insTab,setInsTab]=useState<"quote"|"coverage"|"deductible"|"claims"|"guide">("quote");
   useEffect(()=>{
