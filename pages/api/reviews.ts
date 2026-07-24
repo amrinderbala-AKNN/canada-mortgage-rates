@@ -1,7 +1,28 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const SUPABASE_URL = "https://tmubktwrjtlkqoyasfrp.supabase.co";
+const SUPABASE_URL = process.env.SUPABASE_URL || "https://tmubktwrjtlkqoyasfrp.supabase.co";
 const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY!;
+
+const RATE_LIMIT = 5;
+const WINDOW_MS = 60 * 1000;
+const ipMap = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = ipMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    ipMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+  if (entry.count >= RATE_LIMIT) return true;
+  entry.count++;
+  return false;
+}
+
+setInterval(() => {
+  const now = Date.now();
+  ipMap.forEach((entry, ip) => { if (now > entry.resetAt) ipMap.delete(ip); });
+}, 5 * 60 * 1000);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
@@ -13,6 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === "POST") {
+    const ip = (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() || req.socket.remoteAddress || "unknown";
+    if (isRateLimited(ip)) return res.status(429).json({ error: "Too many requests. Please wait a moment." });
+
     const { name, city, role, rating, text } = req.body;
     if (!name || !text || name.length > 60 || text.length > 500 || text.length < 20) {
       return res.status(400).json({ error: "Invalid input" });
