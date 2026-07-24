@@ -1366,7 +1366,8 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         <div style={{display:"flex",gap:6,flexWrap:"wrap",paddingTop:6,borderTop:`1px solid ${s.border}`}}>
           {([["all","🏦 All","All Lenders"],["national","🏛️","Banks"],["local","🏘️","Credit Unions"],["online","💻","Online Lenders"]] as const).map(([g,icon,label])=>{
             const count=g==="all"?[...withRate,...noRate].length:[...withRate,...noRate].filter(({inst})=>inst.type===g).length;
-            return <button key={g} onClick={()=>setLenderGroup(g)} style={{padding:"5px 12px",borderRadius:20,border:`1.5px solid ${lenderGroup===g?s.navy:s.border}`,background:lenderGroup===g?s.navy:s.white,color:lenderGroup===g?"#fff":s.muted,fontSize:11,fontWeight:lenderGroup===g?700:400,cursor:"pointer",whiteSpace:"nowrap"}}>{icon} {label} <span style={{opacity:0.7,fontSize:10}}>({count})</span></button>;
+            const colors:any={all:s.navy,national:"#1e40af",local:s.green,online:"#0891b2"};
+            return <button key={g} onClick={()=>setLenderGroup(g)} style={{padding:"8px 18px",borderRadius:10,border:`2px solid ${lenderGroup===g?colors[g]:s.border}`,background:lenderGroup===g?colors[g]:s.white,color:lenderGroup===g?"#fff":s.navy,fontSize:13,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:lenderGroup===g?"0 3px 10px rgba(0,0,0,0.15)":"none",transition:"all 0.15s",display:"flex",alignItems:"center",gap:6}}><span style={{fontSize:16}}>{icon}</span>{label}<span style={{background:lenderGroup===g?"rgba(255,255,255,0.2)":"#f1f5f9",color:lenderGroup===g?"#fff":s.muted,borderRadius:20,padding:"1px 7px",fontSize:11,fontWeight:600,marginLeft:2}}>{count}</span></button>;
           })}
         </div>
       </div>
