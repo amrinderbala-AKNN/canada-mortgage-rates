@@ -2492,14 +2492,14 @@ function CalcTab({prov}:{prov:string}){
     {id:"payment",label:"💰 Payment",color:"#0d2240"},
     {id:"afford",label:"🏡 Afford",color:"#15803d"},
     {id:"stress",label:"📋 Stress Test",color:"#7c3aed"},
+    {id:"closing",label:"🏷️ Closing",color:"#92400e"},
+    {id:"propertytax",label:"🏛️ Prop Tax",color:"#0891b2"},
+    {id:"insurance",label:"🛡️ Insurance",color:"#15803d"},
     {id:"renewal",label:"🔄 Renewal",color:"#0891b2"},
     {id:"refi",label:"💳 Refinancing",color:"#c2410c"},
-    {id:"amort",label:"📅 Amortization",color:"#0d2240"},
-    {id:"closing",label:"🏷️ Closing",color:"#92400e"},
-    {id:"docs",label:"📁 Checklist",color:"#15803d"},
     {id:"rentvbuy",label:"🏠 Rent vs Buy",color:"#7c3aed"},
-    {id:"propertytax",label:"🏛️ Property Tax",color:"#0891b2"},
-    {id:"insurance",label:"🛡️ Home Insurance",color:"#15803d"},
+    {id:"amort",label:"📅 Amortization",color:"#0d2240"},
+    {id:"docs",label:"📁 Checklist",color:"#15803d"},
   ];
 
   function doPayment(){
