@@ -4452,6 +4452,7 @@ function RateFinderTab({embedded}:{embedded?:boolean}={}){
 
 function FTHBTab({initProv}:{initProv:string}){
   const [prov,setProv]=useState(initProv);
+  const [fthbTab,setFthbTab]=useState<"programs"|"steps"|"mistakes"|"checklist">("programs");
   useEffect(()=>setProv(initProv),[initProv]);
   const data=FTHB_PROV[prov]||{programs:[],savings:[]};
 
@@ -4483,6 +4484,32 @@ function FTHBTab({initProv}:{initProv:string}){
         </div>
       </div>
 
+      {/* Sub-tab navigation */}
+      <div style={{display:"flex",gap:8,marginBottom:14,flexWrap:"wrap"}}>
+        {([
+          ["programs","📋 Programs","#15803d","#f0fdf4"],
+          ["steps","🪜 Step-by-Step","#1e40af","#eff6ff"],
+          ["mistakes","⚠️ Common Mistakes","#c2410c","#fff7ed"],
+          ["checklist","✅ Checklist","#7c3aed","#f5f3ff"],
+        ] as const).map(([id,label,activeColor,activeBg])=>(
+          <button key={id} onClick={()=>setFthbTab(id)} style={{padding:"9px 16px",borderRadius:10,border:`2px solid ${fthbTab===id?activeColor:"#e2e8f0"}`,background:fthbTab===id?activeBg:"#fff",color:fthbTab===id?activeColor:"#64748b",fontSize:12,fontWeight:700,cursor:"pointer",transition:"all 0.15s",whiteSpace:"nowrap"}}>{label}</button>
+        ))}
+      </div>
+
+      {/* Sticky broker connect card — visible on all sub-tabs */}
+      <div style={{background:"linear-gradient(135deg,#1e40af,#1e3a8a)",borderRadius:12,padding:"12px 16px",marginBottom:14,display:"flex",alignItems:"center",gap:14,flexWrap:"wrap"}}>
+        <div style={{fontSize:28,flexShrink:0}}>👨‍💼</div>
+        <div style={{flex:1,minWidth:200}}>
+          <div style={{color:"#fff",fontSize:13,fontWeight:800,marginBottom:2}}>Talk to a Mortgage Broker — Free</div>
+          <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.5}}>A licensed independent mortgage broker shops 30+ lenders on your behalf at no cost to you. They specialize in first-time buyers and can help you navigate the stress test, FHSA, and finding the best rate.</div>
+        </div>
+        <div style={{display:"flex",gap:8,flexWrap:"wrap",flexShrink:0}}>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Consult"}))} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:800,cursor:"pointer",whiteSpace:"nowrap"}}>📞 Connect Free →</button>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Professionals"}))} style={{background:"rgba(255,255,255,0.15)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>Browse Brokers →</button>
+        </div>
+      </div>
+
+      {fthbTab==="programs"&&<>
       <div style={{background:s.white,borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",overflow:"hidden",marginBottom:14}}>
         <div style={{background:"#f0fdf4",borderBottom:"1px solid #bbf7d0",padding:"12px 18px"}}><div style={{color:"#15803d",fontSize:14,fontWeight:800}}>🇨🇦 Federal Programs — Available in Every Province</div><div style={{color:"#16a34a",fontSize:11,marginTop:2}}>Stack these programs together — a couple can access up to $200K+ combined</div></div>
         <div style={{padding:"14px 18px"}}>
@@ -4558,6 +4585,88 @@ function FTHBTab({initProv}:{initProv:string}){
           ))}
         </div>
       </div>
+      </>}
+
+      {fthbTab==="steps"&&<div style={{background:s.white,borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",padding:"14px 18px",marginBottom:14}}>
+        <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>🪜 Step-by-Step: How to Buy Your First Home in Canada</div>
+        <div style={{fontSize:12,color:s.muted,marginBottom:16}}>Follow these 8 steps in order — skipping any one costs you money.</div>
+        {[
+          {step:"1",icon:"📊",title:"Check Your Credit Score",color:"#0891b2",desc:"Get a free credit report. You need 600+ to qualify, 680+ for the best rates. Fix errors — takes 30–60 days to improve.",tip:"Free at consumer.equifax.ca",url:"https://www.consumer.equifax.ca/personal/products/free-credit-score/"},
+          {step:"2",icon:"💰",title:"Open an FHSA Today",color:"#16a34a",desc:"$8,000/year, $40,000 lifetime per person. Tax deductible like an RRSP. Tax-free withdrawal like a TFSA. Every year you delay is $8,000 lost forever.",tip:"Open at any bank or credit union — takes 15 minutes",url:"https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html"},
+          {step:"3",icon:"🏦",title:"Build Your RRSP for HBP",color:"#7c3aed",desc:"Withdraw up to $60,000 per person tax-free. Funds must sit in RRSP for 90+ days before withdrawal. Stack with FHSA for up to $200K per couple.",tip:"Contribute at least 90 days before you plan to buy"},
+          {step:"4",icon:"📋",title:"Get Pre-Approved (2+ Lenders)",color:"#c2410c",desc:"Confirms your maximum purchase price, locks rate for 90–120 days. Apply at a broker AND your bank. Multiple mortgage inquiries in 14–45 days count as one check.",tip:"Compare our lender tab before applying"},
+          {step:"5",icon:"🔍",title:"Research Neighbourhoods",color:"#0d2240",desc:"Visit at different times. Test your commute at rush hour. Check schools, planned development, and talk to neighbours.",tip:"Use walkscore.com and Google Maps commute feature"},
+          {step:"6",icon:"🤝",title:"Find a REALTOR",color:"#15803d",desc:"A buyer agent costs you nothing — paid by the seller. Choose someone who knows your target area well.",tip:"Use our Professionals tab to find Winnipeg realtors"},
+          {step:"7",icon:"🏠",title:"Make an Offer with Conditions",color:"#1e40af",desc:"Always include a home inspection ($400–$600) and financing condition. Budget 2.5–4% of purchase price extra for closing costs.",tip:"Never skip the home inspection — ever"},
+          {step:"8",icon:"📝",title:"Close and Collect Programs",color:"#92400e",desc:"Claim $1,500 First-Time Buyers Tax Credit (T1 line 31270). Apply for provincial rebates. Set up HBP repayments if you used RRSP. Change your locks.",tip:"Line 31270 on your T1 return — easy $1,500"},
+        ].map((item,i)=>(
+          <div key={i} style={{display:"flex",gap:12,marginBottom:10,padding:"10px 12px",background:"#f8fafc",borderRadius:10,border:"1px solid #e2e8f0"}}>
+            <div style={{width:30,height:30,borderRadius:"50%",background:item.color,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:12,flexShrink:0}}>{item.step}</div>
+            <div style={{flex:1}}>
+              <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:3}}><span style={{fontSize:14}}>{item.icon}</span><div style={{fontSize:12,fontWeight:800,color:s.navy}}>{item.title}</div></div>
+              <div style={{fontSize:11,color:"#374151",lineHeight:1.6,marginBottom:5}}>{item.desc}</div>
+              <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:5,padding:"3px 8px",fontSize:10,color:"#92400e"}}>💡 {item.tip}</div>
+              {item.url&&<a href={item.url} target="_blank" rel="noopener noreferrer" style={{display:"inline-block",fontSize:11,color:s.blue,fontWeight:600,textDecoration:"none",marginTop:4}}>Learn more →</a>}
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      {fthbTab==="mistakes"&&<div style={{background:s.white,borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",padding:"14px 18px",marginBottom:14}}>
+        <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>⚠️ 10 Mistakes First-Time Buyers Make</div>
+        <div style={{fontSize:12,color:s.muted,marginBottom:14}}>42% of Canadian homeowners express some regret. These are the mistakes that cause it.</div>
+        {[
+          {n:"01",title:"Not getting pre-approved before house hunting",cost:"Losing the home you want",fix:"Get pre-approved before looking at a single listing. Without it you cannot make a serious offer.",c:"#dc2626"},
+          {n:"02",title:"Forgetting closing costs",cost:"$12,000-$25,000 surprise",fix:"Budget 2.5-4% on top of your down payment: land transfer tax, legal fees, inspection, title insurance.",c:"#c2410c"},
+          {n:"03",title:"Skipping the home inspection",cost:"$10,000-$100,000 in hidden repairs",fix:"$400-$600 to inspect. Catches foundation issues, electrical problems, plumbing failures. Never skip it.",c:"#dc2626"},
+          {n:"04",title:"New debt after pre-approval",cost:"Voided mortgage approval",fix:"No car, no credit card, no new debt until the keys are in your hand. Any new debt can void your approval.",c:"#c2410c"},
+          {n:"05",title:"Only one mortgage quote",cost:"$5,000-$15,000 over 5 years",fix:"Compare your bank, a broker, and a credit union. A 0.25% better rate on $400K saves $5,000-$6,000.",c:"#dc2626"},
+          {n:"06",title:"Maxing out your budget",cost:"Financial stress for years",fix:"Qualifying for $600K does not mean spend $600K. Leave room for tax, maintenance (1-2%/year), and surprises.",c:"#c2410c"},
+          {n:"07",title:"Not researching the neighbourhood",cost:"Regret and resale problems",fix:"Visit at different times of day. Test your commute. Talk to neighbours. Check planned development.",c:"#dc2626"},
+          {n:"08",title:"Buying based on emotion",cost:"Overpaying by 5-15%",fix:"Set a maximum price before you start and stick to it. Decisions based on sales data, not feelings.",c:"#c2410c"},
+          {n:"09",title:"Not opening FHSA early enough",cost:"$8,000 in room lost per year",fix:"Every year without an FHSA is $8,000 lost forever. Open it now even if you are 5 years from buying.",c:"#dc2626"},
+          {n:"10",title:"Changing jobs before applying",cost:"Delayed or denied approval",fix:"Even a better-paying role change during the mortgage process can delay or prevent approval.",c:"#c2410c"},
+        ].map((m,i)=>(
+          <div key={i} style={{display:"flex",gap:10,marginBottom:8,padding:"9px 12px",background:i%2===0?"#fff7ed":"#fff1f2",borderRadius:9,border:`1px solid ${i%2===0?"#fed7aa":"#fecdd3"}`,borderLeft:`4px solid ${m.c}`}}>
+            <div style={{width:24,height:24,borderRadius:6,background:m.c,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontWeight:800,fontSize:9,flexShrink:0}}>{m.n}</div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:11,fontWeight:800,color:"#1c1917",marginBottom:2}}>{m.title}</div>
+              <div style={{fontSize:10,color:"#dc2626",fontWeight:600,marginBottom:2}}>💸 {m.cost}</div>
+              <div style={{fontSize:10,color:"#374151",lineHeight:1.5}}>✅ {m.fix}</div>
+            </div>
+          </div>
+        ))}
+      </div>}
+
+      {fthbTab==="checklist"&&<div style={{background:s.white,borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",padding:"14px 18px",marginBottom:14}}>
+        <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>✅ First-Time Buyer Checklist</div>
+        <div style={{fontSize:12,color:s.muted,marginBottom:14}}>Check everything here before you sign anything.</div>
+        {[
+          {section:"Before You Start Looking",color:"#1e40af",items:["Credit score checked and above 680","FHSA opened and contributions started","RRSP built for HBP (funds in 90+ days)","Pre-approval from 2+ lenders in hand","Down payment saved plus 2.5-4% for closing costs","Monthly budget set: mortgage, tax, maintenance, utilities"]},
+          {section:"During Your Search",color:"#15803d",items:["Realtor hired who knows your target area","Neighbourhoods visited at different times of day","Commute tested during peak hours","School ratings checked (affects resale)","Comparable sales reviewed for every serious property","Strata documents reviewed (condos only)"]},
+          {section:"Before Making an Offer",color:"#c2410c",items:["Home inspection booked — never skip","Financing condition in offer","Property taxes confirmed","Condo fees and reserve fund reviewed (condos)","Closing date aligns with rental lease","Lawyer hired to review agreement"]},
+          {section:"After Offer Accepted",color:"#7c3aed",items:["No new debt before closing","Employment unchanged","Final mortgage approval confirmed","Home insurance arranged","Utilities transfer scheduled","Moving company booked"]},
+          {section:"After Closing",color:"#0891b2",items:["Tax credit claimed on T1 line 31270","Provincial rebates applied for","HBP repayment schedule set","Locks changed","Utilities transferred","Home warranty registered (new builds)"]},
+        ].map((sec,si)=>(
+          <div key={si} style={{marginBottom:12}}>
+            <div style={{fontSize:11,fontWeight:800,color:sec.color,marginBottom:6,display:"flex",alignItems:"center",gap:5}}><div style={{width:7,height:7,borderRadius:"50%",background:sec.color}}/>{sec.section}</div>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:4}}>
+              {sec.items.map((item,ii)=>(
+                <div key={ii} style={{display:"flex",alignItems:"flex-start",gap:7,padding:"6px 9px",background:"#f8fafc",borderRadius:7,border:"1px solid #e2e8f0"}}>
+                  <div style={{width:14,height:14,borderRadius:3,border:`2px solid ${sec.color}`,flexShrink:0,marginTop:1}}/>
+                  <div style={{fontSize:11,color:"#374151",lineHeight:1.5}}>{item}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",borderRadius:10,padding:"12px 16px",marginTop:8}}>
+          <div style={{color:"#f5a623",fontSize:12,fontWeight:800,marginBottom:3}}>💬 Need Help?</div>
+          <div style={{color:"rgba(255,255,255,0.7)",fontSize:11,marginBottom:8}}>Get your questions answered free — no obligation.</div>
+          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Consult"}))} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:7,padding:"6px 14px",fontSize:11,fontWeight:800,cursor:"pointer"}}>Get Free Help →</button>
+        </div>
+      </div>}
+
     </div>
   );
 }
