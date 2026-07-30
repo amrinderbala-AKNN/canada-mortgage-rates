@@ -4465,6 +4465,25 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
     setBSubmitting(false);
   }
   useEffect(()=>setProv(initProv),[initProv]);
+
+  function printChecklist(){
+    const sections=[
+      {section:"Before You Start Looking",color:"#1e40af",items:["Credit score checked and above 680","FHSA opened and contributions started","RRSP built for HBP (funds in 90+ days)","Pre-approval from 2+ lenders in hand","Down payment saved plus 2.5-4% for closing costs","Monthly budget set: mortgage, tax, maintenance, utilities"]},
+      {section:"During Your Search",color:"#15803d",items:["Realtor hired who knows your target area","Neighbourhoods visited at different times of day","Commute tested during peak hours","School ratings checked (affects resale)","Comparable sales reviewed for every serious property","Strata documents reviewed (condos only)"]},
+      {section:"Before Making an Offer",color:"#c2410c",items:["Home inspection booked — never skip","Financing condition in offer","Property taxes confirmed","Condo fees and reserve fund reviewed (condos)","Closing date aligns with rental lease","Lawyer hired to review agreement"]},
+      {section:"After Offer Accepted",color:"#7c3aed",items:["No new debt before closing","Employment unchanged","Final mortgage approval confirmed","Home insurance arranged","Utilities transfer scheduled","Moving company booked"]},
+      {section:"After Closing",color:"#0891b2",items:["Tax credit claimed on T1 line 31270","Provincial rebates applied for","HBP repayment schedule set","Locks changed","Utilities transferred","Home warranty registered (new builds)"]},
+    ];
+    const sectionsHtml=sections.map(sec=>
+      "<div class=\"section\"><div class=\"section-title\" style=\"color:"+sec.color+"\">"+sec.section+"</div><div class=\"items\">"+
+      sec.items.map(item=>"<div class=\"item\"><div class=\"checkbox\" style=\"border-color:"+sec.color+"\"></div><div class=\"item-text\">"+item+"</div></div>").join("")+
+      "</div></div>"
+    ).join("");
+    const html="<html><head><title>First-Time Buyer Checklist — canadamortgagerates.net</title><style>@page{margin:18mm}*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}body{color:#0d2240;background:#fff}.header{background:#0d2240;color:#fff;padding:18px 22px;border-radius:10px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}.header-title{font-size:18px;font-weight:800}.header-sub{font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px}.header-url{font-size:11px;color:#f5a623;font-weight:700}.section{margin-bottom:16px}.section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:7px;padding-bottom:3px;border-bottom:2px solid currentColor}.items{display:grid;grid-template-columns:1fr 1fr;gap:5px}.item{display:flex;align-items:flex-start;gap:7px;padding:6px 9px;border-radius:5px;border:1px solid #e2e8f0;background:#f8fafc}.checkbox{width:13px;height:13px;border-radius:3px;border:2px solid;flex-shrink:0;margin-top:1px}.item-text{font-size:10.5px;line-height:1.5;color:#374151}.footer{margin-top:20px;padding:10px 14px;background:#f0f9ff;border-radius:7px;font-size:10px;color:#64748b;text-align:center}</style></head><body><div class=\"header\"><div><div class=\"header-title\">&#127809; First-Time Home Buyer Checklist</div><div class=\"header-sub\">Complete this before making any offer — skipping steps costs money</div></div><div class=\"header-url\">canadamortgagerates.net</div></div>"+sectionsHtml+"<div class=\"footer\">Free tool by <strong>canadamortgagerates.net</strong> &mdash; Canada&rsquo;s most complete mortgage platform &middot; Compare rates, calculators, professionals &middot; All free</div></body></html>";
+    const w=window.open("","_blank","width=820,height=920");
+    if(w){w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),600);}
+  }
+
   const data=FTHB_PROV[prov]||{programs:[],savings:[]};
 
   const fedPrograms=[
@@ -4654,57 +4673,7 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
             <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:2}}>✅ First-Time Buyer Checklist</div>
             <div style={{fontSize:11,color:s.muted}}>Check everything here before you sign anything.</div>
           </div>
-          <button onClick={()=>{
-            const printContent = `
-              <html><head><title>First-Time Buyer Checklist — canadamortgagerates.net</title>
-              <style>
-                @page { margin: 20mm; }
-                * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-                body { color: #0d2240; background: #fff; }
-                .header { background: #0d2240; color: #fff; padding: 20px 24px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-                .header-title { font-size: 20px; font-weight: 800; }
-                .header-sub { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-                .header-url { font-size: 11px; color: #f5a623; font-weight: 700; }
-                .section { margin-bottom: 18px; }
-                .section-title { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 2px solid currentColor; }
-                .items { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-                .item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 10px; border-radius: 6px; border: 1px solid #e2e8f0; background: #f8fafc; }
-                .checkbox { width: 14px; height: 14px; border-radius: 3px; border: 2px solid; flex-shrink: 0; margin-top: 1px; }
-                .item-text { font-size: 11px; line-height: 1.5; color: #374151; }
-                .footer { margin-top: 24px; padding: 12px 16px; background: #f0f9ff; border-radius: 8px; font-size: 10px; color: #64748b; text-align: center; }
-                .badge { background: #f5a623; color: #0d2240; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-              </style></head><body>
-              <div class="header">
-                <div>
-                  <div class="header-title">🇨🇦 First-Time Home Buyer Checklist</div>
-                  <div class="header-sub">Complete this before making any offer — skipping steps costs money</div>
-                </div>
-                <div class="header-url">canadamortgagerates.net</div>
-              </div>
-              ${[
-                {section:"Before You Start Looking",color:"#1e40af",items:["Credit score checked and above 680","FHSA opened and contributions started","RRSP built for HBP (funds in 90+ days)","Pre-approval from 2+ lenders in hand","Down payment saved plus 2.5-4% for closing costs","Monthly budget set: mortgage, tax, maintenance, utilities"]},
-                {section:"During Your Search",color:"#15803d",items:["Realtor hired who knows your target area","Neighbourhoods visited at different times of day","Commute tested during peak hours","School ratings checked (affects resale)","Comparable sales reviewed for every serious property","Strata documents reviewed (condos only)"]},
-                {section:"Before Making an Offer",color:"#c2410c",items:["Home inspection booked — never skip","Financing condition in offer","Property taxes confirmed","Condo fees and reserve fund reviewed (condos)","Closing date aligns with rental lease","Lawyer hired to review agreement"]},
-                {section:"After Offer Accepted",color:"#7c3aed",items:["No new debt before closing","Employment unchanged","Final mortgage approval confirmed","Home insurance arranged","Utilities transfer scheduled","Moving company booked"]},
-                {section:"After Closing",color:"#0891b2",items:["Tax credit claimed on T1 line 31270","Provincial rebates applied for","HBP repayment schedule set","Locks changed","Utilities transferred","Home warranty registered (new builds)"]},
-              ].map(sec=>\`
-                <div class="section">
-                  <div class="section-title" style="color:\${sec.color}">\${sec.section}</div>
-                  <div class="items">
-                    \${sec.items.map(item=>\`
-                      <div class="item">
-                        <div class="checkbox" style="border-color:\${sec.color}"></div>
-                        <div class="item-text">\${item}</div>
-                      </div>\`).join("")}
-                  </div>
-                </div>\`).join("")}
-              <div class="footer">
-                Free tool by <strong>canadamortgagerates.net</strong> — Canada's most complete mortgage platform · Compare rates, run calculators, connect with professionals · All free, no account needed
-              </div>
-              </body></html>`;
-            const w = window.open("","_blank","width=800,height=900");
-            if(w){w.document.write(printContent);w.document.close();w.focus();setTimeout(()=>w.print(),500);}
-          }} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.3)"}}>
+          <button onClick={printChecklist} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.3)"}}>
             🖨️ Print / Save PDF
           </button>
         </div>
