@@ -4454,6 +4454,8 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
   const [prov,setProv]=useState(initProv);
   const [fthbTab,setFthbTab]=useState<"programs"|"steps"|"mistakes"|"checklist">("programs");
   const [showBrokerModal,setShowBrokerModal]=useState(false);
+  const [checkedItems,setCheckedItems]=useState<{[k:string]:boolean}>({});
+  function toggleItem(key:string){setCheckedItems(prev=>({...prev,[key]:!prev[key]}));}
   const [bName,setBName]=useState("");const [bEmail,setBEmail]=useState("");const [bPhone,setBPhone]=useState("");const [bMsg,setBMsg]=useState("");const [bSubmitting,setBSubmitting]=useState(false);const [bDone,setBDone]=useState(false);const [bErr,setBErr]=useState("");
   async function submitBrokerForm(){
     if(!bName.trim()||!bEmail.trim()){setBErr("Name and email are required.");return;}
@@ -4668,15 +4670,25 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
       </div>}
 
       {fthbTab==="checklist"&&<div style={{background:s.white,borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",padding:"14px 18px",marginBottom:14}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12,flexWrap:"wrap",gap:8}}>
-          <div>
-            <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:2}}>✅ First-Time Buyer Checklist</div>
-            <div style={{fontSize:11,color:s.muted}}>Check everything here before you sign anything.</div>
-          </div>
-          <button onClick={printChecklist} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.3)"}}>
+        {(()=>{const total=30;const done=Object.values(checkedItems).filter(Boolean).length;return(
+        <div style={{marginBottom:12}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10,flexWrap:"wrap",gap:8}}>
+            <div>
+              <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:2}}>✅ First-Time Buyer Checklist</div>
+              <div style={{fontSize:11,color:s.muted}}>Tap items to check them off. {done}/{total} completed.</div>
+            </div>
+            <div style={{display:"flex",gap:6}}>
+            {done>0&&<button onClick={()=>setCheckedItems({})} style={{padding:"8px 12px",background:"#f1f5f9",color:"#64748b",border:"none",borderRadius:9,fontSize:11,fontWeight:600,cursor:"pointer"}}>Reset</button>}
+            <button onClick={printChecklist} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.3)"}}>
             🖨️ Print / Save PDF
           </button>
-        </div>
+            </div>
+          </div>
+          <div style={{background:"#e2e8f0",borderRadius:20,height:6,marginBottom:4}}>
+            <div style={{background:done===total?"#16a34a":s.navy,borderRadius:20,height:6,width:`${(done/total)*100}%`,transition:"width 0.3s"}}/>
+          </div>
+          {done===total&&<div style={{background:"#f0fdf4",border:"1px solid #bbf7d0",borderRadius:8,padding:"8px 12px",fontSize:11,color:"#15803d",fontWeight:600,textAlign:"center"}}>🎉 Checklist complete — you're ready to buy!</div>}
+        </div>)})()}
         {[
           {section:"Before You Start Looking",color:"#1e40af",items:["Credit score checked and above 680","FHSA opened and contributions started","RRSP built for HBP (funds in 90+ days)","Pre-approval from 2+ lenders in hand","Down payment saved plus 2.5-4% for closing costs","Monthly budget set: mortgage, tax, maintenance, utilities"]},
           {section:"During Your Search",color:"#15803d",items:["Realtor hired who knows your target area","Neighbourhoods visited at different times of day","Commute tested during peak hours","School ratings checked (affects resale)","Comparable sales reviewed for every serious property","Strata documents reviewed (condos only)"]},
@@ -4688,9 +4700,11 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
             <div style={{fontSize:11,fontWeight:800,color:sec.color,marginBottom:6,display:"flex",alignItems:"center",gap:5}}><div style={{width:7,height:7,borderRadius:"50%",background:sec.color}}/>{sec.section}</div>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:4}}>
               {sec.items.map((item,ii)=>(
-                <div key={ii} style={{display:"flex",alignItems:"flex-start",gap:7,padding:"6px 9px",background:"#f8fafc",borderRadius:7,border:"1px solid #e2e8f0"}}>
-                  <div style={{width:14,height:14,borderRadius:3,border:`2px solid ${sec.color}`,flexShrink:0,marginTop:1}}/>
-                  <div style={{fontSize:11,color:"#374151",lineHeight:1.5}}>{item}</div>
+                <div key={ii} onClick={()=>toggleItem(sec.section+ii)} style={{display:"flex",alignItems:"flex-start",gap:7,padding:"6px 9px",background:checkedItems[sec.section+ii]?"#f0fdf4":"#f8fafc",borderRadius:7,border:`1px solid ${checkedItems[sec.section+ii]?sec.color:"#e2e8f0"}`,cursor:"pointer",transition:"all 0.15s"}}>
+                  <div style={{width:14,height:14,borderRadius:3,border:`2px solid ${sec.color}`,flexShrink:0,marginTop:1,background:checkedItems[sec.section+ii]?sec.color:"transparent",display:"flex",alignItems:"center",justifyContent:"center"}}>
+                    {checkedItems[sec.section+ii]&&<span style={{color:"#fff",fontSize:9,fontWeight:800,lineHeight:1}}>✓</span>}
+                  </div>
+                  <div style={{fontSize:11,color:checkedItems[sec.section+ii]?"#374151":"#374151",lineHeight:1.5,textDecoration:checkedItems[sec.section+ii]?"line-through":"none",opacity:checkedItems[sec.section+ii]?0.6:1}}>{item}</div>
                 </div>
               ))}
             </div>
