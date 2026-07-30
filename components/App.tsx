@@ -4453,6 +4453,17 @@ function RateFinderTab({embedded}:{embedded?:boolean}={}){
 function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>void}){
   const [prov,setProv]=useState(initProv);
   const [fthbTab,setFthbTab]=useState<"programs"|"steps"|"mistakes"|"checklist">("programs");
+  const [showBrokerModal,setShowBrokerModal]=useState(false);
+  const [bName,setBName]=useState("");const [bEmail,setBEmail]=useState("");const [bPhone,setBPhone]=useState("");const [bMsg,setBMsg]=useState("");const [bSubmitting,setBSubmitting]=useState(false);const [bDone,setBDone]=useState(false);const [bErr,setBErr]=useState("");
+  async function submitBrokerForm(){
+    if(!bName.trim()||!bEmail.trim()){setBErr("Name and email are required.");return;}
+    setBSubmitting(true);setBErr("");
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:bName,email:bEmail,phone:bPhone,message:bMsg||"First-time buyer looking for mortgage broker advice",type:"First-Time Buyer Broker Request",source:"FTHB Tab"})});
+      setBDone(true);
+    }catch{setBErr("Something went wrong. Please try again.");}
+    setBSubmitting(false);
+  }
   useEffect(()=>setProv(initProv),[initProv]);
   const data=FTHB_PROV[prov]||{programs:[],savings:[]};
 
@@ -4504,7 +4515,7 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.5}}>A licensed independent mortgage broker shops 30+ lenders on your behalf at no cost to you. They specialize in first-time buyers and can help you navigate the stress test, FHSA, and finding the best rate.</div>
         </div>
         <div style={{display:"flex",gap:8,flexWrap:"wrap",flexShrink:0}}>
-          <button onClick={()=>{setActive("Consult");window.scrollTo({top:0,behavior:"smooth"});}} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:800,cursor:"pointer",whiteSpace:"nowrap"}}>📞 Connect Free →</button>
+          <button onClick={()=>setShowBrokerModal(true)} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:800,cursor:"pointer",whiteSpace:"nowrap"}}>📞 Connect Free →</button>
         </div>
       </div>
 
@@ -4666,6 +4677,50 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
         </div>
       </div>}
 
+      {/* Broker Connect Modal */}
+      {showBrokerModal&&(
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.55)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={e=>{if(e.target===e.currentTarget)setShowBrokerModal(false);}}>
+          <div style={{background:"#fff",borderRadius:16,padding:"24px 20px",maxWidth:420,width:"100%",boxShadow:"0 20px 60px rgba(0,0,0,0.3)"}}>
+            {!bDone?<>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16}}>
+                <div>
+                  <div style={{fontSize:16,fontWeight:800,color:"#0d2240"}}>👨‍💼 Connect with a Mortgage Broker</div>
+                  <div style={{fontSize:11,color:"#64748b",marginTop:2}}>Free — a broker will reach out within 1 business day</div>
+                </div>
+                <button onClick={()=>setShowBrokerModal(false)} style={{background:"#f1f5f9",border:"none",borderRadius:8,width:28,height:28,cursor:"pointer",fontSize:14,color:"#64748b"}}>✕</button>
+              </div>
+              <div style={{marginBottom:10}}>
+                <label style={{display:"block",fontSize:10,fontWeight:700,color:"#64748b",marginBottom:3,textTransform:"uppercase"}}>Full Name *</label>
+                <input value={bName} onChange={e=>setBName(e.target.value)} placeholder="Your name" style={{width:"100%",padding:"9px 12px",borderRadius:8,border:"1.5px solid #e2e8f0",fontSize:13,boxSizing:"border-box" as "border-box"}}/>
+              </div>
+              <div style={{marginBottom:10}}>
+                <label style={{display:"block",fontSize:10,fontWeight:700,color:"#64748b",marginBottom:3,textTransform:"uppercase"}}>Email *</label>
+                <input value={bEmail} onChange={e=>setBEmail(e.target.value)} placeholder="your@email.com" type="email" style={{width:"100%",padding:"9px 12px",borderRadius:8,border:"1.5px solid #e2e8f0",fontSize:13,boxSizing:"border-box" as "border-box"}}/>
+              </div>
+              <div style={{marginBottom:10}}>
+                <label style={{display:"block",fontSize:10,fontWeight:700,color:"#64748b",marginBottom:3,textTransform:"uppercase"}}>Phone (optional)</label>
+                <input value={bPhone} onChange={e=>setBPhone(e.target.value)} placeholder="204-xxx-xxxx" style={{width:"100%",padding:"9px 12px",borderRadius:8,border:"1.5px solid #e2e8f0",fontSize:13,boxSizing:"border-box" as "border-box"}}/>
+              </div>
+              <div style={{marginBottom:14}}>
+                <label style={{display:"block",fontSize:10,fontWeight:700,color:"#64748b",marginBottom:3,textTransform:"uppercase"}}>What do you need help with?</label>
+                <textarea value={bMsg} onChange={e=>setBMsg(e.target.value)} placeholder="e.g. First-time buyer, stress test, FHSA, best rate..." rows={3} style={{width:"100%",padding:"9px 12px",borderRadius:8,border:"1.5px solid #e2e8f0",fontSize:13,resize:"none",boxSizing:"border-box" as "border-box"}}/>
+              </div>
+              {bErr&&<div style={{color:"#dc2626",fontSize:11,marginBottom:8}}>{bErr}</div>}
+              <button onClick={submitBrokerForm} disabled={bSubmitting} style={{width:"100%",padding:"11px",background:bSubmitting?"#94a3b8":"#0d2240",color:"#fff",border:"none",borderRadius:9,fontSize:13,fontWeight:800,cursor:bSubmitting?"not-allowed":"pointer"}}>
+                {bSubmitting?"Sending...":"📞 Request Free Consultation →"}
+              </button>
+              <div style={{fontSize:10,color:"#94a3b8",textAlign:"center",marginTop:8}}>No spam. No obligation. A broker will contact you directly.</div>
+            </>:<>
+              <div style={{textAlign:"center",padding:"20px 0"}}>
+                <div style={{fontSize:48,marginBottom:12}}>✅</div>
+                <div style={{fontSize:16,fontWeight:800,color:"#0d2240",marginBottom:6}}>Request Sent!</div>
+                <div style={{fontSize:13,color:"#64748b",marginBottom:16}}>A mortgage broker will reach out within 1 business day.</div>
+                <button onClick={()=>{setShowBrokerModal(false);setBDone(false);setBName("");setBEmail("");setBPhone("");setBMsg("");}} style={{background:"#0d2240",color:"#fff",border:"none",borderRadius:8,padding:"9px 20px",fontSize:12,fontWeight:700,cursor:"pointer"}}>Close</button>
+              </div>
+            </>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
