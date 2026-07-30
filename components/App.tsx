@@ -4450,7 +4450,7 @@ function RateFinderTab({embedded}:{embedded?:boolean}={}){
 }
 
 
-function FTHBTab({initProv}:{initProv:string}){
+function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>void}){
   const [prov,setProv]=useState(initProv);
   const [fthbTab,setFthbTab]=useState<"programs"|"steps"|"mistakes"|"checklist">("programs");
   useEffect(()=>setProv(initProv),[initProv]);
@@ -4504,8 +4504,7 @@ function FTHBTab({initProv}:{initProv:string}){
           <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.5}}>A licensed independent mortgage broker shops 30+ lenders on your behalf at no cost to you. They specialize in first-time buyers and can help you navigate the stress test, FHSA, and finding the best rate.</div>
         </div>
         <div style={{display:"flex",gap:8,flexWrap:"wrap",flexShrink:0}}>
-          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Consult"}))} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:800,cursor:"pointer",whiteSpace:"nowrap"}}>📞 Connect Free →</button>
-          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Professionals"}))} style={{background:"rgba(255,255,255,0.15)",color:"#fff",border:"1px solid rgba(255,255,255,0.3)",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap"}}>Browse Brokers →</button>
+          <button onClick={()=>{setActive("Consult");window.scrollTo({top:0,behavior:"smooth"});}} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:8,padding:"9px 18px",fontSize:12,fontWeight:800,cursor:"pointer",whiteSpace:"nowrap"}}>📞 Connect Free →</button>
         </div>
       </div>
 
@@ -4663,7 +4662,7 @@ function FTHBTab({initProv}:{initProv:string}){
         <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",borderRadius:10,padding:"12px 16px",marginTop:8}}>
           <div style={{color:"#f5a623",fontSize:12,fontWeight:800,marginBottom:3}}>💬 Need Help?</div>
           <div style={{color:"rgba(255,255,255,0.7)",fontSize:11,marginBottom:8}}>Get your questions answered free — no obligation.</div>
-          <button onClick={()=>window.dispatchEvent(new CustomEvent("navigate",{detail:"Consult"}))} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:7,padding:"6px 14px",fontSize:11,fontWeight:800,cursor:"pointer"}}>Get Free Help →</button>
+          <button onClick={()=>{setActive("Consult");window.scrollTo({top:0,behavior:"smooth"});}} style={{background:"#f5a623",color:"#0d2240",border:"none",borderRadius:7,padding:"6px 14px",fontSize:11,fontWeight:800,cursor:"pointer"}}>Get Free Help →</button>
         </div>
       </div>}
 
@@ -11218,7 +11217,7 @@ export default function App(){
     if(active==="Property Tax")return <PropertyTaxTab {...tabProps}/>;
     if(active==="Insurance")return <InsuranceTab initProv={prov}/>;
     if(active==="Rate Finder")return <RateFinderTab/>;
-    if(active==="First-Time Buyers")return <FTHBTab initProv={prov}/>;
+    if(active==="First-Time Buyers")return <FTHBTab initProv={prov} setActive={setActive}/>;
     if(active==="News")return <NewsTab initProv={prov}/>;
     if(active==="Listings")return <ListingsTab {...tabProps}/>;
     if(active==="New Builds")return <NewBuildsTab/>;
