@@ -4486,6 +4486,29 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
     if(w){w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),600);}
   }
 
+  function printProgress(){
+    const sections=[
+      {section:"Before You Start Looking",color:"#1e40af",items:["Credit score checked and above 680","FHSA opened and contributions started","RRSP built for HBP (funds in 90+ days)","Pre-approval from 2+ lenders in hand","Down payment saved plus 2.5-4% for closing costs","Monthly budget set: mortgage, tax, maintenance, utilities"]},
+      {section:"During Your Search",color:"#15803d",items:["Realtor hired who knows your target area","Neighbourhoods visited at different times of day","Commute tested during peak hours","School ratings checked (affects resale)","Comparable sales reviewed for every serious property","Strata documents reviewed (condos only)"]},
+      {section:"Before Making an Offer",color:"#c2410c",items:["Home inspection booked — never skip","Financing condition in offer","Property taxes confirmed","Condo fees and reserve fund reviewed (condos)","Closing date aligns with rental lease","Lawyer hired to review agreement"]},
+      {section:"After Offer Accepted",color:"#7c3aed",items:["No new debt before closing","Employment unchanged","Final mortgage approval confirmed","Home insurance arranged","Utilities transfer scheduled","Moving company booked"]},
+      {section:"After Closing",color:"#0891b2",items:["Tax credit claimed on T1 line 31270","Provincial rebates applied for","HBP repayment schedule set","Locks changed","Utilities transferred","Home warranty registered (new builds)"]},
+    ];
+    const total=30;
+    const done=Object.values(checkedItems).filter(Boolean).length;
+    const sectionsHtml=sections.map(sec=>{
+      const sItems=sec.items.map((item,ii)=>{
+        const k=sec.section+ii;
+        const isChecked=!!checkedItems[k];
+        return "<div class=\"item\" style=\"opacity:"+(isChecked?"1":"0.45")+";border-color:"+(isChecked?sec.color:"#e2e8f0")+"\"><div class=\"checkbox\" style=\"background:"+(isChecked?sec.color:"transparent")+";border-color:"+sec.color+";\">"+(isChecked?"&#10003;":"")+"</div><div class=\"item-text\" style=\"text-decoration:"+(isChecked?"line-through":"none")+";color:"+(isChecked?"#15803d":"#9ca3af")+"\">"+(isChecked?"<strong>":"")+""+item+(isChecked?"</strong>":"")+"</div></div>";
+      }).join("");
+      return "<div class=\"section\"><div class=\"section-title\" style=\"color:"+sec.color+"\">"+sec.section+"</div><div class=\"items\">"+sItems+"</div></div>";
+    }).join("");
+    const html="<html><head><title>My Checklist Progress — canadamortgagerates.net</title><style>@page{margin:18mm}*{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}body{color:#0d2240;background:#fff}.header{background:#0d2240;color:#fff;padding:18px 22px;border-radius:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}.header-title{font-size:18px;font-weight:800}.header-sub{font-size:11px;color:rgba(255,255,255,0.7);margin-top:3px}.header-url{font-size:11px;color:#f5a623;font-weight:700}.progress-bar{height:8px;background:#e2e8f0;border-radius:20px;margin-bottom:16px}.progress-fill{height:8px;border-radius:20px;background:"+(done===total?"#16a34a":"#0d2240")+"}.progress-label{font-size:11px;color:#64748b;margin-bottom:4px}.section{margin-bottom:14px}.section-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;padding-bottom:3px;border-bottom:2px solid currentColor}.items{display:grid;grid-template-columns:1fr 1fr;gap:4px}.item{display:flex;align-items:flex-start;gap:7px;padding:6px 9px;border-radius:5px;border:1px solid;background:#f8fafc}.checkbox{width:13px;height:13px;border-radius:3px;border:2px solid;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff}.item-text{font-size:10.5px;line-height:1.5}.footer{margin-top:18px;padding:10px 14px;background:#f0f9ff;border-radius:7px;font-size:10px;color:#64748b;text-align:center}</style></head><body><div class=\"header\"><div><div class=\"header-title\">&#127809; My Home Buying Checklist</div><div class=\"header-sub\">"+done+" of "+total+" items completed</div></div><div class=\"header-url\">canadamortgagerates.net</div></div><div class=\"progress-label\">Progress: "+done+"/"+total+" completed ("+Math.round(done/total*100)+"%)</div><div class=\"progress-bar\"><div class=\"progress-fill\" style=\"width:"+Math.round(done/total*100)+"%\"></div></div>"+sectionsHtml+"<div class=\"footer\">Free tool by <strong>canadamortgagerates.net</strong> &mdash; Canada&rsquo;s most complete mortgage platform</div></body></html>";
+    const w=window.open("","_blank","width=820,height=920");
+    if(w){w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),600);}
+  }
+
   const data=FTHB_PROV[prov]||{programs:[],savings:[]};
 
   const fedPrograms=[
@@ -4522,7 +4545,7 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
           ["programs","📋 Programs","#15803d","#f0fdf4"],
           ["steps","🪜 Step-by-Step","#1e40af","#eff6ff"],
           ["mistakes","⚠️ Common Mistakes","#c2410c","#fff7ed"],
-          ["checklist","✅ Checklist","#7c3aed","#f5f3ff"],
+          ["checklist","🖨️ Printable Checklist","#7c3aed","#f5f3ff"],
         ] as const).map(([id,label,activeColor,activeBg])=>(
           <button key={id} onClick={()=>setFthbTab(id)} style={{padding:"9px 16px",borderRadius:10,border:`2px solid ${fthbTab===id?activeColor:"#e2e8f0"}`,background:fthbTab===id?activeBg:"#fff",color:fthbTab===id?activeColor:"#64748b",fontSize:12,fontWeight:700,cursor:"pointer",transition:"all 0.15s",whiteSpace:"nowrap"}}>{label}</button>
         ))}
@@ -4679,9 +4702,12 @@ function FTHBTab({initProv,setActive}:{initProv:string,setActive:(t:string)=>voi
             </div>
             <div style={{display:"flex",gap:6}}>
             {done>0&&<button onClick={()=>setCheckedItems({})} style={{padding:"8px 12px",background:"#f1f5f9",color:"#64748b",border:"none",borderRadius:9,fontSize:11,fontWeight:600,cursor:"pointer"}}>Reset</button>}
-            <button onClick={printChecklist} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 16px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:12,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.3)"}}>
-            🖨️ Print / Save PDF
-          </button>
+            <button onClick={printChecklist} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 14px",background:"linear-gradient(135deg,#0d2240,#1a3a5c)",color:"#fff",border:"none",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(13,34,64,0.25)"}}>
+              🖨️ Print Full List
+            </button>
+            <button onClick={printProgress} style={{display:"flex",alignItems:"center",gap:6,padding:"8px 14px",background:"#16a34a",color:"#fff",border:"none",borderRadius:9,fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap",boxShadow:"0 2px 8px rgba(22,163,74,0.3)"}}>
+              🖨️ Print My Progress
+            </button>
             </div>
           </div>
           <div style={{background:"#e2e8f0",borderRadius:20,height:6,marginBottom:4}}>
