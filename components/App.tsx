@@ -942,7 +942,7 @@ function NavBar({active,setActive,isMobile}:{active:string,setActive:(t:string)=
                 "Renewal":[{label:"🔄 Compare Offer",detail:"Is your offer good?"},{label:"🏦 Switch or Stay?",detail:"Decision framework"}],
                 "Listings":[{label:"🏘️ Find Listings",detail:"Search homes across Canada"}],
                 "New Builds":[{label:"🏗️ Explore Builds",detail:"Browse builders by province"},{label:"📋 Buyer's Guide",detail:"New build vs resale"}],
-                "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers"},{label:"🔍 Home Inspectors",detail:"Certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏡 Home Appraisers",detail:"Certified property appraisers"}],
+                "Professionals":[{label:"🤝 Find a Realtor",detail:"Connect with verified local agents"},{label:"⚖️ Find a Lawyer",detail:"Real estate lawyers"},{label:"🔍 Home Inspectors",detail:"Certified home inspectors"},{label:"💼 Mortgage Brokers",detail:"Independent brokers — 30+ lenders"},{label:"🏢 Property Managers",detail:"Residential & commercial property management"},{label:"🏡 Home Appraisers",detail:"Certified property appraisers"}],
                 "Consult":[{label:"🆓 Free Help",detail:"Free consultation, rate alerts & BoC updates"}],
                 "Resources":[{label:"📚 Learn & Blog",detail:"Articles, guides & education"},{label:"📖 Glossary",detail:"Mortgage terms explained"}],
               };
