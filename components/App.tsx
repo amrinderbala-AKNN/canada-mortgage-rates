@@ -11364,7 +11364,7 @@ export default function App(){
         // New Builds
         "🏘️ Explore Builds":"explore","📋 Buyer's Guide":"guide","💳 Construction Mortgage":"mortgage","🤝 Connect":"connect",
         // Professionals
-        "🤝 Find a Realtor":"realtors","⚖️ Find a Lawyer":"lawyers","🔍 Home Inspectors":"inspectors","💼 Mortgage Brokers":"brokers","🏡 Home Value":"evaluation",
+        "🤝 Find a Realtor":"realtors","⚖️ Find a Lawyer":"lawyers","🔍 Home Inspectors":"inspectors","💼 Mortgage Brokers":"brokers","🏢 Property Managers":"managers","🏡 Home Value":"evaluation",
         // Insurance
         "🏠 Get Quotes":"quote","🛡️ What's Covered":"coverage","💰 Deductible Guide":"deductible","🚨 Claims Guide":"claims","📖 Insurance Guide":"guide",
         // Resources
