@@ -5142,7 +5142,7 @@ function NeighbourhoodChecklist(){
 }
 
 function ProfessionalsTab(){
-  const [subTab,setSubTab]=useState<"realtors"|"lawyers"|"inspectors"|"brokers"|"evaluation">("realtors");
+  const [subTab,setSubTab]=useState<"realtors"|"lawyers"|"inspectors"|"brokers"|"managers"|"evaluation">("realtors");
   const [homeValTab,setHomeValTab]=useState<"eval"|"appraisal">("eval");
   useEffect(()=>{
     const h=(e:any)=>{if(e.detail.tab==="Professionals")setSubTab(e.detail.sub);};
@@ -5157,6 +5157,7 @@ function ProfessionalsTab(){
         <button onClick={()=>setSubTab("lawyers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="lawyers"?"#92400e":s.border}`,background:subTab==="lawyers"?"#92400e":s.white,color:subTab==="lawyers"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>⚖️ Real Estate Lawyers</button>
         <button onClick={()=>setSubTab("inspectors")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="inspectors"?s.blue:s.border}`,background:subTab==="inspectors"?s.blue:s.white,color:subTab==="inspectors"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🔍 Home Inspectors</button>
         <button onClick={()=>setSubTab("brokers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="brokers"?s.navy:s.border}`,background:subTab==="brokers"?s.navy:s.white,color:subTab==="brokers"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>💼 Mortgage Brokers</button>
+        <button onClick={()=>setSubTab("managers")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="managers"?"#0891b2":s.border}`,background:subTab==="managers"?"#0891b2":s.white,color:subTab==="managers"?"#fff":s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏢 Property Managers</button>
         <button onClick={()=>setSubTab("evaluation")} style={{flex:1,minWidth:90,padding:"10px",borderRadius:8,border:`2px solid ${subTab==="evaluation"?s.gold:s.border}`,background:subTab==="evaluation"?s.gold:s.white,color:subTab==="evaluation"?s.navy:s.muted,fontSize:11,fontWeight:700,cursor:"pointer"}}>🏡 Home Value</button>
       </div>
 
@@ -5164,6 +5165,7 @@ function ProfessionalsTab(){
       {subTab==="lawyers"&&<LawyersTab/>}
       {subTab==="inspectors"&&<InspectorsTab/>}
       {subTab==="brokers"&&<MortgageBrokersTab/>}
+      {subTab==="managers"&&<PropertyManagersTab/>}
       {subTab==="evaluation"&&(
         <div>
           <div style={{display:"flex",gap:8,marginBottom:14}}>
@@ -5222,6 +5224,69 @@ function ProfessionalsTab(){
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+function PropertyManagersTab(){
+  const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
+  const [prov,setProv]=useState("MB");const [city,setCity]=useState("");const [msg,setMsg]=useState("");
+  const [ok,setOk]=useState(false);const [submitting,setSubmitting]=useState(false);const [err,setErr]=useState("");
+  async function submit(){
+    if(!name.trim()||!email.trim()){setErr("Name and email are required.");return;}
+    setSubmitting(true);setErr("");
+    try{
+      await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        _subject:`Property Manager Request — ${city||prov}`,name,email,phone,province:prov,city,message:msg,source:"Canada Mortgage Rates — Property Manager Request"
+      })});setOk(true);
+    }catch{setErr("Something went wrong. Please try again.");}
+    setSubmitting(false);
+  }
+
+  return(
+    <div>
+      <div style={{background:`linear-gradient(135deg,#0891b2,#0369a1)`,borderRadius:12,padding:"14px 18px",marginBottom:14}}>
+        <div style={{color:"#fff",fontSize:15,fontWeight:800,marginBottom:3}}>🏢 Property Managers</div>
+        <div style={{color:"rgba(255,255,255,0.75)",fontSize:11,lineHeight:1.6}}>
+          Whether you own a rental property and need professional management, or you're a tenant looking to transition to ownership — connect with a trusted Winnipeg property manager.
+        </div>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:10,marginBottom:16}}>
+        {[["🏡","Residential","Single-family homes, condos, townhouses"],["🏢","Commercial","Retail, office, and mixed-use properties"],["🏘️","Multi-family","Apartment blocks and duplexes"],["📋","Condo Boards","Strata and condo corporation management"]].map(([icon,type,desc])=>(
+          <div key={type} style={{background:"#f0f9ff",borderRadius:10,padding:"12px 14px",border:"1px solid #bae6fd",textAlign:"center"}}>
+            <div style={{fontSize:22,marginBottom:4}}>{icon}</div>
+            <div style={{fontSize:12,fontWeight:800,color:"#0369a1",marginBottom:3}}>{type}</div>
+            <div style={{fontSize:10,color:"#64748b",lineHeight:1.5}}>{desc}</div>
+          </div>
+        ))}
+      </div>
+
+      <div id="pm-connect-form" style={{background:s.white,borderRadius:12,border:`1px solid ${s.border}`,padding:"16px 18px",boxShadow:"0 2px 12px rgba(0,0,0,0.07)"}}>
+        <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>📬 Connect with a Property Manager</div>
+        <div style={{fontSize:11,color:s.muted,marginBottom:14}}>Tell us what you need and we'll match you with the right property manager. Free, no obligation.</div>
+        {!ok?<>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:8,marginBottom:8}}>
+            <input value={name} onChange={e=>setName(e.target.value)} placeholder="Full Name *" style={inp}/>
+            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email *" style={inp}/>
+            <input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Phone (optional)" style={inp}/>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
+              <select value={prov} onChange={e=>setProv(e.target.value)} style={inp}>{Object.entries(PDATA).map(([k,v])=><option key={k} value={k}>{k}</option>)}</select>
+              <input value={city} onChange={e=>setCity(e.target.value)} placeholder="City" style={inp}/>
+            </div>
+          </div>
+          <textarea value={msg} onChange={e=>setMsg(e.target.value)} placeholder="What do you need? (e.g. managing a rental property, tenant placement, condo management...)" rows={3} style={{...inp,resize:"none",marginBottom:10,width:"100%"}}/>
+          {err&&<div style={{color:"#dc2626",fontSize:11,marginBottom:8}}>{err}</div>}
+          <button onClick={submit} disabled={submitting} style={{padding:"10px 24px",background:submitting?"#94a3b8":"#0891b2",color:"#fff",border:"none",borderRadius:9,fontSize:13,fontWeight:800,cursor:submitting?"not-allowed":"pointer"}}>
+            {submitting?"Sending...":"📬 Send Request →"}
+          </button>
+          <div style={{fontSize:10,color:s.muted,marginTop:6}}>Your contact info stays private — we match you and connect directly.</div>
+        </>:<div style={{textAlign:"center",padding:"16px 0"}}>
+          <div style={{fontSize:40,marginBottom:8}}>✅</div>
+          <div style={{fontSize:14,fontWeight:800,color:s.navy,marginBottom:4}}>Request Sent!</div>
+          <div style={{fontSize:12,color:s.muted}}>We'll match you with a property manager within 1 business day.</div>
+        </div>}
+      </div>
     </div>
   );
 }
