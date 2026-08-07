@@ -11096,7 +11096,7 @@ function HomeTab({setActive}:{setActive:(t:string)=>void}):JSX.Element{
       {/* Hero */}
       <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"24px 20px",marginBottom:14,textAlign:"center"}}>
         <div style={{fontSize:32,marginBottom:8}}>🍁</div>
-        <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>Canada's Most Complete Mortgage Platform</h2>
+        <h2 style={{color:"#fff",fontSize:22,fontWeight:800,marginBottom:8}}>The Only Canadian Mortgage Platform That Goes Beyond Rates — Buy, Renew, or Refinance. All Free.</h2>
         <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,lineHeight:1.7,maxWidth:600,margin:"0 auto 16px"}}>Free, AI-powered, and built for every province. Compare rates, calculate payments, discover programs, and connect with experts — all in one place.</p>
         <div style={{display:"flex",justifyContent:"center",gap:8,flexWrap:"wrap",marginBottom:16}}>
           {["🏦 50+ Lenders","🌍 All 10 Provinces","🤖 AI-Powered","💰 Always Free"].map(l=>(
