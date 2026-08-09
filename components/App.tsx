@@ -5768,6 +5768,23 @@ function RealtorsTab(){
     //      url:"https://realtor.ca/...", img:"", status:"Active"}
     //   ]
     // }
+    {
+      id:1,
+      name:"Tarun Bansal",
+      brokerage:"Maxpro Real Estate",
+      city:"Winnipeg",
+      prov:"MB",
+      photo:"",
+      specs:["residential","commercial","newbuilds"],
+      experience:"8+ years",
+      languages:["English","Hindi","Punjabi"],
+      rating:0,
+      reviews:0,
+      verified:false,
+      featured:true,
+      bio:"Tarun Bansal is a Winnipeg-based realtor at Maxpro Real Estate with 8+ years of experience in residential and commercial real estate. He works with dedication and honesty, helping buyers and sellers navigate the Winnipeg market with confidence. Tarun also specializes in new build communities including Prairie Pointe, Highland Pointe, and Forest Grove with KDR Homes — with homes starting from $550K.",
+      listings:[]
+    }
   ];
 
   const FAQS=[
@@ -5787,6 +5804,8 @@ function RealtorsTab(){
         name,email,phone,province:PDATA[filterProv]?.name,city:rcity,
         budget,timeline,first_time_buyer:firstTime?"Yes":"No",
         preferred_realtor:selectedRealtor?selectedRealtor.name:"No preference",
+        lead_for:selectedRealtor?"FORWARD TO: "+selectedRealtor.name+" ("+selectedRealtor.brokerage+")":"No specific realtor selected",
+        _subject:selectedRealtor?"New Lead for "+selectedRealtor.name+" — canadamortgagerates.net":"New Realtor Lead — canadamortgagerates.net",
         message:msg,type:"Realtor Referral Request"
       })});
       setOk(true);
