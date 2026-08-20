@@ -904,7 +904,376 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
     <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process — from mortgage rates and calculators to first-time buyer programs and professional connections.</p>
   </div>
 </div>`
+  },,
+  "mortgage-rates-edmonton-2026":{
+    title:"Mortgage Rates Edmonton 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Edmonton for 2026. No provincial land transfer tax. One of Canada's most affordable major cities with average home prices around $440,000.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Edmonton 2026</h2>
+<p>Edmonton remains one of Canada's most affordable major cities with average home prices around $440,000 — roughly 60% below Vancouver and 55% below Toronto. Alberta charges no provincial income tax and no provincial land transfer tax, giving Edmonton buyers a significant financial advantage over buyers in Ontario or BC.</p>
+<h2>Average Home Prices in Edmonton — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Edmonton (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$440,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.1%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Sherwood Park</td><td style="padding:10px;text-align:right;font-weight:700;">$480,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">St. Albert</td><td style="padding:10px;text-align:right;font-weight:700;">$510,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Spruce Grove</td><td style="padding:10px;text-align:right;font-weight:700;">$420,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.9%</td></tr></table>
+<h2>Edmonton vs Other Major Cities</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Edmonton</td><td style="padding:10px;text-align:right;font-weight:700;">$440,000</td><td style="padding:10px;text-align:right;color:#16a34a;">No LTT ✅</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Calgary</td><td style="padding:10px;text-align:right;font-weight:700;">$620,000</td><td style="padding:10px;text-align:right;color:#16a34a;">No LTT ✅</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Ottawa</td><td style="padding:10px;text-align:right;font-weight:700;">$680,000</td><td style="padding:10px;text-align:right;color:#16a34a;">~$9,475 LTT</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Toronto</td><td style="padding:10px;text-align:right;font-weight:700;">$1,100,000</td><td style="padding:10px;text-align:right;color:#16a34a;">~$32,000 LTT</td></tr></table>
+<h2>Alberta First-Time Buyer Advantages</h2>
+<ul>
+<li><strong>No provincial land transfer tax</strong> — saves $5,000–$15,000 vs Ontario or BC buyers</li>
+<li><strong>No provincial income tax</strong> — higher net income means stronger mortgage qualifying</li>
+<li><strong>FHSA:</strong> $8,000/year, $40,000 lifetime per person — tax deductible, tax-free withdrawal</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP for down payment</li>
+<li><strong>Federal GST rebate:</strong> Available on new builds under $1M</li>
+</ul>
+<h2>Current Mortgage Rates in Edmonton 2026</h2>
+<p>Edmonton buyers access the same national lender network as all Canadians. Current best rates: 5-year fixed from 3.94%, variable from 3.40%. Local credit unions and online lenders like nesto and First National often offer the most competitive rates in Alberta.</p>
+<h2>Edmonton Neighbourhoods — Price Ranges</h2>
+<ul>
+<li><strong>Downtown/Oliver:</strong> $350,000–$600,000 (condos dominant)</li>
+<li><strong>South Edmonton (Windermere):</strong> $500,000–$800,000 (newer builds)</li>
+<li><strong>Northeast Edmonton:</strong> $280,000–$420,000 (most affordable entry points)</li>
+<li><strong>Sherwood Park:</strong> $450,000–$650,000 (family-oriented, strong schools)</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-alberta-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
   },
+  "mortgage-rates-ottawa-2026":{
+    title:"Mortgage Rates Ottawa 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Ottawa for 2026. Canada's capital offers stable government-sector employment and average home prices around $680,000 — significantly more affordable than Toronto.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Ottawa 2026</h2>
+<p>Ottawa's real estate market is anchored by federal government employment, making it one of Canada's most stable housing markets. Average home prices around $680,000 — significantly more affordable than Toronto while offering comparable urban amenities and strong employment security for public servants.</p>
+<h2>Average Home Prices in Ottawa-Gatineau — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Ottawa (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$680,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.1%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Kanata/Stittsville</td><td style="padding:10px;text-align:right;font-weight:700;">$720,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.4%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Barrhaven/Nepean</td><td style="padding:10px;text-align:right;font-weight:700;">$650,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.0%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Gatineau QC</td><td style="padding:10px;text-align:right;font-weight:700;">$420,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.2%</td></tr></table>
+<h2>Ottawa vs Toronto — The Comparison Buyers Are Making</h2>
+<p>Ottawa offers federal government jobs, major tech employers (Shopify, Nokia, Mitel), and two universities — at roughly 60% of Toronto's home prices. Many Toronto buyers are relocating to Ottawa, driving steady demand without the volatility seen in the GTA.</p>
+<h2>Ontario Land Transfer Tax in Ottawa</h2>
+<p>Ottawa buyers pay Ontario provincial land transfer tax but NOT Toronto's additional municipal LTT. On a $680,000 Ottawa home, Ontario LTT is approximately $9,475. First-time buyers receive a rebate of up to $4,000, reducing the net cost to $5,475.</p>
+<h2>First-Time Buyer Programs in Ottawa</h2>
+<ul>
+<li><strong>Ontario LTT First-Time Buyer Rebate:</strong> Up to $4,000</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person, tax deductible and tax-free for home purchase</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>Federal First-Time Home Buyers Tax Credit:</strong> $1,500</li>
+</ul>
+<h2>The Gatineau Alternative</h2>
+<p>Gatineau, Quebec sits across the Ottawa River — connected by bridge and a 15-minute commute to downtown Ottawa employers. Average prices of $420,000 represent $260,000 in savings vs Ottawa. However, Gatineau buyers face Quebec income tax rates, Quebec land transfer tax, and some lender restrictions. Run the full numbers before deciding.</p>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-mississauga-2026":{
+    title:"Mortgage Rates Mississauga 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Mississauga for 2026. Canada's 6th largest city — no Toronto municipal land transfer tax, average home prices around $900,000.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Mississauga 2026</h2>
+<p>Mississauga is Canada's sixth-largest city and one of the GTA's most sought-after real estate markets. While more affordable than Toronto proper, average home prices around $900,000 make mortgage strategy critical. Importantly, Mississauga buyers pay Ontario provincial LTT but NOT Toronto's additional municipal LTT — saving $10,000–$20,000 vs purchasing inside Toronto city limits.</p>
+<h2>Mississauga Home Prices by Type — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Detached</td><td style="padding:10px;text-align:right;font-weight:700;">$1,250,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Semi-Detached</td><td style="padding:10px;text-align:right;font-weight:700;">$950,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Townhouse</td><td style="padding:10px;text-align:right;font-weight:700;">$780,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Condo</td><td style="padding:10px;text-align:right;font-weight:700;">$550,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+0.8%</td></tr></table>
+<h2>Key Mississauga Mortgage Facts</h2>
+<ul>
+<li><strong>Homes over $1M require 20% down</strong> — CMHC insurance not available above $1M. Most Mississauga detached homes exceed $1M, requiring $250,000+ down payment.</li>
+<li><strong>No Toronto municipal LTT</strong> — saves $10,000–$20,000 vs buying inside Toronto city limits</li>
+<li><strong>Condo as entry point:</strong> At $550,000, a Mississauga condo allows 5% down ($27,500) with CMHC insurance</li>
+<li><strong>Stress test impact:</strong> On a $900,000 home with 20% down ($180,000), qualifying for a $720,000 mortgage requires approximately $140,000+ household income</li>
+</ul>
+<h2>Best Areas for First-Time Buyers in Mississauga</h2>
+<p>Port Credit and Clarkson offer the most walkable urban experience. Meadowvale and Lisgar have newer builds with better value per square foot. Streetsville ("the Village in the City") offers a charming small-town feel within Mississauga at slightly lower prices than prime areas.</p>
+<h2>First-Time Buyer Programs in Mississauga</h2>
+<ul>
+<li><strong>Ontario LTT Rebate:</strong> Up to $4,000 for first-time buyers</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person — most powerful tool available</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>30-year amortization:</strong> Available for first-time buyers of new builds</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-halifax-2026":{
+    title:"Mortgage Rates Halifax 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Halifax for 2026. Atlantic Canada's largest city with average home prices around $520,000. Strong growth driven by interprovincial migration.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Halifax 2026</h2>
+<p>Halifax has transformed from one of Canada's most affordable major cities to one of its fastest-growing markets. Average home prices have risen to approximately $520,000, driven by in-migration from Ontario and BC, Dalhousie and NSCC enrollment growth, and remote work adoption. Still significantly more affordable than Toronto or Vancouver, Halifax offers major-city amenities at a fraction of the cost.</p>
+<h2>Halifax Home Prices by Area — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Downtown Halifax</td><td style="padding:10px;text-align:right;font-weight:700;">$580,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Clayton Park/Fairview</td><td style="padding:10px;text-align:right;font-weight:700;">$480,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Dartmouth</td><td style="padding:10px;text-align:right;font-weight:700;">$460,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.1%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Bedford/Sackville</td><td style="padding:10px;text-align:right;font-weight:700;">$510,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.9%</td></tr></table>
+<h2>Halifax vs Dartmouth — Which Is Better Value in 2026?</h2>
+<p>Dartmouth, connected to Halifax by bridge and ferry, consistently offers similar amenities at 10–15% lower prices. With the Dartmouth Crossing commercial district and strong transit connections, Dartmouth has become increasingly attractive. For buyers who don't need to be in Halifax specifically, Dartmouth represents better value in 2026.</p>
+<h2>Nova Scotia First-Time Buyer Programs</h2>
+<ul>
+<li><strong>NS Down Payment Assistance:</strong> Nova Scotia Housing provides down payment assistance loans for eligible first-time buyers</li>
+<li><strong>HRM Deed Transfer Tax:</strong> Halifax Regional Municipality charges 1.5% deed transfer tax. On a $520,000 home: $7,800. No first-time buyer exemption at the municipal level.</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person — open one immediately regardless of when you plan to buy</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+</ul>
+<h2>Why Buyers Are Moving to Halifax</h2>
+<p>Halifax offers a walkable downtown, two major universities, a thriving tech sector, ocean access, and significantly lower cost of living than major Ontario or BC cities. A $520,000 home in Halifax vs $1.1M in Toronto buys you a similar quality of life with substantially lower mortgage payments and stress.</p>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-regina-2026":{
+    title:"Mortgage Rates Regina 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Regina for 2026. Saskatchewan's capital offers average home prices around $340,000 with no provincial land transfer tax — one of Canada's best buyer markets.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Regina 2026</h2>
+<p>Regina, Saskatchewan's capital and second-largest city, offers one of Canada's most compelling combinations of affordability and quality of life. With average home prices around $340,000, a stable government and potash-sector economy, and no provincial land transfer tax, Regina buyers get significantly more for their mortgage dollar than in any other Canadian capital city.</p>
+<h2>Regina Home Prices by Type — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Detached</td><td style="padding:10px;text-align:right;font-weight:700;">$390,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Semi-Detached</td><td style="padding:10px;text-align:right;font-weight:700;">$315,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.9%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Townhouse</td><td style="padding:10px;text-align:right;font-weight:700;">$280,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Condo</td><td style="padding:10px;text-align:right;font-weight:700;">$195,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.8%</td></tr></table>
+<h2>Why Regina Is One of Canada's Best Buyer Markets</h2>
+<ul>
+<li><strong>No provincial land transfer tax</strong> — saves $4,000–$8,000 vs Ontario or BC buyers</li>
+<li><strong>Low entry requirements:</strong> 5% down on the Regina average is only $17,000 — one of the lowest entry points of any Canadian capital</li>
+<li><strong>Income threshold:</strong> Approximately $55,000–$70,000 household income qualifies for the average Regina home — far lower than any other major Canadian city</li>
+<li><strong>Stable economy:</strong> Government, potash, agriculture, and oil provide economic diversity and employment stability</li>
+</ul>
+<h2>Regina Mortgage Lenders</h2>
+<p>All major Canadian banks operate in Regina. Conexus Credit Union — Saskatchewan's largest credit union — consistently offers competitive rates. Online lenders including nesto and First National also actively lend in Regina and often offer the province's most competitive rates.</p>
+<h2>First-Time Buyer Programs in Regina</h2>
+<ul>
+<li><strong>No provincial LTT</strong> — immediate savings at purchase</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person, tax deductible and tax-free for home purchase</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>Federal First-Time Home Buyers Tax Credit:</strong> $1,500</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-alberta-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/minimum-down-payment-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-saskatoon-2026":{
+    title:"Mortgage Rates Saskatoon 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Saskatoon for 2026. Saskatchewan's largest city with average home prices around $390,000 and no provincial land transfer tax.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Saskatoon 2026</h2>
+<p>Saskatoon is Saskatchewan's largest city and one of Canada's most underrated real estate markets. With average home prices around $390,000, strong university and healthcare employment, a growing tech sector, and no provincial land transfer tax, Saskatoon offers exceptional value for Canadian homebuyers.</p>
+<h2>Average Home Prices in Saskatoon — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Saskatoon (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$390,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+5.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Stonebridge</td><td style="padding:10px;text-align:right;font-weight:700;">$440,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+5.0%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Evergreen</td><td style="padding:10px;text-align:right;font-weight:700;">$420,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Nutana/Broadway</td><td style="padding:10px;text-align:right;font-weight:700;">$380,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.5%</td></tr></table>
+<h2>Saskatoon vs Regina — Which City Is Better to Buy In?</h2>
+<p>Saskatoon is slightly more expensive than Regina ($390,000 vs $340,000 average) but offers a larger population, more amenities, the University of Saskatchewan, Royal University Hospital, and a more diverse economy. Both cities are excellent buyer markets compared to national averages.</p>
+<h2>Saskatchewan First-Time Buyer Advantages</h2>
+<ul>
+<li><strong>No provincial land transfer tax</strong> — unique advantage shared only with Alberta</li>
+<li><strong>Affinity Credit Union</strong> — Saskatoon's major local credit union, often beats major bank rates</li>
+<li><strong>FHSA + HBP stacking:</strong> A couple can access $200,000 in tax-advantaged down payment funds</li>
+<li><strong>30-year amortization:</strong> Now available for first-time buyers of new builds</li>
+</ul>
+<h2>Best Neighbourhoods for First-Time Buyers</h2>
+<p>Stonebridge in the south offers newer builds with good schools. Evergreen provides excellent value. The Broadway/Nutana area near the University appeals to buyers who want walkability and character. Martensville and Warman (satellite communities) offer even lower prices within commuting distance.</p>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-alberta-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-hamilton-2026":{
+    title:"Mortgage Rates Hamilton 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Hamilton for 2026. The Ambitious City offers average home prices around $730,000 — more affordable than Toronto with strong GO Transit connections.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Hamilton 2026</h2>
+<p>Hamilton — nicknamed "The Ambitious City" — has emerged as one of Ontario's most attractive alternatives to Toronto. With average home prices around $730,000 and direct GO Transit access to downtown Toronto in under an hour, Hamilton attracts buyers priced out of the GTA who still need Toronto commuting access.</p>
+<h2>Average Home Prices in Hamilton — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Hamilton (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$730,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Ancaster</td><td style="padding:10px;text-align:right;font-weight:700;">$890,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Dundas</td><td style="padding:10px;text-align:right;font-weight:700;">$820,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+1.6%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Downtown Hamilton</td><td style="padding:10px;text-align:right;font-weight:700;">$590,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.1%</td></tr></table>
+<h2>Hamilton vs Toronto — The Value Proposition</h2>
+<p>Hamilton averages $730,000 vs Toronto's $1.1M+ — a $370,000+ difference. With GO Transit's Lakeshore West line running frequent service to Union Station, Hamilton has become a genuine alternative for Toronto workers who prioritize housing affordability over commute time.</p>
+<h2>Ontario Land Transfer Tax in Hamilton</h2>
+<p>Hamilton buyers pay Ontario provincial LTT but NOT Toronto's municipal LTT. On a $730,000 Hamilton home, Ontario LTT is approximately $10,475. First-time buyers receive up to $4,000 rebate, reducing net cost to $6,475 — compared to $22,950+ for a similar Toronto purchase.</p>
+<h2>First-Time Buyer Programs</h2>
+<ul>
+<li><strong>Ontario LTT Rebate:</strong> Up to $4,000 for first-time buyers</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>McMaster University proximity:</strong> Strong rental demand makes Hamilton attractive for house-hacking (living in one unit, renting others)</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/how-much-mortgage-can-i-afford-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-victoria-2026":{
+    title:"Mortgage Rates Victoria BC 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Victoria BC for 2026. Canada's most livable city with average home prices around $870,000. Strong government employment and no income tax on moderate incomes.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Victoria BC 2026</h2>
+<p>Victoria, British Columbia's capital city, consistently ranks among Canada's most livable cities. With average home prices around $870,000 — significantly below Vancouver — and major employers including BC provincial government, University of Victoria, and a growing tech sector, Victoria attracts buyers seeking quality of life at a lower price point than Vancouver.</p>
+<h2>Average Home Prices in Victoria — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Victoria (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$870,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Saanich</td><td style="padding:10px;text-align:right;font-weight:700;">$950,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.0%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Langford</td><td style="padding:10px;text-align:right;font-weight:700;">$780,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Colwood/View Royal</td><td style="padding:10px;text-align:right;font-weight:700;">$750,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.8%</td></tr></table>
+<h2>Victoria vs Vancouver — The Price Gap</h2>
+<p>Victoria averages $870,000 vs Vancouver's $1.25M+ — a $380,000 difference while offering similar Pacific Northwest lifestyle, mild climate, and natural beauty. For buyers who don't need to be in Vancouver specifically, Victoria represents meaningfully better value.</p>
+<h2>BC Property Transfer Tax in Victoria</h2>
+<p>British Columbia charges Property Transfer Tax (PTT) on all real estate purchases: 1% on the first $200,000, 2% on $200,001–$2M. On an $870,000 Victoria home, PTT is approximately $15,400. First-time buyers receive a full PTT exemption on homes priced up to $500,000, and a partial exemption up to $525,000.</p>
+<h2>First-Time Buyer Programs in Victoria</h2>
+<ul>
+<li><strong>BC PTT First-Time Buyer Exemption:</strong> Full exemption under $500,000 (partial to $525,000)</li>
+<li><strong>BC Home Owner Grant:</strong> Annual property tax reduction for principal residences</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person — most powerful federal tool</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-bc-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-montreal-2026":{
+    title:"Mortgage Rates Montreal 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Montreal for 2026. Canada's second-largest city with average home prices around $560,000 — significantly more affordable than Toronto or Vancouver.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Montreal 2026</h2>
+<p>Montreal is Canada's second-largest city and one of its best-value major real estate markets. Average home prices around $560,000 — roughly half of Toronto and Vancouver — combined with a rich cultural scene, world-class universities, and a growing tech sector make Montreal increasingly attractive to buyers from across Canada.</p>
+<h2>Average Home Prices in Montreal — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Montreal Island (overall)</td><td style="padding:10px;text-align:right;font-weight:700;">$560,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.1%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Plateau-Mont-Royal</td><td style="padding:10px;text-align:right;font-weight:700;">$720,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Laval (off-island)</td><td style="padding:10px;text-align:right;font-weight:700;">$450,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Longueuil (South Shore)</td><td style="padding:10px;text-align:right;font-weight:700;">$430,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.8%</td></tr></table>
+<h2>Quebec Land Transfer Tax (Welcome Tax)</h2>
+<p>Quebec's land transfer tax — commonly called the "Welcome Tax" — is calculated on a sliding scale: 0.5% on the first $53,700, 1% on $53,701–$268,000, 1.5% on $268,001–$538,300, and 2% above $538,300. On a $560,000 Montreal home, Welcome Tax is approximately $7,100. First-time buyers in Montreal may qualify for a partial rebate from the city of Montreal.</p>
+<h2>Quebec Mortgage Market Differences</h2>
+<ul>
+<li><strong>Notary system:</strong> Quebec uses notaries (not real estate lawyers) to close mortgage transactions. Notary fees typically run $1,500–$3,000.</li>
+<li><strong>Language:</strong> Most major lenders operate in both English and French in Montreal</li>
+<li><strong>Credit union strength:</strong> Desjardins — Canada's largest credit union — is Quebec-based and offers competitive mortgage rates across the province</li>
+</ul>
+<h2>First-Time Buyer Programs in Montreal</h2>
+<ul>
+<li><strong>Quebec First-Time Buyer Tax Credit:</strong> Provincial tax credit for first-time buyers</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person — applies in Quebec</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>Federal First-Time Home Buyers Tax Credit:</strong> $1,500</li>
+</ul>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/mortgage-rates-ontario-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-newfoundland-2026":{
+    title:"Mortgage Rates Newfoundland 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Newfoundland and Labrador for 2026. St. John's average home prices around $320,000 — one of Canada's most affordable provincial capitals.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Newfoundland and Labrador 2026</h2>
+<p>Newfoundland and Labrador offers some of Canada's most affordable real estate in a major provincial capital. St. John's average home prices around $320,000 — significantly below national averages — make NL an attractive market for first-time buyers and those relocating from higher-cost provinces seeking affordability without sacrificing urban amenities.</p>
+<h2>Average Home Prices in NL — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">St. John's</td><td style="padding:10px;text-align:right;font-weight:700;">$320,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.5%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Mount Pearl</td><td style="padding:10px;text-align:right;font-weight:700;">$295,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.9%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Corner Brook</td><td style="padding:10px;text-align:right;font-weight:700;">$220,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Grand Falls-Windsor</td><td style="padding:10px;text-align:right;font-weight:700;">$195,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+2.5%</td></tr></table>
+<h2>Newfoundland First-Time Buyer Programs</h2>
+<ul>
+<li><strong>NLHC Homeownership Program:</strong> Newfoundland and Labrador Housing Corporation offers low-interest loans and subsidies for eligible buyers in rural NL communities</li>
+<li><strong>Federal GST New Home Rebate:</strong> Available on new builds under $1M — significant at NL's lower price points</li>
+<li><strong>FHSA + HBP stacking:</strong> A couple can access up to $200,000 in tax-advantaged down payment funds</li>
+<li><strong>Federal First-Time Home Buyers Tax Credit:</strong> $1,500</li>
+</ul>
+<h2>Fixed vs Variable in NL 2026</h2>
+<p>Variable rates are currently 0.50–0.75% below 5-year fixed. At NL's more affordable price points, many buyers can absorb potential rate fluctuations. A variable rate on a $280,000 mortgage in Corner Brook is far less financially risky than the same choice on a $900,000 Toronto home.</p>
+<h2>Mortgage Lenders in Newfoundland</h2>
+<p>All major Canadian banks operate in NL. Online lenders including nesto and First National also lend in Newfoundland — often with the province's most competitive rates. Credit unions operate locally through organizations like New Waterford Credit Union in Cape Breton-adjacent communities.</p>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/fixed-vs-variable-mortgage-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  },
+  "mortgage-rates-manitoba-2026":{
+    title:"Mortgage Rates Manitoba 2026 — Best Fixed & Variable Rates",
+    desc:"Compare the best mortgage rates in Manitoba for 2026. Winnipeg, Brandon, Steinbach. Credit unions like ACU and SCU consistently beat major banks by 0.20–0.40%.",
+    category:"Rates",
+    date:"August 5, 2026",
+    readTime:"5 min read",
+    content:`<h2>Mortgage Rates in Manitoba 2026</h2>
+<p>Manitoba offers some of the most affordable housing in Canada combined with one of the country's strongest credit union sectors. Winnipeg's average home price of approximately $380,000 sits well below national averages, while smaller communities like Brandon, Steinbach, and Portage la Prairie offer even more affordable entry points for first-time buyers.</p>
+<h2>Average Home Prices in Manitoba — 2026</h2>
+<table style="width:100%;border-collapse:collapse;margin:16px 0;"><tr style="background:#0d2240;color:#fff;"><th style="padding:10px;text-align:left;">City/Area</th><th style="padding:10px;text-align:right;">Avg Price</th><th style="padding:10px;text-align:right;">YoY</th></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Winnipeg</td><td style="padding:10px;text-align:right;font-weight:700;">$380,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+4.2%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Steinbach</td><td style="padding:10px;text-align:right;font-weight:700;">$350,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+5.1%</td></tr><tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px;">Brandon</td><td style="padding:10px;text-align:right;font-weight:700;">$295,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.8%</td></tr><tr style="border-bottom:1px solid #e2e8f0;background:#fafbfc;"><td style="padding:10px;">Portage la Prairie</td><td style="padding:10px;text-align:right;font-weight:700;">$240,000</td><td style="padding:10px;text-align:right;color:#16a34a;">+3.2%</td></tr></table>
+<h2>Manitoba's Credit Union Advantage</h2>
+<p>What makes Manitoba's mortgage market unique is the strength of local credit unions. Assiniboine Credit Union (ACU) and Steinbach Credit Union (SCU) consistently offer rates 0.20–0.40% below the major banks — a significant advantage over the life of a mortgage.</p>
+<ul>
+<li><strong>Assiniboine Credit Union (ACU):</strong> Winnipeg's largest credit union, B Corp certified, founded 1943. Verified 5-year fixed: 4.09%. Verified 1-year fixed: 4.49%. Rates published directly on acu.ca and verified on canadamortgagerates.net.</li>
+<li><strong>Steinbach Credit Union (SCU):</strong> Manitoba's fastest-growing credit union, serving southern Manitoba with competitive rates particularly strong for rural buyers.</li>
+</ul>
+<h2>Manitoba First-Time Buyer Programs</h2>
+<ul>
+<li><strong>Manitoba Land Transfer Tax Rebate:</strong> Up to $4,500 for first-time buyers on homes under $450,000 — one of the most generous provincial LTT rebates in Canada</li>
+<li><strong>FHSA:</strong> $40,000 lifetime per person, tax deductible and tax-free for home purchase</li>
+<li><strong>HBP:</strong> Up to $60,000 per person from RRSP</li>
+<li><strong>Federal First-Time Home Buyers Tax Credit:</strong> $1,500</li>
+</ul>
+<h2>Why Winnipeg is One of Canada's Best Buyer Markets</h2>
+<p>Winnipeg offers a diversified economy (agriculture, manufacturing, retail, government), affordable housing, strong cultural institutions, and one of Canada's most competitive credit union sectors. For buyers who want major-city amenities without major-city prices, Winnipeg delivers consistently.</p>
+<div style="margin-top:28px;padding-top:20px;border-top:2px solid #e2e8f0;"><h3 style="color:#0d2240;font-size:15px;margin-bottom:12px;">Related Articles</h3><a href="/blog/best-mortgage-rates-canada-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Compare Mortgage Rates by Province</a><a href="/blog/first-time-home-buyer-programs-canada" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Best Mortgage Rates Canada 2026</a><a href="/blog/mortgage-rates-winnipeg-2026" style="display:block;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;color:#0d2240;text-decoration:none;font-size:13px;font-weight:600;margin-bottom:6px;">Fixed vs Variable Mortgage 2026</a></div>
+<div style="margin-top:32px;padding-top:20px;border-top:2px solid #e2e8f0;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#0d2240,#1a3a5c);display:flex;align-items:center;justify-content:center;color:#f5a623;font-size:22px;font-weight:800;flex-shrink:0;">A</div>
+  <div style="flex:1;min-width:200px;">
+    <div style="font-weight:800;color:#0d2240;font-size:15px;margin-bottom:2px;">Amrinder Bala, MBA, M.Eng.</div>
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">Senior Consultant, CGI Inc. · Founder, Canada Mortgage Rates · Winnipeg, Manitoba</div>
+    <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process.</p>
+  </div>
+</div>`
+  }
 };;
 
 export const getStaticPaths: GetStaticPaths = async () => {
