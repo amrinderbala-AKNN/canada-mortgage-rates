@@ -904,7 +904,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
     <p style="font-size:13px;color:#374151;line-height:1.7;margin:0;">Amrinder is a Winnipeg-based engineer and MBA who built canadamortgagerates.net to give Canadian homebuyers a single, unbiased platform covering every aspect of the home buying process — from mortgage rates and calculators to first-time buyer programs and professional connections.</p>
   </div>
 </div>`
-  },,
+  },
   "mortgage-rates-edmonton-2026":{
     title:"Mortgage Rates Edmonton 2026 — Best Fixed & Variable Rates",
     desc:"Compare the best mortgage rates in Edmonton for 2026. No provincial land transfer tax. One of Canada's most affordable major cities with average home prices around $440,000.",
