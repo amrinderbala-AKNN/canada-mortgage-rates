@@ -5795,6 +5795,27 @@ function RealtorsTab(){
       featured:true,
       bio:"Tarun Bansal is a Winnipeg-based realtor at Maxpro Real Estate with 8+ years of experience in residential and commercial real estate. He works with dedication and honesty, helping buyers and sellers navigate the Winnipeg market with confidence. Tarun also specializes in new build communities including Prairie Pointe, Highland Pointe, and Forest Grove with KDR Homes — with homes starting from $550K.",
       listings:[]
+    },
+    {
+      id:2,
+      name:"Amrit Sidhu",
+      brokerage:"eXp Realty",
+      city:"Winnipeg",
+      prov:"MB",
+      photo:"/amrit-sidhu.jpg",
+      specs:["residential","firsttime","investment"],
+      experience:"4-5 years",
+      languages:["English","Punjabi","Hindi"],
+      rating:0,
+      reviews:0,
+      verified:false,
+      featured:true,
+      bio:"Amrit Sidhu is a REALTOR® with eXp Realty serving clients throughout Winnipeg, with a strong focus on Winnipeg North & East. With 4–5 years of experience, Amrit specializes in helping first-time homebuyers and real estate investors navigate the market with confidence. He takes a straightforward, client-focused approach — understanding each client's goals and finding the right opportunity for their needs.",
+      listings:[
+        {address:"143 Mosselle Dr, Winnipeg MB",price:null,beds:null,baths:null,sqft:null,type:"Residential",url:"https://www.google.com/maps/search/143+Mosselle+Dr,+Winnipeg",img:"",status:"Active"},
+        {address:"297 River Trail Dr, West St. Paul MB",price:null,beds:null,baths:null,sqft:null,type:"Residential",url:"https://www.google.com/maps/search/297+River+Trail+Dr,+West+St.+Paul",img:"",status:"Active"},
+        {address:"Vacant Land — Deacon Corner",price:null,beds:null,baths:null,sqft:null,type:"Land",url:"",img:"",status:"Active"}
+      ]
     }
   ];
 
