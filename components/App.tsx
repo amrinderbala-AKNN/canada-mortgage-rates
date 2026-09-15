@@ -1622,7 +1622,8 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
                 {date:"Mar 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"2nd consecutive hold",dir:"hold"},
                 {date:"Apr 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"3rd consecutive hold",dir:"hold"},
                 {date:"Jun 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"4th consecutive hold",dir:"hold"},
-                {date:"Jul 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"5th consecutive hold — BoC July 15, 2026",dir:"hold",current:true},
+                {date:"Jul 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"6th consecutive hold — BoC July 15, 2026",dir:"hold"},
+                {date:"Sep 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"7th consecutive hold — tariff uncertainty, energy prices elevated",dir:"hold",current:true},
               ].map((row,i,arr)=>(
                 <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:row.current?`linear-gradient(135deg,${s.navy},#1a3a5c)`:i%2===0?s.white:"#fafbfc"}}>
                   <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:row.current?"#fff":s.navy,whiteSpace:"nowrap"}}>{row.date}{row.current&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"1px 6px",fontSize:8,fontWeight:800,marginLeft:6}}>LATEST</span>}</td>
@@ -8246,7 +8247,7 @@ function BlogTab(){
       category:"Rate Strategy",
       summary:"With the Bank of Canada holding at 2.25% for the fifth consecutive time, the fixed vs variable debate is more relevant than ever. Here's what Canadian homeowners need to know.",
       content:`
-The Bank of Canada held its overnight rate at 2.25% on July 15, 2026 — the fifth consecutive hold. For Canadian mortgage holders and homebuyers, this stability raises an important question: should you choose a fixed or variable rate mortgage in 2026?
+The Bank of Canada held its overnight rate at 2.25% on September 2, 2026 — the seventh consecutive hold. For Canadian mortgage holders and homebuyers, this stability raises an important question: should you choose a fixed or variable rate mortgage in 2026?
 
 ## The Current Rate Environment
 
@@ -10118,7 +10119,7 @@ Use our [Rent vs Buy Calculator](/calculators) to run the actual numbers for you
       category:"Rate Strategy",
       summary:"The Bank of Canada held at 2.25% for the 5th consecutive time on July 15, 2026. Here's how BoC decisions actually affect your mortgage rate.",
       content:`
-On July 15, 2026, the Bank of Canada held its overnight rate at 2.25% — the fifth consecutive hold. Understanding how BoC decisions affect mortgage rates is essential for every Canadian homeowner.
+On September 2, 2026, the Bank of Canada held its overnight rate at 2.25% — the seventh consecutive hold. Understanding how BoC decisions affect mortgage rates is essential for every Canadian homeowner.
 
 ## The Overnight Rate and Your Mortgage
 
@@ -10134,14 +10135,15 @@ This is why fixed rates can move independently of BoC decisions.
 
 **2024–2026 Cutting cycle:** 5.00% → 2.25% through 7 cuts. Variable rates fell from ~7.20% to ~3.35%.
 
-**2026 Hold:** Five consecutive holds. BoC considers 2.25% the neutral rate. Trade uncertainty with the US is keeping the BoC cautious.
+**2026 Hold:** Seven consecutive holds. BoC considers 2.25% the neutral rate. Trade uncertainty with the US is keeping the BoC cautious.
 
 ## 2026 BoC Schedule
 
 | Date | Decision |
 |---|---|
 | July 15, 2026 | Hold at 2.25% (latest) |
-| September 2, 2026 | Next announcement |
+| September 2, 2026 | Hold at 2.25% — 7th consecutive |
+| October 29, 2026 | Next announcement |
 | October 29, 2026 | TBD |
 | December 10, 2026 | TBD |
 
