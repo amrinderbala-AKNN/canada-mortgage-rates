@@ -5343,6 +5343,7 @@ function AppraiserRequestForm(){
 function MortgageBrokersTab(){
   const [showForm,setShowForm]=useState(false);
   const [showPartnerForm,setShowPartnerForm]=useState(false);
+  const [selectedBroker,setSelectedBroker]=useState<any>(null);
   const [filterProv,setFilterProv]=useState("MB");
   const [filterCity,setFilterCity]=useState("");
 
@@ -5410,7 +5411,7 @@ function MortgageBrokersTab(){
                   <div style={{fontSize:10,color:s.muted,marginBottom:8}}>🗣 {broker.languages.join(", ")}</div>
                 )}
                 {broker.rating>0&&<div style={{fontSize:11,color:"#f59e0b",marginBottom:8}}>{"⭐".repeat(Math.floor(broker.rating))} {broker.rating} ({broker.reviews} reviews)</div>}
-                <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:"9px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect with {broker.name.split(" ")[0]} →</button>
+                <button onClick={()=>{setSelectedBroker(broker);setShowForm(true);}} style={{width:"100%",padding:"9px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect with {broker.name.split(" ")[0]} →</button>
               </div>
             </div>
           ))}
@@ -5456,10 +5457,10 @@ function MortgageBrokersTab(){
         <div style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.6)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}} onClick={()=>setShowForm(false)}>
           <div style={{background:s.white,borderRadius:16,width:"100%",maxWidth:420,overflow:"hidden"}} onClick={e=>e.stopPropagation()}>
             <div style={{background:s.navy,padding:"14px 18px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>💼 Find a Mortgage Broker</div>
-              <button onClick={()=>setShowForm(false)} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
+              <div style={{color:"#fff",fontSize:14,fontWeight:700}}>💼 Connect with {selectedBroker?selectedBroker.name:"a Mortgage Broker"}</div>
+              <button onClick={()=>{setShowForm(false);setSelectedBroker(null);}} style={{background:"rgba(255,255,255,0.15)",border:"none",color:"#fff",width:28,height:28,borderRadius:"50%",fontSize:14,cursor:"pointer"}}>✕</button>
             </div>
-            <BrokerRequestForm onClose={()=>setShowForm(false)}/>
+            <BrokerRequestForm onClose={()=>{setShowForm(false);setSelectedBroker(null);}} brokerName={selectedBroker?.name} brokerCompany={selectedBroker?.company}/>
           </div>
         </div>
       )}
@@ -5480,7 +5481,7 @@ function MortgageBrokersTab(){
   );
 }
 
-function BrokerRequestForm({onClose}:{onClose:()=>void}){
+function BrokerRequestForm({onClose,brokerName,brokerCompany}:{onClose:()=>void;brokerName?:string;brokerCompany?:string}){
   const [name,setName]=useState("");const [email,setEmail]=useState("");const [phone,setPhone]=useState("");
   const [prov,setProv]=useState("MB");const [city,setCity]=useState("");const [purpose,setPurpose]=useState("");
   const [price,setPrice]=useState("");const [down,setDown]=useState("");const [employed,setEmployed]=useState("");
@@ -5490,7 +5491,7 @@ function BrokerRequestForm({onClose}:{onClose:()=>void}){
     setSubmitting(true);
     try{
       await fetch("https://formspree.io/f/xpqgwvvl",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
-        _subject:`Mortgage Broker Lead — ${city||prov}`,name,email,phone,province:prov,city,purpose,purchasePrice:price,downPayment:down,employmentType:employed,source:"Canada Mortgage Rates — Brokers Tab"
+        _subject:brokerName?`New Lead for ${brokerName} — canadamortgagerates.net`:`Mortgage Broker Lead — ${city||prov}`,lead_for:brokerName?`FORWARD TO: ${brokerName} (${brokerCompany})`:"No specific broker selected",name,email,phone,province:prov,city,purpose,purchasePrice:price,downPayment:down,employmentType:employed,source:"Canada Mortgage Rates — Brokers Tab"
       })});setOk(true);
     }catch{alert("Something went wrong.");}
     setSubmitting(false);
