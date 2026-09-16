@@ -5349,7 +5349,24 @@ function MortgageBrokersTab(){
   // PARTNER BROKERS — Add real partners here when signed up
   // Structure: {id, name, company, prov, city, specializations[], experience, languages[], rating, reviews, featured}
   // NOTE: No phone/email/website shown — all contact through form for lead tracking ($100/lead)
-  const BROKERS:any[]=[];
+  const BROKERS:any[]=[
+    {
+      id:1,
+      name:"Tracy Spooner",
+      company:"The Spooner Group",
+      prov:"MB",
+      city:"Winnipeg",
+      photo:"/tracy-spooner.jpg",
+      specializations:["firsttime","renewal","refinance","selfemployed","investment","residential","commercial"],
+      experience:"17 years as mortgage broker, 30+ years in real estate",
+      languages:["English"],
+      rating:0,
+      reviews:0,
+      featured:true,
+      verified:false,
+      bio:"Tracy Spooner is the founder and broker-owner of The Spooner Group, one of Winnipeg's most established independent mortgage brokerages. With 17 years as a licensed mortgage broker and over 30 years of experience in the real estate industry, Tracy brings unmatched depth of knowledge to every file she touches. She serves all of Winnipeg and Manitoba, handling every type of mortgage — first-time buyers, renewals, refinancing, self-employed, and investment properties. Tracy's approach is straightforward: understand what her clients need and find the right solution, every time."
+    }
+  ];
 
   return(
     <div>
