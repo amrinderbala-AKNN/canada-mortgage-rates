@@ -5386,29 +5386,30 @@ function MortgageBrokersTab(){
           {BROKERS.filter(b=>b.prov===filterProv&&(!filterCity||b.city===filterCity)).map((broker:any)=>(
             <div key={broker.id} style={{background:s.white,borderRadius:12,border:`2px solid ${broker.featured?s.gold:s.border}`,overflow:"hidden",boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
               <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,padding:"12px 14px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                <div>
-                  <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{broker.name}</div>
-                  <div style={{color:"rgba(255,255,255,0.75)",fontSize:11}}>{broker.company}</div>
+                <div style={{display:"flex",gap:10,alignItems:"center"}}>
+                  {broker.photo?<img src={broker.photo} alt={broker.name} style={{width:44,height:44,borderRadius:"50%",objectFit:"cover",border:"2px solid rgba(255,255,255,0.3)",flexShrink:0}}/>:<div style={{width:44,height:44,borderRadius:"50%",background:"rgba(255,255,255,0.15)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>💼</div>}
+                  <div>
+                    <div style={{color:"#fff",fontSize:13,fontWeight:800}}>{broker.name}</div>
+                    <div style={{color:"rgba(255,255,255,0.75)",fontSize:11}}>{broker.company}</div>
+                  </div>
                 </div>
                 {broker.featured&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:9,fontWeight:700}}>⭐ Featured</span>}
               </div>
               <div style={{padding:12}}>
                 <div style={{display:"flex",gap:6,marginBottom:8,flexWrap:"wrap"}}>
                   <span style={{background:"#f1f5f9",color:s.navy,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>📍 {broker.city}, {broker.prov}</span>
-                  <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {broker.experience} yrs exp</span>
+                  <span style={{background:"#f0fdf4",color:s.green,borderRadius:20,padding:"2px 8px",fontSize:10,fontWeight:600}}>⏱ {broker.experience}</span>
                 </div>
+                {broker.bio&&<div style={{fontSize:11,color:"#374151",lineHeight:1.6,marginBottom:8}}>{broker.bio}</div>}
                 {broker.specializations?.length>0&&(
                   <div style={{display:"flex",gap:4,marginBottom:8,flexWrap:"wrap"}}>
-                    {broker.specializations.map((sp:string)=><span key={sp} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:600}}>{sp}</span>)}
+                    {broker.specializations.map((sp:string)=><span key={sp} style={{background:"#eff6ff",color:"#1e40af",borderRadius:20,padding:"2px 7px",fontSize:9,fontWeight:600,textTransform:"capitalize"}}>{sp}</span>)}
                   </div>
                 )}
-                {broker.languages?.length>1&&(
+                {broker.languages?.length>0&&(
                   <div style={{fontSize:10,color:s.muted,marginBottom:8}}>🗣 {broker.languages.join(", ")}</div>
                 )}
-                {broker.rating&&<div style={{fontSize:11,color:"#f59e0b",marginBottom:8}}>{"⭐".repeat(Math.floor(broker.rating))} {broker.rating} ({broker.reviews} reviews)</div>}
-                <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:6,padding:"6px 10px",marginBottom:10,fontSize:10,color:"#92400e"}}>
-                  💡 Contact through our form — leads delivered within 24 hours
-                </div>
+                {broker.rating>0&&<div style={{fontSize:11,color:"#f59e0b",marginBottom:8}}>{"⭐".repeat(Math.floor(broker.rating))} {broker.rating} ({broker.reviews} reviews)</div>}
                 <button onClick={()=>setShowForm(true)} style={{width:"100%",padding:"9px",background:s.navy,color:"#fff",border:"none",borderRadius:8,fontSize:12,fontWeight:700,cursor:"pointer"}}>Connect with {broker.name.split(" ")[0]} →</button>
               </div>
             </div>
