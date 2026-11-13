@@ -40,7 +40,7 @@ export default function CityPage({ code, prov, city }: { code: string; prov: any
     {q:`What is the best mortgage rate in ${city.name} right now?`,a:`Current 5-year fixed rates in ${city.name} start around ${prov.fixedRate}, while variable rates start around ${prov.variableRate}. Credit unions in ${prov.name} often offer rates 0.25–0.50% below major banks.`},
     {q:`How much income do I need to buy a home in ${city.name}?`,a:`To afford a $${city.avgPrice.toLocaleString()} home in ${city.name} with 10% down at ${prov.fixedRate}, you would need approximately $${Math.round(monthlyFixed/0.39*12).toLocaleString()}/year gross income to meet the GDS ratio of 39%.`},
     {q:`What is the minimum down payment for a home in ${city.name}?`,a:`For a $${city.avgPrice.toLocaleString()} home, the minimum down payment is ${city.avgPrice < 500000 ? "5% ($"+down5.toLocaleString()+")" : city.avgPrice < 1000000 ? "5% on first $500K + 10% on remainder" : "20%"}. With 5% down, CMHC insurance of $${cmhc5.toLocaleString()} is added to your mortgage.`},
-    {q:`Should I get a fixed or variable mortgage in ${city.name}?`,a:`With the Bank of Canada holding at 2.25%, variable rates (${prov.variableRate}) are currently lower than 5-year fixed (${prov.fixedRate}). Variable saves money if rates stay flat or drop, but fixed gives payment certainty. Consult a mortgage broker for your specific situation.`},
+    {q:`Should I get a fixed or variable mortgage in ${city.name}?`,a:`The Bank of Canada raised its overnight rate to 2.50% on October 28, 2026. Variable payments rise if prime rises, while fixed rates give payment certainty. Compare current offers (variable ${prov.variableRate}, 5-year fixed ${prov.fixedRate}) and consult a mortgage broker for your specific situation.`},
   ];
 
   return (
@@ -70,7 +70,7 @@ export default function CityPage({ code, prov, city }: { code: string; prov: any
 
         <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",padding:"28px 20px 36px"}}>
           <div style={{maxWidth:1060,margin:"0 auto"}}>
-            <div style={{display:"inline-block",background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",fontSize:11,color:"#f5a623",fontWeight:700,marginBottom:12}}>📍 {city.name}, {prov.name} · Updated June 2026</div>
+            <div style={{display:"inline-block",background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",fontSize:11,color:"#f5a623",fontWeight:700,marginBottom:12}}>📍 {city.name}, {prov.name} · 2026 estimates</div>
             <h1 style={{color:"#fff",fontSize:"clamp(20px,4vw,36px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>Mortgage Rates in {city.name}, {prov.name} — {new Date().getFullYear()}</h1>
             <p style={{color:"rgba(255,255,255,0.75)",fontSize:13,marginBottom:20,lineHeight:1.7,maxWidth:650}}>Compare current fixed and variable mortgage rates, monthly payment estimates, and first-time buyer programs for {city.name} homebuyers.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(120px,1fr))",gap:10,maxWidth:750}}>
@@ -92,7 +92,7 @@ export default function CityPage({ code, prov, city }: { code: string; prov: any
           {/* Down payment table */}
           <div style={{background:"#fff",borderRadius:12,padding:18,border:"1px solid #e2e8f0",marginBottom:20}}>
             <h2 style={{fontSize:16,fontWeight:800,color:"#0d2240",marginBottom:4}}>Down Payment & Monthly Payment — {city.name}</h2>
-            <p style={{fontSize:12,color:"#64748b",marginBottom:14}}>Based on $${city.avgPrice.toLocaleString()} average home price at current {prov.name} rates.</p>
+            <p style={{fontSize:12,color:"#64748b",marginBottom:14}}>Based on ${city.avgPrice.toLocaleString()} average home price at current {prov.name} rates.</p>
             <div style={{overflowX:"auto"}}>
               <table style={{width:"100%",borderCollapse:"collapse",minWidth:480}}>
                 <thead><tr style={{background:"#f8fafc"}}>
@@ -150,6 +150,18 @@ export default function CityPage({ code, prov, city }: { code: string; prov: any
             </div>
           </div>
 
+          {(()=>{
+          const k=prov.slug+"/"+city.slug;
+          const G:any={cu:{href:"/blog/manitoba-credit-union-mortgage-rates-compared-2026",label:"Manitoba credit unions compared"},ltt:{href:"/blog/manitoba-land-transfer-tax-2026",label:"Manitoba land transfer tax"},ftb:{href:"/blog/first-time-home-buyer-programs-manitoba-2026",label:"First-time buyer programs"},mrg:{href:"/blog/manitoba-credit-union-mergers-mortgage-members-2026",label:"Credit union mergers explained"},ren:{href:"/blog/mortgage-renewal-rates-winnipeg-2026",label:"Mortgage renewal checklist"},st:{href:"/blog/mortgage-stress-test-manitoba-2026",label:"The stress test in 2026"},fvv:{href:"/blog/fixed-vs-variable-mortgage-manitoba-2026",label:"Fixed vs variable after the October hike"},stb:{href:"/blog/steinbach-mortgage-rates-2026",label:"Steinbach mortgage guide"},brd:{href:"/blog/brandon-mortgage-rates-2026",label:"Brandon mortgage guide"}};
+          const REL:any={"manitoba/steinbach":["stb","cu","ltt","ren"],"manitoba/brandon":["brd","cu","ftb","ltt"],"manitoba/winnipeg":["ren","cu","st","fvv"]};
+          const keys:string[]=REL[k]||(prov.slug==="manitoba"?["cu","ltt","ftb","mrg"]:[]);
+          if(!keys.length)return null;
+          return(<div style={{background:"#fff",borderRadius:12,padding:16,border:"1px solid #e2e8f0",marginBottom:20}}>
+          <h2 style={{fontSize:13,fontWeight:800,color:"#0d2240",marginBottom:10}}>Related Manitoba Guides</h2>
+          <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
+          {keys.map((x:string)=>(<Link key={x} href={G[x].href} style={{padding:"5px 12px",background:"#f8fafc",border:"1px solid #e2e8f0",borderRadius:20,fontSize:11,fontWeight:600,color:"#0d2240",textDecoration:"none"}}>{G[x].label}</Link>))}
+          </div></div>);
+          })()}
           {/* Other cities */}
           <div style={{background:"#fff",borderRadius:12,padding:16,border:"1px solid #e2e8f0",marginBottom:20}}>
             <h2 style={{fontSize:13,fontWeight:800,color:"#0d2240",marginBottom:10}}>Other Cities in {prov.name}</h2>

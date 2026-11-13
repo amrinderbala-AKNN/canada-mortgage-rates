@@ -231,7 +231,7 @@ ${note("Illustration only. Semi-annual compounding; payment excludes property ta
 </ul>
 
 <h2>Renewing in Steinbach</h2>
-<p>The same renewal rules apply as in the rest of Canada: a straight switch at maturity is not expected to be stress-tested if the amount and amortization do not increase (OSFI). Start with ${a("mortgage-renewal-rates-winnipeg-2026", "our renewal checklist")}, which works anywhere in Manitoba.</p>`,
+<p>The same renewal rules apply as in the rest of Canada: a straight switch at maturity is not expected to be stress-tested if the amount and amortization do not increase (OSFI). Start with ${a("mortgage-renewal-rates-winnipeg-2026", "our renewal checklist")}, which works anywhere in Manitoba. For current local estimates see the <a href="/mortgage-rates/manitoba/steinbach" style="color:#2563eb;text-decoration:underline">Steinbach rates and price page</a>.</p>`,
     [
       "manitoba-land-transfer-tax-2026",
       "manitoba-credit-union-mortgage-rates-compared-2026",
@@ -282,6 +282,7 @@ ${note("Illustration only; the price is a round number chosen for the example an
 <li>Confirm the lender's rules for the property type, such as older homes or acreage.</li>
 <li>Budget for closing costs and the ${a("manitoba-land-transfer-tax-2026", "land transfer tax")}.</li>
 <li>Check the ${a("first-time-home-buyer-programs-manitoba-2026", "federal first-time buyer programs")} if this is your first purchase.</li>
+<li>Local estimates: <a href="/mortgage-rates/manitoba/brandon" style="color:#2563eb;text-decoration:underline">Brandon rates and price page</a>.</li>
 </ul>`,
     [
       "manitoba-credit-union-mortgage-rates-compared-2026",
