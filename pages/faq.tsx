@@ -6,9 +6,9 @@ const FAQS = [
   {
     category: "Current Rates",
     questions: [
-      {q:"What is the current mortgage rate in Canada?",a:"As of July 2026, the best 5-year fixed mortgage rates in Canada start around 4.84–4.89% through mortgage brokers and credit unions. Variable rates start around 3.30–3.45%. The Bank of Canada's overnight rate is 2.25% with Prime Rate at 4.45%."},
-      {q:"What is the Bank of Canada rate today?",a:"The Bank of Canada overnight rate is currently 2.25% (held at its June 10, 2026 decision — the fifth consecutive hold). The Prime Rate is 4.45% and the Bank Rate is 2.50%. The next BoC announcement is July 15, 2026."},
-      {q:"Are mortgage rates going down in Canada in 2026?",a:"The Bank of Canada has been holding rates at 2.25% through mid-2026. Most economists expect 1-2 more cuts possible in late 2026 or early 2027 if inflation continues to moderate toward the 2% target. However, rate forecasts are uncertain — always consult a licensed mortgage professional."},
+      {q:"What is the current mortgage rate in Canada?",a:"Rates change often, so check the Rates tab for current offers. As one reference point, Assiniboine Credit Union's posted 5-year fixed closed rate was 4.49% on November 10, 2026. The Bank of Canada's overnight rate is 2.50% with Prime Rate at 4.70%."},
+      {q:"What is the Bank of Canada rate today?",a:"The Bank of Canada overnight rate is currently 2.50%, after a 0.25-point increase on October 28, 2026, its first hike in three years. The big-bank Prime Rate is 4.70% and the Bank Rate is 2.75%. The next BoC announcement is December 9, 2026."},
+      {q:"Are mortgage rates going down in Canada in 2026?",a:"The Bank of Canada held at 2.25% through September 2026, then raised its rate to 2.50% on October 28, 2026. Where rates go next depends on inflation, trade and energy prices, and forecasts are uncertain — always consult a licensed mortgage professional."},
       {q:"What is the best mortgage rate in Canada right now?",a:"The best rates are typically found through mortgage brokers who compare 30+ lenders, or through credit unions which often offer 0.25–0.50% below major bank rates. Use our Rate Finder tool for a personalized estimate based on your profile."},
     ]
   },
@@ -89,7 +89,7 @@ export default function FAQ() {
 
         <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",padding:"36px 20px 44px",textAlign:"center"}}>
           <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,36px)",fontWeight:800,marginBottom:8}}>Canadian Mortgage FAQ</h1>
-          <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,maxWidth:600,margin:"0 auto"}}>Answers to the most common mortgage questions for Canadian homebuyers — updated July 2026.</p>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,maxWidth:600,margin:"0 auto"}}>Answers to the most common mortgage questions for Canadian homebuyers — updated November 2026.</p>
         </div>
 
         <div style={{maxWidth:820,margin:"0 auto",padding:"28px 16px"}}>

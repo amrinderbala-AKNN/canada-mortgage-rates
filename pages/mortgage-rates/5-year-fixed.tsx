@@ -29,7 +29,7 @@ export default function FiveYearFixed() {
           <div style={{maxWidth:1060,margin:"0 auto"}}>
             <div style={{display:"inline-block",background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",fontSize:11,color:"#f5a623",fontWeight:700,marginBottom:12}}>🍁 Updated {new Date().toLocaleDateString("en-CA",{month:"long",year:"numeric"})}</div>
             <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,38px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>5-Year Fixed Mortgage Rates in Canada — 2026</h1>
-            <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>The 5-year fixed mortgage is Canada's most popular mortgage product. With the Bank of Canada holding at 2.25%, 5-year fixed rates have stabilized. Compare the best rates from banks, credit unions, and online lenders across all provinces.</p>
+            <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>The 5-year fixed mortgage is Canada's most popular mortgage product. The Bank of Canada raised its rate to 2.50% on October 28, 2026. Compare the best rates from banks, credit unions, and online lenders across all provinces.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,maxWidth:700}}>
               {[["Best Rate",rate,"#f5a623"],["BoC Rate","2.50%","#4ade80"],["Prime Rate","4.70%","#60a5fa"],["Term","5 Years","#c084fc"]].map(([l,v,c])=>(
                 <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 14px"}}>

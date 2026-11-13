@@ -11,7 +11,7 @@ const categoryColors:{[k:string]:string} = {
 const BASE_POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,readTime:string,content:string}} = {
   "best-mortgage-rates-canada-2026":{
     title:"Best Mortgage Rates in Canada — June 2026",
-    desc:"The Bank of Canada held at 2.25% for the fifth time. Here's what that means for fixed and variable rates across Canada.",
+    desc:"Snapshot from June 2026, before the Bank of Canada raised its rate to 2.50% on October 28. Here's what that means for fixed and variable rates across Canada.",
     category:"Rates",date:"June 28, 2026",readTime:"5 min read",
     content:`<p style='background:#fff7ed;border-left:4px solid #f5a623;padding:12px 16px;border-radius:6px;font-size:14px;'><strong>Update:</strong> This article reflects June 2026 data. The Bank of Canada raised its overnight rate to 2.50% on October 28, 2026, and prime is now 4.70%. Check the Rates tab for current numbers.</p><h2>Bank of Canada Holds at 2.25%</h2>
 <p>On June 10, 2026, the Bank of Canada held its overnight rate at 2.25% for the fifth consecutive decision. With Prime Rate at 4.45%, here's where mortgage rates currently stand across Canada.</p>

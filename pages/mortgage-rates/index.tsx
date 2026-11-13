@@ -19,7 +19,7 @@ export default function MortgageRatesIndex() {
         </nav>
         <div style={{maxWidth:1060,margin:"0 auto",padding:"28px 16px"}}>
           <h1 style={{fontSize:"clamp(22px,4vw,36px)",fontWeight:800,color:"#0d2240",marginBottom:8}}>Mortgage Rates Across Canada — 2026</h1>
-          <p style={{fontSize:14,color:"#64748b",marginBottom:24,lineHeight:1.7}}>Compare current fixed and variable mortgage rates, average home prices, and first-time buyer programs in every Canadian province. Bank of Canada rate: <strong>2.25%</strong> · Prime Rate: <strong>4.45%</strong></p>
+          <p style={{fontSize:14,color:"#64748b",marginBottom:24,lineHeight:1.7}}>Compare current fixed and variable mortgage rates, average home prices, and first-time buyer programs in every Canadian province. Bank of Canada rate: <strong>2.50%</strong> · Prime Rate: <strong>4.70%</strong></p>
           <div style={{background:"#fff7ed",border:"1px solid #fed7aa",borderRadius:10,padding:"12px 16px",marginBottom:24,fontSize:12,color:"#92400e"}}>
             ⚠️ Rates are estimates for informational purposes only. Canada Mortgage Rates is not a licensed mortgage broker. Always verify with lenders directly.
           </div>
