@@ -8,7 +8,7 @@ export default function MortgageRatesIndex() {
     <>
       <Head>
         <title>Mortgage Rates by Province — Canada 2026</title>
-        <meta name="description" content="Compare current mortgage rates across all 10 Canadian provinces. Find the best fixed and variable rates in your city — updated June 2026." />
+        <meta name="description" content="Compare current mortgage rates across all 10 Canadian provinces. Find the best fixed and variable rates in your city — 2026 estimates." />
         <link rel="canonical" href="https://www.canadamortgagerates.net/mortgage-rates" />
       </Head>
       <div style={{fontFamily:"-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",background:"#f4f6f9",minHeight:"100vh"}}>
@@ -51,7 +51,7 @@ export default function MortgageRatesIndex() {
           </div>
           <div style={{marginTop:32,background:"#fff",borderRadius:12,padding:20,border:"1px solid #e2e8f0"}}>
             <h2 style={{fontSize:18,fontWeight:800,color:"#0d2240",marginBottom:12}}>About Canadian Mortgage Rates in 2026</h2>
-            <p style={{fontSize:13,color:"#64748b",lineHeight:1.8,marginBottom:10}}>The Bank of Canada has held its overnight rate at 2.25% as of June 2026, with Prime Rate at 4.45%. Variable rates are around 3.30–3.80%, while 5-year fixed rates range from 4.80–5.20%.</p>
+            <p style={{fontSize:13,color:"#64748b",lineHeight:1.8,marginBottom:10}}>The Bank of Canada raised its overnight rate to 2.50% on October 28, 2026, and big-bank Prime Rate is now 4.70%. Variable rates are around 3.30–3.80%, while 5-year fixed rates range from 4.80–5.20%.</p>
             <p style={{fontSize:13,color:"#64748b",lineHeight:1.8,marginBottom:10}}>Credit unions often offer rates 0.25–0.50% below the major banks. Using a mortgage broker gives you access to 30+ lenders at once — free to use.</p>
             <p style={{fontSize:13,color:"#64748b",lineHeight:1.8}}>All buyers must pass Canada's mortgage stress test, qualifying at rate + 2% or 5.25%. First-time buyers can use FHSA ($40K) and RRSP HBP ($60K) to maximize down payment.</p>
           </div>

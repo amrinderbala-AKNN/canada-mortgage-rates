@@ -37,7 +37,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
 
         <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",padding:"28px 20px 36px"}}>
           <div style={{maxWidth:1060,margin:"0 auto"}}>
-            <div style={{display:"inline-block",background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",fontSize:11,color:"#f5a623",fontWeight:700,marginBottom:12}}>🍁 {code} · Updated June 2026</div>
+            <div style={{display:"inline-block",background:"rgba(245,166,35,0.15)",border:"1px solid rgba(245,166,35,0.3)",borderRadius:20,padding:"3px 12px",fontSize:11,color:"#f5a623",fontWeight:700,marginBottom:12}}>🍁 {code} · 2026 estimates</div>
             <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,38px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>Mortgage Rates in {prov.name} — 2026</h1>
             <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>{prov.marketDesc}</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,maxWidth:700}}>
@@ -56,7 +56,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
           <div style={{background:"#fff",borderRadius:12,boxShadow:"0 2px 12px rgba(0,0,0,0.07)",overflow:"hidden",marginBottom:20}}>
             <div style={{background:"linear-gradient(135deg,#0d2240,#1a3a5c)",padding:"14px 18px"}}>
               <h2 style={{color:"#fff",fontSize:16,fontWeight:800,margin:0}}>Current Mortgage Rates — {prov.name} {new Date().getFullYear()}</h2>
-              <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:3}}>BoC Rate: 2.25% · Prime: 4.45% · Estimates only — verify with lenders</div>
+              <div style={{color:"rgba(255,255,255,0.6)",fontSize:11,marginTop:3}}>BoC Rate: 2.50% · Prime: 4.70% · Estimates only — verify with lenders</div>
             </div>
             <div style={{overflowX:"auto"}}>
               <table style={{width:"100%",borderCollapse:"collapse"}}>
@@ -88,7 +88,7 @@ export default function ProvincePage({ code, prov }: { code: string; prov: any }
                 </tbody>
               </table>
             </div>
-            <div style={{padding:"10px 16px",background:"#fffbeb",borderTop:"1px solid #fde68a",fontSize:10,color:"#92400e"}}>⚠️ Rates are estimates based on market data as of June 2026. Actual rates depend on your credit score, down payment, income, and lender. Always verify directly with the lender.</div>
+            <div style={{padding:"10px 16px",background:"#fffbeb",borderTop:"1px solid #fde68a",fontSize:10,color:"#92400e"}}>⚠️ Rates are estimates based on market data. Verify current rates with lenders. Actual rates depend on your credit score, down payment, income, and lender. Always verify directly with the lender.</div>
           </div>
 
           {/* Cities grid */}

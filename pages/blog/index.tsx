@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 const POSTS = [
-  {slug:"best-mortgage-rates-canada-2026",title:"Best Mortgage Rates in Canada — June 2026",desc:"The Bank of Canada held its overnight rate at 2.25% for the fifth consecutive decision. Here's what that means for fixed and variable mortgage rates across Canada.",category:"Rates",date:"June 28, 2026",readTime:"5 min read"},
+  {slug:"best-mortgage-rates-canada-2026",title:"Best Mortgage Rates in Canada — June 2026",desc:"Snapshot from June 2026, before the Bank of Canada raised its rate to 2.50% on October 28. Here's what that means for fixed and variable mortgage rates across Canada.",category:"Rates",date:"June 28, 2026",readTime:"5 min read"},
   {slug:"how-to-pass-mortgage-stress-test-canada",title:"How to Pass Canada's Mortgage Stress Test in 2026",desc:"The stress test requires you to qualify at your rate + 2% or 5.25%. Here's exactly how it works, what it means for your buying power, and 5 ways to qualify for more.",category:"Qualifying",date:"June 25, 2026",readTime:"6 min read"},
   {slug:"fhsa-rrsp-home-buyers-plan-guide",title:"FHSA + RRSP Home Buyers' Plan: The Complete Guide",desc:"First-time buyers can combine the FHSA ($40K) and RRSP Home Buyers' Plan ($60K) to access up to $200K tax-free per couple. Here's how to stack both programs.",category:"First-Time Buyers",date:"June 22, 2026",readTime:"7 min read"},
   {slug:"fixed-vs-variable-mortgage-2026",title:"Fixed vs Variable Mortgage in 2026 — Which Should You Choose?",desc:"With variable rates around 3.35% and 5-year fixed at 4.89%, the spread is significant. We break down the pros, cons, and who should choose each.",category:"Rates",date:"June 20, 2026",readTime:"5 min read"},

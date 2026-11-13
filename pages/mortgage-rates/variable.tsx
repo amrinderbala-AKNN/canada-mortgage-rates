@@ -7,7 +7,7 @@ export default function MortgageTypePage() {
   const title = "Variable Rate Mortgage Canada 2026 — Compare Best Rates";
   const desc = "Compare the best variable mortgage rates in Canada for 2026. Current best rate: 3.45%. See how variable compares to fixed across all provinces.";
   const h1 = "Variable Mortgage Rates in Canada — 2026";
-  const intro = "Variable rate mortgages move with the Bank of Canada prime rate. Currently at 2.25% overnight rate and 4.45% prime, variable rates are lower than 5-year fixed. Compare variable rates from banks, credit unions, and online lenders across Canada.";
+  const intro = "Variable rate mortgages move with the Bank of Canada prime rate. Currently at 2.50% overnight rate and 4.70% prime, variable payments rise with prime. Compare variable rates from banks, credit unions, and online lenders across Canada.";
   const bestRate = "3.45%";
   const rateKey = "variableRate";
   const slug = "variable";
@@ -34,7 +34,7 @@ export default function MortgageTypePage() {
             <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,38px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>{h1}</h1>
             <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>{intro}</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,maxWidth:500}}>
-              {[["Best Rate",bestRate,"#f5a623"],["BoC Rate","2.25%","#4ade80"],["Prime Rate","4.45%","#60a5fa"]].map(([l,v,c])=>(
+              {[["Best Rate",bestRate,"#f5a623"],["BoC Rate","2.50%","#4ade80"],["Prime Rate","4.70%","#60a5fa"]].map(([l,v,c])=>(
                 <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 14px"}}>
                   <div style={{fontSize:9,color:"rgba(255,255,255,0.55)",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px",marginBottom:4}}>{l}</div>
                   <div style={{fontSize:18,fontWeight:800,color:c as string}}>{v}</div>

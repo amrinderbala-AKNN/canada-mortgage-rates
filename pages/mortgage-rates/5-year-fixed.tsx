@@ -31,7 +31,7 @@ export default function FiveYearFixed() {
             <h1 style={{color:"#fff",fontSize:"clamp(22px,4vw,38px)",fontWeight:800,marginBottom:8,lineHeight:1.2}}>5-Year Fixed Mortgage Rates in Canada — 2026</h1>
             <p style={{color:"rgba(255,255,255,0.75)",fontSize:14,marginBottom:20,lineHeight:1.7,maxWidth:700}}>The 5-year fixed mortgage is Canada's most popular mortgage product. With the Bank of Canada holding at 2.25%, 5-year fixed rates have stabilized. Compare the best rates from banks, credit unions, and online lenders across all provinces.</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(130px,1fr))",gap:10,maxWidth:700}}>
-              {[["Best Rate",rate,"#f5a623"],["BoC Rate","2.25%","#4ade80"],["Prime Rate","4.45%","#60a5fa"],["Term","5 Years","#c084fc"]].map(([l,v,c])=>(
+              {[["Best Rate",rate,"#f5a623"],["BoC Rate","2.50%","#4ade80"],["Prime Rate","4.70%","#60a5fa"],["Term","5 Years","#c084fc"]].map(([l,v,c])=>(
                 <div key={l} style={{background:"rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 14px"}}>
                   <div style={{fontSize:9,color:"rgba(255,255,255,0.55)",fontWeight:700,textTransform:"uppercase",letterSpacing:"0.4px",marginBottom:4}}>{l}</div>
                   <div style={{fontSize:18,fontWeight:800,color:c as string}}>{v}</div>
@@ -94,7 +94,7 @@ export default function FiveYearFixed() {
             <h2 style={{color:"#0d2240",fontSize:18,fontWeight:800,marginBottom:16}}>5-Year Fixed Mortgage FAQ</h2>
             {[
               {q:"What is the best 5-year fixed mortgage rate in Canada right now?",a:`The best 5-year fixed mortgage rate in Canada as of 2026 is approximately ${rate}, available from select credit unions and online lenders. Major banks typically offer rates 0.25–0.50% higher. Always compare multiple lenders before committing.`},
-              {q:"Should I choose a 5-year fixed or variable rate in 2026?",a:"With the Bank of Canada holding at 2.25%, variable rates are currently lower than 5-year fixed. However, 5-year fixed offers payment certainty. If you need budget predictability or are at the top of your affordability, fixed is safer. If you have financial flexibility and believe rates will stay flat or drop, variable may save you money."},
+              {q:"Should I choose a 5-year fixed or variable rate in 2026?",a:"The Bank of Canada raised its rate to 2.50% on October 28, 2026, so compare current variable and fixed offers. However, 5-year fixed offers payment certainty. If you need budget predictability or are at the top of your affordability, fixed is safer. If you have financial flexibility and believe rates will stay flat or drop, variable may save you money."},
               {q:"Can I break a 5-year fixed mortgage early?",a:"Yes, but it's costly. Breaking a fixed mortgage early triggers an Interest Rate Differential (IRD) penalty, which can be $10,000–$30,000 depending on your balance and the rate gap. Variable mortgages only charge 3 months interest. If there's any chance you'll move or refinance within 5 years, consider a shorter term."},
               {q:"What is the stress test rate for a 5-year fixed mortgage?",a:`The mortgage stress test requires you to qualify at the higher of your contracted rate + 2%, or 5.25%. At ${rate}, you'd need to qualify at approximately ${(parseFloat(rate)+2).toFixed(2)}%. This reduces your maximum purchase price by roughly 15–20%.`},
             ].map(({q,a})=>(
