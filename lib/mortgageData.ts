@@ -46,7 +46,7 @@ export const PROVINCES:{[k:string]:{name:string,slug:string,cities:{name:string,
     ],
     topLenders:["Vancity Credit Union","Coast Capital Savings","RBC Royal Bank","TD Canada Trust","CIBC"],
     cu:[{name:"Vancity Credit Union",url:"https://www.vancity.com"},{name:"Coast Capital Savings",url:"https://www.coastcapitalsavings.com"},{name:"First West Credit Union",url:"https://www.firstwestcu.ca"}]},
-  MB:{name:"Manitoba",slug:"manitoba",fixedRate:"4.85%",variableRate:"3.30%",minDown:"5%",ltt:"0.5–2% (rebate available)",marketDesc:"Manitoba offers some of Canada's most affordable housing in 2026. Winnipeg remains a buyers' market with strong inventory. The LTT rebate for first-time buyers and rural homeownership programs make Manitoba particularly attractive for new buyers.",
+  MB:{name:"Manitoba",slug:"manitoba",fixedRate:"4.85%",variableRate:"3.30%",minDown:"5%",ltt:"0–2% (no first-time buyer relief listed)",marketDesc:"Manitoba offers some of Canada's most affordable housing in 2026. Winnipeg remains a buyers' market with strong inventory. The LTT rebate for first-time buyers and rural homeownership programs make Manitoba particularly attractive for new buyers.",
     cities:[
       {name:"Winnipeg",slug:"winnipeg",avgPrice:380000,priceChange:"+4.2%"},
       {name:"Brandon",slug:"brandon",avgPrice:295000,priceChange:"+3.5%"},
