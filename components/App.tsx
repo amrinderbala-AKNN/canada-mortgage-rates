@@ -105,14 +105,14 @@ const BANKS=[
 const TERMS=["1-year","2-year","3-year","5-year"];
 
 // ── VERIFIED PARTNER RATES ────────────────────────────────────────────────────
-// ACU rates sourced directly from acu.ca/rates — last updated June 22, 2026
+// ACU rates sourced directly from acu.ca/rates — "Rates were last updated November 10, 2026" (best-rate fixed closed; 1-yr variable is the open rate; 5-yr variable is the closed rate)
 const ACU_VERIFIED_RATES:{[term:string]:{fixed:number,variable:number|null}}={
-  "1-year":{fixed:4.49,variable:4.45},
+  "1-year":{fixed:4.29,variable:4.70},
   "2-year":{fixed:4.29,variable:null},
-  "3-year":{fixed:3.99,variable:null},
-  "5-year":{fixed:4.09,variable:3.60},
+  "3-year":{fixed:4.29,variable:null},
+  "5-year":{fixed:4.49,variable:3.85},
 };
-const ACU_VERIFIED_UPDATED="Jun 22, 2026";
+const ACU_VERIFIED_UPDATED="Nov 10, 2026";
 const OFFERS=[
   // ── NATIONAL (all provinces) ─────────────────────────────────────────────
   {bank:"RBC Royal Bank",type:"Switch",badge:"🔄 Switch Offer",color:"#003168",textColor:"#fff",offer:"Up to $1,100 in Switch Fee Rebates",detail:"Switch your mortgage to RBC and get up to $300 in processing fees + $300 in discharge fees covered. Plus earn up to 55,000 Avion Rewards Points.",expires:"August 31, 2026",url:"https://www.rbcroyalbank.com/dms/mortgages/limited-time-offer/2026.html",tag:"Ends Aug 31",provinces:[]},
@@ -236,9 +236,9 @@ const INS_BASE={AB:0.42,BC:0.52,MB:0.38,NB:0.35,NL:0.36,NS:0.37,ON:0.48,PE:0.32,
 const TYPE_MULT={detached:1.0,semi:0.82,condo:0.38,townhouse:0.72};
 const YEAR_MULT={new:0.82,mid:1.0,old:1.32};
 const RF_STEPS=[{q:"What is the purpose of your mortgage?",key:"purpose",opts:["🏠 First Home Purchase","🏡 Purchase (Not First Home)","🔄 Mortgage Renewal","💳 Refinance"]},{q:"What is your estimated credit score?",key:"credit",opts:["🟢 Excellent (750+)","🔵 Good (700–749)","🟡 Fair (650–699)","🔴 Below 650"]},{q:"How much is your down payment?",key:"down",opts:["5–9% (Insured)","10–14% (Insured)","15–19% (Insured)","20%+ (Conventional)"]},{q:"What is your employment type?",key:"employment",opts:["💼 Salaried / Full-Time","🧾 Self-Employed","📋 Contract / Part-Time","🎯 Retired"]},{q:"What mortgage term do you prefer?",key:"term",opts:["📉 Variable Rate","📅 1–2 Year Fixed","📅 3 Year Fixed","📅 5 Year Fixed"]}];
-const FTHB_PROV={AB:{programs:[{name:"No Land Transfer Tax",saving:"$5,000–$15,000+",status:"Always",color:"#16a34a",desc:"Alberta has no provincial land transfer tax.",url:"https://www.alberta.ca/land-titles.aspx"}],savings:[{l:"No LTT",v:"~$10K"},{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"}]},BC:{programs:[{name:"Property Transfer Tax Exemption",saving:"Up to $8,000+",status:"Active",color:"#16a34a",desc:"Full exemption on homes under $500K.",url:"https://www2.gov.bc.ca/gov/content/taxes/property-taxes/property-transfer-tax/exemptions/first-time-home-buyers"}],savings:[{l:"PTT Exemption",v:"~$8K"},{l:"HOG",v:"$770/yr"},{l:"FHSA+HBP",v:"~$200K"}]},MB:{programs:[{name:"LTT Rebate",saving:"Up to $4,500",status:"Active",color:"#16a34a",desc:"Manitoba first-time buyers receive a rebate on provincial land transfer tax.",url:"https://www.gov.mb.ca/finance/tao/ltt.html"},{name:"Rural Homeownership Program",saving:"Up to $3,500",status:"Active",color:"#2563eb",desc:"Down payment assistance for buyers outside Winnipeg.",url:"https://www.gov.mb.ca/housing/pubs/rural_homeownership_program.pdf"}],savings:[{l:"LTT Rebate",v:"~$4,500"},{l:"Rural Program",v:"~$3,500"},{l:"FHSA+HBP",v:"~$200K"}]},ON:{programs:[{name:"Ontario LTT Rebate",saving:"Up to $4,000",status:"Active",color:"#16a34a",desc:"First-time buyers get a rebate on Ontario land transfer tax.",url:"https://www.ontario.ca/page/land-transfer-tax"},{name:"Ontario HST New Home Rebate",saving:"Up to $130,000",status:"New 2026",color:"#c8102e",desc:"Removes full 13% HST on new homes up to $1M.",url:"https://www.ontario.ca/page/new-housing-rebate"}],savings:[{l:"LTT Rebate",v:"~$4K"},{l:"HST Rebate",v:"~$130K"},{l:"FHSA+HBP",v:"~$200K"}]},SK:{programs:[{name:"Low Transfer Fee",saving:"Only 0.3%",status:"Always",color:"#16a34a",desc:"Saskatchewan charges a flat 0.3% transfer fee.",url:"https://www.saskatchewan.ca/residents/housing"}],savings:[{l:"Low Fee",v:"0.3%"},{l:"Tax Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NS:{programs:[{name:"NS 2% Down Payment Pilot",saving:"Lower barrier",status:"New 2026",color:"#c8102e",desc:"Nova Scotia pilot reduces minimum down payment to 2%.",url:"https://novascotia.ca/housing/"}],savings:[{l:"2% Min Down",v:"Lower barrier"},{l:"Down Pmt",v:"Up to 5%"},{l:"FHSA+HBP",v:"~$200K"}]},NB:{programs:[{name:"NB Homeownership Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for low-to-moderate income buyers.",url:"https://www2.gnb.ca/content/gnb/en/departments/social-development/housing.html"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]},PE:{programs:[{name:"PEI LTT Full Exemption",saving:"Up to $3,000+",status:"Active",color:"#16a34a",desc:"Full real property transfer tax exemption on homes under $200K.",url:"https://www.princeedwardisland.ca/en/information/finance/real-property-transfer-tax"}],savings:[{l:"LTT Exemption",v:"~$3K"},{l:"5% Loan",v:"Interest-free"},{l:"FHSA+HBP",v:"~$200K"}]},QC:{programs:[{name:"Quebec First-Time Buyer Credit",saving:"~$750",status:"Active",color:"#2563eb",desc:"Quebec provincial tax credit on top of the federal $1,500 credit.",url:"https://www.revenuquebec.ca/en/citizens/tax-credits/first-time-home-buyers/"}],savings:[{l:"Prov Credit",v:"~$750"},{l:"Fed Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NL:{programs:[{name:"NL Home Purchase Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for qualifying first-time buyers.",url:"https://www.gov.nl.ca/digital-government-and-service-nl/nlhc/home-ownership-programs/"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]}};
-const EDU_ARTICLES=[{icon:"📊",title:"Fixed vs Variable in 2026?",desc:"BoC holding at 2.25% — which type makes sense now?",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Fixed vs Variable in 2026</h3><p>With the Bank of Canada holding at 2.25% variable rates (~3.3%) are lower than fixed (~4.9%), but rate hike risk exists.</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Fixed Rate</h4><p><b>Pros:</b> Predictable payments, protection from hikes.<br/><b>Cons:</b> Higher rate, costly break penalties (IRD).</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Variable Rate</h4><p><b>Pros:</b> Lower rate, only 3 months interest to break.<br/><b>Cons:</b> Payments fluctuate.</p>"},{icon:"📋",title:"How to Pass the Stress Test",desc:"Must qualify at rate +2% or 5.25%.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada's Mortgage Stress Test</h3><p>Must qualify at the higher of: contracted rate + 2%, or 5.25%.</p><ul style='margin-left:18px;line-height:2;'><li>Increase income or add a co-borrower</li><li>Pay down existing debts</li><li>Increase your down payment</li><li>Choose a lower-priced home</li></ul>"},{icon:"🏦",title:"What is CMHC Insurance?",desc:"Required under 20% down.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>CMHC Mortgage Default Insurance</h3><p>Required when putting less than 20% down. Protects the lender.</p><ul style='margin-left:18px;line-height:2;'><li>5–9.99% down → 4.0%</li><li>10–14.99% → 3.1%</li><li>15–19.99% → 2.8%</li><li>20%+ → No CMHC ✅</li></ul>"},{icon:"💰",title:"FHSA Complete Guide",desc:"$40K tax-free per person.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>First Home Savings Account</h3><p>Up to $8,000/year (lifetime $40K). Tax-deductible + tax-free withdrawals.</p><p style='margin-top:8px;'>Stack with HBP: <b>$200K combined</b> for couples.</p>"},{icon:"🔄",title:"Renewal vs Refinancing",desc:"Millions renewing in 2026–2027.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Renewal vs Refinancing</h3><p><b>Renewal:</b> No penalty to switch lenders. Start shopping 4 months before maturity.</p><p style='margin-top:8px;'><b>Refinancing:</b> Breaking early costs a penalty — 3 months interest or IRD.</p>"},{icon:"📈",title:"Canada Housing Market 2026",desc:"What conflict and tariffs mean for prices.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada Housing Market 2026</h3><p>BoC held at 2.25%. Inflation at 2.8%. GDP growth 1.2%. Analysts expect flat to 3% price growth. Calgary and Edmonton continue to outperform.</p>"}];
-const BOC_ITEMS_DEFAULT=[{label:"Overnight Rate",value:"2.25%",change:"hold"},{label:"Prime Rate",value:"4.45%",change:"hold"},{label:"Bank Rate",value:"2.50%",change:"hold"},{label:"Inflation",value:"2.8%",change:"up"},{label:"Last Decision",value:"Loading...",change:"hold"},{label:"Next Announcement",value:"Loading...",change:"hold"},{label:"Variable Rate",value:"~3.35%",change:"hold"},{label:"5-yr Fixed",value:"~4.89%",change:"hold"},{label:"CAD/USD",value:"~0.72",change:"hold"}];
+const FTHB_PROV={AB:{programs:[{name:"No Land Transfer Tax",saving:"$5,000–$15,000+",status:"Always",color:"#16a34a",desc:"Alberta has no provincial land transfer tax.",url:"https://www.alberta.ca/land-titles.aspx"}],savings:[{l:"No LTT",v:"~$10K"},{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"}]},BC:{programs:[{name:"Property Transfer Tax Exemption",saving:"Up to $8,000+",status:"Active",color:"#16a34a",desc:"Full exemption on homes under $500K.",url:"https://www2.gov.bc.ca/gov/content/taxes/property-taxes/property-transfer-tax/exemptions/first-time-home-buyers"}],savings:[{l:"PTT Exemption",v:"~$8K"},{l:"HOG",v:"$770/yr"},{l:"FHSA+HBP",v:"~$200K"}]},MB:{programs:[{name:"Land Transfer Tax — no first-time buyer relief listed",saving:"None",status:"Check",color:"#64748b",desc:"The Manitoba government's land transfer tax page lists no first-time buyer rebate, so budget for the full tax.",url:"https://gov.mb.ca/finance/other/landtransfertax.html"},{name:"Manitoba Housing homeownership programs",saving:"Varies",status:"Check",color:"#2563eb",desc:"Manitoba Housing runs homeownership programs with limited eligibility. Check current details with the province.",url:"https://gov.mb.ca/housing/progs/homeownership.html"}],savings:[{l:"Tax Credit",v:"$1,500"},{l:"FHSA",v:"$40K max"},{l:"HBP",v:"Check CRA"}]},ON:{programs:[{name:"Ontario LTT Rebate",saving:"Up to $4,000",status:"Active",color:"#16a34a",desc:"First-time buyers get a rebate on Ontario land transfer tax.",url:"https://www.ontario.ca/page/land-transfer-tax"},{name:"Ontario HST New Home Rebate",saving:"Up to $130,000",status:"New 2026",color:"#c8102e",desc:"Removes full 13% HST on new homes up to $1M.",url:"https://www.ontario.ca/page/new-housing-rebate"}],savings:[{l:"LTT Rebate",v:"~$4K"},{l:"HST Rebate",v:"~$130K"},{l:"FHSA+HBP",v:"~$200K"}]},SK:{programs:[{name:"Low Transfer Fee",saving:"Only 0.3%",status:"Always",color:"#16a34a",desc:"Saskatchewan charges a flat 0.3% transfer fee.",url:"https://www.saskatchewan.ca/residents/housing"}],savings:[{l:"Low Fee",v:"0.3%"},{l:"Tax Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NS:{programs:[{name:"NS 2% Down Payment Pilot",saving:"Lower barrier",status:"New 2026",color:"#c8102e",desc:"Nova Scotia pilot reduces minimum down payment to 2%.",url:"https://novascotia.ca/housing/"}],savings:[{l:"2% Min Down",v:"Lower barrier"},{l:"Down Pmt",v:"Up to 5%"},{l:"FHSA+HBP",v:"~$200K"}]},NB:{programs:[{name:"NB Homeownership Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for low-to-moderate income buyers.",url:"https://www2.gnb.ca/content/gnb/en/departments/social-development/housing.html"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]},PE:{programs:[{name:"PEI LTT Full Exemption",saving:"Up to $3,000+",status:"Active",color:"#16a34a",desc:"Full real property transfer tax exemption on homes under $200K.",url:"https://www.princeedwardisland.ca/en/information/finance/real-property-transfer-tax"}],savings:[{l:"LTT Exemption",v:"~$3K"},{l:"5% Loan",v:"Interest-free"},{l:"FHSA+HBP",v:"~$200K"}]},QC:{programs:[{name:"Quebec First-Time Buyer Credit",saving:"~$750",status:"Active",color:"#2563eb",desc:"Quebec provincial tax credit on top of the federal $1,500 credit.",url:"https://www.revenuquebec.ca/en/citizens/tax-credits/first-time-home-buyers/"}],savings:[{l:"Prov Credit",v:"~$750"},{l:"Fed Credit",v:"$1,500"},{l:"FHSA+HBP",v:"~$200K"}]},NL:{programs:[{name:"NL Home Purchase Program",saving:"Varies",status:"Active",color:"#16a34a",desc:"Down payment assistance for qualifying first-time buyers.",url:"https://www.gov.nl.ca/digital-government-and-service-nl/nlhc/home-ownership-programs/"}],savings:[{l:"FHSA+HBP",v:"~$200K"},{l:"Tax Credit",v:"$1,500"},{l:"Down Pmt",v:"Varies"}]}};
+const EDU_ARTICLES=[{icon:"📊",title:"Fixed vs Variable in 2026?",desc:"BoC raised to 2.50% in October 2026 — which type makes sense now?",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Fixed vs Variable in 2026</h3><p>The Bank of Canada raised its overnight rate to 2.50% on October 28, 2026, and variable-rate payments follow prime up. Compare current variable and fixed offers on the Rates tab, and make sure you could afford a higher payment.</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Fixed Rate</h4><p><b>Pros:</b> Predictable payments, protection from hikes.<br/><b>Cons:</b> Higher rate, costly break penalties (IRD).</p><h4 style='margin:12px 0 5px;color:#0d2240;'>Variable Rate</h4><p><b>Pros:</b> Lower rate, only 3 months interest to break.<br/><b>Cons:</b> Payments fluctuate.</p>"},{icon:"📋",title:"How to Pass the Stress Test",desc:"Must qualify at rate +2% or 5.25%.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada's Mortgage Stress Test</h3><p>Must qualify at the higher of: contracted rate + 2%, or 5.25%.</p><ul style='margin-left:18px;line-height:2;'><li>Increase income or add a co-borrower</li><li>Pay down existing debts</li><li>Increase your down payment</li><li>Choose a lower-priced home</li></ul>"},{icon:"🏦",title:"What is CMHC Insurance?",desc:"Required under 20% down.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>CMHC Mortgage Default Insurance</h3><p>Required when putting less than 20% down. Protects the lender.</p><ul style='margin-left:18px;line-height:2;'><li>5–9.99% down → 4.0%</li><li>10–14.99% → 3.1%</li><li>15–19.99% → 2.8%</li><li>20%+ → No CMHC ✅</li></ul>"},{icon:"💰",title:"FHSA Complete Guide",desc:"$40K tax-free per person.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>First Home Savings Account</h3><p>Up to $8,000/year (lifetime $40K). Tax-deductible + tax-free withdrawals.</p><p style='margin-top:8px;'>Stack with HBP: <b>$200K combined</b> for couples.</p>"},{icon:"🔄",title:"Renewal vs Refinancing",desc:"Millions renewing in 2026–2027.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Renewal vs Refinancing</h3><p><b>Renewal:</b> No penalty to switch lenders. Start shopping 4 months before maturity.</p><p style='margin-top:8px;'><b>Refinancing:</b> Breaking early costs a penalty — 3 months interest or IRD.</p>"},{icon:"📈",title:"Canada Housing Market 2026",desc:"What conflict and tariffs mean for prices.",content:"<h3 style='color:#0d2240;margin-bottom:10px;'>Canada Housing Market 2026</h3><p>BoC raised its rate to 2.50% on Oct 28, 2026. Inflation at 2.8%. GDP growth 1.2%. Analysts expect flat to 3% price growth. Calgary and Edmonton continue to outperform.</p>"}];
+const BOC_ITEMS_DEFAULT=[{label:"Overnight Rate",value:"2.50%",change:"up"},{label:"Prime Rate",value:"4.70%",change:"up"},{label:"Bank Rate",value:"2.75%",change:"up"},{label:"Inflation",value:"2.8%",change:"up"},{label:"Last Decision",value:"Loading...",change:"hold"},{label:"Next Announcement",value:"Loading...",change:"hold"},{label:"Variable Rate",value:"~3.35%",change:"hold"},{label:"5-yr Fixed",value:"~4.89%",change:"hold"},{label:"CAD/USD",value:"~0.72",change:"hold"}];
 
 const s={navy:"#0d2240",red:"#c8102e",gold:"#f5a623",green:"#16a34a",blue:"#2563eb",muted:"#64748b",border:"#e2e8f0",light:"#f4f6f9",white:"#fff"};
 const cur=n=>"$"+Math.round(n).toLocaleString();
@@ -439,9 +439,9 @@ function FloatingJourneyButton({setActive}:{setActive:(t:string)=>void}){
 }
 
 function useBocRates(){
-  const [rates,setRates]=useState({overnight:"2.25",prime:"4.45",bankRate:"2.50",cadUsd:"0.72",asOf:"",fallback:true});
+  const [rates,setRates]=useState({overnight:"2.50",prime:"4.70",bankRate:"2.75",cadUsd:"0.72",asOf:"",fallback:true});
   useEffect(()=>{
-    fetch("/api/boc").then(r=>r.json()).then(d=>setRates(d)).catch(()=>{});
+    fetch("/api/boc").then(r=>r.json()).then(d=>setRates(prev=>({...prev,...d}))).catch(()=>{});
   },[]);
   return rates;
 }
@@ -467,10 +467,10 @@ function BocTicker({onRateAlert}:{onRateAlert:()=>void}){
   const boc=useBocRates();
   const {last,next}=getBocSchedule();
   const items=[
-    {label:"Overnight Rate",value:boc.overnight+"%",change:"hold"},
-    {label:"Prime Rate",value:boc.prime+"%",change:"hold"},
-    {label:"Bank Rate",value:boc.bankRate+"%",change:"hold"},
-    {label:"CAD/USD",value:"~"+boc.cadUsd,change:"hold"},
+    {label:"Overnight Rate",value:boc.overnight+"%",change:"up"},
+    {label:"Prime Rate",value:boc.prime+"%",change:"up"},
+    {label:"Bank Rate",value:boc.bankRate+"%",change:"up"},
+    {label:"CAD/USD",value:boc.cadUsd?"~"+boc.cadUsd:"—",change:"hold"},
     {label:"Inflation (as of Apr 2026)",value:"2.8%",change:"up"},
     {label:"Last Decision",value:fmtBocDate(last),change:"hold"},
     {label:"Next Announcement",value:fmtBocDate(next),change:"hold"},
@@ -630,7 +630,7 @@ const SEARCH_INDEX=[
   {title:"Overland Flood Insurance",desc:"Not covered by standard policies — add-on rider $100–$300/year",tab:"Insurance",icon:"🌊",type:"Topic"},
   {title:"CMHC vs Home Insurance",desc:"What's the difference between mortgage default insurance and home insurance?",tab:"Insurance",icon:"🛡️",type:"Topic"},
   // Blog articles
-  {title:"Fixed vs Variable 2026",desc:"Blog: Which mortgage type makes more sense with BoC holding at 2.25%?",tab:"Resources",icon:"📝",type:"Article"},
+  {title:"Fixed vs Variable 2026",desc:"Blog: Which mortgage type makes more sense after the BoC's October 2026 hike?",tab:"Resources",icon:"📝",type:"Article"},
   {title:"Mortgage Stress Test Guide",desc:"Blog: Complete 2026 guide — how it works, 2026 changes, how to pass",tab:"Resources",icon:"📝",type:"Article"},
   {title:"First-Time Buyer Programs",desc:"Blog: Every federal and provincial program in Canada — FHSA, HBP, LTT rebates",tab:"Resources",icon:"📝",type:"Article"},
   {title:"Mortgage Renewal Guide",desc:"Blog: How to get the best rate at renewal — negotiation script included",tab:"Resources",icon:"📝",type:"Article"},
@@ -1622,8 +1622,9 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
                 {date:"Mar 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"2nd consecutive hold",dir:"hold"},
                 {date:"Apr 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"3rd consecutive hold",dir:"hold"},
                 {date:"Jun 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"4th consecutive hold",dir:"hold"},
-                {date:"Jul 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"6th consecutive hold — BoC July 15, 2026",dir:"hold"},
-                {date:"Sep 2026",change:"Hold",rate:bocRates.overnight+"%",prime:bocRates.prime+"%",context:"7th consecutive hold — tariff uncertainty, energy prices elevated",dir:"hold",current:true},
+                {date:"Jul 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"6th consecutive hold — BoC July 15, 2026",dir:"hold"},
+                {date:"Sep 2026",change:"Hold",rate:"2.25%",prime:"4.45%",context:"7th consecutive hold — tariff uncertainty, energy prices elevated",dir:"hold"},
+                {date:"Oct 2026",change:"+0.25%",rate:"2.50%",prime:"4.70%",context:"First hike in three years — BoC Oct 28, 2026",dir:"up",current:true},
               ].map((row,i,arr)=>(
                 <tr key={i} style={{borderBottom:`1px solid ${s.light}`,background:row.current?`linear-gradient(135deg,${s.navy},#1a3a5c)`:i%2===0?s.white:"#fafbfc"}}>
                   <td style={{padding:"8px 12px",fontSize:12,fontWeight:700,color:row.current?"#fff":s.navy,whiteSpace:"nowrap"}}>{row.date}{row.current&&<span style={{background:s.gold,color:s.navy,borderRadius:20,padding:"1px 6px",fontSize:8,fontWeight:800,marginLeft:6}}>LATEST</span>}</td>
@@ -1642,7 +1643,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:12,marginBottom:14}}>
         <Card style={{background:s.navy}}>
           <h3 style={{fontSize:13,fontWeight:800,color:"#fff",marginBottom:10}}>📊 Key Rate Milestones</h3>
-          {[["Mar 2020","0.25%","COVID low — cheapest mortgages ever"],["Jul 2023","5.00%","22-year high — peak of hike cycle"],["Today","2.25%","Well below peak — rates near neutral"]].map(([d,r,n])=>(
+          {[["Mar 2020","0.25%","COVID low — cheapest mortgages ever"],["Jul 2023","5.00%","22-year high — peak of hike cycle"],["Today","2.50%","Raised Oct 28, 2026 — still well below the 5.00% peak"]].map(([d,r,n])=>(
             <div key={d} style={{background:"rgba(255,255,255,0.08)",borderRadius:8,padding:10,marginBottom:8}}>
               <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
                 <span style={{fontSize:10,color:"rgba(255,255,255,0.6)"}}>{d}</span>
@@ -1655,9 +1656,9 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
         <Card>
           <h3 style={{fontSize:13,fontWeight:800,color:s.navy,marginBottom:10}}>🔮 What Economists Expect</h3>
           {[
-            ["Late 2026","1–2 more cuts possible if inflation stays at 2%","#16a34a"],
-            ["2027","Rates may stabilize at 2.00–2.25% (neutral zone)","#2563eb"],
-            ["Risk","Trade disruptions or housing surge could pause cuts","#dc2626"],
+            ["Next decision","Dec 9, 2026 (Bank of Canada schedule)","#2563eb"],
+            ["Direction","Depends on inflation, trade and energy prices; the BoC decides meeting by meeting","#16a34a"],
+            ["Risk","Further hikes are possible if inflation stays above the 2% target","#dc2626"],
           ].map(([t,d,c])=>(
             <div key={t} style={{background:"#f8fafc",borderRadius:8,padding:10,marginBottom:8,borderLeft:`3px solid ${c}`}}>
               <div style={{fontSize:11,fontWeight:800,color:c,marginBottom:3}}>{t}</div>
@@ -1669,7 +1670,7 @@ function RatesTab({initProv,initCity,onLocationChange,bocRates}){
       </div>
 
       <div style={{background:"#fffbeb",border:"1px solid #fde68a",borderRadius:10,padding:"12px 16px",fontSize:11,color:"#92400e"}}>
-        💡 <b>What this means for your mortgage:</b> With rates down from 5% to 2.25%, variable rate holders have seen significant payment relief. Fixed rate borrowers renewing now face lower rates than their original 2021–2022 terms. If you're renewing in 2026–2027, this is a good time to compare offers.
+        💡 <b>What this means for your mortgage:</b> Rates are down from the 5% peak to 2.50%, but the October 2026 hike lifted prime to 4.70%, so variable-rate payments are rising. If you're renewing in 2026–2027, compare offers from several lenders and check how your payment changes at today's rates.
       </div>
       </>}
 
@@ -3223,7 +3224,7 @@ function ClosingCostTab({prov:initProv}:{prov:string}){
 
   function calcClosing(){
     const ltt=getLTT(chp,cprov,ccity);
-    const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?(isToronto?8000:4000):cprov==="BC"?8000:cprov==="MB"?4500:cprov==="PE"?3000:0):0;
+    const lttRebate=cfirst?Math.min(ltt,cprov==="ON"?(isToronto?8000:4000):cprov==="BC"?8000:cprov==="PE"?3000:0):0;
     const lttNet=ltt-lttRebate;
     const legal=1500,titleIns=350,homeInsp=500,appraisal=300,moving=1500;
     const hst=cnew?Math.min(chp*0.05,25000):0;
@@ -4125,7 +4126,7 @@ function RateFinderTab({embedded}:{embedded?:boolean}={}){
     {q:"What is your estimated credit score?",key:"credit",hint:"Your credit score is one of the biggest factors in your rate.",opts:[{v:"🟢 Excellent (750+)",tip:"You qualify for the best rates from all lenders."},{v:"🔵 Good (700–749)",tip:"You qualify for most lenders at competitive rates."},{v:"🟡 Fair (650–699)",tip:"Some A-lenders may add a premium. B-lenders are an option."},{v:"🔴 Below 650",tip:"B-lenders or private lenders. Rate premium of 1–3%."}]},
     {q:"How much is your down payment?",key:"down",hint:"Down payment % determines CMHC requirement and available lenders.",opts:[{v:"5–9% (Insured)",tip:"CMHC required. Premium: 4.0% of mortgage. Max home price $999,999."},{v:"10–14% (Insured)",tip:"CMHC required. Premium: 3.1%. More options than 5% down."},{v:"15–19% (Insured)",tip:"CMHC required. Premium: 2.8%. Nearly conventional."},{v:"20%+ (Conventional)",tip:"No CMHC. Best rates. All lenders available including credit unions."}]},
     {q:"What is your employment situation?",key:"employment",hint:"Lenders view employment type differently for qualification.",opts:[{v:"💼 Salaried / Full-Time",tip:"Easiest to qualify. Use last 2 pay stubs + employment letter."},{v:"🧾 Self-Employed",tip:"Need 2yr NOA + T1 generals. Some lenders use stated income."},{v:"📋 Contract / Part-Time",tip:"Need 2yr history of same type of income. Some lenders add premium."},{v:"🎯 Retired / Pension",tip:"Pension, CPP, OAS all count. Investment income often included."}]},
-    {q:"What mortgage term are you considering?",key:"term",hint:"Current BoC rate: 2.25%. Prime: 4.45%.",opts:[{v:"📉 Variable Rate",tip:"Currently ~3.3–3.8%. Moves with Prime. Low break penalty (3mo int)."},{v:"📅 1–2 Year Fixed",tip:"Currently ~4.5–5.0%. Good if you expect rates to drop."},{v:"📅 3 Year Fixed",tip:"Currently ~4.7–5.0%. Balance of certainty and flexibility."},{v:"📅 5 Year Fixed",tip:"Currently ~4.8–5.2%. Maximum payment certainty."}]},
+    {q:"What mortgage term are you considering?",key:"term",hint:"Current BoC rate: 2.50%. Prime: 4.70%.",opts:[{v:"📉 Variable Rate",tip:"Moves with Prime. Low break penalty (3mo int). See the Rates tab for current rates."},{v:"📅 1–2 Year Fixed",tip:"See the Rates tab for current rates. Good if you expect rates to drop."},{v:"📅 3 Year Fixed",tip:"See the Rates tab for current rates. Balance of certainty and flexibility."},{v:"📅 5 Year Fixed",tip:"See the Rates tab for current rates. Maximum payment certainty."}]},
   ];
 
   function goBack(){if(step>0){const na={...answers};delete na[steps[step].key];setAnswers(na);setStep(step-1);}}
@@ -4245,7 +4246,7 @@ function RateFinderTab({embedded}:{embedded?:boolean}={}){
         <div style={{background:`linear-gradient(135deg,${s.navy},#1a3a5c)`,borderRadius:14,padding:"20px",marginBottom:14,textAlign:"center"}}>
           <div style={{fontSize:28,marginBottom:6}}>📊</div>
           <h2 style={{color:"#fff",fontSize:18,fontWeight:800,marginBottom:6}}>Fixed vs Variable — Which is Right for You?</h2>
-          <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>With BoC at 2.25% and variable rates below fixed, here's the full comparison for 2026.</p>
+          <p style={{color:"rgba(255,255,255,0.75)",fontSize:12,maxWidth:500,margin:"0 auto"}}>With the BoC at 2.50% after its October 2026 hike, here's the full comparison.</p>
         </div>
 
         {/* Side by side comparison */}
@@ -6994,7 +6995,7 @@ function ListingsTab({initProv,initCity}:{initProv:string,initCity:string}){
 function LearnTab(){
   const [selected,setSelected]=useState<number|null>(null);
   const articles=[
-    {icon:"📊",title:"Fixed vs Variable Rate in 2026",time:"5 min read",category:"RATES",categoryColor:s.navy,desc:"With BoC holding at 2.25%, which mortgage type makes more sense right now?",content:`<h3 style='color:#0d2240;margin-bottom:12px;font-size:16px;'>Fixed vs Variable Mortgage Rates in 2026</h3>
+    {icon:"📊",title:"Fixed vs Variable Rate in 2026",time:"5 min read",category:"RATES",categoryColor:s.navy,desc:"After the BoC's October 2026 hike to 2.50%, which mortgage type makes more sense right now?",content:`<h3 style='color:#0d2240;margin-bottom:12px;font-size:16px;'>Fixed vs Variable Mortgage Rates in 2026</h3>
 <div style='background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;margin-bottom:16px;'><b style='color:#15803d;'>Current Rates (June 2026):</b><br/>Variable: ~3.3–3.8% · 1-yr Fixed: ~4.5% · 3-yr Fixed: ~4.8% · 5-yr Fixed: ~4.9%</div>
 <h4 style='color:#0d2240;margin:16px 0 8px;'>Fixed Rate Mortgage</h4>
 <p><b>How it works:</b> Your interest rate and payment are locked for the entire term (1–5 years). When your term ends, you renew at current rates.</p>
@@ -7005,7 +7006,7 @@ function LearnTab(){
 <p style='margin-top:8px;'><b>✅ Pros:</b> Currently lower rate (save ~$200–$400/mo on $500K) · Small break penalty (3 months interest only) · Benefit from rate cuts</p>
 <p style='margin-top:8px;'><b>❌ Cons:</b> Payment uncertainty · Rate could rise if BoC hikes · Less comfortable for tight budgets</p>
 <h4 style='color:#0d2240;margin:16px 0 8px;'>What Specialists Recommend in 2026</h4>
-<p>With BoC holding at 2.25% and inflation stabilizing at 2.8%, most economists expect rates to remain flat or potentially drop 1–2 more times. Variable rates are currently ~1.5% below fixed. A 5-year variable saves approximately <b>$15,000–$25,000</b> vs fixed on a $500K mortgage if rates stay flat.</p>
+<p>The BoC raised its overnight rate to 2.50% on October 28, 2026, its first hike in three years, and the big banks moved prime to 4.70%. Variable payments rise with prime, so the June figures above are out of date: check the Rates tab for today's fixed and variable offers. Which one costs less over a term depends on where rates go, which nobody knows.</p>
 <p style='margin-top:8px;'><b>Choose Fixed if:</b> You're on a tight budget, can't absorb payment increases, or value certainty above all.</p>
 <p style='margin-top:8px;'><b>Choose Variable if:</b> You have a financial buffer, believe rates will stay flat or drop, and want the lower break penalty.</p>
 <p style='margin-top:12px;font-size:11px;color:#64748b;'>* Rate information as of June 2026. Rates change daily — verify current rates on the Rates tab.</p>`},
@@ -7104,14 +7105,14 @@ function LearnTab(){
 <li><b>Life change:</b> Divorce, death, or major financial change that requires restructuring</li>
 </ul>
 <p><b>Best approach:</b> Wait for renewal whenever possible. Renewal = no penalty, fresh start, maximum negotiating power.</p>`},
-    {icon:"📈",title:"Canadian Housing Market Outlook 2026",time:"5 min read",category:"MARKET",categoryColor:"#dc2626",desc:"BoC holding rates, tariff impacts, and what analysts expect for prices this year.",content:`<h3 style='color:#0d2240;margin-bottom:12px;font-size:16px;'>Canadian Housing Market — 2026 Outlook</h3>
+    {icon:"📈",title:"Canadian Housing Market Outlook 2026",time:"5 min read",category:"MARKET",categoryColor:"#dc2626",desc:"BoC rate hike, tariff impacts, and what analysts expect for prices this year.",content:`<h3 style='color:#0d2240;margin-bottom:12px;font-size:16px;'>Canadian Housing Market — 2026 Outlook</h3>
 <div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:16px;'>
 <b>Key Numbers (June 2026):</b><br/>
-BoC Rate: 2.25% (held) · Prime: 4.45% · Inflation: 2.8% · GDP Growth: 1.2% · CAD/USD: ~0.72
+BoC Rate: 2.50% (raised Oct 28, 2026) · Prime: 4.70% · Inflation: 2.8% · GDP Growth: 1.2% · CAD/USD: ~0.72
 </div>
 <h4 style='color:#0d2240;margin:16px 0 8px;'>Bank of Canada Outlook</h4>
-<p>The BoC has held at 2.25% for five consecutive decisions. With inflation at 2.8% (slightly above the 2% target) and GDP growth slowing to 1.2%, the bank is balancing between cutting to stimulate growth and holding to keep inflation in check.</p>
-<p style='margin-top:8px;'><b>Analyst consensus:</b> 1–2 more rate cuts possible in late 2026 if inflation continues to moderate. Most expect BoC to hold through summer, with potential movement in Q4.</p>
+<p>After holding at 2.25% through the summer, the BoC raised its overnight rate to 2.50% on October 28, 2026. With inflation above the 2% target (2.8% in the figures above) and GDP growth slowing to 1.2%, the bank is balancing inflation against growth.</p>
+<p style='margin-top:8px;'><b>Next decision:</b> December 9, 2026. Further moves will depend on inflation, trade and energy prices.</p>
 <h4 style='color:#0d2240;margin:16px 0 8px;'>Price Forecast by Market</h4>
 <ul style='margin:8px 0 8px 18px;line-height:2.2;'>
 <li><b>Calgary & Edmonton:</b> Outperforming. Strong interprovincial migration. +5–8% YoY expected.</li>
@@ -7478,7 +7479,7 @@ function RenewalTab(){
           {/* Term selection guide 2026 */}
           <Card style={{marginBottom:14,background:s.navy}}>
             <h3 style={{fontSize:14,fontWeight:800,color:"#fff",marginBottom:10}}>📅 Which Term Should You Choose at Renewal — 2026?</h3>
-            <p style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:12,lineHeight:1.6}}>With BoC at 2.25% and most economists expecting rates to stay flat or drop slightly in 2027, here's how each term looks right now:</p>
+            <p style={{fontSize:11,color:"rgba(255,255,255,0.7)",marginBottom:12,lineHeight:1.6}}>With the BoC at 2.50% after its October 2026 hike, here's how each term looks right now:</p>
             {[
               {term:"1-Year Fixed",rate:"~4.50%",verdict:"✅ Good if you expect rates to drop significantly within a year. Maximum flexibility.",color:"#4ade80",rec:"If rates fall 0.50%+ in 12 months, worth it"},
               {term:"2-Year Fixed",rate:"~4.20%",verdict:"✅ Best balance in 2026. Lower than 1-year, shorter commitment than 5-year.",color:"#4ade80",rec:"Our top pick for most 2026 renewers"},
@@ -7869,7 +7870,7 @@ function LawyersTab(){
                 {prov:"Toronto (ON)",ltt:"$12,950",legal:"$1,500",title:"$350","total":"$14,800","rebate":"Up to $8,000"},
                 {prov:"British Columbia",ltt:"$8,000",legal:"$1,400",title:"$300","total":"$9,700","rebate":"Up to $8,000"},
                 {prov:"Alberta",ltt:"$400",legal:"$1,200",title:"$300","total":"$1,900","rebate":"None"},
-                {prov:"Manitoba",ltt:"$6,650",legal:"$1,300",title:"$300","total":"$8,250","rebate":"Up to $4,500"},
+                {prov:"Manitoba",ltt:"$6,650",legal:"$1,300",title:"$300","total":"$8,250","rebate":"None"},
                 {prov:"Quebec",ltt:"$5,145",legal:"$1,500",title:"$300","total":"$6,945","rebate":"None (varies by city)"},
                 {prov:"Saskatchewan",ltt:"$1,500",legal:"$1,100",title:"$300","total":"$2,900","rebate":"None"},
                 {prov:"Nova Scotia",ltt:"$7,500",legal:"$1,300",title:"$300","total":"$9,100","rebate":"None"},
@@ -8182,7 +8183,7 @@ const GLOSSARY_TERMS=[
   {term:"Portability",cat:"Products",def:"The ability to transfer your existing mortgage — rate, term, and balance — to a new property when you move, avoiding break penalties."},
   {term:"Pre-Approval",cat:"Buying",def:"A lender's conditional commitment to lend you up to a certain amount at a specific rate, held for 90–120 days. Does not guarantee final approval."},
   {term:"Prepayment Privilege",cat:"Products",def:"The right to make extra payments on your mortgage beyond your regular schedule without penalty. Most lenders allow 10–20% of the original balance per year."},
-  {term:"Prime Rate",cat:"Rates",def:"The interest rate Canadian banks use as a benchmark for variable rate products. Currently 4.45%. Typically Prime = BoC overnight rate + 2.20%."},
+  {term:"Prime Rate",cat:"Rates",def:"The interest rate Canadian banks use as a benchmark for variable rate products. Currently 4.70% (as of Nov 2026). Typically Prime = BoC overnight rate + 2.20%."},
   {term:"Principal",cat:"Basics",def:"The original amount you borrowed, or the remaining balance owed on your mortgage, not including interest."},
   {term:"Refinancing",cat:"Products",def:"Breaking your current mortgage before maturity to access a new rate, change terms, or borrow against your home equity. Usually involves a prepayment penalty."},
   {term:"Renewal",cat:"Products",def:"At the end of your mortgage term, you renew for a new term. No penalty to switch lenders at renewal. Always shop around — your lender's first offer is rarely the best."},
@@ -8264,9 +8265,9 @@ function BlogTab(){
       author:"Canada Mortgage Rates",
       readTime:"6 min read",
       category:"Rate Strategy",
-      summary:"With the Bank of Canada holding at 2.25% for the fifth consecutive time, the fixed vs variable debate is more relevant than ever. Here's what Canadian homeowners need to know.",
+      summary:"The Bank of Canada raised its rate to 2.50% on October 28, 2026, so the fixed vs variable debate is more relevant than ever. Here's what Canadian homeowners need to know.",
       content:`
-The Bank of Canada held its overnight rate at 2.25% on September 2, 2026 — the seventh consecutive hold. For Canadian mortgage holders and homebuyers, this stability raises an important question: should you choose a fixed or variable rate mortgage in 2026?
+The Bank of Canada raised its overnight rate by 0.25 points to 2.50% on October 28, 2026, after holding at 2.25% on September 2. For Canadian mortgage holders and homebuyers, this raises an important question: should you choose a fixed or variable rate mortgage in 2026?
 
 ## The Current Rate Environment
 
@@ -8503,7 +8504,7 @@ Alberta has no provincial land transfer tax — a significant advantage for firs
 
 ### Manitoba
 
-**Land Transfer Tax:** Manitoba's LTT is relatively low compared to eastern provinces. First-time buyers may qualify for a rebate — check at gov.mb.ca.
+**Land Transfer Tax:** Manitoba's LTT is relatively low compared to eastern provinces. The provincial page lists no first-time buyer relief — confirm at gov.mb.ca.
 **Manitoba Home Renovation Tax Credit:** Not exclusively for first-time buyers but useful for fixer-uppers.
 
 ### Quebec
@@ -8607,7 +8608,7 @@ Switching lenders at renewal is penalty-free — unlike breaking your mortgage m
 
 ## Choosing Your New Term at Renewal
 
-With the Bank of Canada holding at 2.25% as of July 2026, and most economists expecting rates to remain stable or possibly fall slightly in 2027, the term decision matters:
+With the Bank of Canada at 2.50% after its October 28, 2026 hike, the term decision matters:
 
 **1-year fixed (~4.50%):** Maximum flexibility. Makes sense if you believe rates will fall significantly within a year.
 **2-year fixed (~4.20%):** Good balance of rate certainty and flexibility heading into a potentially lower rate environment.
@@ -10136,9 +10137,9 @@ Use our [Rent vs Buy Calculator](/calculators) to run the actual numbers for you
       author:"Canada Mortgage Rates",
       readTime:"5 min read",
       category:"Rate Strategy",
-      summary:"The Bank of Canada held at 2.25% for the 5th consecutive time on July 15, 2026. Here's how BoC decisions actually affect your mortgage rate.",
+      summary:"The Bank of Canada raised its rate to 2.50% on October 28, 2026. Here's how BoC decisions actually affect your mortgage rate.",
       content:`
-On September 2, 2026, the Bank of Canada held its overnight rate at 2.25% — the seventh consecutive hold. Understanding how BoC decisions affect mortgage rates is essential for every Canadian homeowner.
+On October 28, 2026, the Bank of Canada raised its overnight rate by 0.25 points to 2.50%, its first hike in three years. Understanding how BoC decisions affect mortgage rates is essential for every Canadian homeowner.
 
 ## The Overnight Rate and Your Mortgage
 
@@ -10152,19 +10153,18 @@ This is why fixed rates can move independently of BoC decisions.
 
 **2022–2023 Hiking cycle:** 0.25% → 5.00% in 18 months. Fastest in modern Canadian history. Variable rates went from ~1.45% to ~7.20%.
 
-**2024–2026 Cutting cycle:** 5.00% → 2.25% through 7 cuts. Variable rates fell from ~7.20% to ~3.35%.
+**2024–2026 Cutting cycle:** 5.00% → 2.25%. Variable rates fell from ~7.20% to ~3.35%.
 
-**2026 Hold:** Seven consecutive holds. BoC considers 2.25% the neutral rate. Trade uncertainty with the US is keeping the BoC cautious.
+**2026:** The BoC held at 2.25% through September, then raised to 2.50% on October 28, 2026. Trade uncertainty and energy prices remain in focus.
 
 ## 2026 BoC Schedule
 
 | Date | Decision |
 |---|---|
-| July 15, 2026 | Hold at 2.25% (latest) |
-| September 2, 2026 | Hold at 2.25% — 7th consecutive |
-| October 29, 2026 | Next announcement |
-| October 29, 2026 | TBD |
-| December 10, 2026 | TBD |
+| July 15, 2026 | Hold at 2.25% |
+| September 2, 2026 | Hold at 2.25% |
+| October 28, 2026 | Raised 0.25 points to 2.50% (latest) |
+| December 9, 2026 | Next announcement |
 
 ## What This Means for Your Decision
 
@@ -10204,7 +10204,7 @@ Full PTT exemption on homes under $500,000. Partial exemption to $835,000. Above
 
 **Alberta and Saskatchewan:** No provincial LTT. First-time buyers pay only modest land title fees (~$500–$1,000).
 
-**Manitoba:** Partial rebate for first-time buyers — check gov.mb.ca for current limits.
+**Manitoba:** No first-time buyer land transfer tax relief is listed on the province's page — confirm at gov.mb.ca.
 
 ## How to Claim
 
@@ -10947,12 +10947,12 @@ Manitoba offers some of the most affordable housing in Canada combined with one 
 
 What makes Manitoba's mortgage market unique is the strength of local credit unions. Assiniboine Credit Union (ACU) and Steinbach Credit Union (SCU) consistently offer rates 0.20–0.40% below the major banks — a significant advantage over the life of a mortgage.
 
-- **Assiniboine Credit Union (ACU):** Winnipeg's largest credit union, B Corp certified, founded 1943. Verified 5-year fixed: 4.09%. Verified 1-year fixed: 4.49%. Rates published directly on acu.ca and verified on canadamortgagerates.net.
+- **Assiniboine Credit Union (ACU):** Winnipeg's largest credit union, B Corp certified, founded 1943. Verified 5-year fixed: 4.49%. Verified 1-year fixed: 4.29% (acu.ca, updated Nov 10, 2026). Rates published directly on acu.ca and verified on canadamortgagerates.net.
 - **Steinbach Credit Union (SCU):** Manitoba's fastest-growing credit union, serving southern Manitoba with competitive rates particularly strong for rural buyers.
 
 ## Manitoba First-Time Buyer Programs
 
-- **Manitoba Land Transfer Tax Rebate:** Up to $4,500 for first-time buyers on homes under $450,000 — one of the most generous provincial LTT rebates in Canada
+- **Manitoba Land Transfer Tax:** 0% on the first $30,000, then 0.5%, 1%, 1.5% and 2% in brackets up to the portion over $200,000. The province's page lists no first-time buyer relief (gov.mb.ca/finance/other/landtransfertax.html).
 - **FHSA:** $40,000 lifetime per person, tax deductible and tax-free for home purchase
 - **HBP:** Up to $60,000 per person from RRSP
 - **Federal First-Time Home Buyers Tax Credit:** $1,500

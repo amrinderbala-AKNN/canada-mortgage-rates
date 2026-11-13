@@ -1,3 +1,4 @@
+import { MB_POSTS } from "../../data/manitobaPosts";
 import Head from "next/head";
 import Link from "next/link";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -7,7 +8,7 @@ const categoryColors:{[k:string]:string} = {
   "Renewal":"#0891b2","CMHC":"#92400e","Market":"#2563eb","Tips":"#0d2240"
 };
 
-const POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,readTime:string,content:string}} = {
+const BASE_POSTS:{[k:string]:{title:string,desc:string,category:string,date:string,readTime:string,content:string}} = {
   "best-mortgage-rates-canada-2026":{
     title:"Best Mortgage Rates in Canada — June 2026",
     desc:"The Bank of Canada held at 2.25% for the fifth time. Here's what that means for fixed and variable rates across Canada.",
@@ -1275,6 +1276,7 @@ $400,000 × 1.00% × 2 = <strong>$8,000 IRD penalty</strong></p>
 </div>`
   }
 };;
+const POSTS: {[k:string]:any} = {...BASE_POSTS, ...MB_POSTS};
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = Object.keys(POSTS).map(slug => ({ params: { slug } }));
